@@ -1,11 +1,12 @@
-#include "Includes.hpp"
 #include "ComponentManager.hpp"
+#include "Includes.hpp"
 
-using namespace ECS;
-
-class ASystem
+namespace ECS
 {
-    public:
-        virtual ~ASystem() = default;
-        virtual void update(ComponentManager componentManager) = 0;
-};
+    class ASystem
+    {
+        public:
+            virtual ~ASystem() = default;
+            virtual void update(ComponentManager componentManager) = 0;
+    };
+}
