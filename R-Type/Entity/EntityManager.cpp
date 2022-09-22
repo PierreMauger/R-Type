@@ -1,5 +1,7 @@
 #include "EntityManager.hpp"
 
+#include "ComponentManager.hpp"
+
 using namespace ECS;
 
 EntityManager::EntityManager()
@@ -11,11 +13,12 @@ std::vector<std::optional<std::size_t>> &EntityManager::getMasks()
     return this->_masks;
 }
 
-void EntityManager::addMask(std::size_t id, std::optional<std::size_t> mask)
+void EntityManager::addMask(std::size_t id, std::optional<std::size_t> mask, ComponentManager &componentManager)
 {
     if (this->_masks.size() <= id)
         this->_masks.resize(id + 1);
     this->_masks[id] = mask;
+    this->readMask(id, componentManager);
 }
 
 void EntityManager::removeMask(std::size_t id)
@@ -32,6 +35,15 @@ void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
     this->_masks[id] = mask;
 }
 
-void EntityManager::readMask(std::size_t id)
+void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
 {
+    auto it = componentManager.getComponentArray().begin();
+
+    for (unsigned short i = 0; i < 32; i++) {
+        if (std::bitset<sizeof(std::size_t)>(this->_masks[id].value()).test(i))
+            it->second.push_back({0});
+        else
+            it->second.push_back(std::nullopt);
+        std::advance(it, i);
+    }
 }

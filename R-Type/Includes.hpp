@@ -2,6 +2,7 @@
 #define INCLUDES_HPP
 
 #include <any>
+#include <bitset>
 #include <condition_variable>
 #include <cstring>
 #include <fstream>
