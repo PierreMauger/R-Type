@@ -1,3 +1,6 @@
+#ifndef ASYSTEM_HPP
+#define ASYSTEM_HPP
+
 #include "ComponentManager.hpp"
 #include "Includes.hpp"
 
@@ -10,3 +13,5 @@ namespace ECS
             virtual void update(ComponentManager componentManager) = 0;
     };
 }
+
+#endif // ASYSTEM_HPP

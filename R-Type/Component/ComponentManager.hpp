@@ -1,3 +1,6 @@
+#ifndef COMPONENTMANAGER_HPP
+#define COMPONENTMANAGER_HPP
+
 #include "ComponentTypes.hpp"
 #include "Includes.hpp"
 
@@ -17,3 +20,5 @@ namespace ECS
             void addComponent(std::type_index type, std::vector<std::optional<std::any>> component);
     };
 }
+
+#endif // COMPONENTMANAGER_HPP

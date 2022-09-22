@@ -1,3 +1,7 @@
+// guards
+#ifndef PHYSICSSYSTEM_HPP
+#define PHYSICSSYSTEM_HPP
+
 #include "ASystem.hpp"
 
 namespace ECS
@@ -11,3 +15,5 @@ namespace ECS
             void update(ComponentManager componentManager) override;
     };
 }
+
+#endif // PHYSICSSYSTEM_HPP

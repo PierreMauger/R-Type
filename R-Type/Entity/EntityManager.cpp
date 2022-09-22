@@ -31,3 +31,7 @@ void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
         return;
     this->_masks[id] = mask;
 }
+
+void EntityManager::readMask(std::size_t id)
+{
+}

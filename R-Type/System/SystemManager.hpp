@@ -1,3 +1,6 @@
+#ifndef SYSTEMMANAGER_HPP
+#define SYSTEMMANAGER_HPP
+
 #include "ASystem.hpp"
 #include "Includes.hpp"
 
@@ -17,3 +20,5 @@ namespace ECS
             void updateSystems(ComponentManager componentManager);
     };
 }
+
+#endif // SYSTEMMANAGER_HPP

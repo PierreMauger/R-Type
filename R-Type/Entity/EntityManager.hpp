@@ -1,3 +1,6 @@
+#ifndef ENTITYMANAGER_HPP
+#define ENTITYMANAGER_HPP
+
 #include "Includes.hpp"
 
 namespace ECS
@@ -15,5 +18,8 @@ namespace ECS
             void addMask(std::size_t id, std::optional<std::size_t> mask);
             void removeMask(std::size_t id);
             void updateMask(std::size_t id, std::optional<std::size_t> mask);
+            void readMask(std::size_t id);
     };
 }
+
+#endif // ENTITYMANAGER_HPP

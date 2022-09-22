@@ -1,3 +1,6 @@
+#ifndef MODELIDSYSTEM_HPP
+#define MODELIDSYSTEM_HPP
+
 #include "ASystem.hpp"
 
 namespace ECS
@@ -13,3 +16,5 @@ namespace ECS
             void update(ComponentManager componentManager) override;
     };
 }
+
+#endif // MODELIDSYSTEM_HPP

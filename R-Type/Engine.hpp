@@ -1,6 +1,9 @@
-#include "Includes.hpp"
-#include "EntityManager.hpp"
+#ifndef ENGINE_HPP
+#define ENGINE_HPP
+
 #include "ComponentManager.hpp"
+#include "EntityManager.hpp"
+#include "Includes.hpp"
 #include "SystemManager.hpp"
 
 namespace ECS
@@ -19,3 +22,5 @@ namespace ECS
             void run();
     };
 }
+
+#endif // ENGINE_HPP
