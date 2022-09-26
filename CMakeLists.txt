@@ -39,6 +39,7 @@ set(SRC
     ${PROJECT_NAME}/Engine.cpp
     ${PROJECT_NAME}/Entity/EntityManager.cpp
     ${PROJECT_NAME}/Component/ComponentManager.cpp
+    ${PROJECT_NAME}/Component/Component.cpp
     ${PROJECT_NAME}/System/SystemManager.cpp
     ${PROJECT_NAME}/System/ModelIdSystem.cpp
     ${PROJECT_NAME}/System/PhysicsSystem.cpp
