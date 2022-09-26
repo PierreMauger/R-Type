@@ -1,7 +1,7 @@
 #ifndef ENTITYMANAGER_HPP
 #define ENTITYMANAGER_HPP
 
-#include "Includes.hpp"
+#include "Component/ComponentManager.hpp"
 
 namespace ECS
 {

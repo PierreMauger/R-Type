@@ -1,12 +1,11 @@
-// guards
 #ifndef PHYSICSSYSTEM_HPP
 #define PHYSICSSYSTEM_HPP
 
-#include "ASystem.hpp"
+#include "System/ISystem.hpp"
 
 namespace ECS
 {
-    class PhysicsSystem : public virtual ASystem
+    class PhysicsSystem : public virtual ISystem
     {
         private:
         public:

@@ -1,10 +1,9 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
-#include "ComponentManager.hpp"
-#include "EntityManager.hpp"
-#include "Includes.hpp"
-#include "SystemManager.hpp"
+#include "Component/ComponentManager.hpp"
+#include "Entity/EntityManager.hpp"
+#include "System/SystemManager.hpp"
 
 namespace ECS
 {

@@ -1,8 +1,7 @@
 #ifndef COMPONENTMANAGER_HPP
 #define COMPONENTMANAGER_HPP
 
-#include "ComponentTypes.hpp"
-#include "Includes.hpp"
+#include "Component/ComponentTypes.hpp"
 
 namespace ECS
 {

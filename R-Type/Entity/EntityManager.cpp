@@ -1,6 +1,4 @@
-#include "EntityManager.hpp"
-
-#include "ComponentManager.hpp"
+#include "Entity/EntityManager.hpp"
 
 using namespace ECS;
 

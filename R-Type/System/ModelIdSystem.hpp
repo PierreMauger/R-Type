@@ -1,11 +1,11 @@
 #ifndef MODELIDSYSTEM_HPP
 #define MODELIDSYSTEM_HPP
 
-#include "ASystem.hpp"
+#include "System/ISystem.hpp"
 
 namespace ECS
 {
-    class ModelIdSystem : public virtual ASystem
+    class ModelIdSystem : public virtual ISystem
     {
         private:
             std::size_t id;

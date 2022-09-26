@@ -1,6 +1,4 @@
-#include "ModelIdSystem.hpp"
-
-#include "ComponentTypes.hpp"
+#include "System/ModelIdSystem.hpp"
 
 using namespace ECS;
 

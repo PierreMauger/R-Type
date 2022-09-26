@@ -1,4 +1,4 @@
-#include "SystemManager.hpp"
+#include "System/SystemManager.hpp"
 
 using namespace ECS;
 
@@ -12,17 +12,17 @@ SystemManager::~SystemManager()
         system.reset();
 }
 
-std::vector<std::unique_ptr<ASystem>> &SystemManager::getSystems()
+std::vector<std::shared_ptr<ISystem>> &SystemManager::getSystems()
 {
     return this->_systems;
 }
 
-void SystemManager::addSystem(std::unique_ptr<ASystem> system)
+void SystemManager::addSystem(std::shared_ptr<ISystem> system)
 {
     this->_systems.push_back(std::move(system));
 }
 
-void SystemManager::updateSystems(ComponentManager componentManager)
+void SystemManager::updateSystems([[maybe_unused]] ComponentManager componentManager)
 {
     for (auto &system : this->_systems)
         system->update(componentManager);
