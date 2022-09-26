@@ -11,7 +11,7 @@ namespace ECS
         public:
             PhysicsSystem();
             ~PhysicsSystem() = default;
-            void update(ComponentManager &componentManager) override;
+            void update(ComponentManager &componentManager);
     };
 }
 
