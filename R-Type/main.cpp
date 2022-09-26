@@ -21,8 +21,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
     engine.getSystemManager().addSystem(std::make_shared<ECS::PhysicsSystem>());
     engine.getSystemManager().addSystem(std::make_shared<ECS::ModelIdSystem>());
 
-    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0)).x << std::endl;
+    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0).value()).x << std::endl;
     engine.run();
-    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0)).x << std::endl;
+    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0).value()).x << std::endl;
     return 0;
 }
