@@ -16,9 +16,11 @@ namespace ECS
             ComponentManager();
             ~ComponentManager() = default;
 
+            void addComponent(std::type_index type, Component component);
+            void initEmptyComponent();
+
             std::map<std::type_index, Component> &getComponentArray();
             Component &getComponent(std::type_index type);
-            void addComponent(std::type_index type, Component component);
     };
 }
 

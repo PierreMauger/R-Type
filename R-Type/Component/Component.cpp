@@ -11,7 +11,7 @@ void Component::addEmptyField()
     this->_component.push_back({});
 }
 
-void Component::addDataField(std::size_t id, std::any data)
+void Component::emplaceData(std::size_t id, std::any data)
 {
     if (id > this->_component.size())
         throw std::runtime_error("incorrect ID");

@@ -16,7 +16,7 @@ namespace ECS
             ~Component() = default;
 
             void addEmptyField();
-            void addDataField(std::size_t id, std::any data);
+            void emplaceData(std::size_t id, std::any data);
 
             std::size_t getSize();
             std::optional<std::any> &getField(std::size_t id);

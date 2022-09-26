@@ -38,9 +38,9 @@ void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
 
     // for (unsigned short i = 0; i < 32; i++) {
     //     if (std::bitset<sizeof(std::size_t)>(this->_masks[id].value()).test(i))
-    //         it->second.addDataField({0});
+    //         it->second.emplaceData({0});
     //     else
-    //         it->second.addDataField(std::nullopt);
+    //         it->second.emplaceData(std::nullopt);
     //     std::advance(it, i);
     // }
 }

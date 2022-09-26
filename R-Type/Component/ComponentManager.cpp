@@ -23,3 +23,9 @@ void ComponentManager::addComponent(std::type_index type, Component component)
 {
     this->_componentArray[type] = component;
 }
+
+void ComponentManager::initEmptyComponent()
+{
+    for (auto &component : this->_componentArray)
+        component.second.addEmptyField();
+}
