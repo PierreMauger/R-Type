@@ -50,7 +50,7 @@ add_executable(${EXEC_NAME}
     ${PROJECT_NAME}/main.cpp
 )
 
-target_compile_options(${EXEC_NAME} PRIVATE -Wall -Wextra -Werror -g)
+target_compile_options(${EXEC_NAME} PRIVATE -Wall -Wextra -g)
 
 #set include paths
 include_directories(${INC}

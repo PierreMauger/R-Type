@@ -11,13 +11,15 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
     engine.getComponentManager().addComponent(typeid(Velocity), {});
     engine.getComponentManager().addComponent(typeid(ModelID), {});
     engine.getEntityManager().addMask(0, (ECS::InfoEntity::POS | ECS::InfoEntity::IDMODEL));
-    engine.getComponentManager().addSpecificComponent(typeid(Position), 0, Position{10, 10, 0});
-    engine.getComponentManager().addSpecificComponent(typeid(Velocity), 0, Velocity{2, 2, 0});
-    engine.getComponentManager().addSpecificComponent(typeid(ModelID), 0, ModelID{1});
+
+    (engine.getComponentManager().getComponent(typeid(Position))).addDataField(0, Position{10, 10, 0});
+    (engine.getComponentManager().getComponent(typeid(Velocity))).addDataField(0, Velocity{2, 2, 0});
+    (engine.getComponentManager().getComponent(typeid(ModelID))).addDataField(0, ModelID{1});
+
     engine.getSystemManager().addSystem(std::make_shared<ECS::PhysicsSystem>());
     engine.getSystemManager().addSystem(std::make_shared<ECS::ModelIdSystem>());
-    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position))[0].value()).x << std::endl;
+    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0)).x << std::endl;
     engine.run();
-    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position))[0].value()).x << std::endl;
+    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0)).x << std::endl;
     return 0;
 }
