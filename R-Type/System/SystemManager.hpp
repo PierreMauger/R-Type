@@ -16,7 +16,7 @@ namespace ECS
 
             std::vector<std::shared_ptr<ISystem>> &getSystems();
             void addSystem(std::shared_ptr<ISystem> system);
-            void updateSystems(ComponentManager componentManager);
+            void updateSystems(ComponentManager &componentManager);
     };
 }
 

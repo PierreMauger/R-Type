@@ -6,7 +6,7 @@ PhysicsSystem::PhysicsSystem()
 {
 }
 
-void PhysicsSystem::update(ComponentManager componentManager)
+void PhysicsSystem::update(ComponentManager &componentManager)
 {
     std::vector<std::optional<std::any>> &position = componentManager.getComponent(typeid(Position));
     std::vector<std::optional<std::any>> &velocity = componentManager.getComponent(typeid(Velocity));

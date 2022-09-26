@@ -1,4 +1,5 @@
 #include "Engine.hpp"
+
 #include "System/ModelIdSystem.hpp"
 #include "System/PhysicsSystem.hpp"
 
@@ -10,11 +11,19 @@ namespace ECS
         this->_componentManager = ComponentManager();
         this->_systemManager = SystemManager();
 
-        // this->_systemManager.addSystem(std::make_shared<>());
+        this->_componentManager.addComponent(typeid(Position), {});
+        this->_componentManager.addComponent(typeid(Velocity), {});
+        this->_componentManager.addComponent(typeid(ModelID), {});
+
+        this->_systemManager.addSystem(std::make_shared<ModelIdSystem>());
+        this->_systemManager.addSystem(std::make_shared<PhysicsSystem>());
     }
 
     void Engine::run()
     {
-        this->_systemManager.updateSystems(this->_componentManager);
+        // while (true) {
+            this->_systemManager.updateSystems(this->_componentManager);
+            // std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        // }
     }
 }
