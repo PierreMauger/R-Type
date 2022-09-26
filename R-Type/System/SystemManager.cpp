@@ -22,8 +22,9 @@ void SystemManager::addSystem(std::shared_ptr<ISystem> system)
     this->_systems.push_back(std::move(system));
 }
 
-void SystemManager::updateSystems([[maybe_unused]] ComponentManager componentManager)
+void SystemManager::updateSystems([[maybe_unused]] ComponentManager &componentManager)
 {
-    for (auto &system : this->_systems)
+    for (auto &system : this->_systems) {
         system->update(componentManager);
+    }
 }

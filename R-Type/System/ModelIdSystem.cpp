@@ -7,7 +7,7 @@ ModelIdSystem::ModelIdSystem()
     this->id = 0;
 }
 
-void ModelIdSystem::update(ComponentManager componentManager)
+void ModelIdSystem::update(ComponentManager &componentManager)
 {
     std::vector<std::optional<std::any>> &modelId = componentManager.getComponent(typeid(ModelID));
 

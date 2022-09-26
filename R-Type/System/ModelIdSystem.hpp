@@ -13,7 +13,7 @@ namespace ECS
         public:
             ModelIdSystem();
             ~ModelIdSystem() = default;
-            void update(ComponentManager componentManager) override;
+            void update(ComponentManager &componentManager) override;
     };
 }
 

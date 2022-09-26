@@ -3,3 +3,5 @@ build/
 *.ini
 r-type_client
 r-type_server
+Ogre
+build_ogre*
