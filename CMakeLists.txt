@@ -1,5 +1,5 @@
 #init Cmake
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 
 project(R-Type LANGUAGES C CXX VERSION 1.0)
 
@@ -52,6 +52,10 @@ add_executable(${EXEC_NAME}
 
 target_compile_options(${EXEC_NAME} PRIVATE -Wall -Wextra -Werror -g)
 
+#fetch libraries
+find_package(ogre-next-deps REQUIRED)
+#find_package(ogre-next REQUIRED)
+
 #set include paths
 include_directories(${INC}
 )
@@ -59,6 +63,8 @@ include_directories(${INC}
 target_link_libraries(${EXEC_NAME}
     ${CMAKE_THREAD_LIBS_INIT}
     ${CMAKE_THREAD_LIBS_REQUIRED}
+    PUBLIC ogre-next-deps
+    #${EXEC_NAME} PUBLIC ogre-next
 )
 
 if(WIN32)
