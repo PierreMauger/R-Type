@@ -14,12 +14,12 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
     engine.getEntityManager().addMask(0, (ECS::InfoEntity::POS | ECS::InfoEntity::IDMODEL));
     engine.getComponentManager().initEmptyComponent();
 
-    (engine.getComponentManager().getComponent(typeid(Position))).emplaceData(0, Position{10, 10, 0});
-    (engine.getComponentManager().getComponent(typeid(Velocity))).emplaceData(0, Velocity{2, 2, 0});
-    (engine.getComponentManager().getComponent(typeid(ModelID))).emplaceData(0, ModelID{1});
+    engine.getComponentManager().getComponent(typeid(Position)).emplaceData(0, Position{10, 10, 0});
+    engine.getComponentManager().getComponent(typeid(Velocity)).emplaceData(0, Velocity{2, 2, 0});
+    engine.getComponentManager().getComponent(typeid(ModelID)).emplaceData(0, ModelID{1});
 
-    engine.getSystemManager().addSystem(std::make_shared<ECS::PhysicsSystem>());
-    engine.getSystemManager().addSystem(std::make_shared<ECS::ModelIdSystem>());
+    engine.getSystemManager().addSystem(std::make_shared<ECS::PhysicSystem>());
+    engine.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>());
 
     std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0).value()).x << std::endl;
     engine.run();

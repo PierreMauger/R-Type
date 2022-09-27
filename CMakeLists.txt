@@ -41,8 +41,8 @@ set(SRC
     ${PROJECT_NAME}/Component/ComponentManager.cpp
     ${PROJECT_NAME}/Component/Component.cpp
     ${PROJECT_NAME}/System/SystemManager.cpp
-    ${PROJECT_NAME}/System/ModelIdSystem.cpp
-    ${PROJECT_NAME}/System/PhysicsSystem.cpp
+    ${PROJECT_NAME}/System/RenderSystem.cpp
+    ${PROJECT_NAME}/System/PhysicSystem.cpp
 )
 
 #set source files
@@ -52,6 +52,10 @@ add_executable(${EXEC_NAME}
 )
 
 target_compile_options(${EXEC_NAME} PRIVATE -Wall -Wextra -g)
+
+if(CMAKE_BUILD_TYPE MATCHES Release)
+    target_compile_options(${EXEC_NAME} PRIVATE -Werror)
+endif()
 
 #set include paths
 include_directories(${INC}

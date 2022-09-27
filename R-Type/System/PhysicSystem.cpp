@@ -1,12 +1,12 @@
-#include "System/PhysicsSystem.hpp"
+#include "System/PhysicSystem.hpp"
 
 using namespace ECS;
 
-PhysicsSystem::PhysicsSystem()
+PhysicSystem::PhysicSystem()
 {
 }
 
-void PhysicsSystem::update(ComponentManager &componentManager)
+void PhysicSystem::update(ComponentManager &componentManager)
 {
     Component &position = componentManager.getComponent(typeid(Position));
     Component &velocity = componentManager.getComponent(typeid(Velocity));

@@ -1,13 +1,13 @@
-#include "System/ModelIdSystem.hpp"
+#include "System/RenderSystem.hpp"
 
 using namespace ECS;
 
-ModelIdSystem::ModelIdSystem()
+RenderSystem::RenderSystem()
 {
     this->id = 0;
 }
 
-void ModelIdSystem::update(ComponentManager &componentManager)
+void RenderSystem::update(ComponentManager &componentManager)
 {
     Component &modelId = componentManager.getComponent(typeid(ModelID));
 
