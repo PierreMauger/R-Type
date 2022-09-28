@@ -10,7 +10,7 @@ namespace ECS
     {
         public:
             virtual ~ISystem() = default;
-            virtual void update(ComponentManager componentManager) = 0;
+            virtual void update(ComponentManager &componentManager) = 0;
     };
 }
 
