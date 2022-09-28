@@ -1,5 +1,4 @@
 #include "ECS/Component/ComponentManager.hpp"
-#include "ECS/Component/Component.hpp"
 
 using namespace ECS;
 

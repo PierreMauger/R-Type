@@ -1,13 +1,14 @@
 #init Cmake
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 
 project(R-Type LANGUAGES C CXX VERSION 1.0)
 
 #set standard flags
+set(CMAKE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "-std=c++20 -pedantic")
+set(CMAKE_CXX_FLAGS "-std=c++20")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
 
@@ -24,31 +25,37 @@ else()
 endif()
 
 #set binary/executable name
-set(EXEC_NAME r-type_client)
+set(EXEC_NAME r-type_server)
 
 #fetch include paths
 set(INC
-    ${PROJECT_NAME}/
-    ${PROJECT_NAME}/Entity/
-    ${PROJECT_NAME}/Component/
-    ${PROJECT_NAME}/System/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Entity/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/
 )
 
 #fetch source files
 set(SRC
-    ${PROJECT_NAME}/Engine.cpp
-    ${PROJECT_NAME}/Entity/EntityManager.cpp
-    ${PROJECT_NAME}/Component/ComponentManager.cpp
-    ${PROJECT_NAME}/Component/Component.cpp
-    ${PROJECT_NAME}/System/SystemManager.cpp
-    ${PROJECT_NAME}/System/Render/RenderSystem.cpp
-    ${PROJECT_NAME}/System/Physic/PhysicSystem.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Engine.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Entity/EntityManager.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/ComponentManager.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/Component.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/SystemManager.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/RenderSystem.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Physic/PhysicSystem.cpp
 )
+
+find_package(SFML REQUIRED)
+
+#set include paths
+include_directories(${INC})
 
 #set source files
 add_executable(${EXEC_NAME}
     ${SRC}
-    ${PROJECT_NAME}/main.cpp
+    main.cpp
 )
 
 target_compile_options(${EXEC_NAME} PRIVATE -Wall -Wextra -g)
@@ -57,14 +64,10 @@ if(CMAKE_BUILD_TYPE MATCHES Release)
     target_compile_options(${EXEC_NAME} PRIVATE -Werror)
 endif()
 
-#set include paths
-include_directories(${INC}
-)
-
-target_link_libraries(${EXEC_NAME}
-    ${CMAKE_THREAD_LIBS_INIT}
-    ${CMAKE_THREAD_LIBS_REQUIRED}
-)
+target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_REQUIRED})
+target_link_libraries(${EXEC_NAME} PUBLIC ${SFML_LIBRARIES})
+target_link_libraries(${EXEC_NAME} PUBLIC sfml-audio sfml-graphics sfml-system sfml-window)
 
 if(WIN32)
     add_custom_command(
