@@ -67,6 +67,7 @@ endif()
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_REQUIRED})
 target_link_libraries(${EXEC_NAME} PUBLIC ${SFML_LIBRARIES})
+target_link_libraries(${EXEC_NAME} PUBLIC sfml-audio sfml-graphics sfml-system sfml-window)
 
 if(WIN32)
     add_custom_command(
