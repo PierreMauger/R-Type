@@ -1,5 +1,5 @@
-#ifndef ENGINE_HPP
-#define ENGINE_HPP
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include "Component/ComponentManager.hpp"
 #include "Entity/EntityManager.hpp"
@@ -9,7 +9,7 @@
 
 namespace ECS
 {
-    class Engine
+    class Game
     {
         private:
             EntityManager _entityManager;
@@ -17,14 +17,14 @@ namespace ECS
             SystemManager _systemManager;
 
         public:
-            Engine();
-            ~Engine() = default;
+            Game();
+            ~Game() = default;
             EntityManager &getEntityManager();
             ComponentManager &getComponentManager();
             SystemManager &getSystemManager();
 
-            void run();
+            void update();
     };
 }
 
-#endif // ENGINE_HPP
+#endif // GAME_HPP

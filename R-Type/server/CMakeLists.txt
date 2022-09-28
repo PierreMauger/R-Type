@@ -36,7 +36,7 @@ set(INC
 
 #fetch source files
 set(SRC
-    ${PROJECT_NAME}/Engine.cpp
+    ${PROJECT_NAME}/Game.cpp
     ${PROJECT_NAME}/Entity/EntityManager.cpp
     ${PROJECT_NAME}/Component/ComponentManager.cpp
     ${PROJECT_NAME}/Component/Component.cpp

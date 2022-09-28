@@ -1,28 +1,20 @@
-#include <any>
-
-#include "Engine.hpp"
+#include "Game.hpp"
 #include "Includes.hpp"
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
+void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
 {
-    ECS::Engine engine;
+    while (graphic.isOpen()) {
+        graphic.clear();
+        game.update();
+        graphic.display();
+    }
+}
 
-    engine.getComponentManager().addComponent(typeid(Position), {});
-    engine.getComponentManager().addComponent(typeid(Velocity), {});
-    engine.getComponentManager().addComponent(typeid(ModelID), {});
+int main(void)
+{
+    ECS::Game game;
+    rdr::Graphic graphic;
 
-    engine.getEntityManager().addMask(0, (ECS::InfoEntity::POS | ECS::InfoEntity::IDMODEL));
-    engine.getComponentManager().initEmptyComponent();
-
-    engine.getComponentManager().getComponent(typeid(Position)).emplaceData(0, Position{10, 10, 0});
-    engine.getComponentManager().getComponent(typeid(Velocity)).emplaceData(0, Velocity{2, 2, 0});
-    engine.getComponentManager().getComponent(typeid(ModelID)).emplaceData(0, ModelID{1});
-
-    engine.getSystemManager().addSystem(std::make_shared<ECS::PhysicSystem>());
-    engine.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>());
-
-    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0).value()).x << std::endl;
-    engine.run();
-    std::cout << std::any_cast<Position>(engine.getComponentManager().getComponent(typeid(Position)).getField(0).value()).x << std::endl;
+    mainLoop(game, graphic);
     return 0;
 }
