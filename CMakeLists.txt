@@ -41,8 +41,8 @@ set(SRC
     ${PROJECT_NAME}/Component/ComponentManager.cpp
     ${PROJECT_NAME}/Component/Component.cpp
     ${PROJECT_NAME}/System/SystemManager.cpp
-    ${PROJECT_NAME}/System/RenderSystem.cpp
-    ${PROJECT_NAME}/System/PhysicSystem.cpp
+    ${PROJECT_NAME}/System/Render/RenderSystem.cpp
+    ${PROJECT_NAME}/System/Physic/PhysicSystem.cpp
 )
 
 #set source files
