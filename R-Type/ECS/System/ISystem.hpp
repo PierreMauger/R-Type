@@ -1,7 +1,7 @@
 #ifndef ISYSTEM_HPP
 #define ISYSTEM_HPP
 
-#include "Component/ComponentManager.hpp"
+#include "ECS/Component/ComponentManager.hpp"
 #include "Includes.hpp"
 
 namespace ECS
