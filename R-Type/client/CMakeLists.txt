@@ -54,7 +54,7 @@ set(SRC
 find_package(SFML REQUIRED)
 
 #set include paths
-include_directories(${INC} ${SFML_INCLUDE_DIRS})
+include_directories(${INC})
 
 #set source files
 add_executable(${EXEC_NAME}
@@ -64,10 +64,12 @@ add_executable(${EXEC_NAME}
 
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_REQUIRED})
-target_link_libraries(${EXEC_NAME} PRIVATE sfml-graphics)
+target_link_libraries(${EXEC_NAME} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_compile_features(${EXEC_NAME} PRIVATE cxx_std_20)
 
-install(TARGETS ${EXEC_NAME})
+if(CMAKE_BUILD_TYPE MATCHES Release)
+    target_compile_options(${EXEC_NAME} PRIVATE -Werror)
+endif()
 
 ################## POST BUILD ##################
 
