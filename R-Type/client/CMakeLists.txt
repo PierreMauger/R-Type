@@ -34,6 +34,7 @@ set(EXEC_NAME r-type_client)
 #fetch include paths
 set(INC
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/graphic/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Entity/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/
@@ -49,6 +50,7 @@ set(SRC
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/SystemManager.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/RenderSystem.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Physic/PhysicSystem.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/graphic/Graphic.cpp
 )
 
 find_package(SFML REQUIRED)

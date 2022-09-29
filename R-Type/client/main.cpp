@@ -1,20 +1,50 @@
 #include "ECS/Game.hpp"
-#include "Includes.hpp"
+#include "graphic/Graphic.hpp"
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
+void createBackground(ECS::Game &game)
+{
+    game.getComponentManager().addComponent(typeid(ModelID), {});
+    game.getEntityManager().addMask(0, (ECS::InfoEntity::POS | ECS::InfoEntity::IDMODEL));
+    game.getComponentManager().initEmptyComponent();
+    game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(0, ModelID{0});
+}
+
+void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
+{
+    while (graphic.isOpen()) {
+        while (graphic.pollEvent(graphic.getEvent()))
+            if (graphic.getEvent().type == sf::Event::Closed)
+                graphic.close();
+        graphic.clear(sf::Color::Green);
+        game.update();
+        graphic.display();
+    }
+}
+
+int main(void)
 {
     ECS::Game game;
-    std::shared_ptr<sf::RenderWindow> window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "R-Type");
+    rdr::Graphic graphic;
 
-    game.getEntityManager().addMask(0, (ECS::InfoEntity::POS | ECS::InfoEntity::IDMODEL));
+    //setup system & component
+    game.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>(graphic.getWindow()));
+    game.getSystemManager().addSystem(std::make_shared<ECS::PhysicSystem>());
     game.getComponentManager().addComponent(typeid(ModelID), {});
-    game.getComponentManager().initEmptyComponent();
-    game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(0, ModelID{1});
-    game.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>(window));
+    game.getComponentManager().addComponent(typeid(Position), {});
+    game.getComponentManager().addComponent(typeid(Velocity), {});
 
-    while (window->isOpen()) {
-        game.update();
-    }
-    window.reset();
+    //create background
+    game.getEntityManager().addMask(0, (ECS::InfoEntity::IDMODEL));
+    game.getComponentManager().initEmptyComponent();
+    game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(0, ModelID{0});
+
+    //create spaceship
+    game.getEntityManager().addMask(1, (ECS::InfoEntity::POS | ECS::InfoEntity::VEL | ECS::InfoEntity::IDMODEL));
+    game.getComponentManager().initEmptyComponent();
+    game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(1, ModelID{1});
+    game.getComponentManager().getComponent(typeid(Position)).emplaceData(1, Position{10, 0, 0});
+    game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(1, Velocity{2, 0, 0});
+
+    mainLoop(game, graphic);
     return 0;
 }
