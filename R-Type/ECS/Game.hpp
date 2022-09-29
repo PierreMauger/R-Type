@@ -4,6 +4,7 @@
 #include "ECS/Component/ComponentManager.hpp"
 #include "ECS/System/Physic/PhysicSystem.hpp"
 #include "ECS/System/Render/RenderSystem.hpp"
+#include "ECS/System/Input/InputSystem.hpp"
 #include "ECS/System/SystemManager.hpp"
 #include "Entity/EntityManager.hpp"
 

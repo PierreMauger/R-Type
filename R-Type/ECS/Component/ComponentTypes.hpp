@@ -19,4 +19,8 @@ typedef struct {
     std::size_t id;
 } ModelID;
 
+typedef struct {
+    bool con;
+} Controllable;
+
 #endif // COMPONENTTYPES_HPP

@@ -12,8 +12,8 @@ namespace rdr
     class Graphic
     {
         private:
-            std::shared_ptr<sf::RenderWindow> window;
-            sf::Event event;
+            std::shared_ptr<sf::RenderWindow> _window;
+            sf::Event _event;
 
         public:
             Graphic();
@@ -23,7 +23,7 @@ namespace rdr
             bool isOpen();
             void display();
             void close();
-            bool pollEvent(sf::Event &event);
+            bool pollEvent();
             void clear(const sf::Color &color = sf::Color(0, 0, 0, 255));
     };
 }
