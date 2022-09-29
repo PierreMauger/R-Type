@@ -2,12 +2,10 @@
 
 using namespace ECS;
 
-RenderSystem::RenderSystem()
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
 {
     this->id = 0;
-    this->window = nullptr;
-
-    this->window = new sf::RenderWindow(sf::VideoMode(800, 600), "R-Type");
+    this->window = window;
     this->window->setFramerateLimit(60);
 }
 

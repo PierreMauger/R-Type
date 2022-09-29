@@ -19,5 +19,8 @@
 #include <thread>
 #include <typeindex>
 #include <vector>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 
 #endif // INCLUDES_HPP
