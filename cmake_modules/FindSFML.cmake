@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.24)
 if (NOT SFML_FOUND)
     INCLUDE(FetchContent)
-    FetchContent_Declare(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TAG 2.6.x)
+    FetchContent_Declare(SFML URL https://github.com/SFML/SFML/archive/refs/tags/2.5.1.tar.gz)
     FetchContent_MakeAvailable(SFML)
 endif()
