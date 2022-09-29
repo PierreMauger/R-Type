@@ -1,7 +1,7 @@
 #ifndef PHYSICSYSTEM_HPP
 #define PHYSICSYSTEM_HPP
 
-#include "System/ISystem.hpp"
+#include "ECS/System/ISystem.hpp"
 
 namespace ECS
 {

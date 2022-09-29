@@ -1,7 +1,7 @@
 #ifndef RENDERSYSTEM_HPP
 #define RENDERSYSTEM_HPP
 
-#include "System/ISystem.hpp"
+#include "ECS/System/ISystem.hpp"
 
 namespace ECS
 {

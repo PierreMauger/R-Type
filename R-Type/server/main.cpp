@@ -1,4 +1,4 @@
-#include "Game.hpp"
+#include "Engine.hpp"
 #include "Includes.hpp"
 
 void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
@@ -13,8 +13,6 @@ void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
 int main(void)
 {
     ECS::Game game;
-    rdr::Graphic graphic;
 
-    mainLoop(game, graphic);
     return 0;
 }
