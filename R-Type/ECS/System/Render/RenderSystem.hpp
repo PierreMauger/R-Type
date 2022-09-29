@@ -4,14 +4,17 @@
 #include <SFML/Graphics.hpp>
 
 #include "ECS/System/ISystem.hpp"
+#include "imgui-SFML.h"
+#include "imgui.h"
 
 namespace ECS
 {
     class RenderSystem : public virtual ISystem
     {
         private:
-            std::size_t id;
-            sf::RenderWindow *window;
+            sf::RenderWindow *_window;
+            sf::Clock _clock;
+            sf::Event _event;
 
         public:
             RenderSystem();

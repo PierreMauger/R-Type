@@ -11,7 +11,8 @@ Engine::Engine()
 
 void Engine::run()
 {
-    this->_systemManager.updateSystems(this->_componentManager);
+    while (1)
+        this->_systemManager.updateSystems(this->_componentManager);
 }
 
 EntityManager &Engine::getEntityManager()
