@@ -1,15 +1,17 @@
+################# CONFIG ##################
+
 #init Cmake
 cmake_minimum_required(VERSION 3.24)
 
-project(R-Type LANGUAGES C CXX VERSION 1.0)
+project(R-Type LANGUAGES CXX VERSION 1.0)
 
 #set standard flags
 set(CMAKE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/../../")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "-std=c++20")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
+set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -lasio")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
 
 #set thread flags
@@ -23,6 +25,8 @@ if(UNIX)
 else()
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /Ox")
 endif()
+
+################## BUILD ##################
 
 #set binary/executable name
 set(EXEC_NAME r-type_server)
@@ -50,7 +54,7 @@ set(SRC
 find_package(Asio REQUIRED)
 
 #set include paths
-include_directories(${INC})
+include_directories(${INC} ${SFML_INCLUDE_DIRS})
 
 #set source files
 add_executable(${EXEC_NAME}
@@ -58,15 +62,13 @@ add_executable(${EXEC_NAME}
     main.cpp
 )
 
-target_compile_options(${EXEC_NAME} PRIVATE -Wall -Wextra -g)
-
-if(CMAKE_BUILD_TYPE MATCHES Release)
-    target_compile_options(${EXEC_NAME} PRIVATE -Werror)
-endif()
-
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_REQUIRED})
-target_link_libraries(${EXEC_NAME} PUBLIC ${Asio_LIBRARIES})
+target_link_libraries(${EXEC_NAME} PRIVATE asio)
+
+install(TARGETS ${EXEC_NAME})
+
+################## POST BUILD ##################
 
 if(WIN32)
     add_custom_command(
