@@ -1,6 +1,8 @@
 #ifndef RENDERSYSTEM_HPP
 #define RENDERSYSTEM_HPP
 
+#include <SFML/Graphics.hpp>
+
 #include "ECS/System/ISystem.hpp"
 
 namespace ECS
@@ -9,6 +11,7 @@ namespace ECS
     {
         private:
             std::size_t id;
+            sf::RenderWindow *window;
 
         public:
             RenderSystem();

@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -lasio")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
 
 #set thread flags
@@ -54,7 +54,7 @@ set(SRC
 find_package(Asio REQUIRED)
 
 #set include paths
-include_directories(${INC} ${SFML_INCLUDE_DIRS})
+include_directories(${INC})
 
 #set source files
 add_executable(${EXEC_NAME}
