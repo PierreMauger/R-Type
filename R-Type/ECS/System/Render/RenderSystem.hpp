@@ -1,9 +1,8 @@
 #ifndef RENDERSYSTEM_HPP
 #define RENDERSYSTEM_HPP
 
-#include <SFML/Graphics.hpp>
-
 #include "ECS/System/ISystem.hpp"
+#include "Includes.hpp"
 
 namespace ECS
 {
@@ -11,10 +10,12 @@ namespace ECS
     {
         private:
             std::size_t id;
-            sf::RenderWindow *window;
+            std::shared_ptr<sf::RenderWindow> _window;
+            std::array<sf::Texture, 5> _texture; // array car sf::vector stock dans la mémoire de manière bizarre donc white square problem sfml
+            std::vector<sf::Sprite> _sprites;
 
         public:
-            RenderSystem();
+            RenderSystem(std::shared_ptr<sf::RenderWindow> window);
             ~RenderSystem() = default;
             void update(ComponentManager &componentManager);
     };

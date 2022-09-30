@@ -43,13 +43,15 @@ set(ECS_INC
 
 #fetch source files
 set(ECS_SRC
-    ${ECS_ROOT}/Engine.cpp
+    ${ECS_ROOT}/Game.cpp
     ${ECS_ROOT}/Entity/EntityManager.cpp
     ${ECS_ROOT}/Component/ComponentManager.cpp
     ${ECS_ROOT}/Component/Component.cpp
     ${ECS_ROOT}/System/SystemManager.cpp
     ${ECS_ROOT}/System/Render/RenderSystem.cpp
     ${ECS_ROOT}/System/Physic/PhysicSystem.cpp
+    ${ECS_ROOT}/System/Render/RenderSystem.cpp
+    ${ECS_ROOT}/System/Input/InputSystem.cpp
 )
 
 find_package(SFML REQUIRED)
@@ -76,6 +78,49 @@ if(CMAKE_BUILD_TYPE MATCHES Release)
 endif()
 
 install(TARGETS ${ECS})
+
+################## BUILD GRAPHIC ##################
+
+#set library name
+set(GRAPH GRAPH)
+
+#set root path
+set(GRAPH_ROOT ${PROJECT_NAME}/Graphic)
+
+#fetch include paths
+set(GRAPH_INC
+    ${GRAPH_ROOT}/
+)
+
+#fetch source files
+set(GRAPH_SRC
+    ${GRAPH_ROOT}/Graphic.cpp
+)
+
+find_package(SFML REQUIRED)
+find_package(Asio REQUIRED)
+
+#set include paths
+include_directories(
+    ${GRAPH_INC}
+    ${SFML_INCLUDE_DIRS}
+    ${ASIO_INCLUDE_DIRS}
+    ${PROJECT_NAME}
+)
+
+#set source files
+add_library(${GRAPH} SHARED ${GRAPH_SRC})
+
+target_link_libraries(${GRAPH} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${GRAPH} PRIVATE ${CMAKE_THREAD_LIBS_REQUIRED})
+target_link_libraries(${GRAPH} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+target_compile_features(${GRAPH} PRIVATE cxx_std_20)
+target_link_libraries(${GRAPH} PRIVATE asio)
+if(CMAKE_BUILD_TYPE MATCHES Release)
+    target_compile_options(${GRAPH} PRIVATE -Werror)
+endif()
+
+install(TARGETS ${GRAPH})
 
 ################## BUILD CLIENT ##################
 
@@ -111,6 +156,7 @@ target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sf
 target_compile_features(${CLIENT} PRIVATE cxx_std_20)
 target_link_libraries(${CLIENT} PRIVATE asio)
 target_link_libraries(${CLIENT} PRIVATE ${ECS})
+target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 if(CMAKE_BUILD_TYPE MATCHES Release)
     target_compile_options(${CLIENT} PRIVATE -Werror)
 endif()
@@ -152,6 +198,7 @@ target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sf
 target_compile_features(${SERVER} PRIVATE cxx_std_20)
 target_link_libraries(${SERVER} PRIVATE asio)
 target_link_libraries(${SERVER} PRIVATE ${ECS})
+target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 if(CMAKE_BUILD_TYPE MATCHES Release)
     target_compile_options(${SERVER} PRIVATE -Werror)
 endif()
