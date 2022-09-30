@@ -1,6 +1,5 @@
 #include <ECS/Engine.hpp>
 #include "Includes.hpp"
-#include <SFML/Graphics.hpp>
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
 {
