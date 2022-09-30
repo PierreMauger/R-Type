@@ -2,6 +2,7 @@
 #define RENDERSYSTEM_HPP
 
 #include "ECS/System/ISystem.hpp"
+#include "Includes.hpp"
 
 namespace ECS
 {

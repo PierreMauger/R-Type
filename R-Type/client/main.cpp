@@ -1,5 +1,6 @@
 #include "ECS/Game.hpp"
 #include "Graphic/Graphic.hpp"
+#include "Includes.hpp"
 
 void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
 {
@@ -19,7 +20,7 @@ int main(void)
     ECS::Game game;
     rdr::Graphic graphic;
 
-    //setup system & component
+    // setup system & component
     game.getSystemManager().addSystem(std::make_shared<ECS::InputSystem>(graphic.getEvent()));
     game.getSystemManager().addSystem(std::make_shared<ECS::PhysicSystem>());
     game.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>(graphic.getWindow()));
@@ -28,12 +29,12 @@ int main(void)
     game.getComponentManager().addComponent(typeid(Velocity), {});
     game.getComponentManager().addComponent(typeid(Controllable), {});
 
-    //create background
+    // create background
     game.getEntityManager().addMask(0, (ECS::InfoEntity::IDMODEL));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(0, ModelID{0});
 
-    //create spaceship
+    // create spaceship
     game.getEntityManager().addMask(1, (ECS::InfoEntity::POS | ECS::InfoEntity::VEL | ECS::InfoEntity::IDMODEL));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(1, ModelID{1});
