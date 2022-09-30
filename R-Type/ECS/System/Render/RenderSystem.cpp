@@ -7,9 +7,9 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
     this->_window = window;
     this->_window->setFramerateLimit(60);
     this->_window->setKeyRepeatEnabled(true);
-    if (!this->_texture.at(0).loadFromFile("/home/xavier/rtype/R-Type/assets/Sprites/space_background.jpg"))
+    if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(1).loadFromFile("/home/xavier/rtype/R-Type/assets/Sprites/spaceship.png"))
+    if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))
         throw std::runtime_error("Background not found");
     this->_sprites.push_back(sf::Sprite(this->_texture[0]));
     this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
