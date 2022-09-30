@@ -1,11 +1,5 @@
 #!/bin/sh
 
-if ! command -v cmake &> /dev/null
-then
-    echo "Couldn't find Cmake"
-    exit
-fi
-
 if [ ! -d "build" ]; then
     mkdir build
 fi

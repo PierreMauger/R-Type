@@ -9,7 +9,7 @@ void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
             if (graphic.getEvent().type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.close();
         }
-        graphic.clear(sf::Color::Green);
+        graphic.clear(sf::Color::Black);
         game.update();
         graphic.display();
     }
@@ -27,7 +27,9 @@ int main(void)
     game.getComponentManager().addComponent(typeid(ModelID), {});
     game.getComponentManager().addComponent(typeid(Position), {});
     game.getComponentManager().addComponent(typeid(Velocity), {});
+    game.getComponentManager().addComponent(typeid(Speed), {});
     game.getComponentManager().addComponent(typeid(Controllable), {});
+    game.getComponentManager().addComponent(typeid(CouldownShoot), {});
 
     // create background
     game.getEntityManager().addMask(0, (ECS::InfoEntity::IDMODEL));
@@ -40,7 +42,9 @@ int main(void)
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(1, ModelID{1});
     game.getComponentManager().getComponent(typeid(Position)).emplaceData(1, Position{10, 0, 0});
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(1, Velocity{0, 0, 0});
+    game.getComponentManager().getComponent(typeid(Speed)).emplaceData(1, Speed{2});
     game.getComponentManager().getComponent(typeid(Controllable)).emplaceData(1, Controllable{true});
+    game.getComponentManager().getComponent(typeid(CouldownShoot)).emplaceData(1, CouldownShoot{{}, sf::seconds(1)});
 
     mainLoop(game, graphic);
     return 0;

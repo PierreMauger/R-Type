@@ -8,7 +8,9 @@ namespace ECS
     enum InfoEntity {
         POS = 0b1,
         VEL = 0b10,
-        IDMODEL = 0b100
+        IDMODEL = 0b100,
+        SPEED = 0b1000,
+        CONTROLLABLE = 0b10000
     };
 
     class EntityManager
@@ -25,7 +27,7 @@ namespace ECS
             void addMask(std::size_t id, std::optional<std::size_t> mask);
             void removeMask(std::size_t id);
             void updateMask(std::size_t id, std::optional<std::size_t> mask);
-            //void readMask(std::size_t id, ComponentManager &componentManager);
+            // void readMask(std::size_t id, ComponentManager &componentManager);
     };
 }
 

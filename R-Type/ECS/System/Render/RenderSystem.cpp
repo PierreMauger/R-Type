@@ -11,9 +11,14 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))
         throw std::runtime_error("Background not found");
+    if (!this->_texture.at(2).loadFromFile("./R-Type/assets/Sprites/fireball.png"))
+        throw std::runtime_error("Background not found");
     this->_sprites.push_back(sf::Sprite(this->_texture[0]));
     this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
     this->_sprites.push_back(sf::Sprite(this->_texture[1]));
+    this->_sprites.at(this->_sprites.size() - 1).setScale(0.5, 0.5);
+    this->_sprites.push_back(sf::Sprite(this->_texture[2]));
+    this->_sprites.at(this->_sprites.size() - 1).setScale(0.3, 0.3);
 }
 
 void RenderSystem::update(ComponentManager &componentManager)
