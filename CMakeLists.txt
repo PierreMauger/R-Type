@@ -97,9 +97,6 @@ set(GRAPH_SRC
     ${GRAPH_ROOT}/Graphic.cpp
 )
 
-find_package(SFML REQUIRED)
-find_package(Asio REQUIRED)
-
 #set include paths
 include_directories(
     ${GRAPH_INC}
