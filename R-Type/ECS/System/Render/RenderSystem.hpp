@@ -19,7 +19,8 @@ namespace ECS
         public:
             RenderSystem();
             ~RenderSystem() = default;
-            void update(ComponentManager &componentManager);
+            void update(ComponentManager &componentManager, EntityManager &entityManager);
+            void drawGUI(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }
 

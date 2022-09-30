@@ -9,7 +9,7 @@ RenderSystem::RenderSystem()
     ImGui::SFML::Init(*this->_window);
 }
 
-void RenderSystem::update(ComponentManager &componentManager)
+void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     Component &modelId = componentManager.getComponent(typeid(ModelID));
 
@@ -21,10 +21,53 @@ void RenderSystem::update(ComponentManager &componentManager)
         }
         this->_window->clear();
         ImGui::SFML::Update(*this->_window, this->_clock.restart());
-        ImGui::Begin("R-Type");
-        ImGui::Text("Hello, world!");
-        ImGui::End();
+        this->drawGUI(componentManager, entityManager);
         ImGui::SFML::Render(*this->_window);
         this->_window->display();
     }
+}
+
+void RenderSystem::drawGUI(ComponentManager &componentManager, EntityManager &entityManager)
+{
+    ImGui::Begin("Entities");
+
+    if (ImGui::BeginTable("Entities", 3)) {
+        ImGui::TableSetupColumn("ID");
+        ImGui::TableSetupColumn("Mask");
+        ImGui::TableSetupColumn("Actions");
+        ImGui::TableHeadersRow();
+        auto &masks = entityManager.getMasks();
+        for (std::size_t i = 0; i < masks.size(); i++) {
+            if (masks[i].has_value()) {
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("%lu", i);
+                ImGui::TableNextColumn();
+                ImGui::Text("%b", masks[i].value());
+                ImGui::TableNextColumn();
+                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
+                    entityManager.removeMask(i);
+                }
+                ImGui::SameLine();
+                if (ImGui::Button(std::string("Update##" + std::to_string(i)).c_str())) {
+                    entityManager.updateMask(i, masks[i].value());
+                }
+            } else {
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("%lu", i);
+                ImGui::TableNextColumn();
+                ImGui::Text("None");
+                ImGui::TableNextColumn();
+                if (ImGui::Button(std::string("Add##" + std::to_string(i)).c_str())) {
+                    entityManager.addMask(i, 0);
+                }
+            }
+        }
+        ImGui::EndTable();
+        if (ImGui::Button("Add Entity")) {
+            entityManager.addMask(masks.size(), std::nullopt);
+        }
+    }
+    ImGui::End();
 }
