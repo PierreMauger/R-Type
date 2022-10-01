@@ -7,6 +7,7 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
     this->_window = window;
     this->_window->setFramerateLimit(60);
     this->_window->setKeyRepeatEnabled(true);
+    this->_couldownBar = {};
     if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))
@@ -32,7 +33,31 @@ void RenderSystem::update(ComponentManager &componentManager)
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
                 this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
             }
+            this->couldownBar(i, componentManager);
             this->_window->draw(this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id));
         }
+    }
+}
+
+void RenderSystem::couldownBar(std::size_t i, ComponentManager &componentManager)
+{
+    Component &couldown = componentManager.getComponent(typeid(CouldownShoot));
+    sf::Vector2f size(100, 10);
+    sf::Vector2u pos(10, 10);
+
+    if (couldown.getField(i).has_value()) {
+        CouldownShoot &sht = std::any_cast<CouldownShoot &>(couldown.getField(i).value());
+        if (this->_couldownBar.find(i) == this->_couldownBar.end()) {
+            this->_couldownBar.insert({i, {sf::RectangleShape(sf::Vector2f(size.x, size.y)), sf::RectangleShape(sf::Vector2f(0, size.y))}});
+            this->_couldownBar.at(i).first.setOutlineColor(sf::Color::Black);
+            this->_couldownBar.at(i).first.setOutlineThickness(2);
+            this->_couldownBar.at(i).first.setPosition(pos.x, pos.y);
+            this->_couldownBar.at(i).second.setFillColor(sf::Color::Red);
+            this->_couldownBar.at(i).second.setPosition(pos.x, pos.y);
+        }
+        this->_couldownBar.at(i).second.setSize({(sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds()) > size.x ?
+            size.x : sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds(),size.y});
+        this->_window->draw(this->_couldownBar.at(i).first);
+        this->_window->draw(this->_couldownBar.at(i).second);
     }
 }

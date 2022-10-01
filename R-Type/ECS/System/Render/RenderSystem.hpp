@@ -11,8 +11,10 @@ namespace ECS
         private:
             std::size_t id;
             std::shared_ptr<sf::RenderWindow> _window;
+            std::map<std::size_t, std::pair<sf::RectangleShape, sf::RectangleShape>> _couldownBar;
             std::array<sf::Texture, 5> _texture; // array car sf::vector stock dans la mémoire de manière bizarre donc white square problem sfml
             std::vector<sf::Sprite> _sprites;
+            void couldownBar(std::size_t i, ComponentManager &componentManager);
 
         public:
             RenderSystem(std::shared_ptr<sf::RenderWindow> window);
