@@ -45,6 +45,7 @@ int main(void)
     game.getComponentManager().getComponent(typeid(Speed)).emplaceData(1, Speed{2});
     game.getComponentManager().getComponent(typeid(Controllable)).emplaceData(1, Controllable{true});
     game.getComponentManager().getComponent(typeid(CouldownShoot)).emplaceData(1, CouldownShoot{{}, sf::seconds(1)});
+    game.getEntityManager().addMask(1, (ECS::InfoEntity::POS | ECS::InfoEntity::VEL | ECS::InfoEntity::IDMODEL));
 
     mainLoop(game, graphic);
     return 0;
