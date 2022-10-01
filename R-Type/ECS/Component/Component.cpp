@@ -34,5 +34,5 @@ void Component::destroyData(std::size_t id)
 {
     if (id > this->_component.size())
         throw std::runtime_error("incorrect ID");
-    this->_component[id]->reset();
+    this->_component[id].reset();
 }

@@ -44,13 +44,12 @@ void RenderSystem::DisplayCouldownBar(std::size_t i, ComponentManager &component
 {
     Component &couldown = componentManager.getComponent(typeid(CouldownShoot));
     sf::Vector2f size(100, 10);
-    sf::Vector2u pos;
+    sf::Vector2u pos(0, this->_window->getSize().y - 20);
 
     if (couldown.getField(i).has_value()) {
         CouldownShoot &sht = std::any_cast<CouldownShoot &>(couldown.getField(i).value());
         if (this->_couldownBar.find(i) == this->_couldownBar.end()) {
             pos.x = this->_couldownBar.size() * (size.x + 10) + 10;
-            pos.y = 580;
             this->_couldownBar.insert({i, {sf::RectangleShape(sf::Vector2f(size.x, size.y)), sf::RectangleShape(sf::Vector2f(0, size.y))}});
             this->_couldownBar.at(i).first.setOutlineColor(sf::Color::Black);
             this->_couldownBar.at(i).first.setOutlineThickness(2);
@@ -58,8 +57,9 @@ void RenderSystem::DisplayCouldownBar(std::size_t i, ComponentManager &component
             this->_couldownBar.at(i).second.setFillColor(this->_color.at(this->_couldownBar.size() - 1));
             this->_couldownBar.at(i).second.setPosition(pos.x, pos.y);
         }
-        this->_couldownBar.at(i).second.setSize({(sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds()) > size.x ?
-            size.x : sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds(),size.y});
+        this->_couldownBar.at(i).second.setSize(
+            {(sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds()) > size.x ? size.x : sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds(),
+             size.y});
         this->_window->draw(this->_couldownBar.at(i).first);
         this->_window->draw(this->_couldownBar.at(i).second);
     }
