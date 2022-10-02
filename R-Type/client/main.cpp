@@ -9,7 +9,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
     engine.getComponentManager().addComponent(typeid(Velocity), {});
     engine.getComponentManager().addComponent(typeid(ModelID), {});
 
-    engine.getEntityManager().addMask(0, (ECS::InfoEntity::POS | ECS::InfoEntity::IDMODEL));
+    engine.getEntityManager().addMask(0, (ECS::InfoEntity::POS | ECS::InfoEntity::IDMODEL | ECS::InfoEntity::VEL));
     engine.getComponentManager().initEmptyComponent();
 
     engine.getComponentManager().getComponent(typeid(Position)).emplaceData(0, Position{10, 10, 0});

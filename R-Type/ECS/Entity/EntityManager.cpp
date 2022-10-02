@@ -41,6 +41,6 @@ void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
     //         it->second.emplaceData({0});
     //     else
     //         it->second.emplaceData(std::nullopt);
-    //     std::advance(it, i);
+    //     it++;
     // }
 }

@@ -16,11 +16,15 @@ namespace ECS
             sf::Clock _clock;
             sf::Event _event;
 
+            bool _showEntityGUI = false;
+            std::size_t _entityID = 0;
+
         public:
             RenderSystem();
             ~RenderSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
             void drawGUI(ComponentManager &componentManager, EntityManager &entityManager);
+            void drawEntityGUI(ComponentManager &componentManager, EntityManager &entityManager, std::size_t id);
     };
 }
 
