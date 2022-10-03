@@ -17,8 +17,10 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
             pos.x += vel.x;
             pos.y += vel.y;
-            if (pos.x > 5000 || pos.y > 5000)
+            if (pos.x > 1000 || pos.y > 1000) {
                 componentManager.killEntity(i);
+                entityManager.removeMask(i);
+            }
             if (pos.x < -800)
                 pos.x = 800;
         }
