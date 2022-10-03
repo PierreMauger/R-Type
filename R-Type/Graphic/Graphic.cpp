@@ -5,6 +5,8 @@ using namespace rdr;
 Graphic::Graphic()
 {
     this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "R-Type");
+    this->_window->setFramerateLimit(60);
+    this->_window->setKeyRepeatEnabled(true);
 }
 
 std::shared_ptr<sf::RenderWindow> &Graphic::getWindow()
@@ -17,28 +19,49 @@ sf::Event &Graphic::getEvent()
     return this->_event;
 }
 
-
-bool Graphic::isOpen()
+std::vector<sf::Texture> &Graphic::getTextures()
 {
-    return this->_window->isOpen();
+    return this->_textures;
 }
 
-void Graphic::close()
+std::vector<sf::Sprite> &Graphic::getSprites()
 {
-    this->_window->close();
+    return this->_sprites;
 }
 
-void Graphic::display()
+void Graphic::loadSprites(std::vector<std::string> paths)
 {
-    this->_window->display();
+    for (auto &path : paths) {
+        try {
+            for (auto &p : std::filesystem::directory_iterator(path)) {
+                sf::Texture texture;
+                sf::Sprite sprite;
+
+                if (texture.loadFromFile(p.path())) {
+                    sprite.setTexture(texture);
+                    this->_textures.push_back(texture);
+                    this->_sprites.push_back(sprite);
+                }
+            }
+        } catch (std::runtime_error &error) {
+            std::cerr << error.what() << std::endl;
+        }
+    }
 }
 
-void Graphic::clear(const sf::Color &color)
+void Graphic::loadSounds(std::vector<std::string> paths)
 {
-    this->_window->clear(color);
-}
+    for (auto &path : paths) {
+        try {
+            for (auto &p : std::filesystem::directory_iterator(path)) {
+                sf::SoundBuffer sound;
 
-bool Graphic::pollEvent()
-{
-    return this->_window->pollEvent(this->_event);
+                if (sound.loadFromFile(p.path())) {
+                    this->_sounds.push_back(sound);
+                }
+            }
+        } catch (std::runtime_error &error) {
+            std::cerr << error.what() << std::endl;
+        }
+    }
 }

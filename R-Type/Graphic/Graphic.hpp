@@ -6,6 +6,7 @@
 #include "ECS/System/Render/RenderSystem.hpp"
 #include "ECS/System/SystemManager.hpp"
 #include "Entity/EntityManager.hpp"
+#include "Includes.hpp"
 
 namespace rdr
 {
@@ -15,16 +16,23 @@ namespace rdr
             std::shared_ptr<sf::RenderWindow> _window;
             sf::Event _event;
 
+            std::vector<sf::Texture> _textures;
+            std::vector<sf::Sprite> _sprites;
+
+            std::vector<sf::SoundBuffer> _sounds;
+
         public:
             Graphic();
             ~Graphic() = default;
+
             std::shared_ptr<sf::RenderWindow> &getWindow();
             sf::Event &getEvent();
-            bool isOpen();
-            void display();
-            void close();
-            bool pollEvent();
-            void clear(const sf::Color &color = sf::Color(0, 0, 0, 255));
+
+            std::vector<sf::Texture> &getTextures();
+            std::vector<sf::Sprite> &getSprites();
+
+            void loadSprites(std::vector<std::string> path);
+            void loadSounds(std::vector<std::string> path);
     };
 }
 

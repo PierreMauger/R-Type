@@ -4,14 +4,14 @@
 
 void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
 {
-    while (graphic.isOpen()) {
-        while (graphic.pollEvent()) {
+    while (graphic.getWindow()->isOpen()) {
+        while (graphic.getWindow()->pollEvent(graphic.getEvent())) {
             if (graphic.getEvent().type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                graphic.close();
+                graphic.getWindow()->close();
         }
-        graphic.clear(sf::Color::Black);
+        graphic.getWindow()->clear(sf::Color::Black);
         game.update();
-        graphic.display();
+        graphic.getWindow()->display();
     }
 }
 
@@ -19,6 +19,9 @@ int main(void)
 {
     ECS::Game game;
     rdr::Graphic graphic;
+
+    graphic.loadSprites({"R-Type/assets/Sprites"});
+    // graphic.loadSounds({"R-Type/assets/Sprites"});
 
     // setup system & component
     game.getSystemManager().addSystem(std::make_shared<ECS::InputSystem>(graphic.getEvent()));

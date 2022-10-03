@@ -5,8 +5,6 @@ using namespace ECS;
 RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
 {
     this->_window = window;
-    this->_window->setFramerateLimit(60);
-    this->_window->setKeyRepeatEnabled(true);
     this->_couldownBar = {};
     this->_color = {{0, sf::Color::Red}, {1, sf::Color::Blue}, {2, sf::Color::Green}, {3, sf::Color::Yellow}, {4, sf::Color::Magenta}};
     if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
