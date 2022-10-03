@@ -109,7 +109,8 @@ target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${CLIENT} PRIVATE asio)
 target_link_libraries(${CLIENT} PRIVATE ${ECS})
-set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
 #install target
 install(TARGETS ${CLIENT})
@@ -147,7 +148,20 @@ target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${SERVER} PRIVATE asio)
 target_link_libraries(${SERVER} PRIVATE ${ECS})
-set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
 #install target
 install(TARGETS ${SERVER})
+
+################## POST BUILD ##################
+
+#copy dlls to root for resources (only on windows)
+if(WIN32)
+  add_custom_command(
+    TARGET ${ECS} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-window-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
+  )
+endif()
