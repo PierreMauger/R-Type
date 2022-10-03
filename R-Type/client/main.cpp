@@ -31,45 +31,51 @@ int main(void)
     game.getComponentManager().addComponent(typeid(Speed), {});
     game.getComponentManager().addComponent(typeid(Controllable), {});
     game.getComponentManager().addComponent(typeid(CooldownShoot), {});
-    game.getComponentManager().addComponent(typeid(Character), {});
+    game.getComponentManager().addComponent(typeid(Parallax), {});
 
     // create background parallax, les images doivent être dans le bon ordre pour l'affichage
     // première image : parallax-space-backgound.png
-    game.getEntityManager().addMask(0, (ECS::InfoEntity::IDMODEL) | (ECS::InfoEntity::POS) | (ECS::InfoEntity::VEL));
+    game.getEntityManager().addMask(0, (ECS::InfoEntity::IDMODEL) | (ECS::InfoEntity::POS) | (ECS::InfoEntity::VEL) | (ECS::InfoEntity::PAR));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(0, ModelID{3});
     game.getComponentManager().getComponent(typeid(Position)).emplaceData(0, Position{0, 0, 0});
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(0, Velocity{-0.2, 0, 0});
+    game.getComponentManager().getComponent(typeid(Parallax)).emplaceData(0, Parallax{true});
     // premiere image dupliqué : parallax-space-backgound.png
-    game.getEntityManager().addMask(1, (ECS::InfoEntity::IDMODEL | ECS::InfoEntity::POS | ECS::InfoEntity::VEL));
+    game.getEntityManager().addMask(1, (ECS::InfoEntity::IDMODEL | ECS::InfoEntity::POS | ECS::InfoEntity::VEL) | (ECS::InfoEntity::PAR));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(1, ModelID{3});
     game.getComponentManager().getComponent(typeid(Position)).emplaceData(1, Position{800, 0, 0});
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(1, Velocity{-0.2, 0, 0});
+    game.getComponentManager().getComponent(typeid(Parallax)).emplaceData(1, Parallax{true});
     // deuxième image : parallax-space-stars.png
-    game.getEntityManager().addMask(2, (ECS::InfoEntity::IDMODEL | ECS::InfoEntity::POS | ECS::InfoEntity::VEL));
+    game.getEntityManager().addMask(2, (ECS::InfoEntity::IDMODEL | ECS::InfoEntity::POS | ECS::InfoEntity::VEL) | (ECS::InfoEntity::PAR));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(2, ModelID{4});
     game.getComponentManager().getComponent(typeid(Position)).emplaceData(2, Position{0, 0, 0});
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(2, Velocity{-0.6, 0, 0});
+    game.getComponentManager().getComponent(typeid(Parallax)).emplaceData(2, Parallax{true});
     // troisième image : parallax-space-far-planets.png
-    game.getEntityManager().addMask(3, (ECS::InfoEntity::IDMODEL | ECS::InfoEntity::POS | ECS::InfoEntity::VEL));
+    game.getEntityManager().addMask(3, (ECS::InfoEntity::IDMODEL | ECS::InfoEntity::POS | ECS::InfoEntity::VEL) | (ECS::InfoEntity::PAR));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(3, ModelID{5});
     game.getComponentManager().getComponent(typeid(Position)).emplaceData(3, Position{0, 100, 0});
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(3, Velocity{-1, 0, 0});
+    game.getComponentManager().getComponent(typeid(Parallax)).emplaceData(3, Parallax{true});
     // quatrième image : parallax-space-ring-planet.png
-    game.getEntityManager().addMask(4, (ECS::InfoEntity::IDMODEL) | (ECS::InfoEntity::POS) | (ECS::InfoEntity::VEL));
+    game.getEntityManager().addMask(4, (ECS::InfoEntity::IDMODEL) | (ECS::InfoEntity::POS) | (ECS::InfoEntity::VEL) | (ECS::InfoEntity::PAR));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(4, ModelID{6});
     game.getComponentManager().getComponent(typeid(Position)).emplaceData(4, Position{400, 250, 0});
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(4, Velocity{-1.5, 0, 0});
+    game.getComponentManager().getComponent(typeid(Parallax)).emplaceData(4, Parallax{true});
     // cinquième image : parallax-space-big-planet.png
-    game.getEntityManager().addMask(5, (ECS::InfoEntity::IDMODEL) | (ECS::InfoEntity::POS) | (ECS::InfoEntity::VEL));
+    game.getEntityManager().addMask(5, (ECS::InfoEntity::IDMODEL) | (ECS::InfoEntity::POS) | (ECS::InfoEntity::VEL) | (ECS::InfoEntity::PAR));
     game.getComponentManager().initEmptyComponent();
     game.getComponentManager().getComponent(typeid(ModelID)).emplaceData(5, ModelID{7});
     game.getComponentManager().getComponent(typeid(Position)).emplaceData(5, Position{800, 100, 0});
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(5, Velocity{-2, 0, 0});
+    game.getComponentManager().getComponent(typeid(Parallax)).emplaceData(5, Parallax{true});
 
     // create spaceship
     game.getEntityManager().addMask(6, (ECS::InfoEntity::POS | ECS::InfoEntity::VEL | ECS::InfoEntity::IDMODEL) | (ECS::InfoEntity::SPEED | ECS::InfoEntity::CONTROLLABLE));
@@ -80,7 +86,6 @@ int main(void)
     game.getComponentManager().getComponent(typeid(Speed)).emplaceData(6, Speed{2});
     game.getComponentManager().getComponent(typeid(Controllable)).emplaceData(6, Controllable{true});
     game.getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{0, 1});
-    game.getComponentManager().getComponent(typeid(Character)).emplaceData(6, Character{true});
 
     mainLoop(game, graphic);
     return 0;

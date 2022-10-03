@@ -12,7 +12,6 @@ namespace ECS
     class RenderSystem : public virtual ISystem
     {
         private:
-            std::size_t id;
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Clock> _clock;
             std::map<std::size_t, std::pair<sf::RectangleShape, sf::RectangleShape>> _cooldownBar;

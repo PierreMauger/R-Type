@@ -12,7 +12,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     Component &position = componentManager.getComponent(typeid(Position));
     Component &velocity = componentManager.getComponent(typeid(Velocity));
     Component &con = componentManager.getComponent(typeid(Controllable));
-    Component &cha = componentManager.getComponent(typeid(Character));
+    Component &par = componentManager.getComponent(typeid(Parallax));
 
     for (std::size_t i = 0; i < position.getSize(); i++) {
         if (position.getField(i).has_value() && velocity.getField(i).has_value()) {
@@ -27,7 +27,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                 pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
                 continue;
             }
-            if (!cha.getField(i).has_value())
+            if (par.getField(i).has_value())
                 pos.x == -800 ? pos.x = 800 : pos.x;
             else if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
                 componentManager.killEntity(i);
