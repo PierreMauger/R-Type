@@ -16,7 +16,7 @@ void createShoot(std::size_t id, ComponentManager &componentManager, Position po
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{20, 0, 0});
 }
 
-void InputSystem::update(ComponentManager &componentManager)
+void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     Component &controllable = componentManager.getComponent(typeid(Controllable));
     Component &velocity = componentManager.getComponent(typeid(Velocity));

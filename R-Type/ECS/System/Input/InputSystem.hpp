@@ -2,6 +2,8 @@
 #define INPUTSYSTEM_HPP
 
 #include "ECS/System/ISystem.hpp"
+#include "imgui-SFML.h"
+#include "imgui.h"
 
 namespace ECS
 {
@@ -14,7 +16,7 @@ namespace ECS
         public:
             InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock);
             ~InputSystem() = default;
-            void update(ComponentManager &componentManager);
+            void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }
 

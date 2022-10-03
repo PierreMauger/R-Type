@@ -6,7 +6,7 @@ PhysicSystem::PhysicSystem()
 {
 }
 
-void PhysicSystem::update(ComponentManager &componentManager)
+void PhysicSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     Component &position = componentManager.getComponent(typeid(Position));
     Component &velocity = componentManager.getComponent(typeid(Velocity));
