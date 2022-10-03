@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "ECS/System/ISystem.hpp"
+#include "ECS/System/Render/GUI.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
 
@@ -15,16 +16,12 @@ namespace ECS
             sf::RenderWindow *_window;
             sf::Clock _clock;
             sf::Event _event;
-
-            bool _showEntityGUI = false;
-            std::size_t _entityID = 0;
+            GUI _gui;
 
         public:
             RenderSystem();
             ~RenderSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
-            void drawGUI(ComponentManager &componentManager, EntityManager &entityManager);
-            void drawEntityGUI(ComponentManager &componentManager, EntityManager &entityManager, std::size_t id);
     };
 }
 

@@ -49,6 +49,7 @@ set(SRC
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/Component.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/SystemManager.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/RenderSystem.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/GUI.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Physic/PhysicSystem.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_draw.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_tables.cpp
