@@ -24,6 +24,51 @@ set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 set(DBUILD_SHARED_LIBS TRUE)
 
+################## BUILD ImGui ##################
+
+#set library name
+set(ImGui ImGui)
+
+#set root path
+set(ImGui_ROOT ${PROJECT_NAME}/ImGui)
+
+#fetch include paths
+set(ImGui_INC
+    ${ImGui_ROOT}/
+)
+
+#fetch source files
+set(ImGui_SRC
+    ${ImGui_ROOT}/imgui_draw.cpp
+    ${ImGui_ROOT}/imgui_tables.cpp
+    ${ImGui_ROOT}/imgui_widgets.cpp
+    ${ImGui_ROOT}/imgui.cpp
+    ${ImGui_ROOT}/imgui-SFML.cpp
+)
+
+#set include paths
+include_directories(
+    ${ImGui_INC}
+    ${SFML_INCLUDE_DIRS}
+    ${ASIO_INCLUDE_DIRS}
+    ${PROJECT_NAME}
+)
+
+#fetch required deps
+find_package(OpenGL REQUIRED)
+find_package(SFML REQUIRED)
+find_package(Asio REQUIRED)
+
+#set source files
+add_library(${ImGui} ${ImGui_SRC})
+
+target_link_libraries(${ImGui} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${ImGui} PRIVATE ${OPENGL_LIBRARIES})
+target_link_libraries(${ImGui} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+
+#install target
+install(TARGETS ${ImGui})
+
 ################## BUILD ECS ##################
 
 #set library name
@@ -31,7 +76,6 @@ set(ECS ECS)
 
 #set root path
 set(ECS_ROOT ${PROJECT_NAME}/ECS)
-set(GUI_ROOT ${PROJECT_NAME}/GUI)
 
 #fetch include paths
 set(ECS_INC
@@ -39,7 +83,6 @@ set(ECS_INC
     ${ECS_ROOT}/Entity/
     ${ECS_ROOT}/Component/
     ${ECS_ROOT}/System/
-    ${GUI_ROOT}/
 )
 
 #fetch source files
@@ -54,17 +97,7 @@ set(ECS_SRC
     ${ECS_ROOT}/System/Render/RenderSystem.cpp
     ${ECS_ROOT}/System/Render/GUI.cpp
     ${ECS_ROOT}/System/Input/InputSystem.cpp
-    ${GUI_ROOT}/imgui_draw.cpp
-    ${GUI_ROOT}/imgui_tables.cpp
-    ${GUI_ROOT}/imgui_widgets.cpp
-    ${GUI_ROOT}/imgui.cpp
-    ${GUI_ROOT}/imgui-SFML.cpp
 )
-
-#fetch required deps
-find_package(OpenGL REQUIRED)
-find_package(SFML REQUIRED)
-find_package(Asio REQUIRED)
 
 #set include paths
 include_directories(
@@ -82,6 +115,7 @@ target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${ECS} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ECS} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${ECS} PRIVATE asio)
+target_link_libraries(${ECS} PRIVATE ${ImGui})
 
 #install target
 install(TARGETS ${ECS})
@@ -117,7 +151,6 @@ add_library(${GRAPH} ${GRAPH_SRC})
 
 target_link_libraries(${GRAPH} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${GRAPH} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${GRAPH} PRIVATE asio)
 
 #install target
 install(TARGETS ${GRAPH})
@@ -152,8 +185,10 @@ add_executable(${CLIENT} ${CLIENT_SRC})
 
 #link library/executable with deps
 target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${CLIENT} PRIVATE asio)
+target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${CLIENT} PRIVATE ${ECS})
 target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
@@ -192,8 +227,10 @@ add_executable(${SERVER} ${SERVER_SRC})
 
 #link library/executable with deps
 target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${SERVER} PRIVATE asio)
+target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${SERVER} PRIVATE ${ECS})
 target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
@@ -212,5 +249,7 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ECS.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ImGui.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/GRAPH.dll ${CMAKE_SOURCE_DIR}
   )
 endif()
