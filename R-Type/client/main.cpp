@@ -23,14 +23,15 @@ int main(void)
 
     // setup system & component dont on a besoin après
     game.getSystemManager().addSystem(std::make_shared<ECS::InputSystem>(graphic.getEvent(), graphic.getClock()));
-    game.getSystemManager().addSystem(std::make_shared<ECS::PhysicSystem>());
     game.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>(graphic.getWindow(), graphic.getClock()));
+    game.getSystemManager().addSystem(std::make_shared<ECS::PhysicSystem>(graphic.getWindow()));
     game.getComponentManager().addComponent(typeid(ModelID), {});
     game.getComponentManager().addComponent(typeid(Position), {});
     game.getComponentManager().addComponent(typeid(Velocity), {});
     game.getComponentManager().addComponent(typeid(Speed), {});
     game.getComponentManager().addComponent(typeid(Controllable), {});
     game.getComponentManager().addComponent(typeid(CooldownShoot), {});
+    game.getComponentManager().addComponent(typeid(Character), {});
 
     // create background parallax, les images doivent être dans le bon ordre pour l'affichage
     // première image : parallax-space-backgound.png
@@ -79,6 +80,7 @@ int main(void)
     game.getComponentManager().getComponent(typeid(Speed)).emplaceData(6, Speed{2});
     game.getComponentManager().getComponent(typeid(Controllable)).emplaceData(6, Controllable{true});
     game.getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{0, 1});
+    game.getComponentManager().getComponent(typeid(Character)).emplaceData(6, Character{true});
 
     mainLoop(game, graphic);
     return 0;

@@ -24,6 +24,10 @@ typedef struct {
 } Controllable;
 
 typedef struct {
+        bool cha;
+} Character;
+
+typedef struct {
         float speed;
 } Speed;
 

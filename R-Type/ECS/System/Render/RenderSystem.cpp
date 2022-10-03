@@ -54,7 +54,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
                 this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
             }
-            this->displayCooldownBar(i, componentManager);
             this->_window->draw(this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id));
         }
     }
