@@ -30,6 +30,6 @@ typedef struct {
 typedef struct {
         sf::Clock clock;
         sf::Time time;
-} CouldownShoot;
+} CooldownShoot;
 
 #endif // COMPONENTTYPES_HPP
