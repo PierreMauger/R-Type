@@ -34,6 +34,7 @@ set(EXEC_NAME r-type_client)
 #fetch include paths
 set(INC
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Graphic/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Entity/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/
@@ -43,7 +44,7 @@ set(INC
 
 #fetch source files
 set(SRC
-    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Engine.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Game.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Entity/EntityManager.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/ComponentManager.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/Component.cpp
@@ -51,6 +52,8 @@ set(SRC
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/RenderSystem.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/GUI.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Physic/PhysicSystem.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Input/InputSystem.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Graphic/Graphic.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_draw.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_tables.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_widgets.cpp

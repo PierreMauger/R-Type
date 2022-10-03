@@ -16,9 +16,8 @@ namespace ECS
             std::size_t _entityID = 0;
 
         public:
-            GUI();
+            GUI(std::shared_ptr<sf::RenderWindow> window);
             ~GUI() = default;
-            void setWindow(sf::RenderWindow *window);
             void drawGUI(ComponentManager &componentManager, EntityManager &entityManager);
             void drawEntityGUI(ComponentManager &componentManager, EntityManager &entityManager);
             void drawComponentGUI(Component &component, std::type_index type, std::size_t id);

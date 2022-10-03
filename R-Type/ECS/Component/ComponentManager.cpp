@@ -28,3 +28,9 @@ void ComponentManager::initEmptyComponent()
     for (auto &component : this->_componentArray)
         component.second.addEmptyField();
 }
+
+void ComponentManager::killEntity(std::size_t id)
+{
+    for (auto &component : this->_componentArray)
+        component.second.destroyData(id);
+}

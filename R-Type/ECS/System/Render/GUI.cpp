@@ -2,11 +2,7 @@
 
 using namespace ECS;
 
-GUI::GUI()
-{
-}
-
-void GUI::setWindow(sf::RenderWindow *window)
+GUI::GUI(std::shared_ptr<sf::RenderWindow> window)
 {
     ImGui::SFML::Init(*window);
 }
@@ -73,7 +69,7 @@ void GUI::drawEntityGUI(ComponentManager &componentManager, EntityManager &entit
             for (unsigned short i = 0; i < 8 && i < componentManager.getComponentArray().size(); i++) {
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
-                ImGui::Text("%s", it->first.name() + 1);
+                ImGui::Text("%s", it->first.name() + std::strlen(it->first.name()) / 10 + 1);
                 ImGui::TableNextColumn();
                 if (std::bitset<sizeof(std::size_t)>(masks[id].value()).test(i))
                     this->drawComponentGUI(it->second, it->first, id);
@@ -110,6 +106,12 @@ void GUI::drawComponentGUI(Component &component, std::type_index type, std::size
             ImGui::DragFloat("z##2", &std::any_cast<Velocity &>(componentT.value()).z, 0.1f, -FLT_MAX, +FLT_MAX);
         } else if (type == typeid(ModelID)) {
             ImGui::InputScalar("", ImGuiDataType_U64, &std::any_cast<ModelID &>(componentT.value()).id);
+        } else if (type == typeid(Controllable)) {
+            ImGui::Checkbox("", &std::any_cast<Controllable &>(componentT.value()).con);
+        } else if (type == typeid(Speed)) {
+            ImGui::DragFloat("coef", &std::any_cast<Speed &>(componentT.value()).speed, 0.1f, -FLT_MAX, +FLT_MAX);
+        } else if (type == typeid(CouldownShoot)) {
+            ImGui::Text("Clock: %f", std::any_cast<CouldownShoot &>(componentT.value()).clock.getElapsedTime().asSeconds());
         }
     }
 }

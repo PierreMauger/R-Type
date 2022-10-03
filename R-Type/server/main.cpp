@@ -1,9 +1,7 @@
-#include "Engine.hpp"
+#include "Game.hpp"
 #include "Includes.hpp"
 
-int main([[maybe_unused]] int argc, [[maybe_unused]] char **argv)
+int main(void)
 {
-    ECS::Engine engine;
-
     return 0;
 }
