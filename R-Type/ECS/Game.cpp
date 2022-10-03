@@ -1,30 +1,30 @@
-#include "Engine.hpp"
+#include "Game.hpp"
 
 using namespace ECS;
 
-Engine::Engine()
+Game::Game()
 {
     this->_entityManager = EntityManager();
     this->_componentManager = ComponentManager();
     this->_systemManager = SystemManager();
 }
 
-void Engine::run()
+void Game::update()
 {
-    this->_systemManager.updateSystems(this->_componentManager);
+    this->_systemManager.updateSystems(this->_componentManager, this->_entityManager);
 }
 
-EntityManager &Engine::getEntityManager()
+EntityManager &Game::getEntityManager()
 {
     return this->_entityManager;
 }
 
-ComponentManager &Engine::getComponentManager()
+ComponentManager &Game::getComponentManager()
 {
     return this->_componentManager;
 }
 
-SystemManager &Engine::getSystemManager()
+SystemManager &Game::getSystemManager()
 {
     return this->_systemManager;
 }

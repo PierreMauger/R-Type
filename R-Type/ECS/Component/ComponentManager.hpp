@@ -18,6 +18,7 @@ namespace ECS
 
             void addComponent(std::type_index type, Component component);
             void initEmptyComponent();
+            void killEntity(std::size_t id);
 
             std::map<std::type_index, Component> &getComponentArray();
             Component &getComponent(std::type_index type);

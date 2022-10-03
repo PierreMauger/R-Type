@@ -32,8 +32,8 @@ void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
     this->_masks[id] = mask;
 }
 
-void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
-{
+//void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
+//{
     // auto it = componentManager.getComponentArray().begin();
 
     // for (unsigned short i = 0; i < 32; i++) {
@@ -41,6 +41,6 @@ void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
     //         it->second.emplaceData({0});
     //     else
     //         it->second.emplaceData(std::nullopt);
-    //     std::advance(it, i);
+    //     it++;
     // }
-}
+//}

@@ -1,15 +1,16 @@
-#ifndef ENGINE_HPP
-#define ENGINE_HPP
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include "ECS/Component/ComponentManager.hpp"
 #include "ECS/System/Physic/PhysicSystem.hpp"
 #include "ECS/System/Render/RenderSystem.hpp"
+#include "ECS/System/Input/InputSystem.hpp"
 #include "ECS/System/SystemManager.hpp"
 #include "Entity/EntityManager.hpp"
 
 namespace ECS
 {
-    class Engine
+    class Game
     {
         private:
             EntityManager _entityManager;
@@ -17,14 +18,14 @@ namespace ECS
             SystemManager _systemManager;
 
         public:
-            Engine();
-            ~Engine() = default;
+            Game();
+            ~Game() = default;
             EntityManager &getEntityManager();
             ComponentManager &getComponentManager();
             SystemManager &getSystemManager();
 
-            void run();
+            void update();
     };
 }
 
-#endif // ENGINE_HPP
+#endif // GAME_HPP

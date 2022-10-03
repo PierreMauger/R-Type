@@ -31,6 +31,7 @@ set(ECS ECS)
 
 #set root path
 set(ECS_ROOT ${PROJECT_NAME}/ECS)
+set(GUI_ROOT ${PROJECT_NAME}/GUI)
 
 #fetch include paths
 set(ECS_INC
@@ -38,20 +39,30 @@ set(ECS_INC
     ${ECS_ROOT}/Entity/
     ${ECS_ROOT}/Component/
     ${ECS_ROOT}/System/
+    ${GUI_ROOT}/
 )
 
 #fetch source files
 set(ECS_SRC
-    ${ECS_ROOT}/Engine.cpp
+    ${ECS_ROOT}/Game.cpp
     ${ECS_ROOT}/Entity/EntityManager.cpp
     ${ECS_ROOT}/Component/ComponentManager.cpp
     ${ECS_ROOT}/Component/Component.cpp
     ${ECS_ROOT}/System/SystemManager.cpp
     ${ECS_ROOT}/System/Render/RenderSystem.cpp
     ${ECS_ROOT}/System/Physic/PhysicSystem.cpp
+    ${ECS_ROOT}/System/Render/RenderSystem.cpp
+    ${ECS_ROOT}/System/Render/GUI.cpp
+    ${ECS_ROOT}/System/Input/InputSystem.cpp
+    ${GUI_ROOT}/imgui_draw.cpp
+    ${GUI_ROOT}/imgui_tables.cpp
+    ${GUI_ROOT}/imgui_widgets.cpp
+    ${GUI_ROOT}/imgui.cpp
+    ${GUI_ROOT}/imgui-SFML.cpp
 )
 
 #fetch required deps
+find_package(OpenGL REQUIRED)
 find_package(SFML REQUIRED)
 find_package(Asio REQUIRED)
 
@@ -68,11 +79,48 @@ add_library(${ECS} ${ECS_SRC})
 
 #link library/executable with deps
 target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${ECS} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ECS} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${ECS} PRIVATE asio)
 
 #install target
 install(TARGETS ${ECS})
+
+################## BUILD GRAPHIC ##################
+
+#set library name
+set(GRAPH GRAPH)
+
+#set root path
+set(GRAPH_ROOT ${PROJECT_NAME}/Graphic)
+
+#fetch include paths
+set(GRAPH_INC
+    ${GRAPH_ROOT}/
+)
+
+#fetch source files
+set(GRAPH_SRC
+    ${GRAPH_ROOT}/Graphic.cpp
+)
+
+#set include paths
+include_directories(
+    ${GRAPH_INC}
+    ${SFML_INCLUDE_DIRS}
+    ${ASIO_INCLUDE_DIRS}
+    ${PROJECT_NAME}
+)
+
+#set source files
+add_library(${GRAPH} ${GRAPH_SRC})
+
+target_link_libraries(${GRAPH} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${GRAPH} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+target_link_libraries(${GRAPH} PRIVATE asio)
+
+#install target
+install(TARGETS ${GRAPH})
 
 ################## BUILD CLIENT ##################
 
@@ -107,6 +155,7 @@ target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${CLIENT} PRIVATE asio)
 target_link_libraries(${CLIENT} PRIVATE ${ECS})
+target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
@@ -146,6 +195,7 @@ target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${SERVER} PRIVATE asio)
 target_link_libraries(${SERVER} PRIVATE ${ECS})
+target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 

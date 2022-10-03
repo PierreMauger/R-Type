@@ -1,7 +1,11 @@
 #ifndef INCLUDES_HPP
 #define INCLUDES_HPP
 
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <any>
+#include <array>
 #include <bitset>
 #include <condition_variable>
 #include <cstring>

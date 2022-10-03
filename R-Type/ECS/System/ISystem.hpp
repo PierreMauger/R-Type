@@ -2,6 +2,7 @@
 #define ISYSTEM_HPP
 
 #include "ECS/Component/ComponentManager.hpp"
+#include "ECS/Entity/EntityManager.hpp"
 #include "Includes.hpp"
 
 namespace ECS
@@ -10,7 +11,7 @@ namespace ECS
     {
         public:
             virtual ~ISystem() = default;
-            virtual void update(ComponentManager &componentManager) = 0;
+            virtual void update(ComponentManager &componentManager, EntityManager &entityManager) = 0;
     };
 }
 
