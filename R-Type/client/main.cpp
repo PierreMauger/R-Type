@@ -6,6 +6,7 @@ void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
 {
     while (graphic.isOpen()) {
         while (graphic.pollEvent()) {
+            ImGui::SFML::ProcessEvent(graphic.getEvent());
             if (graphic.getEvent().type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.close();
         }

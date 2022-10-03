@@ -11,7 +11,7 @@ Game::Game()
 
 void Game::update()
 {
-    this->_systemManager.updateSystems(this->_componentManager);
+    this->_systemManager.updateSystems(this->_componentManager, this->_entityManager);
 }
 
 EntityManager &Game::getEntityManager()

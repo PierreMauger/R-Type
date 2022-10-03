@@ -41,6 +41,6 @@ void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
     //         it->second.emplaceData({0});
     //     else
     //         it->second.emplaceData(std::nullopt);
-    //     std::advance(it, i);
+    //     it++;
     // }
 //}

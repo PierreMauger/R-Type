@@ -39,6 +39,7 @@ set(INC
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Entity/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/
 )
 
 #fetch source files
@@ -49,15 +50,24 @@ set(SRC
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/Component/Component.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/SystemManager.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/RenderSystem.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Render/GUI.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Physic/PhysicSystem.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/ECS/System/Input/InputSystem.cpp
     ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/Graphic/Graphic.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_draw.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_tables.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui_widgets.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui.cpp
+    ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/GUI/imgui-SFML.cpp
 )
 
+find_package(OpenGL REQUIRED)
 find_package(SFML REQUIRED)
 
 #set include paths
-include_directories(${INC})
+include_directories(${INC}
+    ${OpenGL_INCLUDE_DIRS}
+)
 
 #set source files
 add_executable(${EXEC_NAME}
@@ -67,6 +77,7 @@ add_executable(${EXEC_NAME}
 
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${EXEC_NAME} PUBLIC ${CMAKE_THREAD_LIBS_REQUIRED})
+target_link_libraries(${EXEC_NAME} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${EXEC_NAME} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_compile_features(${EXEC_NAME} PRIVATE cxx_std_20)
 

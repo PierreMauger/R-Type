@@ -2,7 +2,7 @@
 
 using namespace ECS;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window) : _gui(window)
 {
     this->_window = window;
     this->_window->setFramerateLimit(60);
@@ -42,13 +42,13 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
     this->_sprites.push_back(sf::Sprite(this->_texture[7]));
 }
 
-void RenderSystem::update(ComponentManager &componentManager)
+void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     Component &modelId = componentManager.getComponent(typeid(ModelID));
     Component &position = componentManager.getComponent(typeid(Position));
 
     for (std::size_t i = 0; i < modelId.getSize(); i++) {
-        if (modelId.getField(i).has_value()) {
+        if (entityManager.getMasks()[i].has_value() && modelId.getField(i).has_value()) {
             if (position.getField(i).has_value()) {
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
                 this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
@@ -57,6 +57,10 @@ void RenderSystem::update(ComponentManager &componentManager)
             this->_window->draw(this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id));
         }
     }
+    ImGui::SFML::Update(*this->_window, this->_clock.restart());
+    this->_gui.drawGUI(componentManager, entityManager);
+    this->_gui.drawEntityGUI(componentManager, entityManager);
+    ImGui::SFML::Render(*this->_window);
 }
 
 void RenderSystem::DisplayCouldownBar(std::size_t i, ComponentManager &componentManager)

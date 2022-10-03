@@ -32,6 +32,7 @@ set(ECS ECS)
 
 #set root path
 set(ECS_ROOT ${PROJECT_NAME}/ECS)
+set(GUI_ROOT ${PROJECT_NAME}/GUI)
 
 #fetch include paths
 set(ECS_INC
@@ -39,6 +40,7 @@ set(ECS_INC
     ${ECS_ROOT}/Entity/
     ${ECS_ROOT}/Component/
     ${ECS_ROOT}/System/
+    ${GUI_ROOT}/
 )
 
 #fetch source files
@@ -51,9 +53,16 @@ set(ECS_SRC
     ${ECS_ROOT}/System/Render/RenderSystem.cpp
     ${ECS_ROOT}/System/Physic/PhysicSystem.cpp
     ${ECS_ROOT}/System/Render/RenderSystem.cpp
+    ${ECS_ROOT}/System/Render/GUI.cpp
     ${ECS_ROOT}/System/Input/InputSystem.cpp
+    ${GUI_ROOT}/imgui_draw.cpp
+    ${GUI_ROOT}/imgui_tables.cpp
+    ${GUI_ROOT}/imgui_widgets.cpp
+    ${GUI_ROOT}/imgui.cpp
+    ${GUI_ROOT}/imgui-SFML.cpp
 )
 
+find_package(OpenGL REQUIRED)
 find_package(SFML REQUIRED)
 find_package(Asio REQUIRED)
 
@@ -70,6 +79,7 @@ add_library(${ECS} SHARED ${ECS_SRC})
 
 target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_REQUIRED})
+target_link_libraries(${ECS} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ECS} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_compile_features(${ECS} PRIVATE cxx_std_20)
 target_link_libraries(${ECS} PRIVATE asio)

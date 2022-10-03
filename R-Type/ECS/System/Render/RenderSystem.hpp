@@ -2,6 +2,9 @@
 #define RENDERSYSTEM_HPP
 
 #include "ECS/System/ISystem.hpp"
+#include "ECS/System/Render/GUI.hpp"
+#include "imgui-SFML.h"
+#include "imgui.h"
 #include "Includes.hpp"
 
 namespace ECS
@@ -15,12 +18,14 @@ namespace ECS
             std::array<sf::Texture, 10> _texture; // array car sf::vector stock dans la mémoire de manière bizarre donc white square problem sfml
             std::vector<sf::Sprite> _sprites;
             std::map<std::size_t, sf::Color> _color;
+            GUI _gui;
+            sf::Clock _clock;
             void DisplayCouldownBar(std::size_t i, ComponentManager &componentManager);
 
         public:
             RenderSystem(std::shared_ptr<sf::RenderWindow> window);
             ~RenderSystem() = default;
-            void update(ComponentManager &componentManager);
+            void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }
 
