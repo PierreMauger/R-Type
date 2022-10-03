@@ -1,6 +1,6 @@
-#include "ECS/System/SystemManager.hpp"
+#include "Engine/ECS/System/SystemManager.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 SystemManager::SystemManager()
 {

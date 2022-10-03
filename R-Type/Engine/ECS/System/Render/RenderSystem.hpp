@@ -1,13 +1,13 @@
 #ifndef RENDERSYSTEM_HPP
 #define RENDERSYSTEM_HPP
 
-#include "ECS/System/ISystem.hpp"
-#include "ECS/System/Render/GUI.hpp"
+#include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/ECS/System/Render/GUI.hpp"
+#include "Includes.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
-#include "Includes.hpp"
 
-namespace ECS
+namespace eng
 {
     class RenderSystem : public virtual ISystem
     {

@@ -1,6 +1,6 @@
-#include "ECS/System/Physic/PhysicSystem.hpp"
+#include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 PhysicSystem::PhysicSystem()
 {

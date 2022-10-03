@@ -1,9 +1,9 @@
 #ifndef PHYSICSYSTEM_HPP
 #define PHYSICSYSTEM_HPP
 
-#include "ECS/System/ISystem.hpp"
+#include "Engine/ECS/System/ISystem.hpp"
 
-namespace ECS
+namespace eng
 {
     class PhysicSystem : public virtual ISystem
     {

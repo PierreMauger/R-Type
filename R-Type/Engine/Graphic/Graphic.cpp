@@ -1,6 +1,6 @@
 #include "Graphic.hpp"
 
-using namespace rdr;
+using namespace eng;
 
 Graphic::Graphic()
 {
@@ -16,7 +16,6 @@ sf::Event &Graphic::getEvent()
 {
     return this->_event;
 }
-
 
 bool Graphic::isOpen()
 {

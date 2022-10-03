@@ -3,11 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "ECS/System/ISystem.hpp"
+#include "Engine/ECS/System/ISystem.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
 
-namespace ECS
+namespace eng
 {
     class GUI
     {

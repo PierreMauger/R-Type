@@ -1,6 +1,6 @@
-#include "ECS/Entity/EntityManager.hpp"
+#include "Engine/ECS/Entity/EntityManager.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 EntityManager::EntityManager()
 {
@@ -32,15 +32,15 @@ void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
     this->_masks[id] = mask;
 }
 
-//void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
+// void EntityManager::readMask(std::size_t id, ComponentManager &componentManager)
 //{
-    // auto it = componentManager.getComponentArray().begin();
+//  auto it = componentManager.getComponentArray().begin();
 
-    // for (unsigned short i = 0; i < 32; i++) {
-    //     if (std::bitset<sizeof(std::size_t)>(this->_masks[id].value()).test(i))
-    //         it->second.emplaceData({0});
-    //     else
-    //         it->second.emplaceData(std::nullopt);
-    //     it++;
-    // }
+// for (unsigned short i = 0; i < 32; i++) {
+//     if (std::bitset<sizeof(std::size_t)>(this->_masks[id].value()).test(i))
+//         it->second.emplaceData({0});
+//     else
+//         it->second.emplaceData(std::nullopt);
+//     it++;
+// }
 //}

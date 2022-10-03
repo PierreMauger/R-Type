@@ -1,6 +1,6 @@
-#include "ECS/System/Render/RenderSystem.hpp"
+#include "Engine/ECS/System/Render/RenderSystem.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window) : _gui(window)
 {

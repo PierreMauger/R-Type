@@ -1,11 +1,11 @@
 #ifndef COMPONENTMANAGER_HPP
 #define COMPONENTMANAGER_HPP
 
-#include "ECS/Component/Component.hpp"
-#include "ECS/Component/ComponentTypes.hpp"
+#include "Engine/ECS/Component/Component.hpp"
+#include "Engine/ECS/Component/ComponentTypes.hpp"
 #include "Includes.hpp"
 
-namespace ECS
+namespace eng
 {
     class ComponentManager
     {

@@ -69,91 +69,65 @@ target_link_libraries(${ImGui} PRIVATE sfml-graphics sfml-window sfml-system sfm
 #install target
 install(TARGETS ${ImGui})
 
-################## BUILD ECS ##################
+################## BUILD ENGINE ##################
 
 #set library name
-set(ECS ECS)
+set(ENGINE ENGINE)
 
 #set root path
-set(ECS_ROOT ${PROJECT_NAME}/ECS)
+set(ENGINE_ROOT ${PROJECT_NAME}/Engine)
 
 #fetch include paths
-set(ECS_INC
-    ${ECS_ROOT}/
-    ${ECS_ROOT}/Entity/
-    ${ECS_ROOT}/Component/
-    ${ECS_ROOT}/System/
+set(ENGINE_INC
+    ${ENGINE_ROOT}/
+    ${ENGINE_ROOT}/ECS
+    ${ENGINE_ROOT}/ECS/Entity/
+    ${ENGINE_ROOT}/ECS/Component/
+    ${ENGINE_ROOT}/ECS/System/
+    ${ENGINE_ROOT}/Graphic/
 )
 
 #fetch source files
-set(ECS_SRC
-    ${ECS_ROOT}/Game.cpp
-    ${ECS_ROOT}/Entity/EntityManager.cpp
-    ${ECS_ROOT}/Component/ComponentManager.cpp
-    ${ECS_ROOT}/Component/Component.cpp
-    ${ECS_ROOT}/System/SystemManager.cpp
-    ${ECS_ROOT}/System/Render/RenderSystem.cpp
-    ${ECS_ROOT}/System/Physic/PhysicSystem.cpp
-    ${ECS_ROOT}/System/Render/RenderSystem.cpp
-    ${ECS_ROOT}/System/Render/GUI.cpp
-    ${ECS_ROOT}/System/Input/InputSystem.cpp
+set(ENGINE_SRC
+    # ECS files
+    ${ENGINE_ROOT}/ECS/ECS.cpp
+    ${ENGINE_ROOT}/ECS/Entity/EntityManager.cpp
+    ${ENGINE_ROOT}/ECS/Component/ComponentManager.cpp
+    ${ENGINE_ROOT}/ECS/Component/Component.cpp
+    ${ENGINE_ROOT}/ECS/System/SystemManager.cpp
+    ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Render/GUI.cpp
+    ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
+
+    # Graphic files
+    ${ENGINE_ROOT}/Graphic/Graphic.cpp
+
+    # Engine files
+    ${ENGINE_ROOT}/Engine.cpp
 )
 
 #set include paths
 include_directories(
-    ${ECS_INC}
+    ${ENGINE_INC}
     ${SFML_INCLUDE_DIRS}
     ${ASIO_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
 #set source files (create library/executable)
-add_library(${ECS} ${ECS_SRC})
+add_library(${ENGINE} ${ENGINE_SRC})
 
 #link library/executable with deps
-target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${ECS} PRIVATE ${OPENGL_LIBRARIES})
-target_link_libraries(${ECS} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${ECS} PRIVATE asio)
-target_link_libraries(${ECS} PRIVATE ${ImGui})
+target_link_libraries(${ENGINE} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARIES})
+target_link_libraries(${ENGINE} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+target_link_libraries(${ENGINE} PRIVATE asio)
+target_link_libraries(${ENGINE} PRIVATE ${ImGui})
 
 #install target
-install(TARGETS ${ECS})
-
-################## BUILD GRAPHIC ##################
-
-#set library name
-set(GRAPH GRAPH)
-
-#set root path
-set(GRAPH_ROOT ${PROJECT_NAME}/Graphic)
-
-#fetch include paths
-set(GRAPH_INC
-    ${GRAPH_ROOT}/
-)
-
-#fetch source files
-set(GRAPH_SRC
-    ${GRAPH_ROOT}/Graphic.cpp
-)
-
-#set include paths
-include_directories(
-    ${GRAPH_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
-    ${PROJECT_NAME}
-)
-
-#set source files
-add_library(${GRAPH} ${GRAPH_SRC})
-
-target_link_libraries(${GRAPH} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${GRAPH} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-
-#install target
-install(TARGETS ${GRAPH})
+install(TARGETS ${ENGINE})
 
 ################## BUILD CLIENT ##################
 
@@ -189,7 +163,7 @@ target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${CLIENT} PRIVATE asio)
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
-target_link_libraries(${CLIENT} PRIVATE ${ECS})
+target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
 target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
@@ -231,7 +205,7 @@ target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${SERVER} PRIVATE asio)
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
-target_link_libraries(${SERVER} PRIVATE ${ECS})
+target_link_libraries(${SERVER} PRIVATE ${ENGINE})
 target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
@@ -244,11 +218,11 @@ install(TARGETS ${SERVER})
 #copy dlls to root for resources (only on windows)
 if(WIN32)
   add_custom_command(
-    TARGET ${ECS} POST_BUILD
+    TARGET ${ENGINE} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-window-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ECS.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ENGINE.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ImGui.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/GRAPH.dll ${CMAKE_SOURCE_DIR}
   )
