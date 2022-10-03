@@ -21,6 +21,8 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+set(DBUILD_SHARED_LIBS TRUE)
 
 ################## BUILD ECS ##################
 
@@ -62,11 +64,7 @@ include_directories(
 )
 
 #set source files (create library/executable)
-if(UNIX)
-    add_library(${ECS} SHARED ${ECS_SRC})
-else()
-    add_library(${ECS} STATIC ${ECS_SRC})
-endif()
+add_library(${ECS} ${ECS_SRC})
 
 #link library/executable with deps
 target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
@@ -163,5 +161,6 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-window-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ECS.dll ${CMAKE_SOURCE_DIR}
   )
 endif()
