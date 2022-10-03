@@ -28,8 +28,8 @@ typedef struct {
 } Speed;
 
 typedef struct {
-        sf::Clock clock;
-        sf::Time time;
+        float time;
+        float cooldown;
 } CooldownShoot;
 
 #endif // COMPONENTTYPES_HPP

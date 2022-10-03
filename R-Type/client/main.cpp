@@ -21,9 +21,9 @@ int main(void)
     rdr::Graphic graphic;
 
     // setup system & component dont on a besoin après
-    game.getSystemManager().addSystem(std::make_shared<ECS::InputSystem>(graphic.getEvent()));
+    game.getSystemManager().addSystem(std::make_shared<ECS::InputSystem>(graphic.getEvent(), graphic.getClock()));
     game.getSystemManager().addSystem(std::make_shared<ECS::PhysicSystem>());
-    game.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>(graphic.getWindow()));
+    game.getSystemManager().addSystem(std::make_shared<ECS::RenderSystem>(graphic.getWindow(), graphic.getClock()));
     game.getComponentManager().addComponent(typeid(ModelID), {});
     game.getComponentManager().addComponent(typeid(Position), {});
     game.getComponentManager().addComponent(typeid(Velocity), {});
@@ -77,7 +77,7 @@ int main(void)
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(6, Velocity{0, 0, 0});
     game.getComponentManager().getComponent(typeid(Speed)).emplaceData(6, Speed{2});
     game.getComponentManager().getComponent(typeid(Controllable)).emplaceData(6, Controllable{true});
-    game.getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{sf::Clock(), sf::seconds(1)});
+    game.getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{0, 1});
 
     mainLoop(game, graphic);
     return 0;

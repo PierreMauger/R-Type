@@ -2,8 +2,9 @@
 
 using namespace ECS;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock)
 {
+    this->_clock = clock;
     this->_window = window;
     this->_window->setFramerateLimit(60);
     this->_window->setKeyRepeatEnabled(true);
@@ -76,9 +77,10 @@ void RenderSystem::DisplayCooldownBar(std::size_t i, ComponentManager &component
             this->_cooldownBar.at(i).second.setFillColor(this->_color.at(this->_cooldownBar.size() - 1));
             this->_cooldownBar.at(i).second.setPosition(pos.x, pos.y);
         }
-        this->_cooldownBar.at(i).second.setSize(
-            {(sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds()) > size.x ? size.x : sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds(),
-             size.y});
+        this->_cooldownBar.at(i).second.setSize({((_clock->getElapsedTime().asSeconds() - sht.time + sht.cooldown) * size.x / sht.cooldown) > size.x
+                                                     ? size.x
+                                                     : (_clock->getElapsedTime().asSeconds() - sht.time + sht.cooldown) * size.x / sht.cooldown,
+                                                 size.y});
         this->_window->draw(this->_cooldownBar.at(i).first);
         this->_window->draw(this->_cooldownBar.at(i).second);
     }

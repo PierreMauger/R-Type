@@ -2,9 +2,10 @@
 
 using namespace ECS;
 
-InputSystem::InputSystem(std::shared_ptr<sf::Event> event)
+InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock)
 {
     this->_event = event;
+    this->_clock = clock;
 }
 
 void createShoot(std::size_t id, ComponentManager &componentManager, Position pos)
@@ -28,9 +29,9 @@ void InputSystem::update(ComponentManager &componentManager)
             Speed &spd = std::any_cast<Speed &>(speed.getField(i).value());
             Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
             CooldownShoot &sht = std::any_cast<CooldownShoot &>(cooldown.getField(i).value());
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && sht.clock.getElapsedTime().asSeconds() > sht.time.asSeconds()) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.time) {
                 createShoot(controllable.getSize(), componentManager, std::any_cast<Position>(position.getField(i).value()));
-                std::any_cast<CooldownShoot &>(cooldown.getField(i).value()).clock.restart();
+                sht.time = _clock->getElapsedTime().asSeconds() + sht.cooldown;
             }
             sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = spd.speed : vel.x = 0);
             sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = spd.speed : vel.y = 0);
