@@ -4,14 +4,14 @@
 
 void mainLoop(ECS::Game &game, rdr::Graphic &graphic)
 {
-    while (graphic.isOpen()) {
-        while (graphic.pollEvent()) {
-            if (graphic.getEvent().type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                graphic.close();
+    while (graphic.getWindow()->isOpen()) {
+        while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
+            if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                graphic.getWindow()->close();
         }
-        graphic.clear(sf::Color::Black);
+        graphic.getWindow()->clear(sf::Color::Black);
         game.update();
-        graphic.display();
+        graphic.getWindow()->display();
     }
 }
 
@@ -77,7 +77,7 @@ int main(void)
     game.getComponentManager().getComponent(typeid(Velocity)).emplaceData(6, Velocity{0, 0, 0});
     game.getComponentManager().getComponent(typeid(Speed)).emplaceData(6, Speed{2});
     game.getComponentManager().getComponent(typeid(Controllable)).emplaceData(6, Controllable{true});
-    game.getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{{}, sf::seconds(1)});
+    game.getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{sf::Clock(), sf::seconds(1)});
 
     mainLoop(game, graphic);
     return 0;

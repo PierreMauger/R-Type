@@ -2,9 +2,9 @@
 
 using namespace ECS;
 
-InputSystem::InputSystem(sf::Event &event)
+InputSystem::InputSystem(std::shared_ptr<sf::Event> event)
 {
-    this->_event = std::make_shared<sf::Event>(event);
+    this->_event = event;
 }
 
 void createShoot(std::size_t id, ComponentManager &componentManager, Position pos)

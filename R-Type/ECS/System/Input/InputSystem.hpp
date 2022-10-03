@@ -9,8 +9,9 @@ namespace ECS
     {
         private:
             std::shared_ptr<sf::Event> _event;
+
         public:
-            InputSystem(sf::Event &event);
+            InputSystem(std::shared_ptr<sf::Event> event);
             ~InputSystem() = default;
             void update(ComponentManager &componentManager);
     };
