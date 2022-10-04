@@ -10,9 +10,9 @@ InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::C
 
 void createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager)
 {
-    entityManager.addMask(id, (eng::InfoEntity::IDMODEL) | (eng::InfoEntity::POS) | (eng::InfoEntity::VEL));
+    entityManager.addMask(id, (eng::InfoEntity::SPRITEID) | (eng::InfoEntity::POS) | (eng::InfoEntity::VEL));
     componentManager.initEmptyComponent();
-    componentManager.getComponent(typeid(ModelID)).emplaceData(id, ModelID{2});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{2});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 55, pos.y + 45, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{20, 0, 0});
 }

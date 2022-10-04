@@ -1,15 +1,26 @@
-#include "Engine/ECS/System/Render/GUI.hpp"
+#include "Engine/ECS/System/GUI/GUISystem.hpp"
 
 using namespace eng;
 
-GUI::GUI(std::shared_ptr<sf::RenderWindow> window)
+GUISystem::GUISystem(std::shared_ptr<sf::RenderWindow> window)
 {
-    ImGui::SFML::Init(*window);
+    this->_window = window;
+    if (!ImGui::SFML::Init(*this->_window))
+        std::cout << "ImGui counldn't init" << std::endl;
 }
 
-void GUI::drawGUI(ComponentManager &componentManager, EntityManager &entityManager)
+void GUISystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    ImGui::Begin("Entities");
+    ImGui::SFML::Update(*this->_window, this->_clock.restart());
+    this->drawEntity(componentManager, entityManager);
+    if (this->_showEntityModify)
+        this->drawModifyEntity(componentManager, entityManager);
+    ImGui::SFML::Render(*this->_window);
+}
+
+void GUISystem::drawEntity(ComponentManager &componentManager, EntityManager &entityManager)
+{
+    ImGui::Begin("Entities", &this->_showEntity);
 
     if (ImGui::BeginTable("Entities", 3)) {
         ImGui::TableSetupColumn("ID");
@@ -31,7 +42,7 @@ void GUI::drawGUI(ComponentManager &componentManager, EntityManager &entityManag
                 }
                 ImGui::SameLine();
                 if (ImGui::Button(std::string("Modify##" + std::to_string(i)).c_str())) {
-                    this->_showEntityGUI = true;
+                    this->_showEntityModify = true;
                     this->_entityID = i;
                 }
             } else {
@@ -52,38 +63,35 @@ void GUI::drawGUI(ComponentManager &componentManager, EntityManager &entityManag
     ImGui::End();
 }
 
-void GUI::drawEntityGUI(ComponentManager &componentManager, EntityManager &entityManager)
+void GUISystem::drawModifyEntity(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto it = componentManager.getComponentArray().begin();
     auto &masks = entityManager.getMasks();
-    std::size_t id = this->_entityID;
 
-    if (!this->_showEntityGUI)
-        return;
-    ImGui::Begin("Modify Entity", &this->_showEntityGUI);
-    ImGui::Text("ID: %lu", id);
+    ImGui::Begin("Modify Entity", &this->_showEntityModify);
+    ImGui::Text("ID: %lu", this->_entityID);
     if (ImGui::BeginTable("Entity", 3)) {
         ImGui::TableSetupColumn("Component");
         ImGui::TableSetupColumn("Value");
         ImGui::TableSetupColumn("Action");
         ImGui::TableHeadersRow();
-        if (masks[id].has_value()) {
+        if (masks[this->_entityID].has_value()) {
             for (unsigned short i = 0; i < 8 && i < componentManager.getComponentArray().size(); i++) {
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
                 ImGui::Text("%s", it->first.name() + std::strlen(it->first.name()) / 10 + 1);
                 ImGui::TableNextColumn();
-                if (std::bitset<sizeof(std::size_t)>(masks[id].value()).test(i))
-                    this->drawComponentGUI(it->second, it->first, id);
+                if (std::bitset<sizeof(std::size_t)>(masks[this->_entityID].value()).test(i))
+                    this->drawComponent(it->second, it->first, this->_entityID);
                 else
                     ImGui::Text("None");
                 ImGui::TableNextColumn();
-                if (std::bitset<sizeof(std::size_t)>(masks[id].value()).test(i)) {
+                if (std::bitset<sizeof(std::size_t)>(masks[this->_entityID].value()).test(i)) {
                     if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str()))
-                        entityManager.updateMask(id, masks[id].value() & ~(1 << i));
+                        entityManager.updateMask(this->_entityID, masks[this->_entityID].value() & ~(1 << i));
                 } else {
                     if (ImGui::Button(std::string("Add##" + std::to_string(i)).c_str()))
-                        entityManager.updateMask(id, masks[id].value() | (1 << i));
+                        entityManager.updateMask(this->_entityID, masks[this->_entityID].value() | (1 << i));
                 }
                 it++;
             }
@@ -91,9 +99,10 @@ void GUI::drawEntityGUI(ComponentManager &componentManager, EntityManager &entit
         ImGui::EndTable();
     }
     ImGui::End();
+
 }
 
-void GUI::drawComponentGUI(Component &component, std::type_index type, std::size_t id)
+void GUISystem::drawComponent(Component &component, std::type_index type, std::size_t id)
 {
     auto &componentT = component.getField(id);
 
@@ -106,14 +115,14 @@ void GUI::drawComponentGUI(Component &component, std::type_index type, std::size
             ImGui::DragFloat("x##2", &std::any_cast<Velocity &>(componentT.value()).x, 0.1f, -FLT_MAX, +FLT_MAX);
             ImGui::DragFloat("y##2", &std::any_cast<Velocity &>(componentT.value()).y, 0.1f, -FLT_MAX, +FLT_MAX);
             ImGui::DragFloat("z##2", &std::any_cast<Velocity &>(componentT.value()).z, 0.1f, -FLT_MAX, +FLT_MAX);
-        } else if (type == typeid(ModelID)) {
-            ImGui::InputScalar("", ImGuiDataType_U64, &std::any_cast<ModelID &>(componentT.value()).id);
+        } else if (type == typeid(SpriteID)) {
+            ImGui::InputScalar("", ImGuiDataType_U64, &std::any_cast<SpriteID &>(componentT.value()).id);
         } else if (type == typeid(Controllable)) {
             ImGui::Checkbox("", &std::any_cast<Controllable &>(componentT.value()).con);
         } else if (type == typeid(Speed)) {
             ImGui::DragFloat("coef", &std::any_cast<Speed &>(componentT.value()).speed, 0.1f, -FLT_MAX, +FLT_MAX);
         } else if (type == typeid(CooldownShoot)) {
-            ImGui::Text("Clock: %f", std::any_cast<CooldownShoot &>(componentT.value()).time);
+            ImGui::Text("%f", std::any_cast<CooldownShoot &>(componentT.value()).time);
         }
     }
 }
