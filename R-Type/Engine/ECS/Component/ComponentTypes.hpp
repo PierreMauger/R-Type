@@ -17,7 +17,7 @@ typedef struct {
 
 typedef struct {
         std::size_t id;
-} ModelID;
+} SpriteID;
 
 typedef struct {
         bool con;
@@ -30,6 +30,6 @@ typedef struct {
 typedef struct {
         sf::Clock clock;
         sf::Time time;
-} CouldownShoot;
+} CooldownShoot;
 
 #endif // COMPONENTTYPES_HPP

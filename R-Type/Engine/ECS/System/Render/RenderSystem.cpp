@@ -2,11 +2,9 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window) : _gui(window)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window)
 {
     this->_window = window;
-    this->_window->setFramerateLimit(60);
-    this->_window->setKeyRepeatEnabled(true);
     this->_couldownBar = {};
     this->_color = {{0, sf::Color::Red}, {1, sf::Color::Blue}, {2, sf::Color::Green}, {3, sf::Color::Yellow}, {4, sf::Color::Magenta}};
     if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
@@ -44,33 +42,29 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window) : _gui(wind
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    Component &modelId = componentManager.getComponent(typeid(ModelID));
+    Component &modelId = componentManager.getComponent(typeid(SpriteID));
     Component &position = componentManager.getComponent(typeid(Position));
 
     for (std::size_t i = 0; i < modelId.getSize(); i++) {
         if (entityManager.getMasks()[i].has_value() && modelId.getField(i).has_value()) {
             if (position.getField(i).has_value()) {
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
-                this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
+                this->_sprites.at(std::any_cast<SpriteID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
             }
             this->DisplayCouldownBar(i, componentManager);
-            this->_window->draw(this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id));
+            this->_window->draw(this->_sprites.at(std::any_cast<SpriteID &>(modelId.getField(i).value()).id));
         }
     }
-    ImGui::SFML::Update(*this->_window, this->_clock.restart());
-    this->_gui.drawGUI(componentManager, entityManager);
-    this->_gui.drawEntityGUI(componentManager, entityManager);
-    ImGui::SFML::Render(*this->_window);
 }
 
 void RenderSystem::DisplayCouldownBar(std::size_t i, ComponentManager &componentManager)
 {
-    Component &couldown = componentManager.getComponent(typeid(CouldownShoot));
+    Component &couldown = componentManager.getComponent(typeid(CooldownShoot));
     sf::Vector2f size(100, 10);
     sf::Vector2u pos(0, this->_window->getSize().y - 20);
 
     if (couldown.getField(i).has_value()) {
-        CouldownShoot &sht = std::any_cast<CouldownShoot &>(couldown.getField(i).value());
+        CooldownShoot &sht = std::any_cast<CooldownShoot &>(couldown.getField(i).value());
         if (this->_couldownBar.find(i) == this->_couldownBar.end()) {
             pos.x = this->_couldownBar.size() * (size.x + 10) + 10;
             this->_couldownBar.insert({i, {sf::RectangleShape(sf::Vector2f(size.x, size.y)), sf::RectangleShape(sf::Vector2f(0, size.y))}});
