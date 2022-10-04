@@ -57,3 +57,18 @@ void Loader::loadSounds(std::vector<std::string> paths)
         }
     }
 }
+
+sf::Texture &Loader::getTexture(std::size_t index)
+{
+    return this->_textures[index];
+}
+
+sf::Sprite &Loader::getSprite(std::size_t index)
+{
+    return this->_sprites[index];
+}
+
+sf::SoundBuffer &Loader::getSound(std::size_t index)
+{
+    return this->_sounds[index];
+}

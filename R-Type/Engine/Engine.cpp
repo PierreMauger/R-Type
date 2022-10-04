@@ -17,3 +17,8 @@ Graphic &Engine::getGraphic()
 {
     return this->_graphic;
 }
+
+Loader &Engine::getLoader()
+{
+    return this->_loader;
+}

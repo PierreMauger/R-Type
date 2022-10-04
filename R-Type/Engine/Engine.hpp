@@ -20,6 +20,7 @@ namespace eng
 
             ECS &getECS();
             Graphic &getGraphic();
+            Loader &getLoader();
     };
 }
 
