@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock) : _gui(window)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock)
 {
     this->_clock = clock;
     this->_window = window;
@@ -41,20 +41,16 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    Component &modelId = componentManager.getComponent(typeid(ModelID));
+    Component &spriteId = componentManager.getComponent(typeid(SpriteID));
     Component &position = componentManager.getComponent(typeid(Position));
 
-    for (std::size_t i = 0; i < modelId.getSize(); i++) {
-        if (entityManager.getMasks()[i].has_value() && modelId.getField(i).has_value()) {
+    for (std::size_t i = 0; i < spriteId.getSize(); i++) {
+        if (entityManager.getMasks()[i].has_value() && spriteId.getField(i).has_value()) {
             if (position.getField(i).has_value()) {
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
-                this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
+                this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id).setPosition(pos.x, pos.y);
             }
-            this->_window->draw(this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id));
+            this->_window->draw(this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id));
         }
     }
-    ImGui::SFML::Update(*this->_window, this->_clock->getElapsedTime());
-    this->_gui.drawGUI(componentManager, entityManager);
-    this->_gui.drawEntityGUI(componentManager, entityManager);
-    ImGui::SFML::Render(*this->_window);
 }

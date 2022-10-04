@@ -17,7 +17,7 @@ typedef struct {
 
 typedef struct {
         std::size_t id;
-} ModelID;
+} SpriteID;
 
 typedef struct {
         bool con;

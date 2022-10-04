@@ -2,7 +2,6 @@
 #define RENDERSYSTEM_HPP
 
 #include "Engine/ECS/System/ISystem.hpp"
-#include "Engine/ECS/System/Render/GUI.hpp"
 #include "Includes.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
@@ -16,7 +15,6 @@ namespace eng
             std::shared_ptr<sf::Clock> _clock;
             std::array<sf::Texture, 10> _texture; // array car sf::vector stock dans la mémoire de manière bizarre donc white square problem sfml
             std::vector<sf::Sprite> _sprites;
-            GUI _gui;
 
         public:
             RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock);
