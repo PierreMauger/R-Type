@@ -17,7 +17,7 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /WX")
 endif()
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/Cmake-Modules/")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
@@ -72,7 +72,7 @@ install(TARGETS ${ImGui})
 ################## BUILD ENGINE ##################
 
 #set library name
-set(ENGINE ENGINE)
+set(ENGINE Engine)
 
 #set root path
 set(ENGINE_ROOT ${PROJECT_NAME}/Engine)
@@ -135,7 +135,7 @@ install(TARGETS ${ENGINE})
 set(CLIENT r-type_client)
 
 #set root path
-set(CLIENT_ROOT ${PROJECT_NAME}/client)
+set(CLIENT_ROOT ${PROJECT_NAME}/Client)
 
 #fetch include paths
 set(CLIENT_INC
@@ -164,7 +164,6 @@ target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sf
 target_link_libraries(${CLIENT} PRIVATE asio)
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
-target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
@@ -177,7 +176,7 @@ install(TARGETS ${CLIENT})
 set(SERVER r-type_server)
 
 #set root paths
-set(SERVER_ROOT ${PROJECT_NAME}/server)
+set(SERVER_ROOT ${PROJECT_NAME}/Server)
 
 #fetch include paths
 set(SERVER_INC
@@ -206,7 +205,6 @@ target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sf
 target_link_libraries(${SERVER} PRIVATE asio)
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${SERVER} PRIVATE ${ENGINE})
-target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
@@ -222,8 +220,7 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-window-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ENGINE.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Engine.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ImGui.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/GRAPH.dll ${CMAKE_SOURCE_DIR}
   )
 endif()

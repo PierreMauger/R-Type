@@ -9,21 +9,21 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window) : _gui(wind
     this->_window->setKeyRepeatEnabled(true);
     this->_couldownBar = {};
     this->_color = {{0, sf::Color::Red}, {1, sf::Color::Blue}, {2, sf::Color::Green}, {3, sf::Color::Yellow}, {4, sf::Color::Magenta}};
-    if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
+    if (!this->_texture.at(0).loadFromFile("./R-Type/Assets/Sprites/Background.jpg"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))
+    if (!this->_texture.at(1).loadFromFile("./R-Type/Assets/Sprites/Spaceship.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(2).loadFromFile("./R-Type/assets/Sprites/fireball.png"))
+    if (!this->_texture.at(2).loadFromFile("./R-Type/Assets/Sprites/Fireball.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(3).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-backgound.png"))
+    if (!this->_texture.at(3).loadFromFile("./R-Type/Assets/Sprites/Parallax/Backgound.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(4).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-stars.png"))
+    if (!this->_texture.at(4).loadFromFile("./R-Type/Assets/Sprites/Parallax/Stars.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(5).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-far-planets.png"))
+    if (!this->_texture.at(5).loadFromFile("./R-Type/Assets/Sprites/Parallax/Moons.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(6).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-ring-planet.png"))
+    if (!this->_texture.at(6).loadFromFile("./R-Type/Assets/Sprites/Parallax/Ring-Planet.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(7).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-big-planet.png"))
+    if (!this->_texture.at(7).loadFromFile("./R-Type/Assets/Sprites/Parallax/Planet.png"))
         throw std::runtime_error("Background not found");
     this->_sprites.push_back(sf::Sprite(this->_texture[0]));
     this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
