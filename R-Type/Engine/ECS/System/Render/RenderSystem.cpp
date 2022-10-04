@@ -6,8 +6,6 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
 {
     this->_clock = clock;
     this->_window = window;
-    this->_window->setFramerateLimit(60);
-    this->_window->setKeyRepeatEnabled(true);
     if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))

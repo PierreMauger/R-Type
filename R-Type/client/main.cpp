@@ -1,7 +1,7 @@
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 
-void mainLoop(eng::ECS ecs, eng::Graphic &graphic)
+void mainLoop(eng::ECS &ecs, eng::Graphic &graphic)
 {
     while (graphic.getWindow()->isOpen()) {
         while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
@@ -18,6 +18,9 @@ void mainLoop(eng::ECS ecs, eng::Graphic &graphic)
 int main(void)
 {
     eng::Engine engine;
+
+    // graphic.loadSprites({"R-Type/assets/Sprites"});
+    // graphic.loadSounds({"R-Type/assets/Sprites"});
 
     // setup system & component
     engine.getECS().getSystemManager().addSystem(std::make_shared<eng::InputSystem>(engine.getGraphic().getEvent(), engine.getGraphic().getClock()));

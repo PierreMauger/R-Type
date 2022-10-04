@@ -1,6 +1,7 @@
 #ifndef INCLUDES_HPP
 #define INCLUDES_HPP
 
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
