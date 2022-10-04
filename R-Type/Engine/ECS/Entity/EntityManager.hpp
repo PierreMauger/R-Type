@@ -11,7 +11,9 @@ namespace eng
         IDMODEL = 0b100,
         SPEED = 0b1000,
         CONTROLLABLE = 0b10000,
-        PAR = 0b100000
+        PARALLAX = 0b100000,
+        PARENT = 0b1000000,
+        COOLDOWNSHOOT = 0b10000000,
     };
 
     class EntityManager

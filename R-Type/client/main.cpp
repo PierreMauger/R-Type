@@ -33,6 +33,7 @@ int main(void)
     engine.getECS().getComponentManager().addComponent(typeid(Controllable), {});
     engine.getECS().getComponentManager().addComponent(typeid(CooldownShoot), {});
     engine.getECS().getComponentManager().addComponent(typeid(Parallax), {});
+    engine.getECS().getComponentManager().addComponent(typeid(Parent), {});
 
     // create background
     engine.getECS().getEntityManager().addMask(0, (eng::InfoEntity::IDMODEL));
