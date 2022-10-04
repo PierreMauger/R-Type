@@ -10,7 +10,8 @@ namespace eng
         VEL = 0b10,
         IDMODEL = 0b100,
         SPEED = 0b1000,
-        CONTROLLABLE = 0b10000
+        CONTROLLABLE = 0b10000,
+        PAR = 0b100000
     };
 
     class EntityManager

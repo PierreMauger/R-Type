@@ -9,14 +9,15 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::RenderWindow> _window;
-            sf::Event _event;
+            std::shared_ptr<sf::Event> _event;
+            std::shared_ptr<sf::Clock> _clock;
 
         public:
             Graphic();
             ~Graphic() = default;
-
-            std::shared_ptr<sf::RenderWindow> &getWindow();
-            sf::Event &getEvent();
+            std::shared_ptr<sf::RenderWindow> getWindow();
+            std::shared_ptr<sf::Event> getEvent();
+            std::shared_ptr<sf::Clock> getClock();
     };
 }
 

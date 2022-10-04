@@ -25,8 +25,10 @@ void GUI::drawGUI(ComponentManager &componentManager, EntityManager &entityManag
                 ImGui::TableNextColumn();
                 ImGui::Text(std::string("%0" + std::to_string(componentManager.getComponentArray().size()) + "b").c_str(), masks[i].value());
                 ImGui::TableNextColumn();
-                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str()))
+                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
                     entityManager.removeMask(i);
+                    componentManager.killEntity(i);
+                }
                 ImGui::SameLine();
                 if (ImGui::Button(std::string("Modify##" + std::to_string(i)).c_str())) {
                     this->_showEntityGUI = true;
@@ -110,8 +112,8 @@ void GUI::drawComponentGUI(Component &component, std::type_index type, std::size
             ImGui::Checkbox("", &std::any_cast<Controllable &>(componentT.value()).con);
         } else if (type == typeid(Speed)) {
             ImGui::DragFloat("coef", &std::any_cast<Speed &>(componentT.value()).speed, 0.1f, -FLT_MAX, +FLT_MAX);
-        } else if (type == typeid(CouldownShoot)) {
-            ImGui::Text("Clock: %f", std::any_cast<CouldownShoot &>(componentT.value()).clock.getElapsedTime().asSeconds());
+        } else if (type == typeid(CooldownShoot)) {
+            ImGui::Text("Clock: %f", std::any_cast<CooldownShoot &>(componentT.value()).time);
         }
     }
 }
