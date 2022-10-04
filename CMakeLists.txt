@@ -50,14 +50,14 @@ set(ImGui_SRC
 include_directories(
     ${ImGui_INC}
     ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
+    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
 #fetch required deps
 find_package(OpenGL REQUIRED)
 find_package(SFML REQUIRED)
-find_package(Asio REQUIRED)
+find_package(Boost REQUIRED)
 
 #set source files
 add_library(${ImGui} ${ImGui_SRC})
@@ -112,7 +112,7 @@ set(ENGINE_SRC
 include_directories(
     ${ENGINE_INC}
     ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
+    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -123,7 +123,7 @@ add_library(${ENGINE} ${ENGINE_SRC})
 target_link_libraries(${ENGINE} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${ENGINE} PRIVATE asio)
+target_link_libraries(${ENGINE} PRIVATE ${BOOST_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE ${ImGui})
 
 #install target
@@ -150,7 +150,7 @@ set(CLIENT_SRC
 include_directories(
     ${CLIENT_INC}
     ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
+    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -161,7 +161,7 @@ add_executable(${CLIENT} ${CLIENT_SRC})
 target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${CLIENT} PRIVATE asio)
+target_link_libraries(${CLIENT} PRIVATE ${BOOST_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
@@ -191,7 +191,7 @@ set(SERVER_SRC
 include_directories(
     ${SERVER_INC}
     ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
+    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -202,7 +202,7 @@ add_executable(${SERVER} ${SERVER_SRC})
 target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${SERVER} PRIVATE asio)
+target_link_libraries(${SERVER} PRIVATE ${BOOST_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${SERVER} PRIVATE ${ENGINE})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
