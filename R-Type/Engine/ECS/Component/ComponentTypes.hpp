@@ -24,6 +24,10 @@ typedef struct {
 } Controllable;
 
 typedef struct {
+        bool par;
+} Parallax;
+
+typedef struct {
         float speed;
 } Speed;
 

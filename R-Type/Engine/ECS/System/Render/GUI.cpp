@@ -25,8 +25,10 @@ void GUI::drawGUI(ComponentManager &componentManager, EntityManager &entityManag
                 ImGui::TableNextColumn();
                 ImGui::Text(std::string("%0" + std::to_string(componentManager.getComponentArray().size()) + "b").c_str(), masks[i].value());
                 ImGui::TableNextColumn();
-                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str()))
+                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
                     entityManager.removeMask(i);
+                    componentManager.killEntity(i);
+                }
                 ImGui::SameLine();
                 if (ImGui::Button(std::string("Modify##" + std::to_string(i)).c_str())) {
                     this->_showEntityGUI = true;

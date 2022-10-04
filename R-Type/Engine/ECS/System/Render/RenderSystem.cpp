@@ -8,8 +8,6 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
     this->_window = window;
     this->_window->setFramerateLimit(60);
     this->_window->setKeyRepeatEnabled(true);
-    this->_cooldownBar = {};
-    this->_color = {{0, sf::Color::Red}, {1, sf::Color::Blue}, {2, sf::Color::Green}, {3, sf::Color::Yellow}, {4, sf::Color::Magenta}};
     if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))
@@ -54,7 +52,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
                 this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
             }
-            this->displayCooldownBar(i, componentManager);
             this->_window->draw(this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id));
         }
     }
@@ -62,30 +59,4 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     this->_gui.drawGUI(componentManager, entityManager);
     this->_gui.drawEntityGUI(componentManager, entityManager);
     ImGui::SFML::Render(*this->_window);
-}
-
-void RenderSystem::displayCooldownBar(std::size_t i, ComponentManager &componentManager)
-{
-    Component &cooldown = componentManager.getComponent(typeid(CooldownShoot));
-    sf::Vector2f size(100, 10);
-    sf::Vector2u pos(0, this->_window->getSize().y - 20);
-
-    if (cooldown.getField(i).has_value()) {
-        CooldownShoot &sht = std::any_cast<CooldownShoot &>(cooldown.getField(i).value());
-        if (this->_cooldownBar.find(i) == this->_cooldownBar.end()) {
-            pos.x = this->_cooldownBar.size() * (size.x + 10) + 10;
-            this->_cooldownBar.insert({i, {sf::RectangleShape(sf::Vector2f(size.x, size.y)), sf::RectangleShape(sf::Vector2f(0, size.y))}});
-            this->_cooldownBar.at(i).first.setOutlineColor(sf::Color::Black);
-            this->_cooldownBar.at(i).first.setOutlineThickness(2);
-            this->_cooldownBar.at(i).first.setPosition(pos.x, pos.y);
-            this->_cooldownBar.at(i).second.setFillColor(this->_color.at(this->_cooldownBar.size() - 1));
-            this->_cooldownBar.at(i).second.setPosition(pos.x, pos.y);
-        }
-        this->_cooldownBar.at(i).second.setSize({((_clock->getElapsedTime().asSeconds() - sht.time + sht.cooldown) * size.x / sht.cooldown) > size.x
-                                                     ? size.x
-                                                     : (_clock->getElapsedTime().asSeconds() - sht.time + sht.cooldown) * size.x / sht.cooldown,
-                                                 size.y});
-        this->_window->draw(this->_cooldownBar.at(i).first);
-        this->_window->draw(this->_cooldownBar.at(i).second);
-    }
 }
