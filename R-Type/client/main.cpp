@@ -1,23 +1,26 @@
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 
-void mainLoop(eng::ECS ecs, eng::Graphic &graphic)
+void mainLoop(eng::ECS &ecs, eng::Graphic &graphic)
 {
-    while (graphic.isOpen()) {
-        while (graphic.pollEvent()) {
+    while (graphic.getWindow()->isOpen()) {
+        while (graphic.getWindow()->pollEvent(graphic.getEvent())) {
             ImGui::SFML::ProcessEvent(graphic.getEvent());
             if (graphic.getEvent().type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                graphic.close();
+                graphic.getWindow()->close();
         }
-        graphic.clear(sf::Color::Black);
+        graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
-        graphic.display();
+        graphic.getWindow()->display();
     }
 }
 
 int main(void)
 {
     eng::Engine engine;
+
+    // graphic.loadSprites({"R-Type/assets/Sprites"});
+    // graphic.loadSounds({"R-Type/assets/Sprites"});
 
     // setup system & component
     engine.getECS().getSystemManager().addSystem(std::make_shared<eng::InputSystem>(engine.getGraphic().getEvent()));

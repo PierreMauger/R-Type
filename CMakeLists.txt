@@ -104,6 +104,9 @@ set(ENGINE_SRC
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp
 
+    # Loader files
+    ${ENGINE_ROOT}/Loader/Loader.cpp
+
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
 )
