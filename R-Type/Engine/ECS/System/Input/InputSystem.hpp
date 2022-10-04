@@ -1,11 +1,11 @@
 #ifndef INPUTSYSTEM_HPP
 #define INPUTSYSTEM_HPP
 
-#include "ECS/System/ISystem.hpp"
+#include "Engine/ECS/System/ISystem.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
 
-namespace ECS
+namespace eng
 {
     class InputSystem : public virtual ISystem
     {

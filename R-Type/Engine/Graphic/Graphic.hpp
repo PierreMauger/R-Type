@@ -1,13 +1,9 @@
 #ifndef GRAPHIC_HPP
 #define GRAPHIC_HPP
 
-#include "ECS/Component/ComponentManager.hpp"
-#include "ECS/System/Physic/PhysicSystem.hpp"
-#include "ECS/System/Render/RenderSystem.hpp"
-#include "ECS/System/SystemManager.hpp"
-#include "Entity/EntityManager.hpp"
+#include "Includes.hpp"
 
-namespace rdr
+namespace eng
 {
     class Graphic
     {

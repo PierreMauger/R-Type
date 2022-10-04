@@ -1,6 +1,6 @@
 #include "Graphic.hpp"
 
-using namespace rdr;
+using namespace eng;
 
 Graphic::Graphic()
 {

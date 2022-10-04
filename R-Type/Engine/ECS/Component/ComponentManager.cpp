@@ -1,6 +1,6 @@
-#include "ECS/Component/ComponentManager.hpp"
+#include "Engine/ECS/Component/ComponentManager.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 ComponentManager::ComponentManager()
 {

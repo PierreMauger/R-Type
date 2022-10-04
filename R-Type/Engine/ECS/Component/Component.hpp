@@ -1,10 +1,10 @@
 #ifndef COMPONENT_HPP
 #define COMPONENT_HPP
 
-#include "ECS/Component/ComponentTypes.hpp"
+#include "Engine/ECS/Component/ComponentTypes.hpp"
 #include "Includes.hpp"
 
-namespace ECS
+namespace eng
 {
     class Component
     {

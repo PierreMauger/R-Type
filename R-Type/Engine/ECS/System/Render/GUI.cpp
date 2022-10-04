@@ -1,6 +1,6 @@
-#include "ECS/System/Render/GUI.hpp"
+#include "Engine/ECS/System/Render/GUI.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 GUI::GUI(std::shared_ptr<sf::RenderWindow> window)
 {

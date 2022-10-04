@@ -1,6 +1,6 @@
-#include "ECS/Component/Component.hpp"
+#include "Engine/ECS/Component/Component.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 Component::Component()
 {

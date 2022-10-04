@@ -1,9 +1,9 @@
 #ifndef ENTITYMANAGER_HPP
 #define ENTITYMANAGER_HPP
 
-#include "ECS/Component/ComponentManager.hpp"
+#include "Engine/ECS/Component/ComponentManager.hpp"
 
-namespace ECS
+namespace eng
 {
     enum InfoEntity {
         POS = 0b1,

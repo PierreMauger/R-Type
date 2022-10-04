@@ -1,9 +1,9 @@
 #ifndef SYSTEMMANAGER_HPP
 #define SYSTEMMANAGER_HPP
 
-#include "ECS/System/ISystem.hpp"
+#include "Engine/ECS/System/ISystem.hpp"
 
-namespace ECS
+namespace eng
 {
     class SystemManager
     {
@@ -14,9 +14,9 @@ namespace ECS
             SystemManager();
             ~SystemManager();
 
-            std::vector<std::shared_ptr<ISystem>> &getSystems();
             void addSystem(std::shared_ptr<ISystem> system);
             void updateSystems(ComponentManager &componentManager, EntityManager &entityManager);
+            std::vector<std::shared_ptr<ISystem>> &getSystems();
     };
 }
 

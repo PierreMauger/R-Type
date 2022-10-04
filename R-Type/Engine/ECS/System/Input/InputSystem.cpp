@@ -1,6 +1,6 @@
-#include "ECS/System/Input/InputSystem.hpp"
+#include "Engine/ECS/System/Input/InputSystem.hpp"
 
-using namespace ECS;
+using namespace eng;
 
 InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock)
 {
