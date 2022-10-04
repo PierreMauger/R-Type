@@ -36,8 +36,10 @@ void GUISystem::drawEntity(ComponentManager &componentManager, EntityManager &en
                 ImGui::TableNextColumn();
                 ImGui::Text(std::string("%0" + std::to_string(componentManager.getComponentArray().size()) + "b").c_str(), masks[i].value());
                 ImGui::TableNextColumn();
-                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str()))
+                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
                     entityManager.removeMask(i);
+                    componentManager.killEntity(i);
+                }
                 ImGui::SameLine();
                 if (ImGui::Button(std::string("Modify##" + std::to_string(i)).c_str())) {
                     this->_showEntityModify = true;
@@ -120,7 +122,7 @@ void GUISystem::drawComponent(Component &component, std::type_index type, std::s
         } else if (type == typeid(Speed)) {
             ImGui::DragFloat("coef", &std::any_cast<Speed &>(componentT.value()).speed, 0.1f, -FLT_MAX, +FLT_MAX);
         } else if (type == typeid(CooldownShoot)) {
-            ImGui::Text("%f", std::any_cast<CooldownShoot &>(componentT.value()).clock.getElapsedTime().asSeconds());
+            ImGui::Text("%f", std::any_cast<CooldownShoot &>(componentT.value()).time);
         }
     }
 }

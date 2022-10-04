@@ -3,12 +3,14 @@
 
 #include "Engine/ECS/ECS.hpp"
 #include "Engine/Graphic/Graphic.hpp"
+#include "Engine/Loader/Loader.hpp"
 
 namespace eng
 {
     class Engine
     {
         private:
+            Loader _loader;
             ECS _ecs;
             Graphic _graphic;
 
@@ -18,6 +20,7 @@ namespace eng
 
             ECS &getECS();
             Graphic &getGraphic();
+            Loader &getLoader();
     };
 }
 

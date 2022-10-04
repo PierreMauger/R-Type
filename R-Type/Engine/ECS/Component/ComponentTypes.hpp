@@ -24,12 +24,16 @@ typedef struct {
 } Controllable;
 
 typedef struct {
+        bool par;
+} Parallax;
+
+typedef struct {
         float speed;
 } Speed;
 
 typedef struct {
-        sf::Clock clock;
-        sf::Time time;
+        float time;
+        float cooldown;
 } CooldownShoot;
 
 #endif // COMPONENTTYPES_HPP

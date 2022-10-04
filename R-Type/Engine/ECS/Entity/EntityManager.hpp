@@ -8,9 +8,10 @@ namespace eng
     enum InfoEntity {
         POS = 0b1,
         VEL = 0b10,
-        IDMODEL = 0b100,
+        SPRITEID = 0b100,
         SPEED = 0b1000,
-        CONTROLLABLE = 0b10000
+        CONTROLLABLE = 0b10000,
+        PAR = 0b100000
     };
 
     class EntityManager
