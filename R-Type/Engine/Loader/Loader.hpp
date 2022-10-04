@@ -20,6 +20,8 @@ namespace eng
             std::vector<sf::Texture> &getTextures();
             std::vector<sf::Sprite> &getSprites();
 
+            std::vector<sf::SoundBuffer> &getSounds();
+
             void loadSprites(std::vector<std::string> path);
             void loadSounds(std::vector<std::string> path);
     };
