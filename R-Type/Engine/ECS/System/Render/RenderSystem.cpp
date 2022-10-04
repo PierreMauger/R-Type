@@ -15,7 +15,7 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window) : _gui(wind
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(2).loadFromFile("./R-Type/Assets/Sprites/Fireball.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(3).loadFromFile("./R-Type/Assets/Sprites/Parallax/Backgound.png"))
+    if (!this->_texture.at(3).loadFromFile("./R-Type/Assets/Sprites/Parallax/Background.png"))
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(4).loadFromFile("./R-Type/Assets/Sprites/Parallax/Stars.png"))
         throw std::runtime_error("Background not found");
