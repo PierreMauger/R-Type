@@ -2,129 +2,139 @@
 
 #init Cmake
 cmake_minimum_required(VERSION 3.24)
-
 project(R-Type LANGUAGES CXX VERSION 1.0)
 
-#set standard flags
+#set flags
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_FLAGS "-std=c++20 -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
-
-#set thread flags
-set(CMAKE_THREAD_LIBS_INIT "-lpthread")
-set(CMAKE_HAVE_THREADS_LIBRARY ON)
-set(CMAKE_USE_WIN32F_THREADS_INIT OFF)
-set(CMAKE_USE_PTHREADS_INIT ON)
-
 if(UNIX)
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3")
+    set(CMAKE_CXX_FLAGS "-std=c++20 -O3 -Wall -Wextra")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -Werror")
 else()
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /Ox")
+    set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /Wall /EHsc")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /WX")
 endif()
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+set(DBUILD_SHARED_LIBS TRUE)
 
-################## BUILD ECS ##################
+################## BUILD ImGui ##################
 
 #set library name
-set(ECS ECS)
+set(ImGui ImGui)
 
 #set root path
-set(ECS_ROOT ${PROJECT_NAME}/ECS)
+set(ImGui_ROOT ${PROJECT_NAME}/ImGui)
 
 #fetch include paths
-set(ECS_INC
-    ${ECS_ROOT}/
-    ${ECS_ROOT}/Entity/
-    ${ECS_ROOT}/Component/
-    ${ECS_ROOT}/System/
+set(ImGui_INC
+    ${ImGui_ROOT}/
 )
 
 #fetch source files
-set(ECS_SRC
-    ${ECS_ROOT}/Game.cpp
-    ${ECS_ROOT}/Entity/EntityManager.cpp
-    ${ECS_ROOT}/Component/ComponentManager.cpp
-    ${ECS_ROOT}/Component/Component.cpp
-    ${ECS_ROOT}/System/SystemManager.cpp
-    ${ECS_ROOT}/System/Render/RenderSystem.cpp
-    ${ECS_ROOT}/System/Physic/PhysicSystem.cpp
-    ${ECS_ROOT}/System/Render/RenderSystem.cpp
-    ${ECS_ROOT}/System/Input/InputSystem.cpp
+set(ImGui_SRC
+    ${ImGui_ROOT}/imgui_draw.cpp
+    ${ImGui_ROOT}/imgui_tables.cpp
+    ${ImGui_ROOT}/imgui_widgets.cpp
+    ${ImGui_ROOT}/imgui.cpp
+    ${ImGui_ROOT}/imgui-SFML.cpp
 )
 
+#set include paths
+include_directories(
+    ${ImGui_INC}
+    ${SFML_INCLUDE_DIRS}
+    ${ASIO_INCLUDE_DIRS}
+    ${PROJECT_NAME}
+)
+
+#fetch required deps
+find_package(OpenGL REQUIRED)
 find_package(SFML REQUIRED)
 find_package(Asio REQUIRED)
 
-#set include paths
-include_directories(
-    ${ECS_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
-    ${PROJECT_NAME}
-)
-
 #set source files
-add_library(${ECS} SHARED ${ECS_SRC})
+add_library(${ImGui} ${ImGui_SRC})
 
-target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${ECS} PRIVATE ${CMAKE_THREAD_LIBS_REQUIRED})
-target_link_libraries(${ECS} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_compile_features(${ECS} PRIVATE cxx_std_20)
-target_link_libraries(${ECS} PRIVATE asio)
-if(CMAKE_BUILD_TYPE MATCHES Release)
-    target_compile_options(${ECS} PRIVATE -Werror)
-endif()
+target_link_libraries(${ImGui} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${ImGui} PRIVATE ${OPENGL_LIBRARIES})
+target_link_libraries(${ImGui} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 
-install(TARGETS ${ECS})
+#install target
+install(TARGETS ${ImGui})
 
-################## BUILD GRAPHIC ##################
+################## BUILD ENGINE ##################
 
 #set library name
-set(GRAPH GRAPH)
+set(ENGINE ENGINE)
 
 #set root path
-set(GRAPH_ROOT ${PROJECT_NAME}/Graphic)
+set(ENGINE_ROOT ${PROJECT_NAME}/Engine)
 
 #fetch include paths
-set(GRAPH_INC
-    ${GRAPH_ROOT}/
+set(ENGINE_INC
+    ${ENGINE_ROOT}/
+    ${ENGINE_ROOT}/ECS
+    ${ENGINE_ROOT}/ECS/Entity/
+    ${ENGINE_ROOT}/ECS/Component/
+    ${ENGINE_ROOT}/ECS/System/
+    ${ENGINE_ROOT}/Graphic/
 )
 
 #fetch source files
-set(GRAPH_SRC
-    ${GRAPH_ROOT}/Graphic.cpp
+set(ENGINE_SRC
+    # ECS files
+    ${ENGINE_ROOT}/ECS/ECS.cpp
+    ${ENGINE_ROOT}/ECS/Entity/EntityManager.cpp
+    ${ENGINE_ROOT}/ECS/Component/ComponentManager.cpp
+    ${ENGINE_ROOT}/ECS/Component/Component.cpp
+    ${ENGINE_ROOT}/ECS/System/SystemManager.cpp
+    ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Render/GUI.cpp
+    ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
+
+    # Graphic files
+    ${ENGINE_ROOT}/Graphic/Graphic.cpp
+
+    # Engine files
+    ${ENGINE_ROOT}/Engine.cpp
 )
 
 #set include paths
 include_directories(
-    ${GRAPH_INC}
+    ${ENGINE_INC}
     ${SFML_INCLUDE_DIRS}
     ${ASIO_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
-#set source files
-add_library(${GRAPH} SHARED ${GRAPH_SRC})
+#set source files (create library/executable)
+add_library(${ENGINE} ${ENGINE_SRC})
 
-target_link_libraries(${GRAPH} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${GRAPH} PRIVATE ${CMAKE_THREAD_LIBS_REQUIRED})
-target_link_libraries(${GRAPH} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_compile_features(${GRAPH} PRIVATE cxx_std_20)
-target_link_libraries(${GRAPH} PRIVATE asio)
-if(CMAKE_BUILD_TYPE MATCHES Release)
-    target_compile_options(${GRAPH} PRIVATE -Werror)
-endif()
+#link library/executable with deps
+target_link_libraries(${ENGINE} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARIES})
+target_link_libraries(${ENGINE} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+target_link_libraries(${ENGINE} PRIVATE asio)
+target_link_libraries(${ENGINE} PRIVATE ${ImGui})
 
-install(TARGETS ${GRAPH})
+#install target
+install(TARGETS ${ENGINE})
 
 ################## BUILD CLIENT ##################
 
-#set library/executable name
+#set executable name
 set(CLIENT r-type_client)
 
-#set usefull paths
+#set root path
 set(CLIENT_ROOT ${PROJECT_NAME}/client)
 
 #fetch include paths
@@ -144,29 +154,29 @@ include_directories(
     ${PROJECT_NAME}
 )
 
-#set source files
+#set source files (create library/executable)
 add_executable(${CLIENT} ${CLIENT_SRC})
 
+#link library/executable with deps
 target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_REQUIRED})
+target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_compile_features(${CLIENT} PRIVATE cxx_std_20)
 target_link_libraries(${CLIENT} PRIVATE asio)
-target_link_libraries(${CLIENT} PRIVATE ${ECS})
+target_link_libraries(${CLIENT} PRIVATE ${ImGui})
+target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
 target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
-if(CMAKE_BUILD_TYPE MATCHES Release)
-    target_compile_options(${CLIENT} PRIVATE -Werror)
-endif()
-set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
+#install target
 install(TARGETS ${CLIENT})
 
 ################## BUILD SERVER ##################
 
-#set library/executable name
+#set executable name
 set(SERVER r-type_server)
 
-#set usefull paths
+#set root paths
 set(SERVER_ROOT ${PROJECT_NAME}/server)
 
 #fetch include paths
@@ -186,19 +196,34 @@ include_directories(
     ${PROJECT_NAME}
 )
 
-#set source files
+#set source files (create library/executable)
 add_executable(${SERVER} ${SERVER_SRC})
 
+#link library/executable with deps
 target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_REQUIRED})
+target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_compile_features(${SERVER} PRIVATE cxx_std_20)
 target_link_libraries(${SERVER} PRIVATE asio)
-target_link_libraries(${SERVER} PRIVATE ${ECS})
+target_link_libraries(${CLIENT} PRIVATE ${ImGui})
+target_link_libraries(${SERVER} PRIVATE ${ENGINE})
 target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
-if(CMAKE_BUILD_TYPE MATCHES Release)
-    target_compile_options(${SERVER} PRIVATE -Werror)
-endif()
-set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
+#install target
 install(TARGETS ${SERVER})
+
+################## POST BUILD ##################
+
+#copy dlls to root for resources (only on windows)
+if(WIN32)
+  add_custom_command(
+    TARGET ${ENGINE} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-window-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ENGINE.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ImGui.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/GRAPH.dll ${CMAKE_SOURCE_DIR}
+  )
+endif()
