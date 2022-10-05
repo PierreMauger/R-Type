@@ -21,14 +21,14 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             pos.x += vel.x;
             pos.y += vel.y;
             if (con.getField(i).has_value()) {
-                pos.x < 0 ? pos.x = 0 : pos.x; 
+                pos.x < 0 ? pos.x = 0 : pos.x;
                 pos.y < 0 ? pos.y = 0 : pos.y;
                 pos.x > _window->getSize().x - 100 ? pos.x = _window->getSize().x - 100 : pos.x;
                 pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
                 continue;
             }
             if (par.getField(i).has_value())
-                pos.x == -800 ? pos.x = 800 : pos.x;
+                pos.x <= -800 ? pos.x = 800 : pos.x;
             else if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
                 componentManager.killEntity(i);
                 entityManager.removeMask(i);
