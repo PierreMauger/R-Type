@@ -2,41 +2,12 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader)
 {
     this->_clock = clock;
     this->_window = window;
-    if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(2).loadFromFile("./R-Type/assets/Sprites/fireball.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(3).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-backgound.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(4).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-stars.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(5).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-far-planets.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(6).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-ring-planet.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(7).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-big-planet.png"))
-        throw std::runtime_error("Background not found");
-    this->_sprites.push_back(sf::Sprite(this->_texture[0]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
-    this->_sprites.push_back(sf::Sprite(this->_texture[1]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(0.5, 0.5);
-    this->_sprites.push_back(sf::Sprite(this->_texture[2]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(0.3, 0.3);
-    this->_sprites.push_back(sf::Sprite(this->_texture[3]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[4]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[5]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[6]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[7]));
+
+    this->_sprites = loader.getSprites();
 }
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
@@ -48,9 +19,9 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         if (entityManager.getMasks()[i].has_value() && spriteId.getField(i).has_value()) {
             if (position.getField(i).has_value()) {
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
-                this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id).setPosition(pos.x, pos.y);
+                this->_sprites->at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id).setPosition(pos.x, pos.y);
             }
-            this->_window->draw(this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id));
+            this->_window->draw(this->_sprites->at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id));
         }
     }
 }

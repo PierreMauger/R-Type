@@ -6,19 +6,19 @@ Loader::Loader()
 {
 }
 
-std::vector<sf::Texture> &Loader::getTextures()
+std::deque<sf::Texture> &Loader::getTextures()
 {
     return this->_textures;
 }
 
-std::vector<sf::Sprite> &Loader::getSprites()
+std::shared_ptr<std::vector<sf::Sprite>> Loader::getSprites()
 {
-    return this->_sprites;
+    return std::make_shared<std::vector<sf::Sprite>>(this->_sprites);
 }
 
-std::vector<sf::SoundBuffer> &Loader::getSounds()
+std::shared_ptr<std::vector<sf::SoundBuffer>> Loader::getSounds()
 {
-    return this->_sounds;
+    return std::make_shared<std::vector<sf::SoundBuffer>>(this->_sounds);
 }
 
 void Loader::loadSprites(std::vector<std::string> paths)
