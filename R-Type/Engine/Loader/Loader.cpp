@@ -6,19 +6,19 @@ Loader::Loader()
 {
 }
 
-std::deque<sf::Texture> &Loader::getTextures()
+std::vector<sf::Texture> &Loader::getTextures()
 {
     return this->_textures;
 }
 
-std::shared_ptr<std::vector<sf::Sprite>> Loader::getSprites()
+std::vector<sf::Sprite> &Loader::getSprites()
 {
-    return std::make_shared<std::vector<sf::Sprite>>(this->_sprites);
+    return this->_sprites;
 }
 
-std::shared_ptr<std::vector<sf::SoundBuffer>> Loader::getSounds()
+std::vector<sf::SoundBuffer> &Loader::getSounds()
 {
-    return std::make_shared<std::vector<sf::SoundBuffer>>(this->_sounds);
+    return this->_sounds;
 }
 
 void Loader::loadSprites(std::vector<std::string> paths)
@@ -26,12 +26,12 @@ void Loader::loadSprites(std::vector<std::string> paths)
     for (auto &path : paths) {
         try {
             for (auto &p : std::filesystem::directory_iterator(path)) {
-                sf::Texture texture;
+                sf::Texture *texture = new sf::Texture();
                 sf::Sprite sprite;
 
-                if (texture.loadFromFile(p.path())) {
-                    sprite.setTexture(texture);
-                    this->_textures.push_back(texture);
+                if (texture->loadFromFile(p.path())) {
+                    sprite.setTexture(*texture);
+                    this->_textures.push_back(*texture);
                     this->_sprites.push_back(sprite);
                 }
             }

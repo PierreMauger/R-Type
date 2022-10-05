@@ -19,9 +19,9 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         if (entityManager.getMasks()[i].has_value() && spriteId.getField(i).has_value()) {
             if (position.getField(i).has_value()) {
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
-                this->_sprites->at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id).setPosition(pos.x, pos.y);
+                this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id).setPosition(pos.x, pos.y);
             }
-            this->_window->draw(this->_sprites->at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id));
+            this->_window->draw(this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id));
         }
     }
 }
