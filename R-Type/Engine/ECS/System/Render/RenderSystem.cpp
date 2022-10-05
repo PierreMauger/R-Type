@@ -22,7 +22,7 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(7).loadFromFile("./R-Type/Assets/Sprites/Parallax/Planet.png"))
         throw std::runtime_error("Background not found");
-    if (!this->_texture.at(8).loadFromFile("./R-Type/assets/Sprites/cooldown_bar.png"))
+    if (!this->_texture.at(8).loadFromFile("./R-Type/Assets/Sprites/Bar.png"))
         throw std::runtime_error("Background not found");
     this->_sprites.push_back(sf::Sprite(this->_texture[0]));
     this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
