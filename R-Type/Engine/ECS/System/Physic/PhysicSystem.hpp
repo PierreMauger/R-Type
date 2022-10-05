@@ -9,6 +9,8 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::RenderWindow> _window;
+            bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
+            bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
 
         public:
             PhysicSystem(std::shared_ptr<sf::RenderWindow> window);

@@ -28,6 +28,14 @@ typedef struct {
 } Parallax;
 
 typedef struct {
+        bool proj;
+} Projectile;
+
+typedef struct {
+        bool enemy;
+} Enemy;
+
+typedef struct {
         float speed;
 } Speed;
 
@@ -49,6 +57,8 @@ enum TypePatern {
 
 typedef struct {
         enum TypePatern type;
+        float angle;
+        float center;
 } Patern;
 
 #endif // COMPONENTTYPES_HPP

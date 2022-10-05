@@ -14,6 +14,8 @@ namespace eng
         PARALLAX = 0b100000,
         PARENT = 0b1000000,
         COOLDOWNSHOOT = 0b10000000,
+        PROJECTILE = 0b100000000,
+        ENEMY = 0b1000000000,
     };
 
     class EntityManager

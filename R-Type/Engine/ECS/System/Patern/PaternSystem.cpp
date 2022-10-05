@@ -2,8 +2,9 @@
 
 using namespace eng;
 
-PaternSystem::PaternSystem()
+PaternSystem::PaternSystem(std::shared_ptr<sf::Clock> clock)
 {
+    this->_clock = clock;
 }
 
 void PaternSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
@@ -17,8 +18,15 @@ void PaternSystem::update(ComponentManager &componentManager, EntityManager &ent
             Position &pos = std::any_cast<Position &>(position.getField(i).value());
             Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
             Patern &pat = std::any_cast<Patern &>(patern.getField(i).value());
-            if (pat.type == TypePatern::LINE)
-                pos.x += vel.x;
+            pos.x += vel.x;
+            if (pat.type == TypePatern::OSCILLATION) {
+                pos.y = pat.center + std::sin(pat.angle) * RADIUS;
+                pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC;
+            }
+            if (pat.type == TypePatern::BIGOSCILLATION) {
+                pos.y = pat.center + std::sin(pat.angle) * (RADIUS * 3);
+                pat.angle = this->_clock->getElapsedTime().asSeconds() * (SPEED_OSC / 2);
+            }
         }
     }
 }
