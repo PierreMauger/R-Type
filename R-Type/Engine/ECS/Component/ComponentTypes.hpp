@@ -17,19 +17,23 @@ typedef struct {
 
 typedef struct {
         std::size_t id;
-} ModelID;
+} SpriteID;
 
 typedef struct {
         bool con;
 } Controllable;
 
 typedef struct {
+        bool par;
+} Parallax;
+
+typedef struct {
         float speed;
 } Speed;
 
 typedef struct {
-        sf::Clock clock;
-        sf::Time time;
-} CouldownShoot;
+        float time;
+        float cooldown;
+} CooldownShoot;
 
 #endif // COMPONENTTYPES_HPP

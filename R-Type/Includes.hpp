@@ -1,6 +1,7 @@
 #ifndef INCLUDES_HPP
 #define INCLUDES_HPP
 
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -9,6 +10,7 @@
 #include <bitset>
 #include <condition_variable>
 #include <cstring>
+#include <filesystem>
 #include <fstream>
 #include <functional>
 #include <iomanip>

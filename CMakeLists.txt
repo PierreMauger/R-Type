@@ -98,11 +98,14 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
-    ${ENGINE_ROOT}/ECS/System/Render/GUI.cpp
+    ${ENGINE_ROOT}/ECS/System/GUI/GUISystem.cpp
     ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp
+
+    # Loader files
+    ${ENGINE_ROOT}/Loader/Loader.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
