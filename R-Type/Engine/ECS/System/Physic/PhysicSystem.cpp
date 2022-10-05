@@ -13,9 +13,10 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     Component &velocity = componentManager.getComponent(typeid(Velocity));
     Component &con = componentManager.getComponent(typeid(Controllable));
     Component &par = componentManager.getComponent(typeid(Parallax));
+    Component &pat = componentManager.getComponent(typeid(Patern));
 
     for (std::size_t i = 0; i < position.getSize(); i++) {
-        if (position.getField(i).has_value() && velocity.getField(i).has_value()) {
+        if (position.getField(i).has_value() && velocity.getField(i).has_value() && !pat.getField(i).has_value()) {
             Position &pos = std::any_cast<Position &>(position.getField(i).value());
             Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
             pos.x += vel.x;

@@ -24,6 +24,8 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(8).loadFromFile("./R-Type/assets/Sprites/cooldown_bar.png"))
         throw std::runtime_error("Background not found");
+    if (!this->_texture.at(9).loadFromFile("./R-Type/assets/Sprites/ennemi.png"))
+        throw std::runtime_error("Background not found");
     this->_sprites.push_back(sf::Sprite(this->_texture[0]));
     this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
     this->_sprites.push_back(sf::Sprite(this->_texture[1]));
@@ -40,6 +42,7 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
     this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
     this->_sprites.push_back(sf::Sprite(this->_texture[7]));
     this->_sprites.push_back(sf::Sprite(this->_texture[8]));
+    this->_sprites.push_back(sf::Sprite(this->_texture[9]));
 }
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
@@ -58,7 +61,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             if (parent.getField(i).has_value() && cooldown.getField(std::any_cast<Parent &>(parent.getField(i).value()).id).has_value()) {
                 CooldownShoot &par = std::any_cast<CooldownShoot &>(cooldown.getField(std::any_cast<Parent &>(parent.getField(i).value()).id).value());
                 sf::Sprite &spriteRef = this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id);
-                spriteRef.setScale(((_clock->getElapsedTime().asSeconds() - par.time + par.cooldown) * 100 / par.cooldown) > 100 ? 100 : (_clock->getElapsedTime().asSeconds() - par.time + par.cooldown) * 100 / par.cooldown, 1);
+                spriteRef.setScale(((_clock->getElapsedTime().asSeconds() - par.time + par.cooldown) * 100 / par.cooldown) > 100
+                                       ? 100
+                                       : (_clock->getElapsedTime().asSeconds() - par.time + par.cooldown) * 100 / par.cooldown,
+                                   1);
             }
             this->_window->draw(this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id));
         }

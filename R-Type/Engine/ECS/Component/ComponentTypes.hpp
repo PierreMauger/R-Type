@@ -40,4 +40,15 @@ typedef struct {
         std::size_t id;
 } Parent;
 
+// Type dépendant du patern
+enum TypePatern {
+    LINE = 0,
+    OSCILLATION,
+    BIGOSCILLATION
+};
+
+typedef struct {
+        enum TypePatern type;
+} Patern;
+
 #endif // COMPONENTTYPES_HPP
