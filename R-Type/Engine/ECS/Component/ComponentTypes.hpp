@@ -36,4 +36,8 @@ typedef struct {
         float cooldown;
 } CooldownShoot;
 
+typedef struct {
+        std::size_t id;
+} Parent;
+
 #endif // COMPONENTTYPES_HPP

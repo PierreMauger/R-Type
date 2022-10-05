@@ -35,6 +35,7 @@ int main(void)
     engine.getECS().getComponentManager().addComponent(typeid(Controllable), {});
     engine.getECS().getComponentManager().addComponent(typeid(CooldownShoot), {});
     engine.getECS().getComponentManager().addComponent(typeid(Parallax), {});
+    engine.getECS().getComponentManager().addComponent(typeid(Parent), {});
 
     // create background
     engine.getECS().getEntityManager().addMask(0, (eng::InfoEntity::SPRITEID));
@@ -83,6 +84,13 @@ int main(void)
     engine.getECS().getComponentManager().getComponent(typeid(Speed)).emplaceData(6, Speed{2});
     engine.getECS().getComponentManager().getComponent(typeid(Controllable)).emplaceData(6, Controllable{true});
     engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{0, 2});
+
+    // create cooldownBar
+    engine.getECS().getEntityManager().addMask(7, (eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT));
+    engine.getECS().getComponentManager().initEmptyComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(7, SpriteID{8});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(7, Position{10, (float)engine.getGraphic().getWindow()->getSize().y - 20, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(7, Parent{6});
 
     mainLoop(engine.getECS(), engine.getGraphic());
     return 0;
