@@ -17,6 +17,7 @@ typedef struct {
 
 typedef struct {
         std::size_t id;
+        std::size_t prio;
 } SpriteID;
 
 typedef struct {

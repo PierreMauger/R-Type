@@ -74,7 +74,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             if (collisionEnemy(i, componentManager, entityManager, pos))
                 continue;
             if (parallax.getField(i).has_value())
-                pos.x <= -800 ? pos.x = 800 : pos.x;
+                pos.x <= -820 ? pos.x = 800 : pos.x;
             else if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
                 componentManager.killEntity(i);
                 entityManager.removeMask(i);
