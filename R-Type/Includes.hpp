@@ -10,6 +10,7 @@
 #include <bitset>
 #include <condition_variable>
 #include <cstring>
+#include <deque>
 #include <filesystem>
 #include <fstream>
 #include <functional>
