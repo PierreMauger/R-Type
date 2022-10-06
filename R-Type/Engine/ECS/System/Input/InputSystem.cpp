@@ -13,7 +13,7 @@ void createShoot(std::size_t id, ComponentManager &componentManager, Position po
     entityManager.addMask(id, (eng::InfoEntity::SPRITEID) | (eng::InfoEntity::POS) | (eng::InfoEntity::VEL) | (eng::InfoEntity::PARENT) | (eng::InfoEntity::PROJECTILE) |
                                   (eng::InfoEntity::PROJECTILE));
     componentManager.initEmptyComponent();
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{1, 2});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{1, Priority::MEDIUM});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 55, pos.y + 45, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{15, 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(id, Parent{id});

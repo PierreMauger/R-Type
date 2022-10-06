@@ -15,9 +15,15 @@ typedef struct {
         float z;
 } Velocity;
 
+enum Priority {
+    HIGH = 0,
+    MEDIUM,
+    LOW
+};
+
 typedef struct {
         std::size_t id;
-        std::size_t prio;
+        enum Priority priority;
 } SpriteID;
 
 typedef struct {

@@ -16,9 +16,13 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     Component &parent = componentManager.getComponent(typeid(Parent));
     Component &cooldown = componentManager.getComponent(typeid(CooldownShoot));
     Component &parallax = componentManager.getComponent(typeid(Parallax));
+    std::vector<sf::Sprite> stockSpriteHigh;
+    std::vector<sf::Sprite> stockSpriteMedium;
+    std::vector<sf::Sprite> stockSpriteLow;
 
     for (std::size_t i = 0; i < spriteId.getSize(); i++) {
         if (entityManager.getMasks()[i].has_value() && spriteId.getField(i).has_value()) {
+            SpriteID &sprId = std::any_cast<SpriteID &>(spriteId.getField(i).value());
             sf::Sprite &spriteRef = this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id);
             if (position.getField(i).has_value()) {
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());
@@ -31,12 +35,25 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
                                        : (_clock->getElapsedTime().asSeconds() - par.time + par.cooldown) * 100 / par.cooldown,
                                    1);
             }
-            if (parallax.getField(i).has_value()) {
-                spriteRef.setPosition(spriteRef.getPosition().x + _window->getSize().x, spriteRef.getPosition().y);
-                this->_window->draw(spriteRef);
-                spriteRef.setPosition(spriteRef.getPosition().x - _window->getSize().x, spriteRef.getPosition().y);
+            if (sprId.priority == Priority::HIGH) {
+                stockSpriteHigh.push_back(spriteRef);
+            } else if (sprId.priority == Priority::MEDIUM) {
+                stockSpriteMedium.push_back(spriteRef);
+            } else if (sprId.priority == Priority::LOW) {
+                stockSpriteLow.push_back(spriteRef);
             }
-            this->_window->draw(this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id));
+            for (std::size_t i = 0; i < stockSpriteHigh.size(); i++) {
+                if (parallax.getField(i).has_value()) {
+                    stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x + _window->getSize().x, stockSpriteHigh[i].getPosition().y);
+                    this->_window->draw(stockSpriteHigh[i]);
+                    stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x - _window->getSize().x, stockSpriteHigh[i].getPosition().y);
+                }
+                this->_window->draw(stockSpriteHigh[i]);
+            }
+            for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
+                this->_window->draw(stockSpriteMedium[i]);
+            for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
+                this->_window->draw(stockSpriteLow[i]);
         }
     }
 }
