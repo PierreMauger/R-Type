@@ -9,10 +9,11 @@ namespace eng
         POS = 0b1,
         VEL = 0b10,
         SPRITEID = 0b100,
-        CONTROLLABLE = 0b1000,
-        PAR = 0b10000,
-        SPEED = 0b100000,
-        COOLDOWNSHOOT = 0b1000000
+        SPEED = 0b1000,
+        CONTROLLABLE = 0b10000,
+        PARALLAX = 0b100000,
+        PARENT = 0b1000000,
+        COOLDOWNSHOOT = 0b10000000,
     };
 
     class EntityManager
