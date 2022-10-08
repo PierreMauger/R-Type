@@ -30,7 +30,7 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
     Component &cooldown = componentManager.getComponent(typeid(CooldownShoot));
 
     for (std::size_t i = 0; i < controllable.getSize(); i++) {
-        if (controllable.getField(i).has_value()) {
+        if (controllable.getField(i).has_value() && std::any_cast<Controllable>(controllable.getField(i).value()).con == true) {
             Speed &spd = std::any_cast<Speed &>(speed.getField(i).value());
             Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
             CooldownShoot &sht = std::any_cast<CooldownShoot &>(cooldown.getField(i).value());

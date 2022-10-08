@@ -25,6 +25,7 @@ namespace eng
             GUISystem(std::shared_ptr<sf::RenderWindow> window);
             ~GUISystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
+            std::string formatBool(std::size_t value, std::size_t size);
     };
 }
 

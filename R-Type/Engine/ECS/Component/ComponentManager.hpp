@@ -10,7 +10,7 @@ namespace eng
     class ComponentManager
     {
         private:
-            std::map<std::type_index, Component> _componentArray;
+            std::vector<std::pair<std::type_index, Component>> _componentArray;
 
         public:
             ComponentManager();
@@ -18,9 +18,10 @@ namespace eng
 
             void addComponent(std::type_index type, Component component);
             void initEmptyComponent();
+            void destroyComponent(std::size_t id, std::type_index type);
             void killEntity(std::size_t id);
 
-            std::map<std::type_index, Component> &getComponentArray();
+            std::vector<std::pair<std::type_index, Component>> &getComponentArray();
             Component &getComponent(std::type_index type);
     };
 }

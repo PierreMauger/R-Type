@@ -20,6 +20,7 @@ void GUISystem::update(ComponentManager &componentManager, EntityManager &entity
 
 void GUISystem::drawEntity(ComponentManager &componentManager, EntityManager &entityManager)
 {
+    std::size_t size = componentManager.getComponentArray().size();
     ImGui::Begin("Entities", &this->_showEntity);
 
     if (ImGui::BeginTable("Entities", 3)) {
@@ -34,7 +35,7 @@ void GUISystem::drawEntity(ComponentManager &componentManager, EntityManager &en
                 ImGui::TableNextColumn();
                 ImGui::Text("%lu", i);
                 ImGui::TableNextColumn();
-                ImGui::Text(std::string("%0" + std::to_string(componentManager.getComponentArray().size()) + "b").c_str(), masks[i].value());
+                masks[i].has_value() ? ImGui::Text("%s", this->formatBool(masks[i].value(), size).c_str()) : ImGui::Text("None");
                 ImGui::TableNextColumn();
                 if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
                     entityManager.removeMask(i);
@@ -76,7 +77,7 @@ void GUISystem::drawModifyEntity(ComponentManager &componentManager, EntityManag
         ImGui::TableSetupColumn("Action");
         ImGui::TableHeadersRow();
         if (masks[this->_entityID].has_value()) {
-            for (unsigned short i = 0; i < 8 && i < componentManager.getComponentArray().size(); i++) {
+            for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
                 ImGui::Text("%s", it->first.name() + std::strlen(it->first.name()) / 10 + 1);
@@ -87,11 +88,15 @@ void GUISystem::drawModifyEntity(ComponentManager &componentManager, EntityManag
                     ImGui::Text("None");
                 ImGui::TableNextColumn();
                 if (std::bitset<sizeof(std::size_t)>(masks[this->_entityID].value()).test(i)) {
-                    if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str()))
+                    if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
                         entityManager.updateMask(this->_entityID, masks[this->_entityID].value() & ~(1 << i));
+                        componentManager.destroyComponent(this->_entityID, it->first);
+                    }
                 } else {
-                    if (ImGui::Button(std::string("Add##" + std::to_string(i)).c_str()))
+                    if (ImGui::Button(std::string("Add##" + std::to_string(i)).c_str())) {
                         entityManager.updateMask(this->_entityID, masks[this->_entityID].value() | (1 << i));
+                        // componentManager.getComponent(it->first).emplaceData(this->_entityID, it->first);
+                    }
                 }
                 it++;
             }
@@ -116,13 +121,28 @@ void GUISystem::drawComponent(Component &component, std::type_index type, std::s
             ImGui::DragFloat("y##2", &std::any_cast<Velocity &>(componentT.value()).y, 0.1f, -FLT_MAX, +FLT_MAX);
             ImGui::DragFloat("z##2", &std::any_cast<Velocity &>(componentT.value()).z, 0.1f, -FLT_MAX, +FLT_MAX);
         } else if (type == typeid(SpriteID)) {
-            ImGui::InputScalar("", ImGuiDataType_U64, &std::any_cast<SpriteID &>(componentT.value()).id);
+            ImGui::InputScalar("##3", ImGuiDataType_U64, &std::any_cast<SpriteID &>(componentT.value()).id);
         } else if (type == typeid(Controllable)) {
-            ImGui::Checkbox("", &std::any_cast<Controllable &>(componentT.value()).con);
+            ImGui::Checkbox("##4", &std::any_cast<Controllable &>(componentT.value()).con);
+        } else if (type == typeid(Parallax)) {
+            ImGui::Checkbox("##5", &std::any_cast<Parallax &>(componentT.value()).par);
         } else if (type == typeid(Speed)) {
             ImGui::DragFloat("coef", &std::any_cast<Speed &>(componentT.value()).speed, 0.1f, -FLT_MAX, +FLT_MAX);
         } else if (type == typeid(CooldownShoot)) {
             ImGui::Text("%f", std::any_cast<CooldownShoot &>(componentT.value()).lastShoot);
         }
     }
+}
+
+std::string GUISystem::formatBool(std::size_t value, std::size_t size)
+{
+    std::string binary = std::bitset<sizeof(std::size_t)>(value).to_string();
+    std::string result = "";
+
+    for (std::size_t i = 0; i < size; i++) {
+        result += binary[i];
+        if (i % 8 == 7)
+            result += " ";
+    }
+    return result;
 }
