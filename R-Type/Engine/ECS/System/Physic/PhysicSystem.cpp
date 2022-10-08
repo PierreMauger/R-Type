@@ -38,10 +38,13 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
     Component &proj = componentManager.getComponent(typeid(Projectile));
     Component &enemy = componentManager.getComponent(typeid(Enemy));
     Component &position = componentManager.getComponent(typeid(Position));
+    Component &parent = componentManager.getComponent(typeid(Parent));
+    Component &con = componentManager.getComponent(typeid(Controllable));
 
-    if (proj.getField(i).has_value()) {
+    if (proj.getField(i).has_value() && parent.getField(i).has_value()) {
+        Parent &par = std::any_cast<Parent &>(parent.getField(i).value());
         for (std::size_t j = 0; j < position.getSize(); j++) {
-            if (position.getField(j).has_value() && enemy.getField(j).has_value()) {
+            if (position.getField(j).has_value() && (enemy.getField(j).has_value() || con.getField(j).has_value()) && par.id != j) {
                 Position &pos2 = std::any_cast<Position &>(position.getField(j).value());
                 if (pos.x > pos2.x - 10 && pos.x < pos2.x + 10 && pos.y > pos2.y - 20 && pos.y < pos2.y + 110) {
                     componentManager.killEntity(j);

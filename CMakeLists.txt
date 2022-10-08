@@ -100,7 +100,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/GUI/GUISystem.cpp
     ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
-    ${ENGINE_ROOT}/ECS/System/Patern/PaternSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp

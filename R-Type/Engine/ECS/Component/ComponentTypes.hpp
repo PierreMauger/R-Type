@@ -40,6 +40,8 @@ typedef struct {
 
 typedef struct {
         bool enemy;
+        float lastShoot;
+        float shootDelay;
 } Enemy;
 
 typedef struct {
@@ -47,9 +49,13 @@ typedef struct {
 } Speed;
 
 typedef struct {
-        float time;
-        float cooldown;
+        float lastShoot;
+        float shootDelay;
 } CooldownShoot;
+
+typedef struct {
+        bool bar;
+} CooldownBar;
 
 typedef struct {
         std::size_t id;

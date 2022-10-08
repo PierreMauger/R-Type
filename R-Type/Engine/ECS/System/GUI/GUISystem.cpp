@@ -122,7 +122,7 @@ void GUISystem::drawComponent(Component &component, std::type_index type, std::s
         } else if (type == typeid(Speed)) {
             ImGui::DragFloat("coef", &std::any_cast<Speed &>(componentT.value()).speed, 0.1f, -FLT_MAX, +FLT_MAX);
         } else if (type == typeid(CooldownShoot)) {
-            ImGui::Text("%f", std::any_cast<CooldownShoot &>(componentT.value()).time);
+            ImGui::Text("%f", std::any_cast<CooldownShoot &>(componentT.value()).lastShoot);
         }
     }
 }
