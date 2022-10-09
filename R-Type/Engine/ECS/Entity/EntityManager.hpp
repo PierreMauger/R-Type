@@ -17,6 +17,9 @@ namespace eng
         PROJECTILE = 0b100000000,
         ENEMY = 0b1000000000,
         COOLDOWNBAR = 0b10000000000,
+        LIFE = 0b100000000000,
+        SIZE = 0b1000000000000,
+        APP = 0b10000000000000,
     };
 
     class EntityManager

@@ -15,6 +15,11 @@ typedef struct {
         float z;
 } Velocity;
 
+typedef struct {
+        float x;
+        float y;
+} Size;
+
 enum Priority {
     HIGH = 0,
     MEDIUM,
@@ -39,10 +44,19 @@ typedef struct {
 } Projectile;
 
 typedef struct {
+        std::size_t life;
+} Life;
+
+typedef struct {
         bool enemy;
         float lastShoot;
         float shootDelay;
 } Enemy;
+
+typedef struct {
+        bool app;
+        float end;
+} Appearance;
 
 typedef struct {
         float speed;

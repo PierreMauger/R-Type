@@ -40,15 +40,23 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
     Component &position = componentManager.getComponent(typeid(Position));
     Component &parent = componentManager.getComponent(typeid(Parent));
     Component &con = componentManager.getComponent(typeid(Controllable));
+    Component &life = componentManager.getComponent(typeid(Life));
+    Component &appear = componentManager.getComponent(typeid(Appearance));
 
     if (proj.getField(i).has_value() && parent.getField(i).has_value()) {
         Parent &par = std::any_cast<Parent &>(parent.getField(i).value());
         for (std::size_t j = 0; j < position.getSize(); j++) {
             if (position.getField(j).has_value() && (enemy.getField(j).has_value() || con.getField(j).has_value()) && par.id != j) {
+                if (appear.getField(j).has_value() && std::any_cast<Appearance &>(appear.getField(j).value()).app)
+                    continue;
                 Position &pos2 = std::any_cast<Position &>(position.getField(j).value());
                 if (pos.x > pos2.x - 10 && pos.x < pos2.x + 10 && pos.y > pos2.y - 20 && pos.y < pos2.y + 110) {
-                    componentManager.killEntity(j);
-                    entityManager.removeMask(j);
+                    Life &hp= std::any_cast<Life &>(life.getField(j).value());
+                    hp.life -= 1;
+                    if (hp.life == 0) {
+                        componentManager.killEntity(j);
+                        entityManager.removeMask(j);
+                    }
                     componentManager.killEntity(i);
                     entityManager.removeMask(i);
                     return true;
@@ -65,11 +73,23 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     Component &velocity = componentManager.getComponent(typeid(Velocity));
     Component &parallax = componentManager.getComponent(typeid(Parallax));
     Component &pat = componentManager.getComponent(typeid(Patern));
+    Component &appear = componentManager.getComponent(typeid(Appearance));
 
     for (std::size_t i = 0; i < position.getSize(); i++) {
-        if (position.getField(i).has_value() && velocity.getField(i).has_value() && !pat.getField(i).has_value()) {
-            Position &pos = std::any_cast<Position &>(position.getField(i).value());
-            Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
+        if (!position.getField(i).has_value() || !velocity.getField(i).has_value())
+            continue;
+        Position &pos = std::any_cast<Position &>(position.getField(i).value());
+        Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
+        if (appear.getField(i).has_value()) {
+            Appearance &app = std::any_cast<Appearance &>(appear.getField(i).value());
+            if (app.app) {
+                pos.y -= vel.y;
+                if (pos.y >= app.end)
+                    app.app = false;
+                continue;
+            }
+        }
+        if (!pat.getField(i).has_value()) {
             pos.x += vel.x;
             pos.y += vel.y;
             if (collisionFireball(i, componentManager, entityManager, pos))
