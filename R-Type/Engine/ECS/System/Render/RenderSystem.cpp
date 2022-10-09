@@ -9,21 +9,21 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
     if (!this->_texture.at(0).loadFromFile("./R-Type/Assets/Sprites/Background.jpg"))
         throw std::runtime_error("Background not found");
     if (!this->_texture.at(1).loadFromFile("./R-Type/Assets/Sprites/Spaceship.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Spaceship not found");
     if (!this->_texture.at(2).loadFromFile("./R-Type/Assets/Sprites/Fireball.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Fireball not found");
     if (!this->_texture.at(3).loadFromFile("./R-Type/Assets/Sprites/Parallax/Background.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Parallax/Background not found");
     if (!this->_texture.at(4).loadFromFile("./R-Type/Assets/Sprites/Parallax/Stars.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Parallax/Stars not found");
     if (!this->_texture.at(5).loadFromFile("./R-Type/Assets/Sprites/Parallax/Moons.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Parallax/Moons not found");
     if (!this->_texture.at(6).loadFromFile("./R-Type/Assets/Sprites/Parallax/Ring-Planet.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Parallax/Ring-Planet not found");
     if (!this->_texture.at(7).loadFromFile("./R-Type/Assets/Sprites/Parallax/Planet.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Parallax/Planet not found");
     if (!this->_texture.at(8).loadFromFile("./R-Type/Assets/Sprites/Bar.png"))
-        throw std::runtime_error("Background not found");
+        throw std::runtime_error("Bar not found");
     this->_sprites.push_back(sf::Sprite(this->_texture[0]));
     this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
     this->_sprites.push_back(sf::Sprite(this->_texture[1]));

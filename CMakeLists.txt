@@ -23,6 +23,8 @@ find_package(Threads REQUIRED)
 set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
 set(DBUILD_SHARED_LIBS TRUE)
+include(ProcessorCount)
+ProcessorCount(CMAKE_BUILD_PARALLEL_LEVEL)
 
 ################## BUILD ImGui ##################
 
@@ -46,6 +48,11 @@ set(ImGui_SRC
     ${ImGui_ROOT}/imgui-SFML.cpp
 )
 
+#fetch required deps
+find_package(OpenGL REQUIRED)
+find_package(SFML REQUIRED)
+find_package(Boost REQUIRED)
+
 #set include paths
 include_directories(
     ${ImGui_INC}
@@ -54,17 +61,14 @@ include_directories(
     ${PROJECT_NAME}
 )
 
-#fetch required deps
-find_package(OpenGL REQUIRED)
-find_package(SFML REQUIRED)
-find_package(Boost REQUIRED)
-
 #set source files
 add_library(${ImGui} ${ImGui_SRC})
 
 target_link_libraries(${ImGui} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${ImGui} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ImGui} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+set_target_properties(${ImGui} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${ImGui} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
 #install target
 install(TARGETS ${ImGui})
@@ -128,6 +132,8 @@ target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 target_link_libraries(${ENGINE} PRIVATE ${BOOST_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE ${ImGui})
+set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
 #install target
 install(TARGETS ${ENGINE})
@@ -224,7 +230,5 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-audio-d-2.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/Engine.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ImGui.dll ${CMAKE_SOURCE_DIR}
   )
 endif()
