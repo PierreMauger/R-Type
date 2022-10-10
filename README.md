@@ -7,18 +7,16 @@
 </p>
 
 ## 📋 Table of Contents
-<!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText="Click to expand") -->
 <details>
-<summary>"Click to expand"</summary>
+<summary>Click to reveal</summary>
 
-- [About](#about)
-- [Requirements](#requirements)
-- [Building](#building)
-- [Usage](#usage)
-- [Authors](#authors)
+- [About](#🔍-about)
+- [Requirements](#💻-requirements)
+- [Building](#⚙️-building)
+- [Usage](#🎮-usage)
+- [Authors](#🤝-authors)
 
 </details>
-<!-- AUTO-GENERATED-CONTENT:END -->
 
 ## 🔍 About
 
