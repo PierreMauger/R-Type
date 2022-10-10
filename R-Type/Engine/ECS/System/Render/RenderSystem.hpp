@@ -1,7 +1,9 @@
 #ifndef RENDERSYSTEM_HPP
 #define RENDERSYSTEM_HPP
 
+#include "Engine/ECS/System/GUI/GUISystem.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/Loader/Loader.hpp"
 #include "Includes.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
@@ -13,11 +15,11 @@ namespace eng
         private:
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Clock> _clock;
-            std::array<sf::Texture, 10> _texture; // array car sf::vector stock dans la mémoire de manière bizarre donc white square problem sfml
+
             std::vector<sf::Sprite> _sprites;
 
         public:
-            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock);
+            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader);
             ~RenderSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };

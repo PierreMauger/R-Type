@@ -26,12 +26,12 @@ void Loader::loadSprites(std::vector<std::string> paths)
     for (auto &path : paths) {
         try {
             for (auto &p : std::filesystem::directory_iterator(path)) {
-                sf::Texture texture;
+                sf::Texture *texture = new sf::Texture();
                 sf::Sprite sprite;
 
-                if (texture.loadFromFile(p.path().string())) {
-                    sprite.setTexture(texture);
-                    this->_textures.push_back(texture);
+                if (texture->loadFromFile(p.path())) {
+                    sprite.setTexture(*texture);
+                    this->_textures.push_back(*texture);
                     this->_sprites.push_back(sprite);
                 }
             }
