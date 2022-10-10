@@ -12,16 +12,16 @@ float createRandom(std::size_t min, std::size_t max)
 void createBoss(eng::ECS &ecs)
 {
     std::size_t id = ecs.getEntityManager().getMasks().size();
-    float posY = createRandom(50, 300);
+    float posY = createRandom(50, 250);
 
     ecs.getEntityManager().addMask(id, (eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::APP | eng::InfoEntity::SPRITEID | eng::InfoEntity::ENEMY |
                                         eng::InfoEntity::LIFE | eng::InfoEntity::SIZE));
     ecs.getComponentManager().initEmptyComponent();
     ecs.getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM});
     ecs.getComponentManager().getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, posY});
-    ecs.getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{480, -300, 0});
-    ecs.getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.5, -2, 0});
-    ecs.getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(1), 0, posY - 2});
+    ecs.getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{430, -300, 0});
+    ecs.getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, -2, 0});
+    ecs.getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(3), 0, {430, posY - 2}});
     ecs.getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true, 0, 0.4});
     ecs.getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{300, 259});
     ecs.getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{5});
@@ -46,7 +46,7 @@ void createEnemy(eng::ECS &ecs)
     ecs.getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{3, Priority::MEDIUM});
     ecs.getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{800, posY, 0});
     ecs.getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-2, -2, 0});
-    ecs.getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(type), 0, posY});
+    ecs.getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(type), 0, {800, posY}});
     ecs.getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true, 0, (float)(type == 0 ? 1.0 : 0.0)});
     ecs.getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{128, 120});
     ecs.getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{1});

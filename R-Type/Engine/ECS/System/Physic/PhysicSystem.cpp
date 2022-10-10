@@ -12,6 +12,7 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
     Component &con = componentManager.getComponent(typeid(Controllable));
     Component &enemy = componentManager.getComponent(typeid(Enemy));
     Component &position = componentManager.getComponent(typeid(Position));
+    Component &size = componentManager.getComponent(typeid(Size));
 
     if (con.getField(i).has_value()) {
         pos.x < 0 ? pos.x = 0 : pos.x;
@@ -21,7 +22,8 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
         for (std::size_t j = 0; j < position.getSize(); j++) {
             if (position.getField(j).has_value() && enemy.getField(j).has_value()) {
                 Position &pos2 = std::any_cast<Position &>(position.getField(j).value());
-                if (pos.x > pos2.x - 90 && pos.x < pos2.x + 90 && pos.y > pos2.y - 90 && pos.y < pos2.y + 90) {
+                Size &sz = std::any_cast<Size &>(size.getField(j).value());
+                if (pos.x >= pos2.x && pos.x <= pos2.x + sz.x && pos.y >= pos2.y && pos.y <= pos2.y + sz.y) {
                     componentManager.killEntity(i);
                     entityManager.removeMask(i);
                     return true;
@@ -42,6 +44,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
     Component &con = componentManager.getComponent(typeid(Controllable));
     Component &life = componentManager.getComponent(typeid(Life));
     Component &appear = componentManager.getComponent(typeid(Appearance));
+    Component &size = componentManager.getComponent(typeid(Size));
 
     if (proj.getField(i).has_value() && parent.getField(i).has_value()) {
         Parent &par = std::any_cast<Parent &>(parent.getField(i).value());
@@ -50,8 +53,9 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                 if (appear.getField(j).has_value() && std::any_cast<Appearance &>(appear.getField(j).value()).app)
                     continue;
                 Position &pos2 = std::any_cast<Position &>(position.getField(j).value());
-                if (pos.x > pos2.x - 10 && pos.x < pos2.x + 10 && pos.y > pos2.y - 20 && pos.y < pos2.y + 110) {
-                    Life &hp= std::any_cast<Life &>(life.getField(j).value());
+                Size &sz = std::any_cast<Size &>(size.getField(j).value());
+                if (pos.x >= pos2.x && pos.x <= pos2.x + sz.x && pos.y >= pos2.y && pos.y <= pos2.y + sz.y) {
+                    Life &hp = std::any_cast<Life &>(life.getField(j).value());
                     hp.life -= 1;
                     if (hp.life == 0) {
                         componentManager.killEntity(j);
@@ -84,8 +88,10 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             Appearance &app = std::any_cast<Appearance &>(appear.getField(i).value());
             if (app.app) {
                 pos.y -= vel.y;
-                if (pos.y >= app.end)
+                if (pos.y >= app.end) {
+                    vel.y = 0;
                     app.app = false;
+                }
                 continue;
             }
         }

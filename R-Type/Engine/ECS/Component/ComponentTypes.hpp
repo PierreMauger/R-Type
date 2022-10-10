@@ -84,13 +84,14 @@ typedef struct {
 enum TypePatern {
     LINE = 0,
     OSCILLATION,
-    BIGOSCILLATION
+    BIGOSCILLATION,
+    CIRCLE
 };
 
 typedef struct {
         enum TypePatern type;
         float angle;
-        float center;
+        sf::Vector2f center;
 } Patern;
 
 #endif // COMPONENTTYPES_HPP

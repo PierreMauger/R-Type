@@ -12,7 +12,6 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::Clock> _clock;
-            float _angle;
             void createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager);
 
         public:
