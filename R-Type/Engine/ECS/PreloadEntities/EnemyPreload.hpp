@@ -1,5 +1,5 @@
-#ifndef PARALLAXPRELOAD_HPP
-#define PARALLAXPRELOAD_HPP
+#ifndef ENEMYPRELOAD_HPP
+#define ENEMYPRELOAD_HPP
 
 #include <Includes.hpp>
 
@@ -8,11 +8,11 @@
 
 namespace eng
 {
-    class ParallaxPreload : public EntityPreload
+    class EnemyPreload : public EntityPreload
     {
         public:
             void preload(Engine &engine) override;
     };
 }
 
-#endif // PARALLAXPRELOAD_HPP
+#endif // ENEMYPRELOAD_HPP

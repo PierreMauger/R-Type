@@ -1,5 +1,5 @@
-#ifndef PARALLAXPRELOAD_HPP
-#define PARALLAXPRELOAD_HPP
+#ifndef BOSSPRELOAD_HPP
+#define BOSSPRELOAD_HPP
 
 #include <Includes.hpp>
 
@@ -8,11 +8,11 @@
 
 namespace eng
 {
-    class ParallaxPreload : public EntityPreload
+    class BossPreload : public EntityPreload
     {
         public:
             void preload(Engine &engine) override;
     };
 }
 
-#endif // PARALLAXPRELOAD_HPP
+#endif // BOSSPRELOAD_HPP

@@ -8,11 +8,11 @@ InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::C
     this->_clock = clock;
 }
 
-void createShoot(ComponentManager &componentManager, Position pos, EntityManager &entityManager)
+void InputSystem::createShoot(ComponentManager &componentManager, EntityManager &entityManager, Position pos, Size size)
 {
-    Size size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(id).value());
     std::size_t id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
-                                      eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE), componentManager);
+                                            eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE),
+                                           componentManager);
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{1, Priority::MEDIUM});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
@@ -34,9 +34,11 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
                 Speed &spd = std::any_cast<Speed &>(componentManager.getComponent(typeid(Speed)).getField(i).value());
                 Velocity &vel = std::any_cast<Velocity &>(componentManager.getComponent(typeid(Velocity)).getField(i).value());
                 CooldownShoot &sht = std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value());
+                Size &size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value());
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
                     sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-                    createShoot(i, componentManager, pos, entityManager);
+                    createShoot(componentManager, entityManager, pos, size);
                 }
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = spd.speed : vel.x = 0);
                 sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = spd.speed : vel.y = 0);

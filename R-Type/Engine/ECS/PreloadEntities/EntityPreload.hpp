@@ -3,7 +3,7 @@
 
 #include <Includes.hpp>
 
-#include "Engine/ECS/ECS.hpp"
+#include "Engine/Engine.hpp"
 
 namespace eng
 {
@@ -12,7 +12,7 @@ namespace eng
         public:
             virtual ~EntityPreload() = default;
 
-            virtual void preload(EntityManager &entityManager, ComponentManager &ComponentManager) = 0;
+            virtual void preload(Engine &engine) = 0;
     };
 }
 

@@ -1,5 +1,5 @@
-#ifndef PARALLAXPRELOAD_HPP
-#define PARALLAXPRELOAD_HPP
+#ifndef COOLDOWNBARPRELOAD_HPP
+#define COOLDOWNBARPRELOAD_HPP
 
 #include <Includes.hpp>
 
@@ -8,11 +8,11 @@
 
 namespace eng
 {
-    class ParallaxPreload : public EntityPreload
+    class CooldownBarPreload : public EntityPreload
     {
         public:
             void preload(Engine &engine) override;
     };
 }
 
-#endif // PARALLAXPRELOAD_HPP
+#endif // COOLDOWNBARPRELOAD_HPP
