@@ -106,6 +106,21 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                     case 2:
                         componentManager.addComponent<SpriteID>(this->_selectedEntity);
                         break;
+                    case 3:
+                        componentManager.addComponent<Controllable>(this->_selectedEntity);
+                        break;
+                    case 4:
+                        componentManager.addComponent<Parallax>(this->_selectedEntity);
+                        break;
+                    case 5:
+                        componentManager.addComponent<Speed>(this->_selectedEntity);
+                        break;
+                    case 6:
+                        componentManager.addComponent<CooldownShoot>(this->_selectedEntity);
+                        break;
+                    case 7:
+                        componentManager.addComponent<Parent>(this->_selectedEntity);
+                        break;
                     default:
                         break;
                     }
@@ -128,15 +143,42 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     }
     case 1: {
         Velocity &velocity = std::any_cast<Velocity &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
-        ImGui::SliderFloat("X##vel", &velocity.x, -10, 10);
-        ImGui::SliderFloat("Y##vel", &velocity.y, -10, 10);
-        ImGui::SliderFloat("Z##vel", &velocity.z, -10, 10);
+        ImGui::SliderFloat("X##vel", &velocity.x, -10.0f, 10.0f);
+        ImGui::SliderFloat("Y##vel", &velocity.y, -10.0f, 10.0f);
+        ImGui::SliderFloat("Z##vel", &velocity.z, -10.0f, 10.0f);
         break;
     }
     case 2: {
         SpriteID &spriteID = std::any_cast<SpriteID &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         const ImU64 increment = 1;
-        ImGui::InputScalar("Model ID", ImGuiDataType_U64, &spriteID, &increment);
+        ImGui::InputScalar("Model ID", ImGuiDataType_U64, &spriteID.id, &increment);
+        break;
+    }
+    case 3: {
+        Controllable &controllable = std::any_cast<Controllable &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("Controllable", &controllable.con);
+        break;
+    }
+    case 4: {
+        Parallax &parallax = std::any_cast<Parallax &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("Parallax", &parallax.par);
+        break;
+    }
+    case 5: {
+        Speed &speed = std::any_cast<Speed &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::SliderFloat("Speed", &speed.speed, -10.0f, 10.0f);
+        break;
+    }
+    case 6: {
+        CooldownShoot &cooldownShoot = std::any_cast<CooldownShoot &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::SliderFloat("Time", &cooldownShoot.time, 0.0f, 10.0f);
+        ImGui::SliderFloat("Cooldown", &cooldownShoot.cooldown, 0.0f, 10.0f);
+        break;
+    }
+    case 7: {
+        Parent &parent = std::any_cast<Parent &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        const ImU64 increment = 1;
+        ImGui::InputScalar("Model ID", ImGuiDataType_U64, &parent.id, &increment);
         break;
     }
     default:
