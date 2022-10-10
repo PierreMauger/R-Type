@@ -11,17 +11,33 @@ namespace eng
     {
         private:
             std::map<std::type_index, Component> _componentArray;
+            std::map<std::size_t, std::type_index> _orderedMap;
 
         public:
             ComponentManager();
             ~ComponentManager() = default;
 
-            void addComponent(std::type_index type, Component component);
-            void initEmptyComponent();
-            void killEntity(std::size_t id);
-
             std::map<std::type_index, Component> &getComponentArray();
             Component &getComponent(std::type_index type);
+            Component &getComponent(std::size_t index);
+            std::type_index getComponentType(std::size_t index);
+            void initEmptyComponent(std::size_t id);
+
+            template <typename T> void bindComponent()
+            {
+                this->_componentArray[std::type_index(typeid(T))] = Component();
+                this->_orderedMap.try_emplace(this->_orderedMap.size(), std::type_index(typeid(T)));
+            }
+
+            template <typename T> void addComponent(std::size_t id)
+            {
+                this->_componentArray[std::type_index(typeid(T))].addData(id, T());
+            }
+
+            void addEntity(std::size_t id);
+            void removeSingleComponent(std::size_t id, std::type_index type);
+            void removeAllComponents(std::size_t id);
+            void updateComponent(std::size_t id);
     };
 }
 

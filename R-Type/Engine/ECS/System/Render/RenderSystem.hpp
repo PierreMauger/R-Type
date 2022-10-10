@@ -5,8 +5,6 @@
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Loader/Loader.hpp"
 #include "Includes.hpp"
-#include "imgui-SFML.h"
-#include "imgui.h"
 
 namespace eng
 {
@@ -15,8 +13,9 @@ namespace eng
         private:
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Clock> _clock;
-
             std::vector<sf::Sprite> _sprites;
+            void displaycooldownBar(ComponentManager &componentManager, sf::Sprite &spriteRef, std::size_t i);
+            void displayLifeBar(ComponentManager &componentManager, sf::Sprite &spriteRef, std::size_t i);
 
         public:
             RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader);

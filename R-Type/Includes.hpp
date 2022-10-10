@@ -21,10 +21,12 @@
 #include <mutex>
 #include <optional>
 #include <queue>
+#include <random>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <typeindex>
+#include <unordered_map>
 #include <vector>
 
 #endif // INCLUDES_HPP
