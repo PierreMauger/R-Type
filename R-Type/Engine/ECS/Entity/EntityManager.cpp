@@ -28,7 +28,7 @@ void EntityManager::removeMask(std::size_t id)
 {
     if (this->_masks.size() <= id)
         return;
-    this->_masks[id].reset();
+    this->_masks[id] = std::nullopt;
 }
 
 void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
