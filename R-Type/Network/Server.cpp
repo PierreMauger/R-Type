@@ -1,20 +1,18 @@
 #include "Server.hpp"
 
-Server::Server(uint16_t port) :
-    _ioContext(),
-    _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), port)),
-    _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), port))
+Server::Server(boost::asio::io_context &ioContext, uint16_t portUdp, uint16_t portTcp) :
+    _ioContext(ioContext),
+    _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), portUdp)),
+    _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
+    if ((portUdp == portTcp) || (portUdp > 65535) || (portTcp > 65535))
+        throw std::runtime_error("Invalid port, must be different and between 0 and 65535");
+    this->initServer();
 }
 
 Server::~Server()
 {
-    if (this->_udpSocket.is_open())
-        this->_udpSocket.close();
-    for (auto &connection : this->_listConnections)
-        if (connection->getTcpSocket().is_open())
-            connection->getTcpSocket().close();
-    this->_ioContext.stop();
+    this->stop();
 }
 
 void Server::initServer()
@@ -43,14 +41,15 @@ void Server::initServer()
     );
 }
 
-void Server::run()
+void Server::stop()
 {
-    try {
-        this->initServer();
-        this->_ioContext.run();
-    } catch (std::exception &error) {
-        std::cerr << error.what() << std::endl;
-    }
+    if (this->_udpSocket.is_open())
+        this->_udpSocket.close();
+    for (auto &connection : this->_listConnections)
+        if (connection->getTcpSocket().is_open())
+            connection->getTcpSocket().close();
+    if (!this->_ioContext.stopped())
+        this->_ioContext.stop();
 }
 
 void Server::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint)

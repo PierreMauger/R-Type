@@ -18,7 +18,7 @@
 
 #define _NET_BUFFER_SIZE 2048
 
-typedef std::vector<uint8_t>                            _STORAGE_DATA;
+typedef boost::array<char, _NET_BUFFER_SIZE>            _STORAGE_DATA;
 typedef std::vector<_STORAGE_DATA>                      _QUEUE_TYPE;
 typedef boost::asio::ip::udp                            _B_ASIO_UDP;
 typedef boost::asio::ip::tcp                            _B_ASIO_TCP;

@@ -15,7 +15,7 @@ class Connection : public boost::enable_shared_from_this<Connection>
 
     public:
         Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
-        Connection(std::string ip, uint16_t port, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
+        Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
         ~Connection();
         _B_ASIO_TCP::socket &getTcpSocket();
         void initConnection();

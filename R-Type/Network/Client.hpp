@@ -9,18 +9,17 @@ class Client {
         void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint);
 
     protected:
-        boost::asio::io_context _ioContext;
+        boost::asio::io_context &_ioContext;
         _B_ASIO_TCP::resolver _resolver;
         _B_ASIO_UDP::socket _udpSocket;
         boost::shared_ptr<Connection> _connection;
         _QUEUE_TYPE _dataIn;
 
     public:
-        Client(std::string ip, uint16_t port);
+        Client(boost::asio::io_context &ioContext, std::string ip, uint16_t portUdp, uint16_t portTcp);
         ~Client();
 
         void initClient();
-        void run();
 
         void open();
         void close();

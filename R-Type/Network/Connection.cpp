@@ -9,10 +9,10 @@ Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, 
     this->initConnection();
 }
 
-Connection::Connection(std::string ip, uint16_t port, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket) :
+Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket) :
     _ioContext(ioContext),
-    _udpEndpoint(boost::asio::ip::address::from_string(ip), port),
-    _tcpEndpoint(boost::asio::ip::address::from_string(ip), port),
+    _udpEndpoint(boost::asio::ip::address::from_string(ip), portUdp),
+    _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp),
     _udpSocket(udpSocket),
     _tcpSocket(ioContext),
     _dataIn(dataIn)

@@ -1,21 +1,23 @@
 #include "Client.hpp"
 
-Client::Client(std::string ip, uint16_t port) :
-    _ioContext(),
+Client::Client(boost::asio::io_context &ioContext, std::string ip, uint16_t portUdp, uint16_t portTcp) :
+    _ioContext(ioContext),
     _resolver(_ioContext),
-    _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(boost::asio::ip::address::from_string(ip), port)),
+    _udpSocket(_ioContext),
     _dataIn(),
     _connection()
 {
-    this->_connection = boost::make_shared<Connection>(ip, port, this->_ioContext, this->_dataIn, this->_udpSocket);
-    this->_connection->setTcpEndpoint(_B_ASIO_TCP::endpoint(boost::asio::ip::address::from_string(ip), port));
-    this->_connection->setUdpEndpoint(ip, port);
+    if ((portUdp == portTcp) || (portUdp > 65535) || (portTcp > 65535))
+        throw std::runtime_error("Invalid port, must be different and between 0 and 65535");
+    this->_connection = boost::make_shared<Connection>(ip, portUdp, portTcp, this->_ioContext, this->_dataIn, this->_udpSocket);
+    this->_connection->setTcpEndpoint(_B_ASIO_TCP::endpoint(boost::asio::ip::address::from_string(ip), portTcp));
+    this->_connection->setUdpEndpoint(ip, portUdp);
+    this->open();
 }
 
 Client::~Client()
 {
     this->close();
-    this->_ioContext.stop();
 }
 
 void Client::initClient()
@@ -35,21 +37,13 @@ void Client::initClient()
     );
 }
 
-void Client::run()
-{
-    try {
-        this->initClient();
-        this->_ioContext.run();
-    } catch (std::exception &error) {
-        std::cerr << error.what() << std::endl;
-    }
-}
-
 void Client::open()
 {
     _B_ASIO_TCP::resolver::results_type endpoints = this->_resolver.resolve(this->_connection->getTcpEndpoint());
     boost::asio::connect(this->_connection->getTcpSocket(), endpoints);
     this->_udpSocket.open(_B_ASIO_UDP::v4());
+    // this->tcpMsg({'H', 'E', 'L', 'L', 'O'});
+    this->initClient();
 }
 
 void Client::close()
@@ -58,6 +52,8 @@ void Client::close()
         this->_udpSocket.close();
     if (this->_connection->getTcpSocket().is_open())
         this->_connection->getTcpSocket().close();
+    if (!this->_ioContext.stopped())
+        this->_ioContext.stop();
 }
 
 void Client::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint)
@@ -77,6 +73,7 @@ void Client::tcpMsg(_STORAGE_DATA data)
 
 void Client::udpMsg(_STORAGE_DATA data)
 {
+    std::cout << "Sending UDP message" << std::endl;
     this->_connection->udpMsg(data);
 }
 
