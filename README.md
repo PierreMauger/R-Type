@@ -10,11 +10,11 @@
 <details>
 <summary>Click to reveal</summary>
 
-- [About](#🔍-about)
-- [Requirements](#💻-requirements)
-- [Building](#⚙️-building)
-- [Usage](#🎮-usage)
-- [Authors](#🤝-authors)
+- [About](#-about)
+- [Requirements](#-requirements)
+- [Building](#-building)
+- [Usage](#-usage)
+- [Authors](#-authors)
 
 </details>
 
@@ -33,7 +33,7 @@ Supported operating systems:
 Dependencies:
 - Cmake 3.24+
 
-## ⚙️ Building
+## 🔧 Building
 
 Launch r-type.sh (linux/MacOS) or r-type.bat (Windows) to start the building of the project.
 It will automatically:
