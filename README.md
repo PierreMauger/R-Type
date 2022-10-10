@@ -7,8 +7,9 @@
 </p>
 
 ## 📋 Table of Contents
+<!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText="Click to expand") -->
 <details>
-<summary>Click to reveal</summary>
+<summary>"Click to expand"</summary>
 
 - [About](#about)
 - [Requirements](#requirements)
@@ -17,6 +18,7 @@
 - [Authors](#authors)
 
 </details>
+<!-- AUTO-GENERATED-CONTENT:END -->
 
 ## 🔍 About
 
@@ -47,4 +49,4 @@ One person has to start r-type_server to host the server and can also start r-ty
 
 ## 🤝 Authors
 
-[Pierre HAMEL](https://github.com/pierre1754) - [Dorian AYOUL](https://github.com/NairodGH) - [Jean-Baptiste BROCHERIE](https://github.com/Parumezan) - [Pierre Mauger](https://github.com/PierreMauger) - [Xavier TONNELLIER](https://github.com/XavTo)
+[Pierre HAMEL](https://github.com/pierre1754) - [Dorian AYOUL](https://github.com/NairodGH) - [Jean-Baptiste BROCHERIE](https://github.com/Parumezan) - [Pierre MAUGER](https://github.com/PierreMauger) - [Xavier TONNELLIER](https://github.com/XavTo)
