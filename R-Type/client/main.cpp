@@ -1,3 +1,4 @@
+#include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 
@@ -22,7 +23,6 @@ int main(void)
     eng::EntityManager &entityManager = engine.getECS().getEntityManager();
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
     eng::Graphic &graphic = engine.getGraphic();
-    std::size_t id = 0;
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
@@ -40,48 +40,14 @@ int main(void)
     componentManager.addComponent(typeid(Parent), {});
 
     // create background
-    id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX), componentManager);
-    componentManager.initNewComponent();
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{3});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.2, 0, 0});
-    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX), componentManager);
-    componentManager.initNewComponent();
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{3});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{800, 0, 0});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.2, 0, 0});
-    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX), componentManager);
-    componentManager.initNewComponent();
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{4});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.6, 0, 0});
-    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX), componentManager);
-    componentManager.initNewComponent();
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 100, 0});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1, 0, 0});
-    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX), componentManager);
-    componentManager.initNewComponent();
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{400, 250, 0});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1.5, 0, 0});
-    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX), componentManager);
-    componentManager.initNewComponent();
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{7});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{800, 100, 0});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-2, 0, 0});
-    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    eng::ParallaxPreload parallaxPreload;
+
+    parallaxPreload.preload(entityManager, componentManager);
 
     // create spaceship
-    id = entityManager.addMask(
+    std::size_t id = entityManager.addMask(
         (eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::SPRITEID | eng::InfoEntity::SPEED | eng::InfoEntity::CONTROLLABLE | eng::InfoEntity::COOLDOWNSHOOT),
         componentManager);
-    componentManager.initNewComponent();
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{1});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, 0, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0});
@@ -91,7 +57,6 @@ int main(void)
 
     // create cooldownBar
     id = entityManager.addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT), componentManager);
-    componentManager.initNewComponent();
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{8});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, (float)graphic.getWindow()->getSize().y - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(id, Parent{6});

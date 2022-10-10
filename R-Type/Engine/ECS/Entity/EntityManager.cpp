@@ -24,6 +24,15 @@ std::size_t EntityManager::addMask(std::optional<std::size_t> mask, ComponentMan
     return (this->_masks.size() - 1);
 }
 
+void EntityManager::addManualMask(std::size_t id, std::optional<std::size_t> mask, ComponentManager &componentManager)
+{
+    if (id >= this->_masks.size()) {
+        this->_masks.resize(id + 1);
+        componentManager.initNewComponent();
+    }
+    this->_masks[id] = mask;
+}
+
 void EntityManager::removeMask(std::size_t id)
 {
     if (this->_masks.size() <= id)
