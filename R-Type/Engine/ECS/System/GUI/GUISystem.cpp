@@ -54,12 +54,12 @@ void GUISystem::drawEntity(ComponentManager &componentManager, EntityManager &en
                 ImGui::Text("None");
                 ImGui::TableNextColumn();
                 if (ImGui::Button(std::string("Add##" + std::to_string(i)).c_str()))
-                    entityManager.addMask(i, 0);
+                    entityManager.addMask(0, componentManager);
             }
         }
         ImGui::EndTable();
         if (ImGui::Button("Add Entity"))
-            entityManager.addMask(masks.size(), std::nullopt);
+            entityManager.addMask(std::nullopt, componentManager);
     }
     ImGui::End();
 }
@@ -104,7 +104,6 @@ void GUISystem::drawModifyEntity(ComponentManager &componentManager, EntityManag
         ImGui::EndTable();
     }
     ImGui::End();
-
 }
 
 void GUISystem::drawComponent(Component &component, std::type_index type, std::size_t id)

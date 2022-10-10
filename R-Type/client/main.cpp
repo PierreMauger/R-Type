@@ -18,6 +18,7 @@ void mainLoop(eng::ECS &ecs, eng::Graphic &graphic)
 int main(void)
 {
     eng::Engine engine;
+    std::size_t id = 0;
 
     // graphic.loadSprites({"R-Type/assets/Sprites"});
     // graphic.loadSounds({"R-Type/assets/Sprites"});
@@ -38,59 +39,67 @@ int main(void)
     engine.getECS().getComponentManager().addComponent(typeid(Parent), {});
 
     // create background
-    engine.getECS().getEntityManager().addMask(0, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(0, SpriteID{3});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(0, Position{0, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(0, Velocity{-0.2, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(0, Parallax{true});
-    engine.getECS().getEntityManager().addMask(1, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(1, SpriteID{3});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(1, Position{800, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(1, Velocity{-0.2, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(1, Parallax{true});
-    engine.getECS().getEntityManager().addMask(2, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(2, SpriteID{4});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(2, Position{0, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(2, Velocity{-0.6, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(2, Parallax{true});
-    engine.getECS().getEntityManager().addMask(3, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(3, SpriteID{5});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(3, Position{0, 100, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(3, Velocity{-1, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(3, Parallax{true});
-    engine.getECS().getEntityManager().addMask(4, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(4, SpriteID{6});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(4, Position{400, 250, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(4, Velocity{-1.5, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(4, Parallax{true});
-    engine.getECS().getEntityManager().addMask(5, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(5, SpriteID{7});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(5, Position{800, 100, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(5, Velocity{-2, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(5, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX),
+                                                    engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{3});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.2, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX),
+                                                    engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{3});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{800, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.2, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX),
+                                                    engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{4});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.6, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX),
+                                                    engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 100, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX),
+                                                    engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{400, 250, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1.5, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX),
+                                                    engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{7});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{800, 100, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-2, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
 
     // create spaceship
-    engine.getECS().getEntityManager().addMask(6, (eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::SPRITEID | eng::InfoEntity::SPEED | eng::InfoEntity::CONTROLLABLE | eng::InfoEntity::COOLDOWNSHOOT));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(6, SpriteID{1});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(6, Position{10, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(6, Velocity{0, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Speed)).emplaceData(6, Speed{2});
-    engine.getECS().getComponentManager().getComponent(typeid(Controllable)).emplaceData(6, Controllable{true});
-    engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(6, CooldownShoot{0, 2});
+    id = engine.getECS().getEntityManager().addMask(
+        (eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::SPRITEID | eng::InfoEntity::SPEED | eng::InfoEntity::CONTROLLABLE | eng::InfoEntity::COOLDOWNSHOOT),
+        engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{1});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{10, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Speed)).emplaceData(id, Speed{2});
+    engine.getECS().getComponentManager().getComponent(typeid(Controllable)).emplaceData(id, Controllable{true});
+    engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 2});
 
     // create cooldownBar
-    engine.getECS().getEntityManager().addMask(7, (eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT));
-    engine.getECS().getComponentManager().initEmptyComponent();
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(7, SpriteID{8});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(7, Position{10, (float)engine.getGraphic().getWindow()->getSize().y - 20, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(7, Parent{6});
+    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT), engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().initNewComponent();
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{8});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{10, (float)engine.getGraphic().getWindow()->getSize().y - 20, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(id, Parent{6});
 
     mainLoop(engine.getECS(), engine.getGraphic());
     return 0;

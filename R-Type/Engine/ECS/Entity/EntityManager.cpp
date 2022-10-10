@@ -11,18 +11,24 @@ std::vector<std::optional<std::size_t>> &EntityManager::getMasks()
     return this->_masks;
 }
 
-void EntityManager::addMask(std::size_t id, std::optional<std::size_t> mask)
+std::size_t EntityManager::addMask(std::optional<std::size_t> mask, ComponentManager &componentManager)
 {
-    if (this->_masks.size() <= id)
-        this->_masks.resize(id + 1);
-    this->_masks[id] = mask;
+    for (std::size_t i = 0; i < this->_masks.size(); i++) {
+        if (!this->_masks[i].has_value()) {
+            this->_masks[i] = mask;
+            return i;
+        }
+    }
+    this->_masks.push_back(mask);
+    componentManager.initNewComponent();
+    return (this->_masks.size() - 1);
 }
 
 void EntityManager::removeMask(std::size_t id)
 {
     if (this->_masks.size() <= id)
         return;
-    this->_masks[id] = std::nullopt;
+    this->_masks[id].reset();
 }
 
 void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)

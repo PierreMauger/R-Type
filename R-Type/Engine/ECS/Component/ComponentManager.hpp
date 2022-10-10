@@ -17,7 +17,7 @@ namespace eng
             ~ComponentManager() = default;
 
             void addComponent(std::type_index type, Component component);
-            void initEmptyComponent();
+            void initNewComponent();
             void destroyComponent(std::size_t id, std::type_index type);
             void killEntity(std::size_t id);
 

@@ -25,7 +25,7 @@ void ComponentManager::addComponent(std::type_index type, Component component)
     this->_componentArray.push_back(std::make_pair(type, component));
 }
 
-void ComponentManager::initEmptyComponent()
+void ComponentManager::initNewComponent()
 {
     for (auto &[index, component] : this->_componentArray)
         component.addEmptyField();
