@@ -21,6 +21,7 @@ namespace eng
         SIZE = 0b1000000000000,
         APP = 0b10000000000000,
         LIFEBAR = 0b100000000000000,
+        PATERN = 0b1000000000000000,
     };
 
     class EntityManager
@@ -37,7 +38,6 @@ namespace eng
             void addMask(std::size_t id, std::optional<std::size_t> mask);
             void removeMask(std::size_t id);
             void updateMask(std::size_t id, std::optional<std::size_t> mask);
-            // void readMask(std::size_t id, ComponentManager &componentManager);
     };
 }
 

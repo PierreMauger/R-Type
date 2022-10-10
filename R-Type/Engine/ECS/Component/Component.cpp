@@ -6,9 +6,11 @@ Component::Component()
 {
 }
 
-void Component::addEmptyField()
+void Component::addData(std::size_t id, std::any data)
 {
-    this->_component.push_back({});
+    if (id >= this->_component.size())
+        this->_component.resize(id + 1);
+    this->_component[id] = data;
 }
 
 void Component::emplaceData(std::size_t id, std::any data)

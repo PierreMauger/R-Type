@@ -53,46 +53,48 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, sf::Sprite
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    Component &spriteId = componentManager.getComponent(typeid(SpriteID));
-    Component &position = componentManager.getComponent(typeid(Position));
-    Component &parent = componentManager.getComponent(typeid(Parent));
-    Component &cooldownBar = componentManager.getComponent(typeid(CooldownBar));
-    Component &lifeBar = componentManager.getComponent(typeid(LifeBar));
-    Component &parallax = componentManager.getComponent(typeid(Parallax));
+    auto &masks = entityManager.getMasks();
+    std::size_t render = (InfoEntity::POS | InfoEntity::SPRITEID);
+    std::size_t renderCooldown = (InfoEntity::PARENT | InfoEntity::COOLDOWNBAR);
+    std::size_t renderLife = (InfoEntity::PARENT | InfoEntity::LIFEBAR);
+    std::size_t renderParallax = (InfoEntity::POS | InfoEntity::SPRITEID | InfoEntity::PARALLAX);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
 
-    for (std::size_t i = 0; i < spriteId.getSize(); i++) {
-        if (entityManager.getMasks()[i].has_value() && spriteId.getField(i).has_value()) {
-            SpriteID &sprId = std::any_cast<SpriteID &>(spriteId.getField(i).value());
-            sf::Sprite &spriteRef = this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id);
-            if (position.getField(i).has_value()) {
-                Position &pos = std::any_cast<Position &>(position.getField(i).value());
-                this->_sprites.at(std::any_cast<SpriteID &>(spriteId.getField(i).value()).id).setPosition(pos.x, pos.y);
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value()) {
+            if ((masks[i].value() & render) == render) {
+                Position &pos = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(i).value());
+                SpriteID &spriteId = std::any_cast<SpriteID &>(componentManager.getComponent(typeid(SpriteID)).getField(i).value());
+                this->_sprites[spriteId.id].setPosition(pos.x, pos.y);
+                this->_window->draw(this->_sprites[spriteId.id]);
+                sf::Sprite &spriteRef = this->_sprites[std::any_cast<SpriteID &>(componentManager.getComponent(typeid(SpriteID)).getField(i).value()).id];
+                if ((masks[i].value() & renderCooldown) == renderCooldown)
+                    displaycooldownBar(componentManager, spriteRef, i);
+                if ((masks[i].value() & renderLife) == renderLife)
+                    displayLifeBar(componentManager, spriteRef, i);
+                if (spriteId.priority == Priority::HIGH)
+                    stockSpriteHigh.push_back(spriteRef);
+                if (spriteId.priority == Priority::MEDIUM)
+                    stockSpriteMedium.push_back(spriteRef);
+                if (spriteId.priority == Priority::LOW)
+                    stockSpriteLow.push_back(spriteRef);
             }
-            if (cooldownBar.getField(i).has_value() && parent.getField(i).has_value())
-                displaycooldownBar(componentManager, spriteRef, i);
-            if (lifeBar.getField(i).has_value() && parent.getField(i).has_value())
-                displayLifeBar(componentManager, spriteRef, i);
-            if (sprId.priority == Priority::HIGH)
-                stockSpriteHigh.push_back(spriteRef);
-            if (sprId.priority == Priority::MEDIUM)
-                stockSpriteMedium.push_back(spriteRef);
-            if (sprId.priority == Priority::LOW)
-                stockSpriteLow.push_back(spriteRef);
-            for (std::size_t i = 0; i < stockSpriteHigh.size(); i++) {
-                if (parallax.getField(i).has_value()) {
-                    stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x + _window->getSize().x, stockSpriteHigh[i].getPosition().y);
-                    this->_window->draw(stockSpriteHigh[i]);
-                    stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x - _window->getSize().x, stockSpriteHigh[i].getPosition().y);
-                }
-                this->_window->draw(stockSpriteHigh[i]);
-            }
-            for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
-                this->_window->draw(stockSpriteMedium[i]);
-            for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
-                this->_window->draw(stockSpriteLow[i]);
         }
     }
+    for (std::size_t i = 0; i < stockSpriteHigh.size(); i++) {
+        if (masks[i].has_value()) {
+            if ((masks[i].value() & renderParallax) == renderParallax) {
+                stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x + _window->getSize().x, stockSpriteHigh[i].getPosition().y);
+                this->_window->draw(stockSpriteHigh[i]);
+                stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x - _window->getSize().x, stockSpriteHigh[i].getPosition().y);
+            }
+        }
+        this->_window->draw(stockSpriteHigh[i]);
+    }
+    for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
+        this->_window->draw(stockSpriteMedium[i]);
+    for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
+        this->_window->draw(stockSpriteLow[i]);
 }

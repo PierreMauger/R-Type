@@ -15,7 +15,7 @@ namespace eng
             Component();
             ~Component() = default;
 
-            void addEmptyField();
+            void addData(std::size_t id, std::any data);
             void emplaceData(std::size_t id, std::any data);
             void destroyData(std::size_t id);
 

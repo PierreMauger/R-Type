@@ -6,44 +6,59 @@ ComponentManager::ComponentManager()
 {
 }
 
-std::vector<std::pair<std::type_index, Component>> &ComponentManager::getComponentArray()
+std::map<std::type_index, Component> &ComponentManager::getComponentArray()
 {
     return this->_componentArray;
 }
 
 Component &ComponentManager::getComponent(std::type_index type)
 {
-    for (auto &[index, component] : this->_componentArray) {
-        if (index == type)
-            return component;
-    }
-    throw std::runtime_error("Component not found");
+    if (this->_componentArray.find(type) == this->_componentArray.end())
+        throw std::runtime_error("Component not found");
+    return this->_componentArray[type];
 }
 
-void ComponentManager::addComponent(std::type_index type, Component component)
+Component &ComponentManager::getComponent(std::size_t index)
 {
-    this->_componentArray.push_back(std::make_pair(type, component));
+    if (index >= this->_componentArray.size())
+        throw std::runtime_error("Component not found");
+    return this->_componentArray[this->_orderedMap.at(index)];
 }
 
-void ComponentManager::initEmptyComponent()
+std::type_index ComponentManager::getComponentType(std::size_t index)
 {
-    for (auto &[index, component] : this->_componentArray)
-        component.addEmptyField();
+    if (index >= this->_componentArray.size())
+        throw std::runtime_error("Component not found");
+    return this->_orderedMap.at(index);
 }
 
-void ComponentManager::destroyComponent(std::size_t id, std::type_index type)
-{
-    for (auto &[index, component] : this->_componentArray) {
-        if (index == type) {
-            component.destroyData(id);
-            return;
-        }
-    }
-    throw std::runtime_error("Component not found");
-}
-
-void ComponentManager::killEntity(std::size_t id)
+void ComponentManager::initEmptyComponent(std::size_t id)
 {
     for (auto &[index, component] : this->_componentArray)
+        component.addData(id, std::nullopt);
+}
+
+void ComponentManager::addEntity(std::size_t id)
+{
+    for (auto &[type, component] : this->_componentArray)
+        component.addData(id, std::nullopt);
+}
+
+void ComponentManager::removeSingleComponent(std::size_t id, std::type_index type)
+{
+    if (this->_componentArray.find(type) == this->_componentArray.end())
+        throw std::runtime_error("Component not found");
+    this->_componentArray[type].destroyData(id);
+}
+
+void ComponentManager::removeAllComponents(std::size_t id)
+{
+    for (auto &[type, component] : this->_componentArray)
         component.destroyData(id);
+}
+
+void ComponentManager::updateComponent(std::size_t id)
+{
+    for (auto &[type, component] : this->_componentArray)
+        component.emplaceData(id, std::nullopt);
 }

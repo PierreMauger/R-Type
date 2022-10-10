@@ -5,8 +5,6 @@
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Loader/Loader.hpp"
 #include "Includes.hpp"
-#include "imgui-SFML.h"
-#include "imgui.h"
 
 namespace eng
 {

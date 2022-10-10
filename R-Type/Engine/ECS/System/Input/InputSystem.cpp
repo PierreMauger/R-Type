@@ -15,7 +15,7 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
 
     entityManager.addMask(addEntity, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
                                       eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE));
-    componentManager.initEmptyComponent();
+    componentManager.initEmptyComponent(id);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{1, Priority::MEDIUM});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{15, 0, 0});
@@ -26,23 +26,24 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    Component &controllable = componentManager.getComponent(typeid(Controllable));
-    Component &velocity = componentManager.getComponent(typeid(Velocity));
-    Component &speed = componentManager.getComponent(typeid(Speed));
-    Component &position = componentManager.getComponent(typeid(Position));
-    Component &cooldown = componentManager.getComponent(typeid(CooldownShoot));
+    auto &masks = entityManager.getMasks();
+    std::size_t input = (InfoEntity::CONTROLLABLE | InfoEntity::VEL | InfoEntity::POS | InfoEntity::SPEED | InfoEntity::COOLDOWNSHOOT);
 
-    for (std::size_t i = 0; i < controllable.getSize(); i++) {
-        if (controllable.getField(i).has_value() && std::any_cast<Controllable>(controllable.getField(i).value()).con == true) {
-            Speed &spd = std::any_cast<Speed &>(speed.getField(i).value());
-            Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
-            CooldownShoot &sht = std::any_cast<CooldownShoot &>(cooldown.getField(i).value());
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
-                sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-                createShoot(i, componentManager, std::any_cast<Position>(position.getField(i).value()), entityManager);
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value()) {
+            if ((masks[i].value() & input) == input) {
+                Position &pos = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(i).value());
+                Speed &spd = std::any_cast<Speed &>(componentManager.getComponent(typeid(Speed)).getField(i).value());
+                Velocity &vel = std::any_cast<Velocity &>(componentManager.getComponent(typeid(Velocity)).getField(i).value());
+                CooldownShoot &sht = std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value());
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
+                    sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
+                    createShoot(masks.size(), componentManager, pos, entityManager);
+                }
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = spd.speed : vel.x = 0);
+                sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = spd.speed : vel.y = 0);
             }
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = spd.speed : vel.x = 0);
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = spd.speed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = spd.speed : vel.y = 0);
         }
     }
 }
