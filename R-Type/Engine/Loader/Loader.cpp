@@ -23,13 +23,18 @@ std::vector<sf::SoundBuffer> &Loader::getSounds()
 
 void Loader::loadSprites(std::vector<std::string> paths)
 {
+    std::set<std::filesystem::path> sorted;
+
     for (auto &path : paths) {
         try {
-            for (auto &p : std::filesystem::directory_iterator(path)) {
+            for (auto &file_name : std::filesystem::directory_iterator(path))
+                sorted.insert(file_name.path());
+
+            for (auto &file_name : sorted) {
                 sf::Texture *texture = new sf::Texture();
                 sf::Sprite sprite;
 
-                if (texture->loadFromFile(p.path())) {
+                if (texture->loadFromFile(file_name.c_str())) {
                     sprite.setTexture(*texture);
                     this->_textures.push_back(*texture);
                     this->_sprites.push_back(sprite);
@@ -38,23 +43,30 @@ void Loader::loadSprites(std::vector<std::string> paths)
         } catch (std::runtime_error &error) {
             std::cerr << error.what() << std::endl;
         }
+        sorted.clear();
     }
 }
 
 void Loader::loadSounds(std::vector<std::string> paths)
 {
+    std::set<std::filesystem::path> sorted;
+
     for (auto &path : paths) {
         try {
-            for (auto &p : std::filesystem::directory_iterator(path)) {
+            for (auto &file_name : std::filesystem::directory_iterator(path))
+                sorted.insert(file_name.path());
+
+            for (auto &file_name : sorted) {
                 sf::SoundBuffer sound;
 
-                if (sound.loadFromFile(p.path())) {
+                if (sound.loadFromFile(file_name.c_str())) {
                     this->_sounds.push_back(sound);
                 }
             }
         } catch (std::runtime_error &error) {
             std::cerr << error.what() << std::endl;
         }
+        sorted.clear();
     }
 }
 
