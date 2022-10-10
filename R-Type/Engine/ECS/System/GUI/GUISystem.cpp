@@ -122,9 +122,7 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     case 0: {
         Position &position = std::any_cast<Position &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         ImGui::DragFloat("X##pos", &position.x, 1.0f, -FLT_MAX, +FLT_MAX);
-        ImGui::SameLine();
         ImGui::DragFloat("Y##pos", &position.y, 1.0f, -FLT_MAX, +FLT_MAX);
-        ImGui::SameLine();
         ImGui::DragFloat("Z##pos", &position.z, 1.0f, -FLT_MAX, +FLT_MAX);
         break;
     }

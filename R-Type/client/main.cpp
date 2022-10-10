@@ -23,8 +23,8 @@ int main(void)
     // graphic.loadSounds({"R-Type/assets/Sprites"});
 
     // setup system & component
-    // engine.getECS().getSystemManager().addSystem(std::make_shared<eng::InputSystem>(engine.getGraphic().getEvent(), engine.getGraphic().getClock()));
-    // engine.getECS().getSystemManager().addSystem(std::make_shared<eng::PhysicSystem>(engine.getGraphic().getWindow()));
+    engine.getECS().getSystemManager().addSystem(std::make_shared<eng::InputSystem>(engine.getGraphic().getEvent(), engine.getGraphic().getClock()));
+    engine.getECS().getSystemManager().addSystem(std::make_shared<eng::PhysicSystem>(engine.getGraphic().getWindow()));
     engine.getECS().getSystemManager().addSystem(std::make_shared<eng::RenderSystem>(engine.getGraphic().getWindow(), engine.getGraphic().getClock(), engine.getLoader()));
     engine.getECS().getSystemManager().addSystem(std::make_shared<eng::GUISystem>(engine.getGraphic().getWindow()));
 
@@ -38,7 +38,7 @@ int main(void)
     engine.getECS().getComponentManager().bindComponent<Parent>();
 
     // create background
-    engine.getECS().getEntityManager().addMask(0, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARALLAX));
+    engine.getECS().getEntityManager().addMask(0, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL));
     engine.getECS().getComponentManager().initEmptyComponent(0);
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(0, SpriteID{3});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(0, Position{0, 0, 0});

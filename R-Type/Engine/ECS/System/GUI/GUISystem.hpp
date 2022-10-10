@@ -27,7 +27,6 @@ namespace eng
         public:
             GUISystem(std::shared_ptr<sf::RenderWindow> window);
             ~GUISystem();
-
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }

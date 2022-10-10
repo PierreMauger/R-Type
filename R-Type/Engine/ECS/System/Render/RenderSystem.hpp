@@ -5,8 +5,6 @@
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Loader/Loader.hpp"
 #include "Includes.hpp"
-#include "imgui-SFML.h"
-#include "imgui.h"
 
 namespace eng
 {
@@ -15,7 +13,6 @@ namespace eng
         private:
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Clock> _clock;
-
             std::vector<sf::Sprite> _sprites;
 
         public:
