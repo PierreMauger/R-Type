@@ -72,6 +72,11 @@ typedef struct {
 } CooldownBar;
 
 typedef struct {
+        bool bar;
+        std::size_t lifeMax;
+} LifeBar;
+
+typedef struct {
         std::size_t id;
 } Parent;
 

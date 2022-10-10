@@ -20,6 +20,7 @@ namespace eng
         LIFE = 0b100000000000,
         SIZE = 0b1000000000000,
         APP = 0b10000000000000,
+        LIFEBAR = 0b100000000000000,
     };
 
     class EntityManager
