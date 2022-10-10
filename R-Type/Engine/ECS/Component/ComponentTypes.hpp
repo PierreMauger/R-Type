@@ -23,9 +23,13 @@ typedef struct Velocity {
         }
 } Velocity;
 
-typedef struct {
+typedef struct Size {
         float x;
         float y;
+
+        Size(float x = 0.0f, float y = 0.0f) : x(x), y(y)
+        {
+        }
 } Size;
 
 enum Priority {
