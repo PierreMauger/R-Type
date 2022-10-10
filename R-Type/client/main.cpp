@@ -80,9 +80,6 @@ int main(void)
 {
     eng::Engine engine;
 
-    // graphic.loadSprites({"R-Type/assets/Sprites"});
-    // graphic.loadSounds({"R-Type/assets/Sprites"});
-
     // setup system & component
     engine.getECS().getSystemManager().addSystem(std::make_shared<eng::InputSystem>(engine.getGraphic().getEvent(), engine.getGraphic().getClock()));
     engine.getECS().getSystemManager().addSystem(std::make_shared<eng::PhysicSystem>(engine.getGraphic().getWindow()));

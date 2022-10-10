@@ -48,7 +48,7 @@ void Loader::loadSounds(std::vector<std::string> paths)
             for (auto &p : std::filesystem::directory_iterator(path)) {
                 sf::SoundBuffer sound;
 
-                if (sound.loadFromFile(p.path())) {
+                if (sound.loadFromFile(p.path().string())) {
                     this->_sounds.push_back(sound);
                 }
             }
