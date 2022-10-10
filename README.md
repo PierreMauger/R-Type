@@ -31,20 +31,21 @@ Supported operating systems:
 - MacOS
 
 Dependencies:
-- Cmake 3.24+
+- [Cmake](https://cmake.org/download/) 3.24+
 
 ## 🔧 Building
 
-Launch r-type.sh (linux/MacOS) or r-type.bat (Windows) to start the building of the project.
+Launch `r-type.sh` (linux/MacOS) or `r-type.bat` (Windows) to start the building of the project.
 It will automatically:
-- Download the [SFML](https://www.sfml-dev.org/)
-- Download [Boost Asio](https://think-async.com/Asio/)
-- Build the r-type_client and r-type_server executables (.exe on Windows) using those libraries
+- Download/build the [SFML](https://www.sfml-dev.org/)
+- Download/build [Boost Asio](https://think-async.com/Asio/)
+- Build the `r-type_client` and `r-type_server` executables (.exe on Windows) using those libraries
 
 ## 🎮 Usage
 
-One person has to start r-type_server to host the server and can also start r-type_client to be a player. The other player(s) just has to start r-type_client on their end aswell.
+One person has to start `r-type_server` to be the server host and can also start `r-type_client` to be a player.
+The other players just have to start `r-type_client` on their end aswell.
 
 ## 🤝 Authors
 
-[Pierre HAMEL](https://github.com/pierre1754) - [Dorian AYOUL](https://github.com/NairodGH) - [Jean-Baptiste BROCHERIE](https://github.com/Parumezan) - [Pierre MAUGER](https://github.com/PierreMauger) - [Xavier TONNELLIER](https://github.com/XavTo)
+[Pierre HAMEL](https://github.com/pierre1754) • [Dorian AYOUL](https://github.com/NairodGH) • [Jean-Baptiste BROCHERIE](https://github.com/Parumezan) • [Pierre MAUGER](https://github.com/PierreMauger) • [Xavier TONNELLIER](https://github.com/XavTo)
