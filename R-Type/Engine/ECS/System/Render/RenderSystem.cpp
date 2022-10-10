@@ -6,7 +6,7 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
 {
     this->_clock = clock;
     this->_window = window;
-    
+
     this->_sprites = loader.getSprites();
 }
 
@@ -18,6 +18,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     Component &cooldown = componentManager.getComponent(typeid(CooldownShoot));
 
     for (std::size_t i = 0; i < spriteId.getSize(); i++) {
+        // Position &pos = std::any_cast<Position &>(position.getField(i).value());
         if (entityManager.getMasks()[i].has_value() && spriteId.getField(i).has_value()) {
             if (position.getField(i).has_value()) {
                 Position &pos = std::any_cast<Position &>(position.getField(i).value());

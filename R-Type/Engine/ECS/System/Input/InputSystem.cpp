@@ -11,7 +11,7 @@ InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::C
 void createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager)
 {
     entityManager.addMask(id, (eng::InfoEntity::SPRITEID) | (eng::InfoEntity::POS) | (eng::InfoEntity::VEL) | (eng::InfoEntity::PARENT));
-    componentManager.initEmptyComponent();
+    componentManager.initEmptyComponent(id);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{2});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 55, pos.y + 45, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{20, 0, 0});
@@ -27,10 +27,16 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
     Component &cooldown = componentManager.getComponent(typeid(CooldownShoot));
 
     for (std::size_t i = 0; i < controllable.getSize(); i++) {
-        if (controllable.getField(i).has_value() && std::any_cast<Controllable>(controllable.getField(i).value()).con == true) {
+        std::cout << "0" << std::endl;
+        //  && std::any_cast<Controllable &>(controllable.getField(i).value()).con == true
+        if (controllable.getField(i).has_value()) {
+            std::cout << "1" << std::endl;
             Speed &spd = std::any_cast<Speed &>(speed.getField(i).value());
+            std::cout << "2" << std::endl;
             Velocity &vel = std::any_cast<Velocity &>(velocity.getField(i).value());
+            std::cout << "3" << std::endl;
             CooldownShoot &sht = std::any_cast<CooldownShoot &>(cooldown.getField(i).value());
+            std::cout << "4" << std::endl;
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.time) {
                 sht.time = _clock->getElapsedTime().asSeconds() + sht.cooldown;
                 createShoot(controllable.getSize(), componentManager, std::any_cast<Position>(position.getField(i).value()), entityManager);

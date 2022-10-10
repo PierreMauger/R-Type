@@ -31,7 +31,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                 pos.x <= -800 ? pos.x = 800 : pos.x;
             else if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
                 entityManager.removeMask(i);
-                componentManager.killEntity(i);
+                componentManager.removeAllComponents(i);
             }
         }
     }
