@@ -9,11 +9,11 @@ namespace eng
         POS = 0b1,
         VEL = 0b10,
         SPRITEID = 0b100,
-        SPEED = 0b1000,
-        CONTROLLABLE = 0b10000,
-        PARALLAX = 0b100000,
-        PARENT = 0b1000000,
-        COOLDOWNSHOOT = 0b10000000,
+        CONTROLLABLE = 0b1000,
+        PARALLAX = 0b10000,
+        SPEED = 0b100000,
+        COOLDOWNSHOOT = 0b1000000,
+        PARENT = 0b10000000,
     };
 
     class EntityManager
@@ -30,7 +30,6 @@ namespace eng
             void addMask(std::size_t id, std::optional<std::size_t> mask);
             void removeMask(std::size_t id);
             void updateMask(std::size_t id, std::optional<std::size_t> mask);
-            // void readMask(std::size_t id, ComponentManager &componentManager);
     };
 }
 

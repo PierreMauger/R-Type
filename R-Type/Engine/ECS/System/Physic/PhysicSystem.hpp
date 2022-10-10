@@ -9,6 +9,7 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::RenderWindow> _window;
+
         public:
             PhysicSystem(std::shared_ptr<sf::RenderWindow> window);
             ~PhysicSystem() = default;
