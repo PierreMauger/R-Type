@@ -91,6 +91,7 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/Entity/
     ${ENGINE_ROOT}/ECS/Component/
     ${ENGINE_ROOT}/ECS/System/
+    ${ENGINE_ROOT}/ECS/PreloadEntities/
     ${ENGINE_ROOT}/Graphic/
 )
 
@@ -107,6 +108,8 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/GUI/GUISystem.cpp
     ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/ParallaxPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/Vessel.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Graphic files

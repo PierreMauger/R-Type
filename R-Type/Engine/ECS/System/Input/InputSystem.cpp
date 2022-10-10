@@ -8,20 +8,18 @@ InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::C
     this->_clock = clock;
 }
 
-void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager)
+void createShoot(ComponentManager &componentManager, Position pos, EntityManager &entityManager)
 {
-    std::size_t addEntity = componentManager.getComponent(typeid(Position)).getSize();
     Size size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(id).value());
+    std::size_t id = entityManager.addMask((eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
+                                      eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE), componentManager);
 
-    entityManager.addMask(addEntity, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
-                                      eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE));
-    componentManager.initEmptyComponent(addEntity);
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{1, Priority::MEDIUM});
-    componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{15, 0, 0});
-    componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
-    componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true});
-    componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55, 30});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{1, Priority::MEDIUM});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{15, 0, 0});
+    componentManager.getComponent(typeid(Parent)).emplaceData(id, Parent{id});
+    componentManager.getComponent(typeid(Projectile)).emplaceData(id, Projectile{true});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{55, 30});
 }
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
