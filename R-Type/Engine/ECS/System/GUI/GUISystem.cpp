@@ -9,136 +9,188 @@ GUISystem::GUISystem(std::shared_ptr<sf::RenderWindow> window)
         std::cout << "ImGui counldn't init" << std::endl;
 }
 
+GUISystem::~GUISystem()
+{
+    ImGui::SFML::Shutdown();
+}
+
 void GUISystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     ImGui::SFML::Update(*this->_window, this->_clock.restart());
-    this->drawEntity(componentManager, entityManager);
-    if (this->_showEntityModify)
-        this->drawModifyEntity(componentManager, entityManager);
+    if (this->_showEntityManager)
+        this->drawEntityManager(componentManager, entityManager);
+    if (this->_showEntityDetails)
+        this->drawEntityDetails(componentManager, entityManager);
     ImGui::SFML::Render(*this->_window);
 }
 
-void GUISystem::drawEntity(ComponentManager &componentManager, EntityManager &entityManager)
+void GUISystem::drawEntityManager(ComponentManager &componentManager, EntityManager &entityManager)
 {
     std::size_t size = componentManager.getComponentArray().size();
-    ImGui::Begin("Entities", &this->_showEntity);
+    ImGui::Begin("Entities", &this->_showEntityManager);
 
-    if (ImGui::BeginTable("Entities", 3)) {
+    if (ImGui::BeginTable("Entities", 3, ImGuiTableFlags_Resizable)) {
         ImGui::TableSetupColumn("ID");
         ImGui::TableSetupColumn("Mask");
         ImGui::TableSetupColumn("Actions");
         ImGui::TableHeadersRow();
         auto &masks = entityManager.getMasks();
         for (std::size_t i = 0; i < masks.size(); i++) {
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            ImGui::Text("%lu", i);
+            ImGui::TableNextColumn();
+            masks[i].has_value() ? ImGui::Text("%s", this->formatBool(masks[i].value(), size).c_str()) : ImGui::Text("None");
+            ImGui::TableNextColumn();
             if (masks[i].has_value()) {
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("%lu", i);
-                ImGui::TableNextColumn();
-                masks[i].has_value() ? ImGui::Text("%s", this->formatBool(masks[i].value(), size).c_str()) : ImGui::Text("None");
-                ImGui::TableNextColumn();
                 if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
                     entityManager.removeMask(i);
-                    componentManager.killEntity(i);
+                    componentManager.removeAllComponents(i);
+                    this->_showEntityDetails = false;
                 }
                 ImGui::SameLine();
                 if (ImGui::Button(std::string("Modify##" + std::to_string(i)).c_str())) {
-                    this->_showEntityModify = true;
-                    this->_entityID = i;
+                    this->_showEntityDetails = true;
+                    this->_selectedEntity = i;
                 }
-            } else {
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("%lu", i);
-                ImGui::TableNextColumn();
-                ImGui::Text("None");
-                ImGui::TableNextColumn();
-                if (ImGui::Button(std::string("Add##" + std::to_string(i)).c_str()))
-                    entityManager.addMask(0, componentManager);
+            } else if (ImGui::Button(std::string("Create##" + std::to_string(i)).c_str())) {
+                entityManager.addMask(i, 0, componentManager);
             }
         }
         ImGui::EndTable();
-        if (ImGui::Button("Add Entity"))
-            entityManager.addMask(std::nullopt, componentManager);
+        const float footerReserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
+        ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footerReserve), false, ImGuiWindowFlags_HorizontalScrollbar);
+        ImGui::EndChild();
+        ImGui::Separator();
+        if (ImGui::Button("Add New Entity"))
+            entityManager.addMask(masks.size(), std::nullopt, componentManager);
     }
     ImGui::End();
 }
 
-void GUISystem::drawModifyEntity(ComponentManager &componentManager, EntityManager &entityManager)
+void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    auto it = componentManager.getComponentArray().begin();
+    ImGui::Begin("Entity Details", &this->_showEntityDetails);
     auto &masks = entityManager.getMasks();
 
-    ImGui::Begin("Modify Entity", &this->_showEntityModify);
-    ImGui::Text("ID: %lu", this->_entityID);
-    if (ImGui::BeginTable("Entity", 3)) {
-        ImGui::TableSetupColumn("Component");
-        ImGui::TableSetupColumn("Value");
-        ImGui::TableSetupColumn("Action");
-        ImGui::TableHeadersRow();
-        if (masks[this->_entityID].has_value()) {
-            for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("%s", it->first.name() + std::strlen(it->first.name()) / 10 + 1);
-                ImGui::TableNextColumn();
-                if (std::bitset<sizeof(std::size_t)>(masks[this->_entityID].value()).test(i))
-                    this->drawComponent(it->second, it->first, this->_entityID);
-                else
-                    ImGui::Text("None");
-                ImGui::TableNextColumn();
-                if (std::bitset<sizeof(std::size_t)>(masks[this->_entityID].value()).test(i)) {
-                    if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
-                        entityManager.updateMask(this->_entityID, masks[this->_entityID].value() & ~(1 << i));
-                        componentManager.destroyComponent(this->_entityID, it->first);
-                    }
-                } else {
-                    if (ImGui::Button(std::string("Add##" + std::to_string(i)).c_str())) {
-                        entityManager.updateMask(this->_entityID, masks[this->_entityID].value() | (1 << i));
-                        // componentManager.getComponent(it->first).emplaceData(this->_entityID, it->first);
+    ImGui::Text("ID: %lu", this->_selectedEntity);
+    for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
+        if (masks[this->_selectedEntity].value() & (1 << i)) {
+            if (ImGui::CollapsingHeader(FORMAT_NAME(componentManager.getComponentType(i).name()), ImGuiTreeNodeFlags_DefaultOpen)) {
+                this->drawEntityComponent(componentManager, i);
+                if (ImGui::Button(std::string("Remove##" + std::to_string(i)).c_str())) {
+                    entityManager.updateMask(this->_selectedEntity, masks[this->_selectedEntity].value() & ~(1 << i));
+                    componentManager.removeSingleComponent(this->_selectedEntity, componentManager.getComponentType(i));
+                }
+            }
+            ImGui::Separator();
+        }
+    }
+    const float footerReserve = ImGui::GetStyle().ItemSpacing.y + ImGui::GetFrameHeightWithSpacing();
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0, -footerReserve), false, ImGuiWindowFlags_HorizontalScrollbar);
+    ImGui::EndChild();
+    ImGui::Separator();
+    if (ImGui::CollapsingHeader("Add Component")) {
+        for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
+            if (!(masks[this->_selectedEntity].value() & (1 << i))) {
+                if (ImGui::Selectable(FORMAT_NAME(componentManager.getComponentType(i).name()))) {
+                    entityManager.updateMask(this->_selectedEntity, masks[this->_selectedEntity].value() | (1 << i));
+                    switch (i) {
+                    case 0:
+                        componentManager.addComponent<Position>(this->_selectedEntity);
+                        break;
+                    case 1:
+                        componentManager.addComponent<Velocity>(this->_selectedEntity);
+                        break;
+                    case 2:
+                        componentManager.addComponent<SpriteID>(this->_selectedEntity);
+                        break;
+                    case 3:
+                        componentManager.addComponent<Controllable>(this->_selectedEntity);
+                        break;
+                    case 4:
+                        componentManager.addComponent<Parallax>(this->_selectedEntity);
+                        break;
+                    case 5:
+                        componentManager.addComponent<Speed>(this->_selectedEntity);
+                        break;
+                    case 6:
+                        componentManager.addComponent<CooldownShoot>(this->_selectedEntity);
+                        break;
+                    case 7:
+                        componentManager.addComponent<Parent>(this->_selectedEntity);
+                        break;
+                    default:
+                        break;
                     }
                 }
-                it++;
             }
         }
-        ImGui::EndTable();
     }
     ImGui::End();
 }
 
-void GUISystem::drawComponent(Component &component, std::type_index type, std::size_t id)
+void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::size_t type)
 {
-    auto &componentT = component.getField(id);
-
-    if (componentT.has_value()) {
-        if (type == typeid(Position)) {
-            ImGui::DragFloat("x##1", &std::any_cast<Position &>(componentT.value()).x, 1.0f, -FLT_MAX, +FLT_MAX);
-            ImGui::DragFloat("y##1", &std::any_cast<Position &>(componentT.value()).y, 1.0f, -FLT_MAX, +FLT_MAX);
-            ImGui::DragFloat("z##1", &std::any_cast<Position &>(componentT.value()).z, 1.0f, -FLT_MAX, +FLT_MAX);
-        } else if (type == typeid(Velocity)) {
-            ImGui::DragFloat("x##2", &std::any_cast<Velocity &>(componentT.value()).x, 0.1f, -FLT_MAX, +FLT_MAX);
-            ImGui::DragFloat("y##2", &std::any_cast<Velocity &>(componentT.value()).y, 0.1f, -FLT_MAX, +FLT_MAX);
-            ImGui::DragFloat("z##2", &std::any_cast<Velocity &>(componentT.value()).z, 0.1f, -FLT_MAX, +FLT_MAX);
-        } else if (type == typeid(SpriteID)) {
-            ImGui::InputScalar("##3", ImGuiDataType_U64, &std::any_cast<SpriteID &>(componentT.value()).id);
-        } else if (type == typeid(Controllable)) {
-            ImGui::Checkbox("##4", &std::any_cast<Controllable &>(componentT.value()).con);
-        } else if (type == typeid(Parallax)) {
-            ImGui::Checkbox("##5", &std::any_cast<Parallax &>(componentT.value()).par);
-        } else if (type == typeid(Speed)) {
-            ImGui::DragFloat("coef", &std::any_cast<Speed &>(componentT.value()).speed, 0.1f, -FLT_MAX, +FLT_MAX);
-        } else if (type == typeid(CooldownShoot)) {
-            ImGui::Text("%f", std::any_cast<CooldownShoot &>(componentT.value()).time);
-        }
+    switch (type) {
+    case 0: {
+        Position &position = std::any_cast<Position &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::DragFloat("X##pos", &position.x, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("Y##pos", &position.y, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("Z##pos", &position.z, 1.0f, -FLT_MAX, +FLT_MAX);
+        break;
+    }
+    case 1: {
+        Velocity &velocity = std::any_cast<Velocity &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::SliderFloat("X##vel", &velocity.x, -10.0f, 10.0f);
+        ImGui::SliderFloat("Y##vel", &velocity.y, -10.0f, 10.0f);
+        ImGui::SliderFloat("Z##vel", &velocity.z, -10.0f, 10.0f);
+        break;
+    }
+    case 2: {
+        SpriteID &spriteID = std::any_cast<SpriteID &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        const ImU64 increment = 1;
+        ImGui::InputScalar("Model ID", ImGuiDataType_U64, &spriteID.id, &increment);
+        break;
+    }
+    case 3: {
+        Controllable &controllable = std::any_cast<Controllable &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("Controllable", &controllable.con);
+        break;
+    }
+    case 4: {
+        Parallax &parallax = std::any_cast<Parallax &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("Parallax", &parallax.par);
+        break;
+    }
+    case 5: {
+        Speed &speed = std::any_cast<Speed &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::SliderFloat("Speed", &speed.speed, -10.0f, 10.0f);
+        break;
+    }
+    case 6: {
+        CooldownShoot &cooldownShoot = std::any_cast<CooldownShoot &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::SliderFloat("Last shoot", &cooldownShoot.lastShoot, 0.0f, 10.0f);
+        ImGui::SliderFloat("Shoot delay", &cooldownShoot.shootDelay, 0.0f, 10.0f);
+        break;
+    }
+    case 7: {
+        Parent &parent = std::any_cast<Parent &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        const ImU64 increment = 1;
+        ImGui::InputScalar("Model ID", ImGuiDataType_U64, &parent.id, &increment);
+        break;
+    }
+    default:
+        break;
     }
 }
 
 std::string GUISystem::formatBool(std::size_t value, std::size_t size)
 {
-    std::string binary = std::bitset<sizeof(std::size_t)>(value).to_string();
+    std::string binary = std::bitset<64>(value).to_string();
     std::string result = "";
 
-    for (std::size_t i = 0; i < size; i++) {
+    for (std::size_t i = 64 - size; i < 64; i++) {
         result += binary[i];
         if (i % 8 == 7)
             result += " ";

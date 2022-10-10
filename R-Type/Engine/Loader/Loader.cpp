@@ -1,4 +1,6 @@
 #include "Loader.hpp"
+#include <chrono>
+#include <thread>
 
 using namespace eng;
 
@@ -34,7 +36,7 @@ void Loader::loadSprites(std::vector<std::string> paths)
                 sf::Texture *texture = new sf::Texture();
                 sf::Sprite sprite;
 
-                if (texture->loadFromFile(file_name.c_str())) {
+                if (texture->loadFromFile(p.path().string())) {
                     sprite.setTexture(*texture);
                     this->_textures.push_back(*texture);
                     this->_sprites.push_back(sprite);
@@ -59,7 +61,7 @@ void Loader::loadSounds(std::vector<std::string> paths)
             for (auto &file_name : sorted) {
                 sf::SoundBuffer sound;
 
-                if (sound.loadFromFile(file_name.c_str())) {
+                if (sound.loadFromFile(p.path().string())) {
                     this->_sounds.push_back(sound);
                 }
             }
