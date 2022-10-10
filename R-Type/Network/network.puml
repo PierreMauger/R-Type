@@ -1,0 +1,110 @@
+@startuml network
+
+namespace net {
+    ' Gère tout ce qui est communication solo bolo (1 connexion = 1 client)
+    class Connection {
+        ' protected
+            ' pour envoyer un message en udp
+            -boost::asio::ip::udp::endpoint _endpoint;
+
+            -boost::asio::ip::udp::socket &_udpSocket;
+            -boost::asio::ip::tcp::socket _tcpSocket;
+            -std::vector<std::vector<uint8_t>> &_dataIn;
+
+        ' public
+            +Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
+            +Connection(std::string ip, uint16_t port, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
+            +~Connection();
+            +_B_ASIO_TCP::socket &getTcpSocket();
+            +void initConnection();
+            +void setUdpEndpoint(std::string ip, uint16_t port);
+            +void setTcpEndpoint(std::string ip, uint16_t port);
+            +_B_ASIO_UDP::endpoint getUdpEndpoint();
+            +_B_ASIO_TCP::endpoint getTcpEndpoint();
+
+            ' Todo : installer le protocole de communication
+            +void handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer, size_t size);
+            +void tcpMsg(std::vector<uint8_t> data);
+            +void udpMsg(std::vector<uint8_t> data);
+    }
+
+    ' Gère l'acceptance des requêtes pour les liers aux connexions si existante (genre udp requête)
+    ' + Messages envers un client en particulier ou tout les clients
+    class Server {
+        ' private
+            ' Check si il accepte le message udp + le stock dans la queue
+            +void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint);
+
+            ' Si connexion udp, check all connexions + verif
+            +void handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection);
+
+        ' protected
+            -boost::asio::io_context _ioContext;
+            -boost::asio::ip::udp::socket _udpSocket;
+            -boost::asio::ip::tcp::acceptor _acceptor;
+            -std::vector<Connection> _listConnections;
+            -std::vector<std::vector<uint8_t>> _dataIn;
+
+        ' public
+            +Server(uint16_t port);
+            +~Server();
+            
+            ' Boucle Principale pour waits les clients, async handleMsgUdp & handleNewTcp
+            +void initServer();
+
+            ' Send message pour un client par connexion
+            +void tcpMsgCli();
+            +void udpMsgCli();
+
+            ' Boucle toutes les connexions pour un message
+            +void tcpMsgAll();
+            +void udpMsgAll();
+
+            ' func call when new client (dans handleAccept et handleUdp après verif)
+            +virtual void newConnect(_B_ASIO_TCP::endpoint endpoint);
+
+            ' someone call this to get dataIn and use it (thread it ? need help)
+            +virtual void updateAction();
+    }
+
+    class Client {
+        ' private
+            +void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint);
+
+        ' protected
+            -boost::asio::io_context _ioContext;
+            -boost::asio::ip::tcp::resolver _resolver;
+            -std::vector<std::vector<uint8_t>> _dataIn;
+            -boost::asio::ip::udp::socket _udpSocket;
+            -Connection _connection;
+
+        ' public
+            +Client();
+            +~Client();
+
+            +void initClient();
+            +void run();
+
+            +void tcpMsg(_STORAGE_DATA data);
+            +void udpMsg(_STORAGE_DATA data);
+
+            ' someone call this to get dataIn and use it (thread it ? need help)
+            +virtual void updateAction();
+    }
+
+    struct msgHeader {
+        T id{};
+        uint32_t size = 0;
+    }
+
+    struct message {
+        msgHeader<T> header{};
+        std::vector<uint8_t> body;
+        ' -------------------
+        size_t size();
+        friend message<T> &operator<<(message<T> &msg, DataType &data);
+        friend message<T> &operator>>(message<T> &msg, DataType &data);
+    }
+}
+
+@enduml

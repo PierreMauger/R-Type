@@ -1,6 +1,7 @@
-#pragma once
+#ifndef MESSAGE_HPP_
+#define MESSAGE_HPP_
 
-#include "common.hpp"
+#include "NetCommon.hpp"
 
 namespace net
 {
@@ -8,7 +9,7 @@ namespace net
 
     /// @brief Define the message header
     /// @tparam T
-    template <typename T> struct msg_header {
+    template <typename T> struct msgHeader {
             T id{};
             uint32_t size = 0;
     };
@@ -18,7 +19,7 @@ namespace net
     /// @brief Define the message packet
     /// @tparam T
     template <typename T> struct message {
-            msg_header<T> header{};
+            msgHeader<T> header{};
             std::vector<uint8_t> body;
 
             //$--------------------- Methods -----------------------$//
@@ -27,7 +28,7 @@ namespace net
             /// @return size_t
             size_t size() const
             {
-                return sizeof(msg_header<T>) + body.size();
+                return sizeof(msgHeader<T>) + body.size();
             }
 
             /// @brief Overload the << operator to insert data into the message packet
@@ -64,12 +65,6 @@ namespace net
                 return msg;
             }
     };
-
-    //$----------- Message Owned (to ping back) ------------$//
-
-    template <typename T> struct owned_message {
-            std::shared_ptr<connection<T>> remote = nullptr;
-            message<T> msg;
-    };
-
 } // namespace net
+
+#endif /* !MESSAGE_HPP_ */
