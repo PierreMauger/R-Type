@@ -22,9 +22,12 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
-set(DBUILD_SHARED_LIBS TRUE)
+set(BUILD_SHARED_LIBS TRUE)
 include(ProcessorCount)
 ProcessorCount(CMAKE_BUILD_PARALLEL_LEVEL)
+set(SFML_BUILD_EXAMPLES OFF)
+set(SFML_BUILD_DOC OFF)
+set(SFML_BUILD_NETWORK OFF)
 
 ################## BUILD ImGui ##################
 
@@ -230,5 +233,6 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-audio-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-src/extlibs/bin/x64/openal32.dll ${CMAKE_SOURCE_DIR}
   )
 endif()
