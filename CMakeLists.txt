@@ -54,7 +54,12 @@ set(ImGui_SRC
 #fetch required deps
 find_package(OpenGL REQUIRED)
 find_package(SFML REQUIRED)
-find_package(Boost REQUIRED)
+set(BOOST_ROOT "$ENV{HOME}/boost/boost_1_74_0")
+set(Boost_INCLUDE_DIR  "$ENV{HOME}/boost/boost_1_74_0")
+set(Boost_LIBRARY_DIR "$ENV{HOME}/boost/boost_1_74_0/libs")
+find_package(Boost REQUIRED COMPONENTS system)
+# find_package(Boost COMPONENTS asio REQUIRED)
+# find_package(Boost REQUIRED)
 
 #set include paths
 include_directories(
@@ -140,7 +145,7 @@ add_library(${ENGINE} ${ENGINE_SRC})
 target_link_libraries(${ENGINE} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${ENGINE} PRIVATE ${BOOST_LIBRARIES})
+target_link_libraries(${ENGINE} PRIVATE ${Boost_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE ${ImGui})
 set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
