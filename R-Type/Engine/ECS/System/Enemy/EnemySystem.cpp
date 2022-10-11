@@ -12,10 +12,11 @@ void EnemySystem::createShoot(std::size_t id, ComponentManager &componentManager
     std::size_t addEntity = componentManager.getComponent(typeid(Position)).getSize();
     Size size = std::any_cast<Size>(componentManager.getComponent(typeid(Size)).getField(id).value());
 
-    entityManager.addMask(addEntity, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
-                                      eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE));
-    componentManager.initEmptyComponent(addEntity);
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{1, Priority::MEDIUM});
+    entityManager.addManualMask(addEntity,
+                                (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
+                                 eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE),
+                                componentManager);
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{3, Priority::MEDIUM});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{-15, 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});

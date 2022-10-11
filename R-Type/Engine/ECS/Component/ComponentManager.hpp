@@ -18,10 +18,11 @@ namespace eng
             ~ComponentManager() = default;
 
             std::map<std::type_index, Component> &getComponentArray();
+
             Component &getComponent(std::type_index type);
             Component &getComponent(std::size_t index);
             std::type_index getComponentType(std::size_t index);
-            void initEmptyComponent(std::size_t id);
+            void initNewComponent(std::size_t id);
 
             template <typename T> void bindComponent()
             {
