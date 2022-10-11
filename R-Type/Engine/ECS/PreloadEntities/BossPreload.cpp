@@ -15,10 +15,10 @@ void eng::BossPreload::preload(Engine &engine)
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{300, 259});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{5});
 
-    id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT | eng::InfoEntity::LIFEBAR),
-                                                    engine.getECS().getComponentManager());
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{480, 10, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(id, Parent{id});
-    engine.getECS().getComponentManager().getComponent(typeid(LifeBar)).emplaceData(id, LifeBar{true, 5});
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{1, Priority::MEDIUM});
+    std::size_t idBar = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT | eng::InfoEntity::LIFEBAR),
+                                                                   engine.getECS().getComponentManager());
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(idBar, Position{480, 10, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
+    engine.getECS().getComponentManager().getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 5});
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::MEDIUM});
 }

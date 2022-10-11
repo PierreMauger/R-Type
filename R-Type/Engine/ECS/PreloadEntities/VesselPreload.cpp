@@ -15,4 +15,12 @@ void eng::VesselPreload::preload(Engine &engine)
     engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 0.5});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{100, 118});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{1});
+
+    std::size_t idBar = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT | eng::InfoEntity::COOLDOWNBAR),
+                                                                   engine.getECS().getComponentManager());
+
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::HIGH});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(idBar, Position{10, (float)engine.getGraphic().getWindow()->getSize().y - 20, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
+    engine.getECS().getComponentManager().getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
 }

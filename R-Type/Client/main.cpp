@@ -75,11 +75,6 @@ int main(void)
 
     vesselPreload.preload(engine);
 
-    // create cooldownBar
-    eng::CooldownBarPreload cooldownBarPreload;
-
-    cooldownBarPreload.preload(engine);
-
     mainLoop(engine);
     return 0;
 }

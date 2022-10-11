@@ -13,8 +13,8 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
 {
     auto &masks = entityManager.getMasks();
 
-    std::size_t cooldownBarParent = (InfoEntity::COOLDOWNSHOOT | InfoEntity::SPRITEID | InfoEntity::PARENT);
-    std::size_t cooldownBarChild = (InfoEntity::COOLDOWNBAR);
+    std::size_t cooldownBarParent = (InfoEntity::COOLDOWNBAR | InfoEntity::SPRITEID | InfoEntity::PARENT);
+    std::size_t cooldownBarChild = (InfoEntity::COOLDOWNSHOOT);
 
     if (masks[i].has_value()) {
         if ((masks[i].value() & cooldownBarParent) == cooldownBarParent) {
@@ -27,9 +27,8 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
                                            : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay,
                                        1);
                 }
-            } else {
+            } else
                 spriteRef.setScale(0, 0);
-            }
         }
     }
 }
@@ -38,8 +37,8 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
 {
     auto &masks = entityManager.getMasks();
 
-    std::size_t lifeBarParent = (InfoEntity::POS | InfoEntity::LIFE | InfoEntity::SIZE | InfoEntity::PARENT);
-    std::size_t lifeBarChild = (InfoEntity::LIFEBAR);
+    std::size_t lifeBarParent = (InfoEntity::POS | InfoEntity::LIFEBAR | InfoEntity::PARENT);
+    std::size_t lifeBarChild = (InfoEntity::LIFE);
 
     if (masks[i].has_value()) {
         if ((masks[i].value() & lifeBarParent) == lifeBarParent) {
@@ -52,9 +51,9 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
                     spriteRef.setScale(life.life * 100 / lifeBar.lifeMax, 1);
                     spriteRef.setPosition(pos.x, pos.y - 20);
                 }
-            }
-        } else
-            spriteRef.setScale(0, 0);
+            } else
+                spriteRef.setScale(0, 0);
+        }
     }
 }
 
@@ -62,7 +61,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
 {
     auto &masks = entityManager.getMasks();
     std::size_t render = (InfoEntity::POS | InfoEntity::SPRITEID);
-    std::size_t renderCooldown = (InfoEntity::PARENT | InfoEntity::COOLDOWNBAR | InfoEntity::SPRITEID);
+    std::size_t renderCooldown = (InfoEntity::PARENT | InfoEntity::COOLDOWNBAR);
     std::size_t renderLife = (InfoEntity::PARENT | InfoEntity::LIFEBAR);
     std::size_t renderParallax = (InfoEntity::POS | InfoEntity::SPRITEID | InfoEntity::PARALLAX);
     std::vector<sf::Sprite> stockSpriteHigh;
