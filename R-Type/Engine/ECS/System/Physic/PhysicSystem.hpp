@@ -9,6 +9,10 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::RenderWindow> _window;
+            sf::Rect<float> _rect1;
+            sf::Rect<float> _rect2;
+            bool checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
+            bool checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2);
             bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
 

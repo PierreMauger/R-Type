@@ -6,7 +6,7 @@ void eng::EnemyPreload::preload(Engine &engine)
                                                                  eng::InfoEntity::LIFE | eng::InfoEntity::SIZE | eng::InfoEntity::PATERN),
                                                                 engine.getECS().getComponentManager());
 
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{3, Priority::MEDIUM});
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{2, Priority::MEDIUM});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{800, 200, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-2, -2, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(1), 0, {800, 200}});
