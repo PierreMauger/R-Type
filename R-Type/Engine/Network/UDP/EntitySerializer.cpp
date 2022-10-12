@@ -13,7 +13,7 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     packet.push_back(type);
 
     // sync id
-    packet.push_back(std::any_cast<uint8_t>(componentManager.getComponent(typeid(SyncID)).getField(id)));
+    this->serializeComponent<SyncID>(packet, std::any_cast<SyncID &>(componentManager.getComponent(typeid(SyncID)).getField(id).value()));
 
     // mask
     packet.push_back(InfoEntity::POS | InfoEntity::VEL | InfoEntity::SPRITEID);
@@ -41,4 +41,16 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     }
 
     return packet;
+}
+
+void eng::EntitySerializer::synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
+{
+    if (packet.at(0) != ENTITY) {
+        return;
+    }
+
+    std::size_t adv = 1;
+    EntityType type = static_cast<EntityType>(packet.at(adv++));
+
+    std::cout << "type: " << type << std::endl;
 }

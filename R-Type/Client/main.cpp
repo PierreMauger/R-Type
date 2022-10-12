@@ -76,6 +76,9 @@ int main(void)
 
     vesselPreload.preload(engine);
 
-    mainLoop(engine);
+    // mainLoop(engine);
+    std::vector<uint8_t> packet = engine.getNetwork().getUDPClient().getSerializer().serializeEntity(1, eng::EntityType::UPDATE, componentManager);
+
+    // engine.getNetwork().getUDPClient().getSerializer().synchronizeEntity(packet, engine.getECS().getEntityManager(), componentManager);
     return 0;
 }

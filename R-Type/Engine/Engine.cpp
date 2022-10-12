@@ -22,3 +22,8 @@ Loader &Engine::getLoader()
 {
     return this->_loader;
 }
+
+Network &Engine::getNetwork()
+{
+    return this->_network;
+}
