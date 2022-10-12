@@ -1,4 +1,5 @@
 #include "Client.hpp"
+#include <thread>
 
 int main(int ac, char **av)
 {
@@ -7,11 +8,14 @@ int main(int ac, char **av)
         return 84;
     }
     try {
-        boost::asio::io_context io_context;
-        Client client(io_context, av[1], std::stoi(av[2]), std::stoi(av[3]));
-        client.tcpMsg({'H', 'E', 'L', 'L', 'O'});
+        Client client(av[1], std::stoi(av[2]), std::stoi(av[3]));
+        client.run();
+        sleep(1);
+        sleep(1);
+        sleep(1);
+        // client.udpMsg({'T'});
     } catch (std::exception &error) {
-        std::cerr << error.what() << std::endl;
+        std::cerr << "[CLIENT]: " << error.what() << std::endl;
     }
     return 0;
 }

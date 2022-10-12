@@ -6,7 +6,6 @@ Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, 
     _tcpSocket(ioContext),
     _dataIn(dataIn)
 {
-    this->initConnection();
 }
 
 Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket) :
@@ -17,16 +16,22 @@ Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost
     _tcpSocket(ioContext),
     _dataIn(dataIn)
 {
-    this->initConnection();
 }
 
 Connection::~Connection()
 {
 }
 
-_B_ASIO_TCP::socket &Connection::getTcpSocket()
+void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer)
 {
-    return this->_tcpSocket;
+    if (!error) {
+        std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
+        std::cout << "Message: " << buffer.data() << std::endl;
+        this->_dataIn.push_back(buffer);
+    } else {
+        std::cerr << "handleMsgTcp Error: " << error.message() << std::endl;
+    }
+    this->initConnection();
 }
 
 void Connection::initConnection()
@@ -40,6 +45,16 @@ void Connection::initConnection()
                     buffer
                 )
     );
+}
+
+void Connection::run()
+{
+    this->initConnection();
+}
+
+_B_ASIO_TCP::socket &Connection::getTcpSocket()
+{
+    return this->_tcpSocket;
 }
 
 void Connection::setUdpEndpoint(std::string ip, uint16_t port)
@@ -60,16 +75,6 @@ void Connection::setTcpEndpoint(_B_ASIO_TCP::endpoint endpoint)
 _B_ASIO_TCP::endpoint Connection::getTcpEndpoint()
 {
     return this->_tcpEndpoint;
-}
-
-void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer)
-{
-    if (!error) {
-        std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
-        std::cout << "Message: " << buffer.data() << std::endl;
-        this->_dataIn.push_back(buffer);
-    }
-    this->initConnection();
 }
 
 void Connection::tcpMsg(_STORAGE_DATA data)

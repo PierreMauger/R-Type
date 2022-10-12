@@ -5,6 +5,10 @@
 
 class Connection : public boost::enable_shared_from_this<Connection>
 {
+    private:
+        void handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer);
+        void initConnection();
+
     protected:
         boost::asio::io_context &_ioContext;
         _B_ASIO_UDP::endpoint _udpEndpoint;
@@ -17,13 +21,15 @@ class Connection : public boost::enable_shared_from_this<Connection>
         Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
         Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
         ~Connection();
+
+        void run();
         _B_ASIO_TCP::socket &getTcpSocket();
-        void initConnection();
+
         void setUdpEndpoint(std::string ip, uint16_t port);
         void setTcpEndpoint(_B_ASIO_TCP::endpoint endpoint);
         _B_ASIO_UDP::endpoint getUdpEndpoint();
         _B_ASIO_TCP::endpoint getTcpEndpoint();
-        void handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer);
+
         void tcpMsg(_STORAGE_DATA data);
         void udpMsg(_STORAGE_DATA data);
 };

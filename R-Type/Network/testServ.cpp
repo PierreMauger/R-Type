@@ -7,11 +7,13 @@ int main(int ac, char **av) {
         return 84;
     }
     try {
-        boost::asio::io_context io_context;
-        Server server(io_context, std::stoi(av[1]), std::stoi(av[2]));
-        io_context.run();
+        Server server(std::stoi(av[1]), std::stoi(av[2]));
+        server.run();
+        while (true) {
+            sleep(1);
+        }
     } catch (std::exception &error) {
-        std::cerr << error.what() << std::endl;
+        std::cerr << "[SERVER]: " << error.what() << std::endl;
     }
     return 0;
 }
