@@ -17,7 +17,7 @@ void eng::BossPreload::preload(Engine &engine)
 
     std::size_t idBar = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT | eng::InfoEntity::LIFEBAR),
                                                                    engine.getECS().getComponentManager());
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(idBar, Position{480, 10, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     engine.getECS().getComponentManager().getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 5});
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::MEDIUM});
