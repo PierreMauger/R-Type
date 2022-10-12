@@ -21,13 +21,15 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/Cmake-Modules/")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
-set(BUILD_SHARED_LIBS TRUE)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(BUILD_SHARED_LIBS ON)
 include(ProcessorCount)
 ProcessorCount(CMAKE_BUILD_PARALLEL_LEVEL)
 set(SFML_BUILD_EXAMPLES OFF)
 set(SFML_BUILD_DOC OFF)
 set(SFML_BUILD_NETWORK OFF)
+include(FetchContent)
+set(FETCHCONTENT_QUIET ON)
 
 ################## BUILD ImGui ##################
 
@@ -54,12 +56,12 @@ set(ImGui_SRC
 #fetch required deps
 find_package(OpenGL REQUIRED)
 find_package(SFML REQUIRED)
-set(BOOST_ROOT "$ENV{HOME}/boost/boost_1_74_0")
-set(Boost_INCLUDE_DIR  "$ENV{HOME}/boost/boost_1_74_0")
-set(Boost_LIBRARY_DIR "$ENV{HOME}/boost/boost_1_74_0/libs")
-find_package(Boost REQUIRED COMPONENTS system)
-# find_package(Boost COMPONENTS asio REQUIRED)
-# find_package(Boost REQUIRED)
+set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
+find_package(Boost)
+if (NOT Boost_FOUND)
+    FetchContent_Declare(Boost GIT_REPOSITORY https://github.com/boostorg/boost.git GIT_PROGRESS TRUE)
+    FetchContent_MakeAvailable(boost)
+endif()
 
 #set include paths
 include_directories(
