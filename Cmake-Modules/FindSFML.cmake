@@ -1,6 +1,0 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.24)
-FetchContent_GetProperties(sfml)
-if (NOT sfml_POPULATED)
-    FetchContent_Declare(sfml GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TAG 2.6.x GIT_PROGRESS TRUE)
-    FetchContent_MakeAvailable(sfml)
-endif()
