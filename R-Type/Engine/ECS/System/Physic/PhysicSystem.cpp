@@ -7,6 +7,23 @@ PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
     this->_window = window;
 }
 
+void PhysicSystem::createBonus(u_int64_t id, u_int64_t drop, ComponentManager &componentManager, EntityManager &entityManager)
+{
+    auto &masks = entityManager.getMasks();
+    u_int64_t addEntity = masks.size();
+    u_int64_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS);
+
+    if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
+        Size &size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(id).value());
+        Position &pos = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(id).value());
+        entityManager.addManualMask(addEntity, (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::DROP | eng::InfoEntity::SIZE), componentManager);
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{4, Priority::MEDIUM});
+        componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
+        componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
+        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55, 30});
+    }
+}
+
 bool PhysicSystem::checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2)
 {
     this->_rect1 = sf::Rect(pos.x, pos.y, sz.x - 10, sz.y - 10);
@@ -29,6 +46,32 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
     return false;
 }
 
+bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
+{
+    auto &masks = entityManager.getMasks();
+    u_int64_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS | InfoEntity::DROP);
+    u_int64_t physicCont = (InfoEntity::CONTROLLABLE | InfoEntity::POS | InfoEntity::SIZE);
+
+    if (!masks[i].has_value() || (masks[i].value() & physicCont) != physicCont)
+        return false;
+    Size &size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value());
+    for (std::size_t j = 0; j < masks.size(); j++) {
+        if (masks[j].has_value() && ((masks[j].value() & physicDrop) == physicDrop)) {
+            Size &size2 = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(j).value());
+            Position &pos2 = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(j).value());
+            DropBonus &drop = std::any_cast<DropBonus &>(componentManager.getComponent(typeid(DropBonus)).getField(j).value());
+            if (this->checkColision(pos, pos2, size, size2)) {
+                componentManager.removeAllComponents(j);
+                entityManager.removeMask(j);
+                if (drop.id == 0)
+                    std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).shootDelay /= 2;
+                return true;
+            }
+        }
+    }
+    return true;
+}
+
 bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
 {
     auto &masks = entityManager.getMasks();
@@ -42,9 +85,9 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
         pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
         for (std::size_t j = 0; j < masks.size(); j++) {
             if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol) {
-                if (checkColision(pos, std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(j).value()),
-                                  std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value()),
-                                  std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(j).value()))) {
+                if (this->checkColision(pos, std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(j).value()),
+                                        std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value()),
+                                        std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(j).value()))) {
                     componentManager.removeAllComponents(i);
                     entityManager.removeMask(i);
                     return true;
@@ -62,6 +105,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
     std::size_t physicApp = (InfoEntity::APP);
     std::size_t physicCon = (InfoEntity::CONTROLLABLE);
     std::size_t physicEne = (InfoEntity::ENEMY);
+    std::size_t physicDrop = (InfoEntity::DROP);
 
     if (masks[i].has_value() && (masks[i].value() & physicProj) == physicProj) {
         Parent &par = std::any_cast<Parent &>(componentManager.getComponent(typeid(Parent)).getField(i).value());
@@ -69,15 +113,20 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
             if (masks[j].has_value() && ((masks[j].value() & physicCon) == physicCon || (masks[j].value() & physicEne) == physicEne) && par.id != j) {
                 if ((masks[j].value() & physicApp) == physicApp && std::any_cast<Appearance &>(componentManager.getComponent(typeid(Appearance)).getField(j).value()).app)
                     continue;
-                if (checkColision(pos, std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(j).value()),
-                                  std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value()),
-                                  std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(j).value()))) {
+                if (this->checkColision(pos, std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(j).value()),
+                                        std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value()),
+                                        std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(j).value()))) {
                     Life &hp = std::any_cast<Life &>(componentManager.getComponent(typeid(Life)).getField(j).value());
-                    hp.life -= 1;
-                    if (hp.life == 0) {
+                    Projectile &proj = std::any_cast<Projectile &>(componentManager.getComponent(typeid(Projectile)).getField(i).value());
+                    if (proj.damage >= hp.life) {
+                        if ((masks[j].value() & physicDrop) == physicDrop)
+                            this->createBonus(j, std::any_cast<DropBonus &>(componentManager.getComponent(typeid(DropBonus)).getField(j).value()).id, componentManager,
+                                              entityManager);
+                        hp.life = 0;
                         componentManager.removeAllComponents(j);
                         entityManager.removeMask(j);
-                    }
+                    } else
+                        hp.life -= proj.damage;
                     componentManager.removeAllComponents(i);
                     entityManager.removeMask(i);
                     return true;
@@ -106,9 +155,11 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             if ((masks[i].value() & physicPat) != physicPat) {
                 pos.x += vel.x;
                 pos.y += vel.y;
-                if (collisionFireball(i, componentManager, entityManager, pos))
+                if (this->collisionFireball(i, componentManager, entityManager, pos))
                     continue;
-                if (collisionEnemy(i, componentManager, entityManager, pos))
+                if (this->collisionEnemy(i, componentManager, entityManager, pos))
+                    continue;
+                if (this->collisionBonus(i, componentManager, entityManager, pos))
                     continue;
                 if ((masks[i].value() & physicControl) == physicControl) {
                     Position &pos = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(i).value());
