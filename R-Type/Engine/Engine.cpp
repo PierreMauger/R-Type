@@ -5,7 +5,7 @@ using namespace eng;
 Engine::Engine()
 {
     // this->_loader.loadSounds()
-    this->_loader.loadSprites({"R-Type/assets/Sprites", "R-Type/assets/Sprites/background_parallax"});
+    this->_loader.loadSprites({"R-Type/Assets/Sprites", "R-Type/Assets/Sprites/Parallax"});
 }
 
 ECS &Engine::getECS()
