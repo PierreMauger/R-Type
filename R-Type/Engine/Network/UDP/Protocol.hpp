@@ -5,6 +5,8 @@
 #include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Includes.hpp"
 
+#define FOOTER "\n"
+
 namespace eng
 {
     enum PacketType {

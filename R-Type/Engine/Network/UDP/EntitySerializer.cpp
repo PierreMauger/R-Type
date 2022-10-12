@@ -4,23 +4,6 @@ eng::EntitySerializer::EntitySerializer()
 {
 }
 
-template <typename T> void eng::EntitySerializer::serializeComponent(std::vector<uint8_t> &packet, T &component)
-{
-    for (uint8_t i = 0; i < sizeof(T); i++) {
-        packet.push_back(((uint8_t *)&component)[i]);
-    }
-}
-
-template <typename T> std::size_t eng::EntitySerializer::deserializeComponent(std::vector<uint8_t> &packet, T &component)
-{
-    std::size_t i = 0;
-
-    for (; i < sizeof(T); i++) {
-        ((std::size_t *)&component)[i] = packet[i];
-    }
-    return i;
-}
-
 std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager)
 {
     std::vector<uint8_t> packet;
@@ -33,11 +16,29 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     packet.push_back(std::any_cast<uint8_t>(componentManager.getComponent(typeid(SyncID)).getField(id)));
 
     // mask
-    packet.push_back(eng::InfoEntity::POS | eng::InfoEntity::VEL);
+    packet.push_back(InfoEntity::POS | InfoEntity::VEL | InfoEntity::SPRITEID);
 
     // components
-    this->serializeComponent(packet, componentManager.getComponent(typeid(Position)).getField(id));
-    this->serializeComponent(packet, componentManager.getComponent(typeid(Velocity)).getField(id));
+    for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
+        switch (i) {
+        case 0:
+            this->serializeComponent<Position>(packet, std::any_cast<Position &>(componentManager.getComponent(i).getField(id).value()));
+            break;
+        case 1:
+            this->serializeComponent<Velocity>(packet, std::any_cast<Velocity &>(componentManager.getComponent(i).getField(id).value()));
+            break;
+        case 2:
+            this->serializeComponent<SpriteID>(packet, std::any_cast<SpriteID &>(componentManager.getComponent(i).getField(id).value()));
+            break;
+        default:
+            break;
+        }
+    }
+
+    // footer
+    for (auto elem : FOOTER) {
+        packet.push_back(elem);
+    }
 
     return packet;
 }

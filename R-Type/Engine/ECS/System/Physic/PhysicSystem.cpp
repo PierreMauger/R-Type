@@ -35,24 +35,24 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
     std::size_t physicCon = (InfoEntity::CONTROLLABLE);
     std::size_t physicCol = (InfoEntity::POS | InfoEntity::ENEMY | InfoEntity::SIZE);
 
-    if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
-        pos.x < 0 ? pos.x = 0 : pos.x;
-        pos.y < 0 ? pos.y = 0 : pos.y;
-        pos.x > _window->getSize().x - 100 ? pos.x = _window->getSize().x - 100 : pos.x;
-        pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
-        for (std::size_t j = 0; j < masks.size(); j++) {
-            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol) {
-                if (checkColision(pos, std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(j).value()),
-                                  std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value()),
-                                  std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(j).value()))) {
-                    componentManager.removeAllComponents(i);
-                    entityManager.removeMask(i);
-                    return true;
-                }
+    if (!masks[i].has_value() || (masks[i].value() & physicCon) != physicCon)
+        return false;
+    pos.x < 0 ? pos.x = 0 : pos.x;
+    pos.y < 0 ? pos.y = 0 : pos.y;
+    pos.x > _window->getSize().x - 100 ? pos.x = _window->getSize().x - 100 : pos.x;
+    pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
+    for (std::size_t j = 0; j < masks.size(); j++) {
+        if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol) {
+            if (checkColision(pos, std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(j).value()),
+                              std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(i).value()),
+                              std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(j).value()))) {
+                componentManager.removeAllComponents(i);
+                entityManager.removeMask(i);
+                return true;
             }
         }
     }
-    return false;
+    return true;
 }
 
 bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)

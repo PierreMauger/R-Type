@@ -11,8 +11,22 @@ namespace eng
     class EntitySerializer
     {
         private:
-            template <typename T> void serializeComponent(std::vector<uint8_t> &packet, T &component);
-            template <typename T> std::size_t deserializeComponent(std::vector<uint8_t> &packet, T &component);
+            template <typename T> void serializeComponent(std::vector<uint8_t> &packet, T &component)
+            {
+                for (uint8_t i = 0; i < sizeof(T); i++) {
+                    packet.push_back(((uint8_t *)&component)[i]);
+                }
+            };
+
+            template <typename T> std::size_t deserializeComponent(std::vector<uint8_t> &packet, T &component)
+            {
+                std::size_t i = 0;
+
+                for (; i < sizeof(T); i++) {
+                    ((std::size_t *)&component)[i] = packet[i];
+                }
+                return i;
+            };
 
         public:
             EntitySerializer();
