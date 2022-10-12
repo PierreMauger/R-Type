@@ -12,11 +12,14 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
 {
     auto &masks = entityManager.getMasks();
     std::size_t addEntity = masks.size();
-    std::size_t sizeMask = (InfoEntity::SIZE);
+    std::size_t sizeMask = (InfoEntity::SIZE | InfoEntity::COOLDOWNSHOOT);
     Size size;
+    CooldownShoot sizeProj;
 
-    if (masks[id].has_value() && (masks[id].value() & sizeMask) == sizeMask)
+    if (masks[id].has_value() && (masks[id].value() & sizeMask) == sizeMask) {
         size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(id).value());
+        sizeProj = std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(id).value());
+    }
     entityManager.addManualMask(addEntity,
                                 (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
                                  eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE),
@@ -25,8 +28,8 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{15, 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
-    componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, damage});
-    componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55, 30});
+    componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, damage, sizeProj.size});
+    componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55 * sizeProj.size, 30 * sizeProj.size});
 }
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)

@@ -65,6 +65,8 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                 entityManager.removeMask(j);
                 if (drop.id == 0)
                     std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).shootDelay /= 2;
+                if (drop.id == 1)
+                    std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).size += 2;
                 return true;
             }
         }

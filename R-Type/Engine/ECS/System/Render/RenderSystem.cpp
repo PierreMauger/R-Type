@@ -65,6 +65,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderCooldown = (InfoEntity::PARENT | InfoEntity::COOLDOWNBAR);
     std::size_t renderLife = (InfoEntity::PARENT | InfoEntity::LIFEBAR);
     std::size_t renderParallax = (InfoEntity::POS | InfoEntity::SPRITEID | InfoEntity::PARALLAX);
+    std::size_t renderProj = (InfoEntity::PROJECTILE);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
@@ -79,6 +80,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
                 displayCooldownBar(componentManager, entityManager, spriteRef, i);
             if ((masks[i].value() & renderLife) == renderLife)
                 displayLifeBar(componentManager, entityManager, spriteRef, i);
+            if ((masks[i].value() & renderProj) == renderProj) {
+                Projectile &proj = std::any_cast<Projectile &>(componentManager.getComponent(typeid(Projectile)).getField(i).value());
+                spriteRef.setScale(proj.size, proj.size);
+            }
             if (spriteId.priority == Priority::HIGH)
                 stockSpriteHigh.push_back(spriteRef);
             if (spriteId.priority == Priority::MEDIUM)

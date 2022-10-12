@@ -10,7 +10,7 @@ void eng::VesselPreload::preload(Engine &engine)
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{10, 0, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, 5});
     engine.getECS().getComponentManager().getComponent(typeid(Controllable)).emplaceData(id, Controllable{true});
-    engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1});
+    engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{100, 118});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{1});
 
