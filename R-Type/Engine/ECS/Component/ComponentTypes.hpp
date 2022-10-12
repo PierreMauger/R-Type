@@ -17,8 +17,9 @@ typedef struct Velocity {
         float x;
         float y;
         float z;
+        float baseSpeed;
 
-        Velocity(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z)
+        Velocity(float x = 0.0f, float y = 0.0f, float z = 0.0f, float baseSpeed = 0.0) : x(x), y(y), z(z), baseSpeed(baseSpeed)
         {
         }
 } Velocity;
@@ -39,10 +40,10 @@ enum Priority {
 };
 
 typedef struct SpriteID {
-        std::size_t id;
+        u_int64_t id;
         enum Priority priority;
 
-        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH) : id(i), priority(prio)
+        SpriteID(u_int64_t i = 0, Priority prio = Priority::HIGH) : id(i), priority(prio)
         {
         }
 } SpriteID;
@@ -65,16 +66,17 @@ typedef struct Parallax {
 
 typedef struct Projectile {
         bool proj;
+        u_int64_t damage;
 
-        Projectile(bool proj = true) : proj(proj)
+        Projectile(bool proj = true, u_int64_t damage = 1) : proj(proj), damage(damage)
         {
         }
 } Projectile;
 
 typedef struct Life {
-        std::size_t life;
+        u_int64_t life;
 
-        Life(std::size_t life = 1) : life(life)
+        Life(u_int64_t life = 1) : life(life)
         {
         }
 } Life;
@@ -98,14 +100,6 @@ typedef struct Appearance {
         }
 } Appearance;
 
-typedef struct Speed {
-        float speed;
-
-        Speed(float spd = 0.0f) : speed(spd)
-        {
-        }
-} Speed;
-
 typedef struct CooldownShoot {
         float lastShoot;
         float shootDelay;
@@ -125,17 +119,17 @@ typedef struct CooldownBar {
 
 typedef struct LifeBar {
         bool bar;
-        std::size_t lifeMax;
+        u_int64_t lifeMax;
 
-        LifeBar(bool bar = false, std::size_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)
+        LifeBar(bool bar = false, u_int64_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)
         {
         }
 } LifeBar;
 
 typedef struct Parent {
-        std::size_t id;
+        u_int64_t id;
 
-        Parent(std::size_t i = 0) : id(i)
+        Parent(u_int64_t i = 0) : id(i)
         {
         }
 } Parent;
@@ -157,5 +151,13 @@ typedef struct Patern {
         {
         }
 } Patern;
+
+typedef struct DropBonus {
+        u_int64_t id;
+
+        DropBonus(u_int64_t id = 0) : id(id)
+        {
+        }
+} DropBonus;
 
 #endif // COMPONENTTYPES_HPP

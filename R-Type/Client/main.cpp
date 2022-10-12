@@ -58,12 +58,12 @@ int main(void)
     componentManager.bindComponent<Life>();
     componentManager.bindComponent<Enemy>();
     componentManager.bindComponent<Appearance>();
-    componentManager.bindComponent<Speed>();
     componentManager.bindComponent<CooldownShoot>();
     componentManager.bindComponent<CooldownBar>();
     componentManager.bindComponent<LifeBar>();
     componentManager.bindComponent<Parent>();
     componentManager.bindComponent<Patern>();
+    componentManager.bindComponent<DropBonus>();
 
     // create background
     eng::ParallaxPreload parallaxPreload;

@@ -38,7 +38,7 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
     auto &masks = entityManager.getMasks();
 
     std::size_t lifeBarParent = (InfoEntity::POS | InfoEntity::LIFEBAR | InfoEntity::PARENT);
-    std::size_t lifeBarChild = (InfoEntity::LIFE);
+    std::size_t lifeBarChild = (InfoEntity::POS | InfoEntity::LIFE | InfoEntity::SIZE);
 
     if (masks[i].has_value()) {
         if ((masks[i].value() & lifeBarParent) == lifeBarParent) {
@@ -48,7 +48,8 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
                     LifeBar &lifeBar = std::any_cast<LifeBar &>(componentManager.getComponent(typeid(LifeBar)).getField(i).value());
                     Life &life = std::any_cast<Life &>(componentManager.getComponent(typeid(Life)).getField(idPar).value());
                     Position &pos = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(idPar).value());
-                    spriteRef.setScale(life.life * 100 / lifeBar.lifeMax, 1);
+                    Size &sz = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(idPar).value());
+                    spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);
                     spriteRef.setPosition(pos.x, pos.y - 20);
                 }
             } else
