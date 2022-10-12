@@ -20,7 +20,7 @@ void EnemySystem::createShoot(std::size_t id, ComponentManager &componentManager
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{-15, 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
-    componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true});
+    componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, 1});
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55, 30});
 }
 
