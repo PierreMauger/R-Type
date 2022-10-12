@@ -40,10 +40,10 @@ enum Priority {
 };
 
 typedef struct SpriteID {
-        u_int64_t id;
+        std::size_t id;
         enum Priority priority;
 
-        SpriteID(u_int64_t i = 0, Priority prio = Priority::HIGH) : id(i), priority(prio)
+        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH) : id(i), priority(prio)
         {
         }
 } SpriteID;
@@ -66,17 +66,17 @@ typedef struct Parallax {
 
 typedef struct Projectile {
         bool proj;
-        u_int64_t damage;
+        std::size_t damage;
 
-        Projectile(bool proj = true, u_int64_t damage = 1) : proj(proj), damage(damage)
+        Projectile(bool proj = true, std::size_t damage = 1) : proj(proj), damage(damage)
         {
         }
 } Projectile;
 
 typedef struct Life {
-        u_int64_t life;
+        std::size_t life;
 
-        Life(u_int64_t life = 1) : life(life)
+        Life(std::size_t life = 1) : life(life)
         {
         }
 } Life;
@@ -119,17 +119,17 @@ typedef struct CooldownBar {
 
 typedef struct LifeBar {
         bool bar;
-        u_int64_t lifeMax;
+        std::size_t lifeMax;
 
-        LifeBar(bool bar = false, u_int64_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)
+        LifeBar(bool bar = false, std::size_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)
         {
         }
 } LifeBar;
 
 typedef struct Parent {
-        u_int64_t id;
+        std::size_t id;
 
-        Parent(u_int64_t i = 0) : id(i)
+        Parent(std::size_t i = 0) : id(i)
         {
         }
 } Parent;
@@ -153,9 +153,9 @@ typedef struct Patern {
 } Patern;
 
 typedef struct DropBonus {
-        u_int64_t id;
+        std::size_t id;
 
-        DropBonus(u_int64_t id = 0) : id(id)
+        DropBonus(std::size_t id = 0) : id(id)
         {
         }
 } DropBonus;

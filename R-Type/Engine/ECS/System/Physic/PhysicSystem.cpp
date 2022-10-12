@@ -7,11 +7,11 @@ PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
     this->_window = window;
 }
 
-void PhysicSystem::createBonus(u_int64_t id, u_int64_t drop, ComponentManager &componentManager, EntityManager &entityManager)
+void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    u_int64_t addEntity = masks.size();
-    u_int64_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS);
+    std::size_t addEntity = masks.size();
+    std::size_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS);
 
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
         Size &size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(id).value());
@@ -49,8 +49,8 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
 bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
 {
     auto &masks = entityManager.getMasks();
-    u_int64_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS | InfoEntity::DROP);
-    u_int64_t physicCont = (InfoEntity::CONTROLLABLE | InfoEntity::POS | InfoEntity::SIZE);
+    std::size_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS | InfoEntity::DROP);
+    std::size_t physicCont = (InfoEntity::CONTROLLABLE | InfoEntity::POS | InfoEntity::SIZE);
 
     if (!masks[i].has_value() || (masks[i].value() & physicCont) != physicCont)
         return false;

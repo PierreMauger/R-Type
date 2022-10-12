@@ -56,7 +56,7 @@ set(ImGui_SRC
 #fetch required deps
 find_package(OpenGL REQUIRED)
 set(SFML_DIR ${CMAKE_BINARY_DIR}/_deps/sfml-build/)
-find_package (SFML REQUIRED COMPONENTS system window graphics audio)
+find_package(SFML COMPONENTS system window graphics audio)
 if (NOT SFML_FOUND)
     FetchContent_Declare(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TAG 2.6.x GIT_PROGRESS TRUE)
     FetchContent_MakeAvailable(SFML)
