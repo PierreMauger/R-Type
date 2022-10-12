@@ -112,12 +112,9 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                         componentManager.addComponent<Parallax>(this->_selectedEntity);
                         break;
                     case 5:
-                        componentManager.addComponent<Speed>(this->_selectedEntity);
-                        break;
-                    case 6:
                         componentManager.addComponent<CooldownShoot>(this->_selectedEntity);
                         break;
-                    case 7:
+                    case 6:
                         componentManager.addComponent<Parent>(this->_selectedEntity);
                         break;
                     default:
@@ -164,17 +161,12 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         break;
     }
     case 5: {
-        Speed &speed = std::any_cast<Speed &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
-        ImGui::SliderFloat("Speed", &speed.speed, -10.0f, 10.0f);
-        break;
-    }
-    case 6: {
         CooldownShoot &cooldownShoot = std::any_cast<CooldownShoot &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         ImGui::SliderFloat("Last shoot", &cooldownShoot.lastShoot, 0.0f, 10.0f);
         ImGui::SliderFloat("Shoot delay", &cooldownShoot.shootDelay, 0.0f, 10.0f);
         break;
     }
-    case 7: {
+    case 6: {
         Parent &parent = std::any_cast<Parent &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         const ImU64 increment = 1;
         ImGui::InputScalar("Model ID", ImGuiDataType_U64, &parent.id, &increment);
