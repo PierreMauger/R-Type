@@ -103,22 +103,46 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                         componentManager.addComponent<Velocity>(this->_selectedEntity);
                         break;
                     case 2:
-                        componentManager.addComponent<SpriteID>(this->_selectedEntity);
+                        componentManager.addComponent<Size>(this->_selectedEntity);
                         break;
                     case 3:
-                        componentManager.addComponent<Controllable>(this->_selectedEntity);
+                        componentManager.addComponent<SpriteID>(this->_selectedEntity);
                         break;
                     case 4:
-                        componentManager.addComponent<Parallax>(this->_selectedEntity);
+                        componentManager.addComponent<Controllable>(this->_selectedEntity);
                         break;
                     case 5:
-                        componentManager.addComponent<Speed>(this->_selectedEntity);
+                        componentManager.addComponent<Parallax>(this->_selectedEntity);
                         break;
                     case 6:
-                        componentManager.addComponent<CooldownShoot>(this->_selectedEntity);
+                        componentManager.addComponent<Projectile>(this->_selectedEntity);
                         break;
                     case 7:
+                        componentManager.addComponent<Life>(this->_selectedEntity);
+                        break;
+                    case 8:
+                        componentManager.addComponent<Enemy>(this->_selectedEntity);
+                        break;
+                    case 9:
+                        componentManager.addComponent<Appearance>(this->_selectedEntity);
+                        break;
+                    case 10:
+                        componentManager.addComponent<Speed>(this->_selectedEntity);
+                        break;
+                    case 11:
+                        componentManager.addComponent<CooldownShoot>(this->_selectedEntity);
+                        break;
+                    case 12:
+                        componentManager.addComponent<CooldownBar>(this->_selectedEntity);
+                        break;
+                    case 13:
+                        componentManager.addComponent<LifeBar>(this->_selectedEntity);
+                        break;
+                    case 14:
                         componentManager.addComponent<Parent>(this->_selectedEntity);
+                        break;
+                    case 15:
+                        componentManager.addComponent<Patern>(this->_selectedEntity);
                         break;
                     default:
                         break;
@@ -148,36 +172,82 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         break;
     }
     case 2: {
-        SpriteID &spriteID = std::any_cast<SpriteID &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
-        const ImU64 increment = 1;
-        ImGui::InputScalar("Model ID", ImGuiDataType_U64, &spriteID.id, &increment);
+        Size &size = std::any_cast<Size &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::DragFloat("X##size", &size.x, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("Y##size", &size.y, 1.0f, -FLT_MAX, +FLT_MAX);
         break;
     }
     case 3: {
+        SpriteID &spriteID = std::any_cast<SpriteID &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        const ImU64 increment = 1;
+        ImGui::InputScalar("SpriteID", ImGuiDataType_U64, &spriteID.id, &increment);
+        break;
+    }
+    case 4: {
         Controllable &controllable = std::any_cast<Controllable &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         ImGui::Checkbox("Controllable", &controllable.con);
         break;
     }
-    case 4: {
+    case 5: {
         Parallax &parallax = std::any_cast<Parallax &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         ImGui::Checkbox("Parallax", &parallax.par);
         break;
     }
-    case 5: {
+    case 6: {
+        Projectile &projectile = std::any_cast<Projectile &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("Projectile", &projectile.proj);
+        break;
+    }
+    case 7: {
+        Life &life = std::any_cast<Life &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        const ImU64 increment = 1;
+        ImGui::InputScalar("Life", ImGuiDataType_U64, &life.life, &increment);
+        break;
+    }
+    case 8: {
+        Enemy &enemy = std::any_cast<Enemy &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("Enemy", &enemy.enemy);
+        ImGui::SliderFloat("Last shoot##1", &enemy.lastShoot, 0.0f, 10.0f);
+        ImGui::SliderFloat("Shoot delay##1", &enemy.shootDelay, 0.0f, 10.0f);
+        break;
+    }
+    case 9: {
+        Appearance &app = std::any_cast<Appearance &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("Appearance", &app.app);
+        ImGui::SliderFloat("Appearance time", &app.end, 0.0f, 10.0f);
+        break;
+    }
+    case 10: {
         Speed &speed = std::any_cast<Speed &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         ImGui::SliderFloat("Speed", &speed.speed, -10.0f, 10.0f);
         break;
     }
-    case 6: {
-        CooldownShoot &cooldownShoot = std::any_cast<CooldownShoot &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
-        ImGui::SliderFloat("Last shoot", &cooldownShoot.lastShoot, 0.0f, 10.0f);
-        ImGui::SliderFloat("Shoot delay", &cooldownShoot.shootDelay, 0.0f, 10.0f);
+    case 11: {
+        CooldownShoot &cdShoot = std::any_cast<CooldownShoot &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::SliderFloat("Last shoot", &cdShoot.lastShoot, 0.0f, 10.0f);
+        ImGui::SliderFloat("Shoot delay", &cdShoot.shootDelay, 0.0f, 10.0f);
         break;
     }
-    case 7: {
+    case 12: {
+        CooldownBar &cdBar = std::any_cast<CooldownBar &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("CooldownBar", &cdBar.bar);
+        break;
+    }
+    case 13: {
+        LifeBar &lifeBar = std::any_cast<LifeBar &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
+        ImGui::Checkbox("LifeBar", &lifeBar.bar);
+        const ImU64 increment = 1;
+        ImGui::InputScalar("Life Max", ImGuiDataType_U64, &lifeBar.lifeMax, &increment);
+        break;
+    }
+    case 14: {
         Parent &parent = std::any_cast<Parent &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         const ImU64 increment = 1;
         ImGui::InputScalar("Model ID", ImGuiDataType_U64, &parent.id, &increment);
+        break;
+    }
+    case 15: {
+        Patern &patern = std::any_cast<Patern &>(componentManager.getComponent(type).getField(this->_selectedEntity).value());
         break;
     }
     default:
