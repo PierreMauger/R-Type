@@ -126,6 +126,9 @@ set(ENGINE_SRC
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
 
+    # Network files
+    ${ENGINE_ROOT}/Network/UDP/EntitySerializer.cpp
+
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
 )

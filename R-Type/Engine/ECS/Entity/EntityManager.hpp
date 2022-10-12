@@ -22,6 +22,7 @@ namespace eng
         LIFEBAR = 0b10000000000000,
         PARENT = 0b100000000000000,
         PATERN = 0b1000000000000000,
+        SYNCID = 0b10000000000000000,
     };
 
     class EntityManager

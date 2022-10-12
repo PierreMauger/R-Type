@@ -158,4 +158,12 @@ typedef struct Patern {
         }
 } Patern;
 
+typedef struct SyncID {
+        std::size_t id;
+
+        SyncID(std::size_t i = 0) : id(i)
+        {
+        }
+} SyncID;
+
 #endif // COMPONENTTYPES_HPP
