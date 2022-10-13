@@ -65,6 +65,8 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                 entityManager.removeMask(j);
                 if (drop.id == 0)
                     std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).shootDelay /= 2;
+                if (drop.id == 1)
+                    std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).size += 1;
                 return true;
             }
         }
@@ -152,6 +154,17 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             Velocity &vel = std::any_cast<Velocity &>(componentManager.getComponent(typeid(Velocity)).getField(i).value());
             if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
                 continue;
+            if ((masks[i].value() & physicPar) == physicPar) {
+                pos.x += vel.x;
+                if (pos.x <= -static_cast<int>(_window->getSize().x))
+                    pos.x = 0;
+                continue;
+            }
+            if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+                entityManager.removeMask(i);
+                componentManager.removeAllComponents(i);
+                continue;
+            }
             if ((masks[i].value() & physicPat) != physicPat) {
                 pos.x += vel.x;
                 pos.y += vel.y;
@@ -168,12 +181,6 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                     pos.x > _window->getSize().x - 100 ? pos.x = _window->getSize().x - 100 : pos.x;
                     pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
                     continue;
-                }
-                if ((masks[i].value() & physicPar) == physicPar)
-                    pos.x <= -800 ? pos.x = 800 : pos.x;
-                else if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
-                    entityManager.removeMask(i);
-                    componentManager.removeAllComponents(i);
                 }
             }
         }

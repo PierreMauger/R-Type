@@ -66,9 +66,10 @@ typedef struct Parallax {
 
 typedef struct Projectile {
         bool proj;
-        std::size_t damage;
+        u_int64_t damage;
+        float size;
 
-        Projectile(bool proj = true, std::size_t damage = 1) : proj(proj), damage(damage)
+        Projectile(bool proj = true, u_int64_t damage = 1, float size = 1) : proj(proj), damage(damage), size(size)
         {
         }
 } Projectile;
@@ -103,8 +104,9 @@ typedef struct Appearance {
 typedef struct CooldownShoot {
         float lastShoot;
         float shootDelay;
+        float size;
 
-        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f) : lastShoot(lastShoot), shootDelay(shootDelay)
+        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f, u_int64_t size = 1) : lastShoot(lastShoot), shootDelay(shootDelay), size(size)
         {
         }
 } CooldownShoot;
