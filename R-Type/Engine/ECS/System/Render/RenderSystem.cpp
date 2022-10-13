@@ -74,7 +74,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             Position &pos = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(i).value());
             SpriteID &spriteId = std::any_cast<SpriteID &>(componentManager.getComponent(typeid(SpriteID)).getField(i).value());
             this->_sprites[spriteId.id].setPosition(pos.x, pos.y);
-            sf::Sprite &spriteRef = this->_sprites[std::any_cast<SpriteID &>(componentManager.getComponent(typeid(SpriteID)).getField(i).value()).id];
+            sf::Sprite &spriteRef = this->_sprites[spriteId.id];
             if ((masks[i].value() & renderCooldown) == renderCooldown)
                 displayCooldownBar(componentManager, entityManager, spriteRef, i);
             if ((masks[i].value() & renderLife) == renderLife)
