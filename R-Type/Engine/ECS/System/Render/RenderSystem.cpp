@@ -100,3 +100,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
 }
+
+// animations rects data:
+// enemy: 63x48 (offset 63 on x)
