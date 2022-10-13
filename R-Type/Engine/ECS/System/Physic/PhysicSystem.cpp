@@ -160,6 +160,11 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                     pos.x = 0;
                 continue;
             }
+            if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+                entityManager.removeMask(i);
+                componentManager.removeAllComponents(i);
+                continue;
+            }
             if ((masks[i].value() & physicPat) != physicPat) {
                 pos.x += vel.x;
                 pos.y += vel.y;
@@ -176,10 +181,6 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                     pos.x > _window->getSize().x - 100 ? pos.x = _window->getSize().x - 100 : pos.x;
                     pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
                     continue;
-                }
-                if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
-                    entityManager.removeMask(i);
-                    componentManager.removeAllComponents(i);
                 }
             }
         }
