@@ -2,8 +2,8 @@
 
 void eng::VesselPreload::preload(Engine &engine)
 {
-    std::size_t id = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::LIFE | eng::InfoEntity::VEL | eng::InfoEntity::SPRITEID |
-                                                                 eng::InfoEntity::CONTROLLABLE | eng::InfoEntity::COOLDOWNSHOOT | eng::InfoEntity::SIZE),
+    std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID |
+                                                                 InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE),
                                                                 engine.getECS().getComponentManager());
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM});
@@ -14,7 +14,7 @@ void eng::VesselPreload::preload(Engine &engine)
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{100, 118});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{1});
 
-    std::size_t idBar = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT | eng::InfoEntity::COOLDOWNBAR),
+    std::size_t idBar = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR),
                                                                    engine.getECS().getComponentManager());
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::HIGH});

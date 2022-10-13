@@ -12,17 +12,15 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
 {
     auto &masks = entityManager.getMasks();
     std::size_t addEntity = masks.size();
-    std::size_t sizeMask = (InfoEntity::SIZE | InfoEntity::COOLDOWNSHOOT);
+    std::size_t sizeMask = (InfoComp::SIZE | InfoComp::COOLDOWNSHOOT);
     Size size;
     CooldownShoot sizeProj;
 
     if (masks[id].has_value() && (masks[id].value() & sizeMask) == sizeMask) {
-        size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(id).value());
-        sizeProj = std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(id).value());
+        size = componentManager.getSingleComponent<Size>(id);
+        sizeProj = componentManager.getSingleComponent<CooldownShoot>(id);
     }
-    entityManager.addManualMask(addEntity,
-                                (eng::InfoEntity::SPRITEID | eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::PARENT | eng::InfoEntity::PROJECTILE |
-                                 eng::InfoEntity::PROJECTILE | eng::InfoEntity::SIZE),
+    entityManager.addManualMask(addEntity, (InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE),
                                 componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((damage == 2) ? 4 : 3), Priority::MEDIUM});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + (size.y / 2 - (30 * sizeProj.size / 2)), pos.z});
@@ -35,13 +33,13 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t input = (InfoEntity::CONTROLLABLE | InfoEntity::VEL | InfoEntity::POS | InfoEntity::COOLDOWNSHOOT | InfoEntity::SIZE);
+    std::size_t input = (InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & input) == input) {
-            Position &pos = std::any_cast<Position &>(componentManager.getComponent(typeid(Position)).getField(i).value());
-            Velocity &vel = std::any_cast<Velocity &>(componentManager.getComponent(typeid(Velocity)).getField(i).value());
-            CooldownShoot &sht = std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value());
+            Position &pos = componentManager.getSingleComponent<Position>(i);
+            Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
+            CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(i);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
                 sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
                 createShoot(i, componentManager, pos, entityManager, 2);

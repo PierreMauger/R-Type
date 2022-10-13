@@ -3,8 +3,8 @@
 void eng::BossPreload::preload(Engine &engine)
 {
     std::size_t id =
-        engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::VEL | eng::InfoEntity::APP | eng::InfoEntity::SPRITEID | eng::InfoEntity::ENEMY |
-                                                    eng::InfoEntity::LIFE | eng::InfoEntity::SIZE | eng::InfoEntity::PATERN | eng::InfoEntity::DROP),
+        engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY |
+                                                    InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATERN | InfoComp::DROP),
                                                    engine.getECS().getComponentManager());
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM});
     engine.getECS().getComponentManager().getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100});
@@ -16,7 +16,7 @@ void eng::BossPreload::preload(Engine &engine)
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{25});
     engine.getECS().getComponentManager().getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{1});
 
-    std::size_t idBar = engine.getECS().getEntityManager().addMask((eng::InfoEntity::POS | eng::InfoEntity::SPRITEID | eng::InfoEntity::PARENT | eng::InfoEntity::LIFEBAR),
+    std::size_t idBar = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR),
                                                                    engine.getECS().getComponentManager());
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
