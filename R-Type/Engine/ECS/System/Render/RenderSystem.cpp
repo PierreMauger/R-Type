@@ -36,7 +36,6 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
 void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
-
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
     std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
 
@@ -46,7 +45,7 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
             if (masks[idPar].has_value()) {
                 if ((masks[idPar].value() & lifeBarChild) == lifeBarChild) {
                     LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(i);
-                    Life &life = componentManager.getSingleComponent<Life>(i);
+                    Life &life = componentManager.getSingleComponent<Life>(idPar);
                     Position &pos = componentManager.getSingleComponent<Position>(idPar);
                     Size &sz = componentManager.getSingleComponent<Size>(idPar);
                     spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);

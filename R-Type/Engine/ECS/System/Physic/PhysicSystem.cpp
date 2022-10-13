@@ -57,9 +57,9 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
     Size &size = componentManager.getSingleComponent<Size>(i);
     for (std::size_t j = 0; j < masks.size(); j++) {
         if (masks[j].has_value() && ((masks[j].value() & physicDrop) == physicDrop)) {
-            Size &size2 = componentManager.getSingleComponent<Size>(i);
-            Position &pos2 = componentManager.getSingleComponent<Position>(i);
-            DropBonus &drop = componentManager.getSingleComponent<DropBonus>(i);
+            Size &size2 = componentManager.getSingleComponent<Size>(j);
+            Position &pos2 = componentManager.getSingleComponent<Position>(j);
+            DropBonus &drop = componentManager.getSingleComponent<DropBonus>(j);
             if (this->checkColision(pos, pos2, size, size2)) {
                 componentManager.removeAllComponents(j);
                 entityManager.removeMask(j);
