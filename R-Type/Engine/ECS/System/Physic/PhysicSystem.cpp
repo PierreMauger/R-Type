@@ -7,11 +7,11 @@ PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
     this->_window = window;
 }
 
-void PhysicSystem::createBonus(u_int64_t id, u_int64_t drop, ComponentManager &componentManager, EntityManager &entityManager)
+void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    u_int64_t addEntity = masks.size();
-    u_int64_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS);
+    std::size_t addEntity = masks.size();
+    std::size_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS);
 
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
         Size &size = std::any_cast<Size &>(componentManager.getComponent(typeid(Size)).getField(id).value());
@@ -49,8 +49,8 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
 bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
 {
     auto &masks = entityManager.getMasks();
-    u_int64_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS | InfoEntity::DROP);
-    u_int64_t physicCont = (InfoEntity::CONTROLLABLE | InfoEntity::POS | InfoEntity::SIZE);
+    std::size_t physicDrop = (InfoEntity::SIZE | InfoEntity::POS | InfoEntity::DROP);
+    std::size_t physicCont = (InfoEntity::CONTROLLABLE | InfoEntity::POS | InfoEntity::SIZE);
 
     if (!masks[i].has_value() || (masks[i].value() & physicCont) != physicCont)
         return false;
@@ -66,7 +66,7 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                 if (drop.id == 0)
                     std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).shootDelay /= 2;
                 if (drop.id == 1)
-                    std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).size += 2;
+                    std::any_cast<CooldownShoot &>(componentManager.getComponent(typeid(CooldownShoot)).getField(i).value()).size += 1;
                 return true;
             }
         }
@@ -154,6 +154,12 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             Velocity &vel = std::any_cast<Velocity &>(componentManager.getComponent(typeid(Velocity)).getField(i).value());
             if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
                 continue;
+            if ((masks[i].value() & physicPar) == physicPar) {
+                pos.x += vel.x;
+                if (pos.x <= -static_cast<int>(_window->getSize().x))
+                    pos.x = 0;
+                continue;
+            }
             if ((masks[i].value() & physicPat) != physicPat) {
                 pos.x += vel.x;
                 pos.y += vel.y;
@@ -171,9 +177,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                     pos.y > _window->getSize().y - 100 ? pos.y = _window->getSize().y - 100 : pos.y;
                     continue;
                 }
-                if ((masks[i].value() & physicPar) == physicPar)
-                    pos.x <= -800 ? pos.x = 800 : pos.x;
-                else if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+                if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
                     entityManager.removeMask(i);
                     componentManager.removeAllComponents(i);
                 }
