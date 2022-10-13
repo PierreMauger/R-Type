@@ -16,20 +16,18 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
     std::size_t cooldownBarParent = (InfoComp::COOLDOWNBAR | InfoComp::SPRITEID | InfoComp::PARENT);
     std::size_t cooldownBarChild = (InfoComp::COOLDOWNSHOOT);
 
-    if (masks[i].has_value()) {
-        if ((masks[i].value() & cooldownBarParent) == cooldownBarParent) {
-            std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
-            if (masks[idPar].has_value()) {
-                if ((masks[idPar].value() & cooldownBarChild) == cooldownBarChild) {
-                    CooldownShoot &cooldownShoot = componentManager.getSingleComponent<CooldownShoot>(idPar);
-                    spriteRef.setScale(((this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay) > 100
-                                           ? 100
-                                           : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay,
-                                       1);
-                }
-            } else
-                spriteRef.setScale(0, 0);
-        }
+    if (masks[i].has_value() && (masks[i].value() & cooldownBarParent) == cooldownBarParent) {
+        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        if (masks[idPar].has_value()) {
+            if ((masks[idPar].value() & cooldownBarChild) == cooldownBarChild) {
+                CooldownShoot &cooldownShoot = componentManager.getSingleComponent<CooldownShoot>(idPar);
+                spriteRef.setScale(((this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay) > 100
+                                       ? 100
+                                       : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay,
+                                   1);
+            }
+        } else
+            spriteRef.setScale(0, 0);
     }
 }
 
@@ -39,21 +37,19 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
     std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
 
-    if (masks[i].has_value()) {
-        if ((masks[i].value() & lifeBarParent) == lifeBarParent) {
-            std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
-            if (masks[idPar].has_value()) {
-                if ((masks[idPar].value() & lifeBarChild) == lifeBarChild) {
-                    LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(i);
-                    Life &life = componentManager.getSingleComponent<Life>(idPar);
-                    Position &pos = componentManager.getSingleComponent<Position>(idPar);
-                    Size &sz = componentManager.getSingleComponent<Size>(idPar);
-                    spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);
-                    spriteRef.setPosition(pos.x, pos.y - 20);
-                }
-            } else
-                spriteRef.setScale(0, 0);
-        }
+    if (masks[i].has_value() && (masks[i].value() & lifeBarParent) == lifeBarParent) {
+        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        if (masks[idPar].has_value()) {
+            if ((masks[idPar].value() & lifeBarChild) == lifeBarChild) {
+                LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(i);
+                Life &life = componentManager.getSingleComponent<Life>(idPar);
+                Position &pos = componentManager.getSingleComponent<Position>(idPar);
+                Size &sz = componentManager.getSingleComponent<Size>(idPar);
+                spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);
+                spriteRef.setPosition(pos.x, pos.y - 20);
+            }
+        } else
+            spriteRef.setScale(0, 0);
     }
 }
 

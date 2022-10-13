@@ -30,36 +30,34 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t enemy = (InfoComp::ENEMY);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
-        if (masks[i].has_value()) {
-            if ((masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app)
-                continue;
-            if ((masks[i].value() & enemyData) == enemyData) {
-                Position &pos = componentManager.getSingleComponent<Position>(i);
-                Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
-                Patern &pat = componentManager.getSingleComponent<Patern>(i);
-                if (pat.type == TypePatern::CIRCLE) {
-                    pos.x = pat.center.x + std::cos(pat.angle) * (RADIUS * 2);
-                    pos.y = pat.center.y + std::sin(pat.angle) * (RADIUS * 2);
-                    pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
-                }
-                if (pat.type == TypePatern::OSCILLATION) {
-                    pos.x += vel.x;
-                    pos.y = pat.center.y + std::sin(pat.angle) * RADIUS;
-                    pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC;
-                }
-                if (pat.type == TypePatern::BIGOSCILLATION) {
-                    pos.x += vel.x;
-                    pos.y = pat.center.y + std::sin(pat.angle) * (RADIUS * 3);
-                    pat.angle = this->_clock->getElapsedTime().asSeconds() * (SPEED_OSC / 2);
-                }
-                if (pat.type == TypePatern::LINE)
-                    pos.x += vel.x;
-                if ((masks[i].value() & enemy) == enemy) {
-                    Enemy &enemy = componentManager.getSingleComponent<Enemy>(i);
-                    if (enemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > enemy.lastShoot + enemy.shootDelay) {
-                        createShoot(i, componentManager, pos, entityManager);
-                        enemy.lastShoot = _clock->getElapsedTime().asSeconds();
-                    }
+        if (!masks[i].has_value() || (masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app)
+            continue;
+        if ((masks[i].value() & enemyData) == enemyData) {
+            Position &pos = componentManager.getSingleComponent<Position>(i);
+            Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
+            Patern &pat = componentManager.getSingleComponent<Patern>(i);
+            if (pat.type == TypePatern::CIRCLE) {
+                pos.x = pat.center.x + std::cos(pat.angle) * (RADIUS * 2);
+                pos.y = pat.center.y + std::sin(pat.angle) * (RADIUS * 2);
+                pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
+            }
+            if (pat.type == TypePatern::OSCILLATION) {
+                pos.x += vel.x;
+                pos.y = pat.center.y + std::sin(pat.angle) * RADIUS;
+                pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC;
+            }
+            if (pat.type == TypePatern::BIGOSCILLATION) {
+                pos.x += vel.x;
+                pos.y = pat.center.y + std::sin(pat.angle) * (RADIUS * 3);
+                pat.angle = this->_clock->getElapsedTime().asSeconds() * (SPEED_OSC / 2);
+            }
+            if (pat.type == TypePatern::LINE)
+                pos.x += vel.x;
+            if ((masks[i].value() & enemy) == enemy) {
+                Enemy &enemy = componentManager.getSingleComponent<Enemy>(i);
+                if (enemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > enemy.lastShoot + enemy.shootDelay) {
+                    createShoot(i, componentManager, pos, entityManager);
+                    enemy.lastShoot = _clock->getElapsedTime().asSeconds();
                 }
             }
         }
