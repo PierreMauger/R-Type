@@ -30,7 +30,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t enemy = (InfoComp::ENEMY);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
-        if (!masks[i].has_value() || (masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app)
+        if (!masks[i].has_value() || ((masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app))
             continue;
         if ((masks[i].value() & enemyData) == enemyData) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
