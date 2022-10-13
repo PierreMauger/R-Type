@@ -103,3 +103,4 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
 
 // animations rects data:
 // enemy: 63x48 (offset 63 on x)
+// boss: 48x48 (offset 48 on x)
