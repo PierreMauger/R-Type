@@ -29,7 +29,7 @@ set(SFML_BUILD_EXAMPLES OFF)
 set(SFML_BUILD_DOC OFF)
 set(SFML_BUILD_NETWORK OFF)
 include(FetchContent)
-set(FETCHCONTENT_QUIET ON)
+set(FETCHCONTENT_QUIET OFF)
 
 ################## BUILD ImGui ##################
 
@@ -55,24 +55,28 @@ set(ImGui_SRC
 
 #fetch required deps
 find_package(OpenGL REQUIRED)
-set(SFML_DIR ${CMAKE_BINARY_DIR}/_deps/sfml-build/)
-find_package(SFML COMPONENTS system window graphics audio)
-if (NOT SFML_FOUND)
+
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/sfml-build/")
     FetchContent_Declare(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TAG 2.6.x GIT_PROGRESS TRUE)
     FetchContent_MakeAvailable(SFML)
 endif()
-set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
-find_package(Boost)
-if (NOT Boost_FOUND)
+if (NOT SFML_FOUND)
+    set(SFML_DIR ${CMAKE_BINARY_DIR}/_deps/sfml-build/)
+    find_package(SFML COMPONENTS system window graphics audio)
+endif()
+
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/boost-build/")
     FetchContent_Declare(Boost GIT_REPOSITORY https://github.com/boostorg/boost.git GIT_PROGRESS TRUE)
     FetchContent_MakeAvailable(Boost)
+endif()
+if (NOT Boost_FOUND)
+    set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
+    find_package(Boost)
 endif()
 
 #set include paths
 include_directories(
     ${ImGui_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -140,8 +144,6 @@ set(ENGINE_SRC
 #set include paths
 include_directories(
     ${ENGINE_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -180,8 +182,6 @@ set(CLIENT_SRC
 #set include paths
 include_directories(
     ${CLIENT_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -221,8 +221,6 @@ set(SERVER_SRC
 #set include paths
 include_directories(
     ${SERVER_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${BOOST_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
