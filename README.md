@@ -32,6 +32,7 @@ Supported operating systems:
 
 Dependencies:
 - [Cmake](https://cmake.org/download/) 3.24+
+- [OpenGL](https://www.opengl.org/)
 
 ## 🔧 Building
 
