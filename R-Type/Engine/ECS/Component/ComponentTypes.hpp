@@ -3,6 +3,25 @@
 
 #include "Includes.hpp"
 
+enum InfoComp {
+    POS = 0b1,
+    VEL = 0b10,
+    SIZE = 0b100,
+    SPRITEID = 0b1000,
+    CONTROLLABLE = 0b10000,
+    PARALLAX = 0b100000,
+    PROJECTILE = 0b1000000,
+    LIFE = 0b10000000,
+    ENEMY = 0b100000000,
+    APP = 0b1000000000,
+    COOLDOWNSHOOT = 0b10000000000,
+    COOLDOWNBAR = 0b100000000000,
+    LIFEBAR = 0b1000000000000,
+    PARENT = 0b10000000000000,
+    PATERN = 0b100000000000000,
+    DROP = 0b1000000000000000,
+};
+
 typedef struct Position {
         float x;
         float y;
@@ -67,8 +86,9 @@ typedef struct Parallax {
 typedef struct Projectile {
         bool proj;
         std::size_t damage;
+        float size;
 
-        Projectile(bool proj = true, std::size_t damage = 1) : proj(proj), damage(damage)
+        Projectile(bool proj = true, std::size_t damage = 1, float size = 1) : proj(proj), damage(damage), size(size)
         {
         }
 } Projectile;
@@ -103,8 +123,9 @@ typedef struct Appearance {
 typedef struct CooldownShoot {
         float lastShoot;
         float shootDelay;
+        float size;
 
-        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f) : lastShoot(lastShoot), shootDelay(shootDelay)
+        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f, std::size_t size = 1) : lastShoot(lastShoot), shootDelay(shootDelay), size(size)
         {
         }
 } CooldownShoot;

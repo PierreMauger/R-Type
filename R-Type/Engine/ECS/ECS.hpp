@@ -3,9 +3,10 @@
 
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
+#include "Engine/ECS/System/Animation/AnimationSystem.hpp"
+#include "Engine/ECS/System/Enemy/EnemySystem.hpp"
 #include "Engine/ECS/System/GUI/GUISystem.hpp"
 #include "Engine/ECS/System/Input/InputSystem.hpp"
-#include "Engine/ECS/System/Enemy/EnemySystem.hpp"
 #include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 #include "Engine/ECS/System/Render/RenderSystem.hpp"
 #include "Engine/ECS/System/SystemManager.hpp"
