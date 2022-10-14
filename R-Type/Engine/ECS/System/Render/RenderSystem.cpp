@@ -2,88 +2,101 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window) : _gui(window)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader)
 {
+    this->_clock = clock;
     this->_window = window;
-    this->_window->setFramerateLimit(60);
-    this->_window->setKeyRepeatEnabled(true);
-    this->_couldownBar = {};
-    this->_color = {{0, sf::Color::Red}, {1, sf::Color::Blue}, {2, sf::Color::Green}, {3, sf::Color::Yellow}, {4, sf::Color::Magenta}};
-    if (!this->_texture.at(0).loadFromFile("./R-Type/assets/Sprites/space_background.jpg"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(1).loadFromFile("./R-Type/assets/Sprites/spaceship.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(2).loadFromFile("./R-Type/assets/Sprites/fireball.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(3).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-backgound.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(4).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-stars.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(5).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-far-planets.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(6).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-ring-planet.png"))
-        throw std::runtime_error("Background not found");
-    if (!this->_texture.at(7).loadFromFile("./R-Type/assets/Sprites/background_parallax/parallax-space-big-planet.png"))
-        throw std::runtime_error("Background not found");
-    this->_sprites.push_back(sf::Sprite(this->_texture[0]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(0.6, 0.63);
-    this->_sprites.push_back(sf::Sprite(this->_texture[1]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(0.5, 0.5);
-    this->_sprites.push_back(sf::Sprite(this->_texture[2]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(0.3, 0.3);
-    this->_sprites.push_back(sf::Sprite(this->_texture[3]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[4]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[5]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[6]));
-    this->_sprites.at(this->_sprites.size() - 1).setScale(3, 4);
-    this->_sprites.push_back(sf::Sprite(this->_texture[7]));
+    this->_sprites = loader.getSprites();
+}
+
+void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+{
+    auto &masks = entityManager.getMasks();
+
+    std::size_t cooldownBarParent = (InfoComp::COOLDOWNBAR | InfoComp::SPRITEID | InfoComp::PARENT);
+    std::size_t cooldownBarChild = (InfoComp::COOLDOWNSHOOT);
+
+    if (masks[i].has_value() && (masks[i].value() & cooldownBarParent) == cooldownBarParent) {
+        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        if (masks[idPar].has_value()) {
+            if ((masks[idPar].value() & cooldownBarChild) == cooldownBarChild) {
+                CooldownShoot &cooldownShoot = componentManager.getSingleComponent<CooldownShoot>(idPar);
+                spriteRef.setScale(((this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay) > 100
+                                       ? 100
+                                       : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay,
+                                   1);
+            }
+        } else
+            spriteRef.setScale(0, 0);
+    }
+}
+
+void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+{
+    auto &masks = entityManager.getMasks();
+    std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
+    std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
+
+    if (masks[i].has_value() && (masks[i].value() & lifeBarParent) == lifeBarParent) {
+        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        if (masks[idPar].has_value()) {
+            if ((masks[idPar].value() & lifeBarChild) == lifeBarChild) {
+                LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(i);
+                Life &life = componentManager.getSingleComponent<Life>(idPar);
+                Position &pos = componentManager.getSingleComponent<Position>(idPar);
+                Size &sz = componentManager.getSingleComponent<Size>(idPar);
+                spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);
+                spriteRef.setPosition(pos.x, pos.y - 20);
+            }
+        } else
+            spriteRef.setScale(0, 0);
+    }
 }
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    Component &modelId = componentManager.getComponent(typeid(ModelID));
-    Component &position = componentManager.getComponent(typeid(Position));
+    auto &masks = entityManager.getMasks();
+    std::size_t render = (InfoComp::POS | InfoComp::SPRITEID);
+    std::size_t renderCooldown = (InfoComp::PARENT | InfoComp::COOLDOWNBAR);
+    std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
+    std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
+    std::size_t renderProj = (InfoComp::PROJECTILE);
+    std::vector<sf::Sprite> stockSpriteHigh;
+    std::vector<sf::Sprite> stockSpriteMedium;
+    std::vector<sf::Sprite> stockSpriteLow;
 
-    for (std::size_t i = 0; i < modelId.getSize(); i++) {
-        if (entityManager.getMasks()[i].has_value() && modelId.getField(i).has_value()) {
-            if (position.getField(i).has_value()) {
-                Position &pos = std::any_cast<Position &>(position.getField(i).value());
-                this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id).setPosition(pos.x, pos.y);
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value() && (masks[i].value() & render) == render) {
+            Position &pos = componentManager.getSingleComponent<Position>(i);
+            SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(i);
+            sf::Sprite &spriteRef = this->_sprites[spriteId.id];
+            spriteRef.setPosition(pos.x, pos.y);
+            if ((masks[i].value() & renderCooldown) == renderCooldown)
+                displayCooldownBar(componentManager, entityManager, spriteRef, i);
+            if ((masks[i].value() & renderLife) == renderLife)
+                displayLifeBar(componentManager, entityManager, spriteRef, i);
+            if ((masks[i].value() & renderProj) == renderProj) {
+                Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
+                spriteRef.setScale(proj.size, proj.size);
             }
-            this->DisplayCouldownBar(i, componentManager);
-            this->_window->draw(this->_sprites.at(std::any_cast<ModelID &>(modelId.getField(i).value()).id));
+            if (spriteId.priority == Priority::HIGH)
+                stockSpriteHigh.push_back(spriteRef);
+            if (spriteId.priority == Priority::MEDIUM)
+                stockSpriteMedium.push_back(spriteRef);
+            if (spriteId.priority == Priority::LOW)
+                stockSpriteLow.push_back(spriteRef);
         }
     }
-    ImGui::SFML::Update(*this->_window, this->_clock.restart());
-    this->_gui.drawGUI(componentManager, entityManager);
-    this->_gui.drawEntityGUI(componentManager, entityManager);
-    ImGui::SFML::Render(*this->_window);
-}
-
-void RenderSystem::DisplayCouldownBar(std::size_t i, ComponentManager &componentManager)
-{
-    Component &couldown = componentManager.getComponent(typeid(CouldownShoot));
-    sf::Vector2f size(100, 10);
-    sf::Vector2u pos(0, this->_window->getSize().y - 20);
-
-    if (couldown.getField(i).has_value()) {
-        CouldownShoot &sht = std::any_cast<CouldownShoot &>(couldown.getField(i).value());
-        if (this->_couldownBar.find(i) == this->_couldownBar.end()) {
-            pos.x = this->_couldownBar.size() * (size.x + 10) + 10;
-            this->_couldownBar.insert({i, {sf::RectangleShape(sf::Vector2f(size.x, size.y)), sf::RectangleShape(sf::Vector2f(0, size.y))}});
-            this->_couldownBar.at(i).first.setOutlineColor(sf::Color::Black);
-            this->_couldownBar.at(i).first.setOutlineThickness(2);
-            this->_couldownBar.at(i).first.setPosition(pos.x, pos.y);
-            this->_couldownBar.at(i).second.setFillColor(this->_color.at(this->_couldownBar.size() - 1));
-            this->_couldownBar.at(i).second.setPosition(pos.x, pos.y);
+    for (std::size_t i = 0; i < stockSpriteHigh.size(); i++) {
+        if (masks[i].has_value() && (masks[i].value() & renderParallax) == renderParallax) {
+            stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x + _window->getSize().x, stockSpriteHigh[i].getPosition().y);
+            this->_window->draw(stockSpriteHigh[i]);
+            stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x - _window->getSize().x, stockSpriteHigh[i].getPosition().y);
         }
-        this->_couldownBar.at(i).second.setSize(
-            {(sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds()) > size.x ? size.x : sht.clock.getElapsedTime().asSeconds() * size.x / sht.time.asSeconds(),
-             size.y});
-        this->_window->draw(this->_couldownBar.at(i).first);
-        this->_window->draw(this->_couldownBar.at(i).second);
+        this->_window->draw(stockSpriteHigh[i]);
     }
+    for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
+        this->_window->draw(stockSpriteMedium[i]);
+    for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
+        this->_window->draw(stockSpriteLow[i]);
 }

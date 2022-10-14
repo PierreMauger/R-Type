@@ -11,9 +11,11 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::Event> _event;
+            std::shared_ptr<sf::Clock> _clock;
+            void createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager, std::size_t damage);
 
         public:
-            InputSystem(sf::Event &event);
+            InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock);
             ~InputSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };

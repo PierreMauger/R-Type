@@ -17,12 +17,19 @@ else()
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /WX")
 endif()
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/build/_deps/sfml-src/cmake")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
-set(DBUILD_SHARED_LIBS TRUE)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+set(BUILD_SHARED_LIBS ON)
+include(ProcessorCount)
+ProcessorCount(CMAKE_BUILD_PARALLEL_LEVEL)
+set(SFML_BUILD_EXAMPLES OFF)
+set(SFML_BUILD_DOC OFF)
+set(SFML_BUILD_NETWORK OFF)
+include(FetchContent)
+set(FETCHCONTENT_QUIET OFF)
 
 ################## BUILD ImGui ##################
 
@@ -46,18 +53,32 @@ set(ImGui_SRC
     ${ImGui_ROOT}/imgui-SFML.cpp
 )
 
+#fetch required deps
+find_package(OpenGL REQUIRED)
+
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/sfml-build/")
+    FetchContent_Declare(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TAG 2.6.x GIT_PROGRESS TRUE)
+    FetchContent_MakeAvailable(SFML)
+endif()
+if (NOT SFML_FOUND)
+    set(SFML_DIR ${CMAKE_BINARY_DIR}/_deps/sfml-build/)
+    find_package(SFML COMPONENTS system window graphics audio)
+endif()
+
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/boost-build/")
+    FetchContent_Declare(Boost GIT_REPOSITORY https://github.com/boostorg/boost.git GIT_PROGRESS TRUE)
+    FetchContent_MakeAvailable(Boost)
+endif()
+if (NOT Boost_FOUND)
+    set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
+    find_package(Boost)
+endif()
+
 #set include paths
 include_directories(
     ${ImGui_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
-
-#fetch required deps
-find_package(OpenGL REQUIRED)
-find_package(SFML REQUIRED)
-find_package(Asio REQUIRED)
 
 #set source files
 add_library(${ImGui} ${ImGui_SRC})
@@ -65,6 +86,8 @@ add_library(${ImGui} ${ImGui_SRC})
 target_link_libraries(${ImGui} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${ImGui} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ImGui} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+set_target_properties(${ImGui} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${ImGui} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
 #install target
 install(TARGETS ${ImGui})
@@ -72,7 +95,7 @@ install(TARGETS ${ImGui})
 ################## BUILD ENGINE ##################
 
 #set library name
-set(ENGINE ENGINE)
+set(ENGINE Engine)
 
 #set root path
 set(ENGINE_ROOT ${PROJECT_NAME}/Engine)
@@ -84,6 +107,7 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/Entity/
     ${ENGINE_ROOT}/ECS/Component/
     ${ENGINE_ROOT}/ECS/System/
+    ${ENGINE_ROOT}/ECS/PreloadEntities/
     ${ENGINE_ROOT}/Graphic/
 )
 
@@ -98,11 +122,20 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
-    ${ENGINE_ROOT}/ECS/System/Render/GUI.cpp
+    ${ENGINE_ROOT}/ECS/System/GUI/GUISystem.cpp
     ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/ParallaxPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/VesselPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/BossPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/CooldownBarPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/EnemyPreload.cpp
+    ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp
+
+    # Loader files
+    ${ENGINE_ROOT}/Loader/Loader.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
@@ -111,8 +144,6 @@ set(ENGINE_SRC
 #set include paths
 include_directories(
     ${ENGINE_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -123,8 +154,10 @@ add_library(${ENGINE} ${ENGINE_SRC})
 target_link_libraries(${ENGINE} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${ENGINE} PRIVATE asio)
+target_link_libraries(${ENGINE} PRIVATE ${Boost_LIBRARIES})
 target_link_libraries(${ENGINE} PRIVATE ${ImGui})
+set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
+set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
 #install target
 install(TARGETS ${ENGINE})
@@ -135,7 +168,7 @@ install(TARGETS ${ENGINE})
 set(CLIENT r-type_client)
 
 #set root path
-set(CLIENT_ROOT ${PROJECT_NAME}/client)
+set(CLIENT_ROOT ${PROJECT_NAME}/Client)
 
 #fetch include paths
 set(CLIENT_INC
@@ -149,8 +182,6 @@ set(CLIENT_SRC
 #set include paths
 include_directories(
     ${CLIENT_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -161,10 +192,9 @@ add_executable(${CLIENT} ${CLIENT_SRC})
 target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${CLIENT} PRIVATE asio)
+target_link_libraries(${CLIENT} PRIVATE ${BOOST_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
-target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
@@ -177,7 +207,7 @@ install(TARGETS ${CLIENT})
 set(SERVER r-type_server)
 
 #set root paths
-set(SERVER_ROOT ${PROJECT_NAME}/server)
+set(SERVER_ROOT ${PROJECT_NAME}/Server)
 
 #fetch include paths
 set(SERVER_INC
@@ -191,8 +221,6 @@ set(SERVER_SRC
 #set include paths
 include_directories(
     ${SERVER_INC}
-    ${SFML_INCLUDE_DIRS}
-    ${ASIO_INCLUDE_DIRS}
     ${PROJECT_NAME}
 )
 
@@ -203,10 +231,9 @@ add_executable(${SERVER} ${SERVER_SRC})
 target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${SERVER} PRIVATE asio)
+target_link_libraries(${SERVER} PRIVATE ${BOOST_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${SERVER} PRIVATE ${ENGINE})
-target_link_libraries(${CLIENT} PRIVATE ${GRAPH})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
@@ -222,8 +249,7 @@ if(WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-window-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ENGINE.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/ImGui.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE}/GRAPH.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-audio-d-2.dll ${CMAKE_SOURCE_DIR}
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-src/extlibs/bin/x64/openal32.dll ${CMAKE_SOURCE_DIR}
   )
 endif()
