@@ -19,7 +19,7 @@ void ScoreSystem::createText(ComponentManager &componentManager, EntityManager &
     sf::Text text("Score: 0", font, 20);
 
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, static_cast<float>(this->_window->getSize().x) - 50, 0});
-    componentManager.getComponent(typeid(Text)).emplaceData(id, text);
+    componentManager.getComponent(typeid(Text)).emplaceData(id, Text{text});
 }
 
 void ScoreSystem::createVessel(ComponentManager &componentManager, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites,
