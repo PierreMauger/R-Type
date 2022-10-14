@@ -1,4 +1,6 @@
-#include "Server.hpp"
+#include "Server/Server.hpp"
+
+using namespace eng;
 
 Server::Server(uint16_t portUdp, uint16_t portTcp) :
     _ioContext(),

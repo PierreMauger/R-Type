@@ -1,4 +1,6 @@
-#include "Client.hpp"
+#include "Client/Client.hpp"
+
+using namespace eng;
 
 Client::Client(std::string ip, uint16_t portUdp, uint16_t portTcp) :
     _ioContext(),

@@ -1,5 +1,7 @@
 #include "Connection.hpp"
 
+using namespace eng;
+
 Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket) :
     _ioContext(ioContext),
     _udpSocket(udpSocket),
