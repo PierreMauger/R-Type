@@ -1,7 +1,0 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.24)
-if (NOT Boost_FOUND AND NOT Boost_POPULATED)
-    INCLUDE(FetchContent)
-    SET(FETCHCONTENT_QUIET FALSE)
-    FetchContent_Declare(Boost GIT_REPOSITORY https://github.com/boostorg/boost.git GIT_PROGRESS TRUE)
-    FetchContent_MakeAvailable(Boost)
-endif()

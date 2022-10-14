@@ -3,6 +3,25 @@
 
 #include "Includes.hpp"
 
+enum InfoComp {
+    POS = 0b1,
+    VEL = 0b10,
+    SIZE = 0b100,
+    SPRITEID = 0b1000,
+    CONTROLLABLE = 0b10000,
+    PARALLAX = 0b100000,
+    PROJECTILE = 0b1000000,
+    LIFE = 0b10000000,
+    ENEMY = 0b100000000,
+    APP = 0b1000000000,
+    COOLDOWNSHOOT = 0b10000000000,
+    COOLDOWNBAR = 0b100000000000,
+    LIFEBAR = 0b1000000000000,
+    PARENT = 0b10000000000000,
+    PATERN = 0b100000000000000,
+    DROP = 0b1000000000000000,
+};
+
 typedef struct Position {
         float x;
         float y;
@@ -17,8 +36,9 @@ typedef struct Velocity {
         float x;
         float y;
         float z;
+        float baseSpeed;
 
-        Velocity(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z)
+        Velocity(float x = 0.0f, float y = 0.0f, float z = 0.0f, float baseSpeed = 0.0) : x(x), y(y), z(z), baseSpeed(baseSpeed)
         {
         }
 } Velocity;
@@ -65,8 +85,10 @@ typedef struct Parallax {
 
 typedef struct Projectile {
         bool proj;
+        std::size_t damage;
+        float size;
 
-        Projectile(bool proj = true) : proj(proj)
+        Projectile(bool proj = true, std::size_t damage = 1, float size = 1) : proj(proj), damage(damage), size(size)
         {
         }
 } Projectile;
@@ -98,19 +120,12 @@ typedef struct Appearance {
         }
 } Appearance;
 
-typedef struct Speed {
-        float speed;
-
-        Speed(float spd = 0.0f) : speed(spd)
-        {
-        }
-} Speed;
-
 typedef struct CooldownShoot {
         float lastShoot;
         float shootDelay;
+        float size;
 
-        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f) : lastShoot(lastShoot), shootDelay(shootDelay)
+        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f, std::size_t size = 1) : lastShoot(lastShoot), shootDelay(shootDelay), size(size)
         {
         }
 } CooldownShoot;
@@ -157,5 +172,13 @@ typedef struct Patern {
         {
         }
 } Patern;
+
+typedef struct DropBonus {
+        std::size_t id;
+
+        DropBonus(std::size_t id = 0) : id(id)
+        {
+        }
+} DropBonus;
 
 #endif // COMPONENTTYPES_HPP
