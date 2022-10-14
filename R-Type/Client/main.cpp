@@ -6,7 +6,7 @@
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 
-void mainLoop(eng::Engine &engine)
+void mainLoop(eng::Engine &engine, std::shared_ptr<std::vector<sf::Sprite>> sprites)
 {
     eng::Graphic &graphic = engine.getGraphic();
     eng::ECS &ecs = engine.getECS();
@@ -22,10 +22,10 @@ void mainLoop(eng::Engine &engine)
                 graphic.getWindow()->close();
         }
         if (graphic.getClock()->getElapsedTime() > elapsed_time && graphic.getClock()->getElapsedTime().asSeconds() < 10) {
-            enemyPreload.preload(engine);
+            enemyPreload.preload(engine, sprites);
             elapsed_time = graphic.getClock()->getElapsedTime() + delta_time;
         } else if (graphic.getClock()->getElapsedTime() > elapsed_time && elapsed_time.asSeconds() != 0) {
-            bossPreload.preload(engine);
+            bossPreload.preload(engine, sprites);
             elapsed_time = sf::seconds(0);
         }
         graphic.getWindow()->clear(sf::Color::Black);
@@ -40,11 +40,13 @@ int main(void)
     eng::SystemManager &systemManager = engine.getECS().getSystemManager();
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
     eng::Graphic &graphic = engine.getGraphic();
+    std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), engine.getLoader()));
+    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
 
@@ -68,13 +70,13 @@ int main(void)
     // create background
     eng::ParallaxPreload parallaxPreload;
 
-    parallaxPreload.preload(engine);
+    parallaxPreload.preload(engine, sprites);
 
     // create spaceship
     eng::VesselPreload vesselPreload;
 
-    vesselPreload.preload(engine);
+    vesselPreload.preload(engine, sprites);
 
-    mainLoop(engine);
+    mainLoop(engine, sprites);
     return 0;
 }

@@ -12,7 +12,7 @@ namespace eng
         public:
             virtual ~EntityPreload() = default;
 
-            virtual void preload(Engine &engine) = 0;
+            virtual void preload(Engine &engine, std::shared_ptr<std::vector<sf::Sprite>> sprites) = 0;
     };
 }
 

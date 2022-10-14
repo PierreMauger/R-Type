@@ -2,8 +2,7 @@
 #define ANIMATIONSYSTEM_HPP
 
 #include "Engine/ECS/System/ISystem.hpp"
-#include "imgui-SFML.h"
-#include "imgui.h"
+#include "Engine/Loader/Loader.hpp"
 
 namespace eng
 {
@@ -12,9 +11,10 @@ namespace eng
         private:
             std::shared_ptr<sf::Event> _event;
             std::shared_ptr<sf::Clock> _clock;
+            std::shared_ptr<std::vector<sf::Sprite>> _sprites;
 
         public:
-            AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock);
+            AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             ~AnimationSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };

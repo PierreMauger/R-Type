@@ -2,11 +2,11 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites)
 {
     this->_clock = clock;
     this->_window = window;
-    this->_sprites = loader.getSprites();
+    this->_sprites = sprites;
 }
 
 void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
@@ -69,7 +69,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         if (masks[i].has_value() && (masks[i].value() & render) == render) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
             SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(i);
-            sf::Sprite &spriteRef = this->_sprites[spriteId.id];
+            sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
             spriteRef.setPosition(pos.x, pos.y);
             if ((masks[i].value() & renderCooldown) == renderCooldown)
                 displayCooldownBar(componentManager, entityManager, spriteRef, i);
@@ -100,8 +100,3 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
 }
-
-// animations rects data:
-// enemy: 63x48 (offset 63 on x)
-// boss: 48x48 (offset 48 on x)
-// player: 32x14 (offset 32 on x and 14 on y to change color)
