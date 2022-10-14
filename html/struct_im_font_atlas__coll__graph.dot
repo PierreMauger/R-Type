@@ -1,0 +1,42 @@
+digraph "ImFontAtlas"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="ImFontAtlas",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" TexUvScale\nTexUvWhitePixel" ];
+  Node2 [label="ImVec2",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vec2.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" Fonts" ];
+  Node3 [label="ImVector\< ImFont * \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vector.html",tooltip=" "];
+  Node4 -> Node3 [dir="back",color="darkorchid3",style="dashed",label=" Data" ];
+  Node4 [label="ImFont",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_font.html",tooltip=" "];
+  Node5 -> Node4 [dir="back",color="darkorchid3",style="dashed",label=" IndexAdvanceX" ];
+  Node5 [label="ImVector\< float \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vector.html",tooltip=" "];
+  Node6 -> Node4 [dir="back",color="darkorchid3",style="dashed",label=" IndexLookup" ];
+  Node6 [label="ImVector\< ImWchar \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vector.html",tooltip=" "];
+  Node7 -> Node4 [dir="back",color="darkorchid3",style="dashed",label=" Glyphs" ];
+  Node7 [label="ImVector\< ImFontGlyph \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vector.html",tooltip=" "];
+  Node8 -> Node7 [dir="back",color="darkorchid3",style="dashed",label=" Data" ];
+  Node8 [label="ImFontGlyph",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_font_glyph.html",tooltip=" "];
+  Node8 -> Node4 [dir="back",color="darkorchid3",style="dashed",label=" FallbackGlyph" ];
+  Node1 -> Node4 [dir="back",color="darkorchid3",style="dashed",label=" ContainerAtlas" ];
+  Node9 -> Node4 [dir="back",color="darkorchid3",style="dashed",label=" ConfigData" ];
+  Node9 [label="ImFontConfig",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_font_config.html",tooltip=" "];
+  Node2 -> Node9 [dir="back",color="darkorchid3",style="dashed",label=" GlyphExtraSpacing\nGlyphOffset" ];
+  Node4 -> Node9 [dir="back",color="darkorchid3",style="dashed",label=" DstFont" ];
+  Node10 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" CustomRects" ];
+  Node10 [label="ImVector\< ImFontAtlasCustom\lRect \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vector.html",tooltip=" "];
+  Node11 -> Node10 [dir="back",color="darkorchid3",style="dashed",label=" Data" ];
+  Node11 [label="ImFontAtlasCustomRect",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_font_atlas_custom_rect.html",tooltip=" "];
+  Node2 -> Node11 [dir="back",color="darkorchid3",style="dashed",label=" GlyphOffset" ];
+  Node4 -> Node11 [dir="back",color="darkorchid3",style="dashed",label=" Font" ];
+  Node12 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" ConfigData" ];
+  Node12 [label="ImVector\< ImFontConfig \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vector.html",tooltip=" "];
+  Node9 -> Node12 [dir="back",color="darkorchid3",style="dashed",label=" Data" ];
+  Node13 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" TexUvLines" ];
+  Node13 [label="ImVec4",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_vec4.html",tooltip=" "];
+  Node14 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" FontBuilderIO" ];
+  Node14 [label="ImFontBuilderIO",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_font_builder_i_o.html",tooltip=" "];
+}

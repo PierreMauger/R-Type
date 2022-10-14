@@ -1,0 +1,10 @@
+digraph "StbUndoState"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  Node1 [label="StbUndoState",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" undo_rec" ];
+  Node2 [label="StbUndoRecord",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_stb_undo_record.html",tooltip=" "];
+}

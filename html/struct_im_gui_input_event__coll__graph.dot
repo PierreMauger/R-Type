@@ -1,0 +1,21 @@
+digraph "ImGuiInputEvent"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  rankdir="LR";
+  Node1 [label="ImGuiInputEvent",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" MousePos" ];
+  Node2 [label="ImGuiInputEventMousePos",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_gui_input_event_mouse_pos.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" MouseWheel" ];
+  Node3 [label="ImGuiInputEventMouseWheel",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_gui_input_event_mouse_wheel.html",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" MouseButton" ];
+  Node4 [label="ImGuiInputEventMouseButton",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_gui_input_event_mouse_button.html",tooltip=" "];
+  Node5 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" Key" ];
+  Node5 [label="ImGuiInputEventKey",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_gui_input_event_key.html",tooltip=" "];
+  Node6 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" Text" ];
+  Node6 [label="ImGuiInputEventText",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_gui_input_event_text.html",tooltip=" "];
+  Node7 -> Node1 [dir="back",color="darkorchid3",style="dashed",label=" AppFocused" ];
+  Node7 [label="ImGuiInputEventAppFocused",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$struct_im_gui_input_event_app_focused.html",tooltip=" "];
+}
