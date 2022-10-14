@@ -32,13 +32,14 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
             if (spriteID.nbFrame == 0 || ((masks[i].value() & appMask) == appMask && componentManager.getSingleComponent<Appearance>(i).app))
                 continue;
             if (this->_clock->getElapsedTime().asSeconds() >= spriteID.lastTime + spriteID.delay) {
-                spriteID.lastTime = this->_clock->getElapsedTime().asSeconds();
                 if (spriteID.curFrame == 0)
                     spriteID.signe = false;
                 if (spriteID.curFrame == spriteID.nbFrame)
                     spriteID.signe = true;
-                !spriteID.signe ? spriteID.curFrame++ : spriteID.curFrame--;
+                spriteID.signe == false ? spriteID.curFrame++ : spriteID.curFrame--;
                 this->_sprites->at(spriteID.id).setTextureRect(sf::IntRect(spriteID.curFrame * spriteID.offsetX, spriteID.curFrame * spriteID.offsetY, sz.x, sz.y));
+                spriteID.lastTime = this->_clock->getElapsedTime().asSeconds();
+                // bug anim synchro
             }
         }
     }
