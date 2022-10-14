@@ -61,11 +61,15 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
     std::size_t renderProj = (InfoComp::PROJECTILE);
+    std::size_t renderText = (InfoComp::TEXT);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
+    std::vector<sf::Text> stockText;
 
     for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value() && (masks[i].value() & renderText) == renderText)
+            stockText.push_back(componentManager.getSingleComponent<Text>(i).text);
         if (masks[i].has_value() && (masks[i].value() & render) == render) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
             SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(i);
@@ -97,6 +101,8 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     }
     for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
         this->_window->draw(stockSpriteMedium[i]);
+    for (std::size_t i = 0; i < stockText.size(); i++)
+        this->_window->draw(stockText[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
 }

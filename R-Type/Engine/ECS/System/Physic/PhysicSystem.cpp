@@ -36,7 +36,7 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
 {
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
     if (app.app) {
-        pos.y -= vel.y;
+        pos.y -= -vel.baseSpeed;
         if (pos.y >= app.end) {
             vel.y = 0;
             app.app = false;
@@ -114,6 +114,8 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                                         componentManager.getSingleComponent<Size>(j))) {
                     Life &hp = componentManager.getSingleComponent<Life>(j);
                     Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
+                    if ((masks[par.id].value() & physicCon) == physicCon)
+                        componentManager.getSingleComponent<Controllable>(par.id).kill++;
                     if (proj.damage >= hp.life) {
                         if ((masks[j].value() & physicDrop) == physicDrop)
                             this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);

@@ -8,7 +8,7 @@ void eng::BossPreload::preload(Engine &engine, std::shared_ptr<std::vector<sf::S
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, 0.3, 0, 48, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{430, -300, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, -2, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, -2, 0, 2});
     engine.getECS().getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(3), 0, {430, 100 - 2}});
     engine.getECS().getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true, 0, 0.4});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{48, 48});

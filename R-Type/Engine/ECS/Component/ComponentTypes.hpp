@@ -20,6 +20,7 @@ enum InfoComp {
     PARENT = 0b10000000000000,
     PATERN = 0b100000000000000,
     DROP = 0b1000000000000000,
+    TEXT = 0b10000000000000000,
 };
 
 typedef struct Position {
@@ -78,8 +79,9 @@ typedef struct SpriteID {
 
 typedef struct Controllable {
         bool con;
+        std::size_t kill;
 
-        Controllable(bool con = true) : con(con)
+        Controllable(bool con = true, std::size_t kill = 0) : con(con), kill(kill)
         {
         }
 } Controllable;
@@ -189,5 +191,13 @@ typedef struct DropBonus {
         {
         }
 } DropBonus;
+
+typedef struct Text {
+        sf::Text text;
+
+        Text(sf::Text text = sf::Text()) : text(text)
+        {
+        }
+} Text;
 
 #endif // COMPONENTTYPES_HPP
