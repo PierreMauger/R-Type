@@ -4,6 +4,7 @@ Server::Server(uint16_t portUdp, uint16_t portTcp) :
     _ioContext(),
     _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), portUdp)),
     _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp)),
+    _tmpEndpoint(),
     _threadContext()
 {
     if ((portUdp == portTcp) || (portUdp > 65535) || (portTcp > 65535))
@@ -18,18 +19,15 @@ Server::~Server()
 
 void Server::initServer()
 {
-    std::cout << "initServer..";
     _STORAGE_DATA buffer;
-    _B_ASIO_UDP::endpoint newEndpoint;
     this->_udpSocket.async_receive_from(
         boost::asio::buffer(buffer),
-        newEndpoint,
+        this->_tmpEndpoint,
         boost::bind(&Server::handleMsgUdp,
                     this,
                     boost::asio::placeholders::error,
                     buffer,
-                    boost::asio::placeholders::bytes_transferred,
-                    newEndpoint
+                    boost::asio::placeholders::bytes_transferred
                 )
     );
 
@@ -41,55 +39,50 @@ void Server::initServer()
                     newConnection
                 )
     );
-    std::cout << "done" << std::endl;
-}
-
-bool Server::isConnected(boost::shared_ptr<Connection> client)
-{
-    if (client->getTcpSocket().is_open())
-        return true;
-    return false;
 }
 
 void Server::run()
 {
-    std::cout << "run..";
     this->_threadContext = std::thread([this]() {
         this->_ioContext.run();
     });
-    std::cout << "done" << std::endl;
+    std::cout << "Server is running" << std::endl;
 }
 
 void Server::stop()
 {
+    // Stop all connections
     if (this->_udpSocket.is_open())
         this->_udpSocket.close();
-    for (auto &connection : this->_listConnections)
-        if (connection->getTcpSocket().is_open())
-            connection->getTcpSocket().close();
+    for (auto &connection : this->_listConnections) {
+        if (connection->isConnected())
+            connection->closeConnection();
+        // if (connection->getThreadConnection().joinable())
+            // connection->getThreadConnection().join();
+    }
+    this->_listConnections.clear();
+
+    // Stop the ioContext
     if (!this->_ioContext.stopped())
         this->_ioContext.stop();
     if (this->_threadContext.joinable())
         this->_threadContext.join();
 }
 
-void Server::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint)
+void Server::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size)
 {
-    std::cout << "handleMsgUdp..";
     if (!error) {
-        std::cout << "New UDP message from " << newEndpoint.address().to_string() << ":" << newEndpoint.port() << std::endl;
+        std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
         std::cout << "Message: " << buffer.data() << std::endl;
         this->_dataIn.push_back(buffer);
     } else {
         std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;
     }
-    std::cout << "done" << std::endl;
     this->initServer();
 }
 
 void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection)
 {
-    std::cout << "handleNewTcp..";
     if (!error) {
         newConnection->setTcpEndpoint(newConnection->getTcpSocket().remote_endpoint());
         std::string ip = newConnection->getTcpEndpoint().address().to_string();
@@ -101,7 +94,6 @@ void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
     }
-    std::cout << "done" << std::endl;
     this->initServer();
 }
 
@@ -143,16 +135,42 @@ void Server::udpMsgAll(_STORAGE_DATA data)
     }
 }
 
-void Server::newConnect(_B_ASIO_TCP::endpoint endpoint)
+void Server::closeConnection(_B_ASIO_TCP::endpoint endpoint)
 {
-    std::cout << "New TCP connection from " << endpoint.address().to_string() << ":" << endpoint.port() << std::endl;
+    for (auto &connection : this->_listConnections) {
+        if (connection->getTcpEndpoint() == endpoint) {
+            connection->closeConnection();
+            break;
+        } else {
+            std::cerr << "Client not found" << std::endl;
+        }
+    }
 }
 
-void Server::updateAction()
+void Server::updateConnection()
 {
-    if (!this->_dataIn.empty()) {
-        _STORAGE_DATA data = this->_dataIn.front();
-        this->_dataIn.erase(this->_dataIn.begin());
-        std::cout << "New message: " << data.data() << std::endl;
+    for (auto &connection : this->_listConnections) {
+        if (!connection->isConnected()) {
+            // if (connection->getThreadConnection().joinable())
+                // connection->getThreadConnection().join();
+            this->_listConnections.erase(std::remove(this->_listConnections.begin(), this->_listConnections.end(), connection), this->_listConnections.end());
+        }
+    }
+}
+
+void Server::updateAction(size_t msgCount)
+{
+    size_t count = this->_dataIn.size();
+
+    if (count > 0) {
+        if (count > msgCount)
+            count = msgCount;
+        std::cout << "Update action: " << count << " messages" << std::endl;
+        for (; count > 0; count--) {
+            _STORAGE_DATA data = this->_dataIn.pop_front();
+            std::cout << "Message: " << data.data() << std::endl;
+        }
+    } else {
+        std::cout << "Update action : No message" << std::endl;
     }
 }

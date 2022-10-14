@@ -16,6 +16,7 @@ class Connection : public boost::enable_shared_from_this<Connection>
         _B_ASIO_UDP::socket &_udpSocket;
         _B_ASIO_TCP::socket _tcpSocket;
         _QUEUE_TYPE &_dataIn;
+        std::thread _threadConnection;
 
     public:
         Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);
@@ -24,11 +25,14 @@ class Connection : public boost::enable_shared_from_this<Connection>
 
         void run();
         _B_ASIO_TCP::socket &getTcpSocket();
+        bool isConnected();
+        void closeConnection();
 
         void setUdpEndpoint(std::string ip, uint16_t port);
         void setTcpEndpoint(_B_ASIO_TCP::endpoint endpoint);
         _B_ASIO_UDP::endpoint getUdpEndpoint();
         _B_ASIO_TCP::endpoint getTcpEndpoint();
+        std::thread &getThreadConnection();
 
         void tcpMsg(_STORAGE_DATA data);
         void udpMsg(_STORAGE_DATA data);

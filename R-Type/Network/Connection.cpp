@@ -5,6 +5,7 @@ Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, 
     _udpSocket(udpSocket),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
+    // _threadConnection(&Connection::run, this)
 {
 }
 
@@ -15,6 +16,7 @@ Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost
     _udpSocket(udpSocket),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
+    // _threadConnection(&Connection::run, this)
 {
 }
 
@@ -28,6 +30,8 @@ void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buf
         std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
         std::cout << "Message: " << buffer.data() << std::endl;
         this->_dataIn.push_back(buffer);
+    } else if (error == boost::asio::error::eof) {
+        std::cout << "Connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << " closed" << std::endl;
     } else {
         std::cerr << "handleMsgTcp Error: " << error.message() << std::endl;
     }
@@ -57,14 +61,19 @@ _B_ASIO_TCP::socket &Connection::getTcpSocket()
     return this->_tcpSocket;
 }
 
+bool Connection::isConnected()
+{
+    return this->_tcpSocket.is_open();
+}
+
+void Connection::closeConnection()
+{
+    this->_tcpSocket.close();
+}
+
 void Connection::setUdpEndpoint(std::string ip, uint16_t port)
 {
     this->_udpEndpoint = _B_ASIO_UDP::endpoint(boost::asio::ip::address::from_string(ip), port);
-}
-
-_B_ASIO_UDP::endpoint Connection::getUdpEndpoint()
-{
-    return this->_udpEndpoint;
 }
 
 void Connection::setTcpEndpoint(_B_ASIO_TCP::endpoint endpoint)
@@ -72,9 +81,19 @@ void Connection::setTcpEndpoint(_B_ASIO_TCP::endpoint endpoint)
     this->_tcpEndpoint = endpoint;
 }
 
+_B_ASIO_UDP::endpoint Connection::getUdpEndpoint()
+{
+    return this->_udpEndpoint;
+}
+
 _B_ASIO_TCP::endpoint Connection::getTcpEndpoint()
 {
     return this->_tcpEndpoint;
+}
+
+std::thread &Connection::getThreadConnection()
+{
+    return this->_threadConnection;
 }
 
 void Connection::tcpMsg(_STORAGE_DATA data)

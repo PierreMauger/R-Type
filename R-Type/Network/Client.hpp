@@ -28,7 +28,7 @@ class Client {
         void tcpMsg(_STORAGE_DATA data);
         void udpMsg(_STORAGE_DATA data);
 
-        virtual void updateAction();
+        void updateAction(size_t msgCount);
 };
 
 #endif /* !CLIENT_HPP_ */

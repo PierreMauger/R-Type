@@ -71,6 +71,8 @@ void Client::stop()
         this->_udpSocket.close();
     if (this->_connection->getTcpSocket().is_open())
         this->_connection->getTcpSocket().close();
+    // if (this->_connection->getThreadConnection().joinable())
+        // this->_connection->getThreadConnection().join();
     if (!this->_ioContext.stopped())
         this->_ioContext.stop();
     if (this->_threadContext.joinable())
@@ -91,7 +93,7 @@ void Client::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA 
 
 void Client::tcpMsg(_STORAGE_DATA data)
 {
-    std::cout << "Sending UDP message" << std::endl;
+    std::cout << "Sending TCP message" << std::endl;
     this->_connection->tcpMsg(data);
 }
 
@@ -101,11 +103,19 @@ void Client::udpMsg(_STORAGE_DATA data)
     this->_connection->udpMsg(data);
 }
 
-void Client::updateAction()
+void Client::updateAction(size_t msgCount)
 {
-    if (!this->_dataIn.empty()) {
-        _STORAGE_DATA data = this->_dataIn.front();
-        this->_dataIn.erase(this->_dataIn.begin());
-        std::cout << "New message: " << data.data() << std::endl;
+    size_t count = this->_dataIn.size();
+
+    if (count > 0) {
+        if (count > msgCount)
+            count = msgCount;
+        std::cout << "Update action: " << count << " messages" << std::endl;
+        for (; count > 0; count--) {
+            _STORAGE_DATA data = this->_dataIn.pop_front();
+            std::cout << "Message: " << data.data() << std::endl;
+        }
+    } else {
+        std::cout << "Update action : No message" << std::endl;
     }
 }

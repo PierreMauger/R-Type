@@ -7,9 +7,8 @@
 class Server {
     private:
         void handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection);
-        void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint);
+        void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size);
         void initServer();
-        bool isConnected(boost::shared_ptr<Connection> client);
 
     protected:
         boost::asio::io_context _ioContext;
@@ -18,6 +17,7 @@ class Server {
         std::vector<boost::shared_ptr<Connection>> _listConnections;
         _QUEUE_TYPE _dataIn;
         std::thread _threadContext;
+        _B_ASIO_UDP::endpoint _tmpEndpoint;
 
     public:
         Server(uint16_t portUdp, uint16_t portTcp);
@@ -32,9 +32,10 @@ class Server {
         void tcpMsgAll(_STORAGE_DATA data);
         void udpMsgAll(_STORAGE_DATA data);
 
-        virtual void newConnect(_B_ASIO_TCP::endpoint endpoint);
+        void closeConnection(_B_ASIO_TCP::endpoint endpoint);
+        void updateConnection();
 
-        virtual void updateAction();
+        void updateAction(size_t msgCount);
 };
 
 #endif /* !SERVER_HPP_ */
