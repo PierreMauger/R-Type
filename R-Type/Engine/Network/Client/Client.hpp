@@ -31,7 +31,7 @@ namespace eng
             void tcpMsg(_STORAGE_DATA data);
             void udpMsg(_STORAGE_DATA data);
 
-            void updateAction(size_t msgCount);
+            _QUEUE_TYPE &getQueue();
     };
 } // namespace eng
 

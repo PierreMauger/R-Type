@@ -38,7 +38,7 @@ namespace eng
             void closeConnection(_B_ASIO_TCP::endpoint endpoint);
             void updateConnection();
 
-            void updateAction(size_t msgCount);
+            _QUEUE_TYPE &getQueue();
     };
 } // namespace eng
 

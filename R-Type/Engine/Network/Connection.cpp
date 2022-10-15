@@ -30,7 +30,6 @@ void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buf
 {
     if (!error) {
         std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
-        std::cout << "Message: " << buffer.data() << std::endl;
         this->_dataIn.push_back(buffer);
     } else if (error == boost::asio::error::eof) {
         std::cout << "Connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << " closed" << std::endl;

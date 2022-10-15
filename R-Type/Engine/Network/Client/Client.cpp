@@ -82,7 +82,6 @@ void Client::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA 
 {
     if (!error) {
         std::cout << "New UDP message from " << newEndpoint.address().to_string() << ":" << newEndpoint.port() << std::endl;
-        std::cout << "Message: " << buffer.data() << std::endl;
         this->_dataIn.push_back(buffer);
     } else {
         std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;
@@ -102,19 +101,7 @@ void Client::udpMsg(_STORAGE_DATA data)
     this->_connection->udpMsg(data);
 }
 
-void Client::updateAction(size_t msgCount)
+_QUEUE_TYPE &Client::getQueue()
 {
-    size_t count = this->_dataIn.size();
-
-    if (count > 0) {
-        if (count > msgCount)
-            count = msgCount;
-        std::cout << "Update action: " << count << " messages" << std::endl;
-        for (; count > 0; count--) {
-            _STORAGE_DATA data = this->_dataIn.pop_front();
-            std::cout << "Message: " << data.data() << std::endl;
-        }
-    } else {
-        std::cout << "Update action : No message" << std::endl;
-    }
+    return this->_dataIn;
 }

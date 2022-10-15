@@ -73,7 +73,6 @@ void Server::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA 
 {
     if (!error) {
         std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
-        std::cout << "Message: " << buffer.data() << std::endl;
         this->_dataIn.push_back(buffer);
     } else {
         std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;
@@ -91,6 +90,7 @@ void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_
         std::cout << "New TCP connection from " << ip << ":" << port << std::endl;
         newConnection->run();
         this->_listConnections.push_back(newConnection);
+        // TODO send action structure or message for client connection in dataIn
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
     }
@@ -139,6 +139,7 @@ void Server::closeConnection(_B_ASIO_TCP::endpoint endpoint)
 {
     for (auto &connection : this->_listConnections) {
         if (connection->getTcpEndpoint() == endpoint) {
+            // TODO send action structure or message for client disconnection in dataIn
             connection->closeConnection();
             break;
         } else {
@@ -153,24 +154,13 @@ void Server::updateConnection()
         if (!connection->isConnected()) {
             // if (connection->getThreadConnection().joinable())
                 // connection->getThreadConnection().join();
+            // TODO send action structure or message for client disconnection in dataIn
             this->_listConnections.erase(std::remove(this->_listConnections.begin(), this->_listConnections.end(), connection), this->_listConnections.end());
         }
     }
 }
 
-void Server::updateAction(size_t msgCount)
+_QUEUE_TYPE &Server::getQueue()
 {
-    size_t count = this->_dataIn.size();
-
-    if (count > 0) {
-        if (count > msgCount)
-            count = msgCount;
-        std::cout << "Update action: " << count << " messages" << std::endl;
-        for (; count > 0; count--) {
-            _STORAGE_DATA data = this->_dataIn.pop_front();
-            std::cout << "Message: " << data.data() << std::endl;
-        }
-    } else {
-        std::cout << "Update action : No message" << std::endl;
-    }
+    return this->_dataIn;
 }
