@@ -6,15 +6,17 @@ digraph "R-Type/Engine/ECS/System"
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   compound=true
   subgraph clusterdir_a7793a2d5ce20173a47e3c5d4033a58c {
-    graph [ bgcolor="#ffe0b6", pencolor="grey50", label="ECS", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_a7793a2d5ce20173a47e3c5d4033a58c.html",tooltip=""]
+    graph [ bgcolor="#ffead3", pencolor="grey50", label="ECS", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_a7793a2d5ce20173a47e3c5d4033a58c.html",tooltip=""]
+  dir_021599018e266890d8f1774a2d1ccd08 [label="Component", fillcolor="#ff9f31", color="grey25", style="filled", URL="dir_021599018e266890d8f1774a2d1ccd08.html",tooltip=""];
   subgraph clusterdir_628ac78da6848c9bc4923d1396a2f9cb {
-    graph [ bgcolor="#ffe0b6", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_628ac78da6848c9bc4923d1396a2f9cb.html",tooltip=""]
+    graph [ bgcolor="#ffead3", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_628ac78da6848c9bc4923d1396a2f9cb.html",tooltip=""]
     dir_628ac78da6848c9bc4923d1396a2f9cb [shape=plaintext, label="System"];
-  dir_d27bbe0bb2435ddbd7c128e146c4a77b [label="Enemy", fillcolor="#d07900", color="grey25", style="filled", URL="dir_d27bbe0bb2435ddbd7c128e146c4a77b.html",tooltip=""];
-  dir_5cc5b4e1636b2d0b46f7d4e5af688aba [label="GUI", fillcolor="#d07900", color="grey25", style="filled", URL="dir_5cc5b4e1636b2d0b46f7d4e5af688aba.html",tooltip=""];
-  dir_6275344d2ab13a2ccc8c3564f028d5c7 [label="Input", fillcolor="#d07900", color="grey25", style="filled", URL="dir_6275344d2ab13a2ccc8c3564f028d5c7.html",tooltip=""];
-  dir_e6d6e86fec154d7ccd5878755a4dbfbd [label="Physic", fillcolor="#d07900", color="grey25", style="filled", URL="dir_e6d6e86fec154d7ccd5878755a4dbfbd.html",tooltip=""];
-  dir_3ae3c4c1ac0a8b0820dedcc76cbe9316 [label="Render", fillcolor="#d07900", color="grey25", style="filled", URL="dir_3ae3c4c1ac0a8b0820dedcc76cbe9316.html",tooltip=""];
+  dir_d27bbe0bb2435ddbd7c128e146c4a77b [label="Enemy", fillcolor="#ff9f31", color="grey25", style="filled", URL="dir_d27bbe0bb2435ddbd7c128e146c4a77b.html",tooltip=""];
+  dir_5cc5b4e1636b2d0b46f7d4e5af688aba [label="GUI", fillcolor="#ff9f31", color="grey25", style="filled", URL="dir_5cc5b4e1636b2d0b46f7d4e5af688aba.html",tooltip=""];
+  dir_6275344d2ab13a2ccc8c3564f028d5c7 [label="Input", fillcolor="#ff9f31", color="grey25", style="filled", URL="dir_6275344d2ab13a2ccc8c3564f028d5c7.html",tooltip=""];
+  dir_e6d6e86fec154d7ccd5878755a4dbfbd [label="Physic", fillcolor="#ff9f31", color="grey25", style="filled", URL="dir_e6d6e86fec154d7ccd5878755a4dbfbd.html",tooltip=""];
+  dir_3ae3c4c1ac0a8b0820dedcc76cbe9316 [label="Render", fillcolor="#ff9f31", color="grey25", style="filled", URL="dir_3ae3c4c1ac0a8b0820dedcc76cbe9316.html",tooltip=""];
   }
   }
+  dir_628ac78da6848c9bc4923d1396a2f9cb->dir_021599018e266890d8f1774a2d1ccd08 [headlabel="1", labeldistance=1.5 headhref="dir_000016_000001.html" color="steelblue1" fontcolor="steelblue1"];
 }

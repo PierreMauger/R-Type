@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_7ecomponent_0',['~Component',['../classeng_1_1_component.html#a1a3945f189348729bcff39ca7166d799',1,'eng::Component']]]
+  ['initnewcomponent_0',['initNewComponent',['../classeng_1_1_component_manager.html#a0a6596724e3c63520c1b5405d76ceae7',1,'eng::ComponentManager']]]
 ];

@@ -1,8 +1,22 @@
+/**
+ * @file ComponentTypes.hpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief Ressources header containing the components' masks with their structs definitions.
+ * @copyright Epitech Rennes 2022
+*/
+
 #ifndef COMPONENTTYPES_HPP
 #define COMPONENTTYPES_HPP
 
+/// @cond
 #include "Includes.hpp"
+/// @endcond
 
+
+/**
+ * @enum InfoComp
+ * @brief Masks of the components.
+*/
 enum InfoComp {
     POS = 0b1,
     VEL = 0b10,
@@ -22,6 +36,10 @@ enum InfoComp {
     DROP = 0b1000000000000000,
 };
 
+/**
+ * @struct Position
+ * @brief The position component.
+*/
 typedef struct Position {
         float x;
         float y;
@@ -32,6 +50,10 @@ typedef struct Position {
         }
 } Position;
 
+/**
+ * @struct Velocity
+ * @brief The velocity component.
+*/
 typedef struct Velocity {
         float x;
         float y;
@@ -43,6 +65,10 @@ typedef struct Velocity {
         }
 } Velocity;
 
+/**
+ * @struct Size
+ * @brief The size component.
+*/
 typedef struct Size {
         float x;
         float y;
@@ -52,12 +78,20 @@ typedef struct Size {
         }
 } Size;
 
+/**
+ * @enum Priority
+ * @brief Priority of the sprites to be displayed (background before foreground etc..).
+*/
 enum Priority {
     HIGH = 0,
     MEDIUM,
     LOW
 };
 
+/**
+ * @struct SpriteID
+ * @brief The spriteID component.
+*/
 typedef struct SpriteID {
         std::size_t id;
         enum Priority priority;
@@ -67,6 +101,10 @@ typedef struct SpriteID {
         }
 } SpriteID;
 
+/**
+ * @struct Controllable
+ * @brief The controllable component.
+*/
 typedef struct Controllable {
         bool con;
 
@@ -75,6 +113,10 @@ typedef struct Controllable {
         }
 } Controllable;
 
+/**
+ * @struct Parallax
+ * @brief The parallax component.
+*/
 typedef struct Parallax {
         bool par;
 
@@ -83,6 +125,10 @@ typedef struct Parallax {
         }
 } Parallax;
 
+/**
+ * @struct Projectile
+ * @brief The projectile component.
+*/
 typedef struct Projectile {
         bool proj;
         std::size_t damage;
@@ -93,6 +139,10 @@ typedef struct Projectile {
         }
 } Projectile;
 
+/**
+ * @struct Life
+ * @brief The life component.
+*/
 typedef struct Life {
         std::size_t life;
 
@@ -101,6 +151,10 @@ typedef struct Life {
         }
 } Life;
 
+/**
+ * @struct Enemy
+ * @brief The enemy component.
+*/
 typedef struct Enemy {
         bool enemy;
         float lastShoot;
@@ -111,6 +165,10 @@ typedef struct Enemy {
         }
 } Enemy;
 
+/**
+ * @struct Appearance
+ * @brief The appearance component.
+*/
 typedef struct Appearance {
         bool app;
         float end;
@@ -120,6 +178,10 @@ typedef struct Appearance {
         }
 } Appearance;
 
+/**
+ * @struct CooldownShoot
+ * @brief The cooldownShoot component.
+*/
 typedef struct CooldownShoot {
         float lastShoot;
         float shootDelay;
@@ -130,6 +192,10 @@ typedef struct CooldownShoot {
         }
 } CooldownShoot;
 
+/**
+ * @struct CooldownBar
+ * @brief The cooldownBar component.
+*/
 typedef struct CooldownBar {
         bool bar;
 
@@ -138,6 +204,10 @@ typedef struct CooldownBar {
         }
 } CooldownBar;
 
+/**
+ * @struct Lifebar
+ * @brief The lifebar component.
+*/
 typedef struct LifeBar {
         bool bar;
         std::size_t lifeMax;
@@ -147,6 +217,10 @@ typedef struct LifeBar {
         }
 } LifeBar;
 
+/**
+ * @struct Parent
+ * @brief The parent component.
+*/
 typedef struct Parent {
         std::size_t id;
 
@@ -156,23 +230,35 @@ typedef struct Parent {
 } Parent;
 
 // Type dépendant du patern
-enum TypePatern {
+/**
+ * @enum TypePattern
+ * @brief The type of pattern that an enemy has.
+*/
+enum TypePattern {
     LINE = 0,
     OSCILLATION,
     BIGOSCILLATION,
     CIRCLE
 };
 
+/**
+ * @struct Patern
+ * @brief The patern component.
+*/
 typedef struct Patern {
-        enum TypePatern type;
+        enum TypePattern type;
         float angle;
         sf::Vector2f center;
 
-        Patern(enum TypePatern type = TypePatern::LINE, float angle = 0.0f, sf::Vector2f center = sf::Vector2f(0.0f, 0.0f)) : type(type), angle(angle), center(center)
+        Patern(enum TypePattern type = TypePattern::LINE, float angle = 0.0f, sf::Vector2f center = sf::Vector2f(0.0f, 0.0f)) : type(type), angle(angle), center(center)
         {
         }
 } Patern;
 
+/**
+ * @struct DropBonus
+ * @brief The dropBonus component.
+*/
 typedef struct DropBonus {
         std::size_t id;
 

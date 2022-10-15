@@ -154,6 +154,8 @@ var searchData=
   ['imvector_3c_20imwchar_20_3e_151',['ImVector&lt; ImWchar &gt;',['../struct_im_vector.html',1,'']]],
   ['imvector_3c_20int_20_3e_152',['ImVector&lt; int &gt;',['../struct_im_vector.html',1,'']]],
   ['imvector_3c_20unsigned_20char_20_3e_153',['ImVector&lt; unsigned char &gt;',['../struct_im_vector.html',1,'']]],
-  ['inputsystem_154',['InputSystem',['../classeng_1_1_input_system.html',1,'eng']]],
-  ['isystem_155',['ISystem',['../classeng_1_1_i_system.html',1,'eng']]]
+  ['infocomp_154',['InfoComp',['../_component_types_8hpp.html#aa4d2e0a9444f715e2ab35f936f16ce86',1,'ComponentTypes.hpp']]],
+  ['initnewcomponent_155',['initNewComponent',['../classeng_1_1_component_manager.html#a0a6596724e3c63520c1b5405d76ceae7',1,'eng::ComponentManager']]],
+  ['inputsystem_156',['InputSystem',['../classeng_1_1_input_system.html',1,'eng']]],
+  ['isystem_157',['ISystem',['../classeng_1_1_i_system.html',1,'eng']]]
 ];

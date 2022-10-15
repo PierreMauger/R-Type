@@ -6,7 +6,7 @@ digraph "R-Type/Server"
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   compound=true
   subgraph clusterdir_8f7e954352f7b5dc32847f303aad1678 {
-    graph [ bgcolor="#ffe0b6", pencolor="grey25", label="R-Type", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_8f7e954352f7b5dc32847f303aad1678.html",tooltip=""]
-  dir_c0a88e01f1825565a01bbaba842f5d30 [label="Server", fillcolor="#ffe0b6", color="grey25", style="filled,bold", URL="dir_c0a88e01f1825565a01bbaba842f5d30.html",tooltip=""];
+    graph [ bgcolor="#ffead3", pencolor="grey25", label="R-Type", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_8f7e954352f7b5dc32847f303aad1678.html",tooltip=""]
+  dir_c0a88e01f1825565a01bbaba842f5d30 [label="Server", fillcolor="#ffead3", color="grey25", style="filled,bold", URL="dir_c0a88e01f1825565a01bbaba842f5d30.html",tooltip=""];
   }
 }

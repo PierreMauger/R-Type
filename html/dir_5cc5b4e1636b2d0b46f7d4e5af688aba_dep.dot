@@ -6,7 +6,7 @@ digraph "R-Type/Engine/ECS/System/GUI"
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   compound=true
   subgraph clusterdir_628ac78da6848c9bc4923d1396a2f9cb {
-    graph [ bgcolor="#ffe0b6", pencolor="grey50", label="System", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_628ac78da6848c9bc4923d1396a2f9cb.html",tooltip=""]
-  dir_5cc5b4e1636b2d0b46f7d4e5af688aba [label="GUI", fillcolor="#ffe0b6", color="grey25", style="filled,bold", URL="dir_5cc5b4e1636b2d0b46f7d4e5af688aba.html",tooltip=""];
+    graph [ bgcolor="#ffead3", pencolor="grey50", label="System", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_628ac78da6848c9bc4923d1396a2f9cb.html",tooltip=""]
+  dir_5cc5b4e1636b2d0b46f7d4e5af688aba [label="GUI", fillcolor="#ffead3", color="grey25", style="filled,bold", URL="dir_5cc5b4e1636b2d0b46f7d4e5af688aba.html",tooltip=""];
   }
 }
