@@ -29,7 +29,9 @@ namespace eng
             };
 
             void insertMagic(std::vector<uint8_t> &packet);
-            std::size_t getEntityID(SyncID syncID, ComponentManager &componentManager);
+            std::size_t getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager);
+
+            std::size_t updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager);
 
         public:
             EntitySerializer();
