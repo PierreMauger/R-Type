@@ -80,6 +80,10 @@ int main(void)
     // mainLoop(engine);
     std::vector<uint8_t> packet = engine.getNetwork()._udpClient.getSerializer().serializeEntity(5, eng::EntityType::UPDATE, componentManager);
 
-    // engine.getNetwork().getUDPClient().getSerializer().synchronizeEntity(packet, engine.getECS().getEntityManager(), componentManager);
+    for (auto &it : packet) {
+        std::cout << (int)it << std::endl;
+    }
+
+    engine.getNetwork()._udpClient.getSerializer().synchronizeEntity(packet, engine.getECS().getEntityManager(), componentManager);
     return 0;
 }

@@ -18,15 +18,18 @@ namespace eng
                 }
             };
 
-            template <typename T> std::size_t deserializeComponent(std::vector<uint8_t> &packet, T &component)
+            template <typename T> std::size_t deserializeComponent(std::vector<uint8_t> &packet, std::size_t adv, T &component)
             {
                 std::size_t i = 0;
 
                 for (; i < sizeof(T); i++) {
-                    ((std::size_t *)&component)[i] = packet[i];
+                    ((std::size_t *)&component)[i] = packet[adv + i];
                 }
-                return i;
+                return (adv + i);
             };
+
+            void insertMagic(std::vector<uint8_t> &packet);
+            std::size_t getEntityID(SyncID syncID, ComponentManager &componentManager);
 
         public:
             EntitySerializer();

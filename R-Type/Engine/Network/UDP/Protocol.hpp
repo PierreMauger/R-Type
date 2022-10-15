@@ -1,7 +1,8 @@
 #ifndef PROTOCOL_HPP
 #define PROTOCOL_HPP
 
-#define MAGIC_NUMBER "R-TYPE/AMOGUS"
+#define MAGIC "R-TYPE/AMOGUS"
+#define MAGIC_SIZE sizeof(MAGIC)
 
 namespace eng
 {
