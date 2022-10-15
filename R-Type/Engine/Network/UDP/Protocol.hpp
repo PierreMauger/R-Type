@@ -1,7 +1,7 @@
 #ifndef PROTOCOL_HPP
 #define PROTOCOL_HPP
 
-#define FOOTER "\n"
+#define MAGIC_NUMBER "R-TYPE/AMOGUS"
 
 namespace eng
 {

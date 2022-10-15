@@ -40,6 +40,7 @@ int main(void)
     eng::SystemManager &systemManager = engine.getECS().getSystemManager();
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
     eng::Graphic &graphic = engine.getGraphic();
+    eng::Network &network = engine.getNetwork();
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
@@ -77,7 +78,7 @@ int main(void)
     vesselPreload.preload(engine);
 
     // mainLoop(engine);
-    std::vector<uint8_t> packet = engine.getNetwork().getUDPClient().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, componentManager);
+    std::vector<uint8_t> packet = engine.getNetwork()._udpClient.getSerializer().serializeEntity(5, eng::EntityType::UPDATE, componentManager);
 
     // engine.getNetwork().getUDPClient().getSerializer().synchronizeEntity(packet, engine.getECS().getEntityManager(), componentManager);
     return 0;

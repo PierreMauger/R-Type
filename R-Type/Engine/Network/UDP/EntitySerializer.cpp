@@ -36,7 +36,7 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     }
 
     // footer
-    for (auto elem : FOOTER) {
+    for (auto elem : MAGIC_NUMBER) {
         packet.push_back(elem);
     }
 
