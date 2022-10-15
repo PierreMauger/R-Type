@@ -1,12 +1,7 @@
 <map id="R&#45;Type/Engine/ECS/Component/ComponentManager.hpp" name="R&#45;Type/Engine/ECS/Component/ComponentManager.hpp">
-<area shape="rect" id="node1" title="Functions definitions for the ComponentManager containing/handling the engine&#39;s components." alt="" coords="93,5,301,45"/>
-<area shape="rect" id="node2" href="$_e_c_s_8hpp_source.html" title=" " alt="" coords="296,357,491,383"/>
-<area shape="rect" id="node4" href="$_i_system_8hpp_source.html" title=" " alt="" coords="300,93,487,133"/>
-<area shape="rect" id="node3" href="$_engine_8hpp_source.html" title=" " alt="" coords="305,431,481,456"/>
-<area shape="rect" id="node5" href="$_enemy_system_8hpp_source.html" title=" " alt="" coords="39,269,225,309"/>
-<area shape="rect" id="node6" href="$_g_u_i_system_8hpp_source.html" title=" " alt="" coords="169,181,356,221"/>
-<area shape="rect" id="node7" href="$_render_system_8hpp_source.html" title=" " alt="" coords="300,269,487,309"/>
-<area shape="rect" id="node8" href="$_input_system_8hpp_source.html" title=" " alt="" coords="511,269,697,309"/>
-<area shape="rect" id="node9" href="$_physic_system_8hpp_source.html" title=" " alt="" coords="481,181,668,221"/>
-<area shape="rect" id="node10" href="$_system_manager_8hpp_source.html" title=" " alt="" coords="692,181,879,221"/>
+<area shape="rect" id="node1" title="Functions definitions for the ComponentManager containing/handling the engine&#39;s components." alt="" coords="5,5,213,45"/>
+<area shape="rect" id="node2" href="$_e_c_s_8hpp_source.html" title=" " alt="" coords="12,269,207,295"/>
+<area shape="rect" id="node4" href="$_i_system_8hpp_source.html" title=" " alt="" coords="81,93,268,133"/>
+<area shape="rect" id="node3" href="$_engine_8hpp_source.html" title=" " alt="" coords="21,343,197,368"/>
+<area shape="rect" id="node5" href="$_system_manager_8hpp_source.html" title=" " alt="" coords="81,181,268,221"/>
 </map>
