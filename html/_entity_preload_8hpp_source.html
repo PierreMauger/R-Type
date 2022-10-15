@@ -78,27 +78,30 @@ $(function() {
   <div class="headertitle"><div class="title">EntityPreload.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef ENTITYPRELOAD_HPP</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define ENTITYPRELOAD_HPP</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;Includes.hpp&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Engine/Engine.hpp&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeng.html">eng</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classeng_1_1_entity_preload.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classeng_1_1_entity_preload.html">EntityPreload</a></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>            <span class="keyword">virtual</span> <a class="code hl_class" href="classeng_1_1_entity_preload.html">~EntityPreload</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> preload(<a class="code hl_class" href="classeng_1_1_engine.html">Engine</a> &amp;engine) = 0;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    };</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#endif </span><span class="comment">// ENTITYPRELOAD_HPP</span></div>
+<a href="_entity_preload_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef ENTITYPRELOAD_HPP</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define ENTITYPRELOAD_HPP</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;Includes.hpp&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;Engine/Engine.hpp&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeng.html">eng</a></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>{</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classeng_1_1_entity_preload.html">   28</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classeng_1_1_entity_preload.html">EntityPreload</a></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <span class="keyword">virtual</span> <a class="code hl_class" href="classeng_1_1_entity_preload.html">~EntityPreload</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classeng_1_1_entity_preload.html#a9941e2dc38aaeb2db25f5fa0f44757af">   42</a></span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classeng_1_1_entity_preload.html#a9941e2dc38aaeb2db25f5fa0f44757af">preload</a>(<a class="code hl_class" href="classeng_1_1_engine.html">Engine</a> &amp;engine) = 0;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    };</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#endif </span><span class="comment">// ENTITYPRELOAD_HPP</span></div>
 <div class="ttc" id="aclasseng_1_1_engine_html"><div class="ttname"><a href="classeng_1_1_engine.html">eng::Engine</a></div><div class="ttdef"><b>Definition:</b> Engine.hpp:11</div></div>
-<div class="ttc" id="aclasseng_1_1_entity_preload_html"><div class="ttname"><a href="classeng_1_1_entity_preload.html">eng::EntityPreload</a></div><div class="ttdef"><b>Definition:</b> EntityPreload.hpp:11</div></div>
+<div class="ttc" id="aclasseng_1_1_entity_preload_html"><div class="ttname"><a href="classeng_1_1_entity_preload.html">eng::EntityPreload</a></div><div class="ttdoc">Preloads an entity.</div><div class="ttdef"><b>Definition:</b> EntityPreload.hpp:29</div></div>
+<div class="ttc" id="aclasseng_1_1_entity_preload_html_a9941e2dc38aaeb2db25f5fa0f44757af"><div class="ttname"><a href="classeng_1_1_entity_preload.html#a9941e2dc38aaeb2db25f5fa0f44757af">eng::EntityPreload::preload</a></div><div class="ttdeci">virtual void preload(Engine &amp;engine)=0</div><div class="ttdoc">Preloads an entity.</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
