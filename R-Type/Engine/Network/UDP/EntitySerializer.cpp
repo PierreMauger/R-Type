@@ -13,7 +13,7 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     packet.push_back(type);
 
     // sync id
-    this->serializeComponent<SyncID>(packet, std::any_cast<SyncID &>(componentManager.getComponent(typeid(SyncID)).getField(id).value()));
+    this->serializeComponent<SyncID>(packet, componentManager.getSingleComponent<SyncID &>(id));
 
     // mask
     packet.push_back(InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID);
@@ -22,13 +22,13 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
         switch (i) {
         case 0:
-            this->serializeComponent<Position>(packet, std::any_cast<Position &>(componentManager.getComponent(i).getField(id).value()));
+            this->serializeComponent<Position>(packet, componentManager.getSingleComponent<Position &>(id));
             break;
         case 1:
-            this->serializeComponent<Velocity>(packet, std::any_cast<Velocity &>(componentManager.getComponent(i).getField(id).value()));
+            this->serializeComponent<Velocity>(packet, componentManager.getSingleComponent<Velocity &>(id));
             break;
         case 2:
-            this->serializeComponent<SpriteID>(packet, std::any_cast<SpriteID &>(componentManager.getComponent(i).getField(id).value()));
+            this->serializeComponent<SpriteID>(packet, componentManager.getSingleComponent<SpriteID &>(id));
             break;
         default:
             break;
