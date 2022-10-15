@@ -5,12 +5,9 @@ using namespace eng;
 Client::Client(std::string ip, uint16_t portUdp, uint16_t portTcp) :
     _ioContext(),
     _resolver(_ioContext),
-    _udpSocket(_ioContext),
-    _dataIn(),
-    _connection(),
-    _threadContext()
+    _udpSocket(_ioContext)
 {
-    if ((portUdp == portTcp) || (portUdp > 65535) || (portTcp > 65535))
+    if (portUdp == portTcp)
         throw std::runtime_error("Invalid port, must be different and between 0 and 65535");
     this->_connection = boost::make_shared<Connection>(ip, portUdp, portTcp, this->_ioContext, this->_dataIn, this->_udpSocket);
     this->_connection->setTcpEndpoint(_B_ASIO_TCP::endpoint(boost::asio::ip::address::from_string(ip), portTcp));

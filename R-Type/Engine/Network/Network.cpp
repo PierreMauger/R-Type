@@ -5,13 +5,16 @@ using namespace eng;
 Network::Network()
 {
     this->_clock = std::make_shared<sf::Clock>();
-    // this->_server = std::make_shared<Server>();
-    // this->_client = std::make_shared<Client>();
 }
 
-std::shared_ptr<sf::Clock> Network::getClock()
+void Network::initServer(uint16_t portUdp, uint16_t portTcp)
 {
-    return this->_clock;
+    this->_server = std::make_shared<Server>(portUdp, portTcp);
+}
+
+void Network::initClient(std::string ip, uint16_t portUdp, uint16_t portTcp)
+{
+    this->_client = std::make_shared<Client>(ip, portUdp, portTcp);
 }
 
 std::shared_ptr<Server> Network::getServer()
@@ -22,4 +25,9 @@ std::shared_ptr<Server> Network::getServer()
 std::shared_ptr<Client> Network::getClient()
 {
     return this->_client;
+}
+
+std::shared_ptr<sf::Clock> Network::getClock()
+{
+    return this->_clock;
 }

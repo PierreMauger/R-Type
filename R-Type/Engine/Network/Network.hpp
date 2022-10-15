@@ -17,9 +17,11 @@ namespace eng
         public:
             Network();
             ~Network() = default;
-            std::shared_ptr<sf::Clock> getClock();
+            void initServer(uint16_t portUdp, uint16_t portTcp);
+            void initClient(std::string ip, uint16_t portUdp, uint16_t portTcp);
             std::shared_ptr<Server> getServer();
             std::shared_ptr<Client> getClient();
+            std::shared_ptr<sf::Clock> getClock();
     };
 } // namespace eng
 

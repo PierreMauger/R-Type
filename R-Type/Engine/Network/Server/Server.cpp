@@ -5,11 +5,9 @@ using namespace eng;
 Server::Server(uint16_t portUdp, uint16_t portTcp) :
     _ioContext(),
     _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), portUdp)),
-    _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp)),
-    _tmpEndpoint(),
-    _threadContext()
+    _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
-    if ((portUdp == portTcp) || (portUdp > 65535) || (portTcp > 65535))
+    if (portUdp == portTcp)
         throw std::runtime_error("Invalid port, must be different and between 0 and 65535");
     this->initServer();
 }
