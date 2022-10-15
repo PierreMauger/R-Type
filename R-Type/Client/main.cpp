@@ -40,6 +40,7 @@ int main(void)
     eng::SystemManager &systemManager = engine.getECS().getSystemManager();
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
     eng::Graphic &graphic = engine.getGraphic();
+    eng::Network &network = engine.getNetwork();
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));

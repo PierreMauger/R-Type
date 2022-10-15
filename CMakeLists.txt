@@ -109,6 +109,7 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/System/
     ${ENGINE_ROOT}/ECS/PreloadEntities/
     ${ENGINE_ROOT}/Graphic/
+    ${ENGINE_ROOT}/Network/
 )
 
 #fetch source files
@@ -130,6 +131,12 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/PreloadEntities/CooldownBarPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/EnemyPreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
+
+    # Network files
+    ${ENGINE_ROOT}/Network/Network.cpp
+    ${ENGINE_ROOT}/Network/Connection.cpp
+    ${ENGINE_ROOT}/Network/Server/Server.cpp
+    ${ENGINE_ROOT}/Network/Client/Client.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp
