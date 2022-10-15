@@ -44,7 +44,7 @@ namespace eng
 
             /**
              * @brief Get the components array.
-             * @fn std::map<std::type_index, Component> &getComponentArray();
+             * @fn std::map<std::type_index, Component> &getComponentArray()
              * @return The components array.
             */
             std::map<std::type_index, Component> &getComponentArray();

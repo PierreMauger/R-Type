@@ -81,25 +81,185 @@ $(function() {
   <div class="headertitle"><div class="title">eng::EntityManager Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>The engine's <a class="el" href="classeng_1_1_entity_manager.html" title="The engine&#39;s EntityManager.">EntityManager</a>.  
+ <a href="classeng_1_1_entity_manager.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_entity_manager_8hpp_source.html">EntityManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a460e0548f9af3fb3e9b41c38cb9666b8"><td class="memItemLeft" align="right" valign="top"><a id="a460e0548f9af3fb3e9b41c38cb9666b8" name="a460e0548f9af3fb3e9b41c38cb9666b8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>EntityManager</b> ()</td></tr>
+<tr class="memdesc:a460e0548f9af3fb3e9b41c38cb9666b8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_entity_manager.html" title="The engine&#39;s EntityManager.">EntityManager</a> constructor. <br /></td></tr>
+<tr class="separator:a460e0548f9af3fb3e9b41c38cb9666b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fc94fe2cc8e4fc9d1323661c18bcccf"><td class="memItemLeft" align="right" valign="top"><a id="a5fc94fe2cc8e4fc9d1323661c18bcccf" name="a5fc94fe2cc8e4fc9d1323661c18bcccf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~EntityManager</b> ()=default</td></tr>
+<tr class="memdesc:a5fc94fe2cc8e4fc9d1323661c18bcccf"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_entity_manager.html" title="The engine&#39;s EntityManager.">EntityManager</a> destructor. <br /></td></tr>
+<tr class="separator:a5fc94fe2cc8e4fc9d1323661c18bcccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7557a23aef805909d811e8aeb3eac8fe"><td class="memItemLeft" align="right" valign="top"><a id="a7557a23aef805909d811e8aeb3eac8fe" name="a7557a23aef805909d811e8aeb3eac8fe"></a>
 std::vector&lt; std::optional&lt; std::size_t &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getMasks</b> ()</td></tr>
 <tr class="separator:a7557a23aef805909d811e8aeb3eac8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64c12a2a22ff84c3436e1370ab9c04d0"><td class="memItemLeft" align="right" valign="top"><a id="a64c12a2a22ff84c3436e1370ab9c04d0" name="a64c12a2a22ff84c3436e1370ab9c04d0"></a>
-std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>addMask</b> (std::optional&lt; std::size_t &gt; mask, <a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager)</td></tr>
-<tr class="separator:a64c12a2a22ff84c3436e1370ab9c04d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b41396e1d5a4b763364a12214dfad20"><td class="memItemLeft" align="right" valign="top"><a id="a8b41396e1d5a4b763364a12214dfad20" name="a8b41396e1d5a4b763364a12214dfad20"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addManualMask</b> (std::size_t id, std::optional&lt; std::size_t &gt; mask, <a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager)</td></tr>
-<tr class="separator:a8b41396e1d5a4b763364a12214dfad20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af78520208152c760d29e4205aa65523b"><td class="memItemLeft" align="right" valign="top"><a id="af78520208152c760d29e4205aa65523b" name="af78520208152c760d29e4205aa65523b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>removeMask</b> (std::size_t id)</td></tr>
-<tr class="separator:af78520208152c760d29e4205aa65523b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc7da765b541799e3c45b2ee7a3ca507"><td class="memItemLeft" align="right" valign="top"><a id="acc7da765b541799e3c45b2ee7a3ca507" name="acc7da765b541799e3c45b2ee7a3ca507"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updateMask</b> (std::size_t id, std::optional&lt; std::size_t &gt; mask)</td></tr>
-<tr class="separator:acc7da765b541799e3c45b2ee7a3ca507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b200fa478c070bc3dd0046a11dea29f"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_entity_manager.html#a9b200fa478c070bc3dd0046a11dea29f">addMask</a> (std::optional&lt; std::size_t &gt; mask, <a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager)</td></tr>
+<tr class="memdesc:a9b200fa478c070bc3dd0046a11dea29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a mask.  <a href="classeng_1_1_entity_manager.html#a9b200fa478c070bc3dd0046a11dea29f">More...</a><br /></td></tr>
+<tr class="separator:a9b200fa478c070bc3dd0046a11dea29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0788a80011917b8805db67fdee5f977"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_entity_manager.html#aa0788a80011917b8805db67fdee5f977">addManualMask</a> (std::size_t id, std::optional&lt; std::size_t &gt; mask, <a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager)</td></tr>
+<tr class="memdesc:aa0788a80011917b8805db67fdee5f977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a mask manually.  <a href="classeng_1_1_entity_manager.html#aa0788a80011917b8805db67fdee5f977">More...</a><br /></td></tr>
+<tr class="separator:aa0788a80011917b8805db67fdee5f977"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c4b8da12d8df10cc2362489148e9454"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_entity_manager.html#a5c4b8da12d8df10cc2362489148e9454">removeMask</a> (std::size_t id)</td></tr>
+<tr class="memdesc:a5c4b8da12d8df10cc2362489148e9454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a mask.  <a href="classeng_1_1_entity_manager.html#a5c4b8da12d8df10cc2362489148e9454">More...</a><br /></td></tr>
+<tr class="separator:a5c4b8da12d8df10cc2362489148e9454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a465dc393b0da213cf74cd343277c315d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_entity_manager.html#a465dc393b0da213cf74cd343277c315d">updateMask</a> (std::size_t id, std::optional&lt; std::size_t &gt; mask)</td></tr>
+<tr class="memdesc:a465dc393b0da213cf74cd343277c315d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a mask.  <a href="classeng_1_1_entity_manager.html#a465dc393b0da213cf74cd343277c315d">More...</a><br /></td></tr>
+<tr class="separator:a465dc393b0da213cf74cd343277c315d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >The engine's <a class="el" href="classeng_1_1_entity_manager.html" title="The engine&#39;s EntityManager.">EntityManager</a>. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa0788a80011917b8805db67fdee5f977" name="aa0788a80011917b8805db67fdee5f977"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0788a80011917b8805db67fdee5f977">&#9670;&#160;</a></span>addManualMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::EntityManager::addManualMask </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; std::size_t &gt;&#160;</td>
+          <td class="paramname"><em>mask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>componentManager</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a mask manually. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the mask to add. </td></tr>
+    <tr><td class="paramname">mask</td><td>The mask to add. </td></tr>
+    <tr><td class="paramname">componentManager</td><td>A reference to the componentManager. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9b200fa478c070bc3dd0046a11dea29f" name="a9b200fa478c070bc3dd0046a11dea29f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b200fa478c070bc3dd0046a11dea29f">&#9670;&#160;</a></span>addMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t eng::EntityManager::addMask </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; std::size_t &gt;&#160;</td>
+          <td class="paramname"><em>mask</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>componentManager</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a mask. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>The mask to add. </td></tr>
+    <tr><td class="paramname">componentManager</td><td>A reference to the componentManager. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of masks. </dd></dl>
+
+</div>
+</div>
+<a id="a5c4b8da12d8df10cc2362489148e9454" name="a5c4b8da12d8df10cc2362489148e9454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c4b8da12d8df10cc2362489148e9454">&#9670;&#160;</a></span>removeMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::EntityManager::removeMask </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove a mask. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the mask to remove. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a465dc393b0da213cf74cd343277c315d" name="a465dc393b0da213cf74cd343277c315d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a465dc393b0da213cf74cd343277c315d">&#9670;&#160;</a></span>updateMask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::EntityManager::updateMask </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::optional&lt; std::size_t &gt;&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update a mask. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the mask to update. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>R-Type/Engine/ECS/Entity/<a class="el" href="_entity_manager_8hpp_source.html">EntityManager.hpp</a></li>
 <li>R-Type/Engine/ECS/Entity/EntityManager.cpp</li>

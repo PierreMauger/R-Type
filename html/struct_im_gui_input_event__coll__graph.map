@@ -1,0 +1,9 @@
+<map id="ImGuiInputEvent" name="ImGuiInputEvent">
+<area shape="rect" id="node1" title=" " alt="" coords="328,129,444,155"/>
+<area shape="rect" id="node2" href="$struct_im_gui_input_event_mouse_pos.html" title=" " alt="" coords="13,5,191,31"/>
+<area shape="rect" id="node3" href="$struct_im_gui_input_event_mouse_wheel.html" title=" " alt="" coords="6,55,198,80"/>
+<area shape="rect" id="node4" href="$struct_im_gui_input_event_mouse_button.html" title=" " alt="" coords="5,104,199,129"/>
+<area shape="rect" id="node5" href="$struct_im_gui_input_event_key.html" title=" " alt="" coords="33,153,171,179"/>
+<area shape="rect" id="node6" href="$struct_im_gui_input_event_text.html" title=" " alt="" coords="31,203,173,228"/>
+<area shape="rect" id="node7" href="$struct_im_gui_input_event_app_focused.html" title=" " alt="" coords="7,252,197,277"/>
+</map>
