@@ -1,6 +1,6 @@
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 
-void eng::VesselPreload::preload(Engine &engine, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+void eng::VesselPreload::preload(Engine &engine)
 {
     std::size_t id = engine.getECS().getEntityManager().addMask(
         (InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP),
@@ -14,7 +14,6 @@ void eng::VesselPreload::preload(Engine &engine, std::shared_ptr<std::vector<sf:
     engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{32, 14});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{1});
-    sprites->at(6).setTextureRect(sf::IntRect(0, 0, 32, 14));
 
     std::size_t idBar =
         engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), engine.getECS().getComponentManager());

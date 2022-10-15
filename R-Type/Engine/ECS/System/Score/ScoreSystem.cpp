@@ -23,8 +23,8 @@ void ScoreSystem::createText(ComponentManager &componentManager, EntityManager &
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{sf::Text(this->_text[0]), "death"});
     id = entityManager.addMask((InfoComp::POS | InfoComp::TEXT), componentManager);
     this->_text.push_back(sf::Text("Score = 0", this->_font, 20));
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(this->_window->getSize().x) - 50, 80, 0});
-    this->_text[1].setPosition(static_cast<float>(this->_window->getSize().x) - 100, 80);
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(this->_window->getSize().x) - 50, 50, 0});
+    this->_text[1].setPosition(static_cast<float>(this->_window->getSize().x) - 100, 50);
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{sf::Text(this->_text[1]), "score"});
 }
 

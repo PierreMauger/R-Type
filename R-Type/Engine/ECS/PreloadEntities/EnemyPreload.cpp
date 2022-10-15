@@ -1,6 +1,6 @@
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 
-void eng::EnemyPreload::preload(Engine &engine, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+void eng::EnemyPreload::preload(Engine &engine)
 {
     std::size_t id = engine.getECS().getEntityManager().addMask(
         (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATERN), engine.getECS().getComponentManager());
@@ -12,5 +12,4 @@ void eng::EnemyPreload::preload(Engine &engine, std::shared_ptr<std::vector<sf::
     engine.getECS().getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true, 0, (float)(1 == 0 ? 1.0 : 0.0)});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{63, 48});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{2});
-    sprites->at(2).setTextureRect(sf::IntRect(0, 0, 63, 48));
 }

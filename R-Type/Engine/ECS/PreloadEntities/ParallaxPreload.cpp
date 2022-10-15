@@ -1,6 +1,6 @@
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 
-void eng::ParallaxPreload::preload(Engine &engine, [[maybe_unused]] std::shared_ptr<std::vector<sf::Sprite>> sprites)
+void eng::ParallaxPreload::preload(Engine &engine)
 {
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX), engine.getECS().getComponentManager());
 

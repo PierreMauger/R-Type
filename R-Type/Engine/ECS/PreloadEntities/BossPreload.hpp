@@ -11,7 +11,7 @@ namespace eng
     class BossPreload : public EntityPreload
     {
         public:
-            void preload(Engine &engine, std::shared_ptr<std::vector<sf::Sprite>> sprites) override;
+            void preload(Engine &engine) override;
     };
 }
 

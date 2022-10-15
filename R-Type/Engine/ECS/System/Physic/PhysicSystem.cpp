@@ -108,7 +108,8 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
         Parent &par = componentManager.getSingleComponent<Parent>(i);
         for (std::size_t j = 0; j < masks.size(); j++) {
             if (masks[j].has_value() && ((masks[j].value() & physicCon) == physicCon || (masks[j].value() & physicEne) == physicEne) && par.id != j) {
-                if ((masks[j].value() & physicApp) == physicApp && componentManager.getSingleComponent<Appearance>(j).app)
+                if (((masks[j].value() & physicApp) == physicApp && componentManager.getSingleComponent<Appearance>(j).app) ||
+                    ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
                 if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
                                         componentManager.getSingleComponent<Size>(j))) {

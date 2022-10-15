@@ -1,6 +1,6 @@
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 
-void eng::CooldownBarPreload::preload(Engine &engine, [[maybe_unused]] std::shared_ptr<std::vector<sf::Sprite>> sprites)
+void eng::CooldownBarPreload::preload(Engine &engine)
 {
     std::size_t id =
         engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), engine.getECS().getComponentManager());

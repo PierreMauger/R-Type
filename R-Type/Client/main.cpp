@@ -7,12 +7,13 @@
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 
-void mainLoop(eng::Engine &engine, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+void mainLoop(eng::Engine &engine)
 {
     eng::Graphic &graphic = engine.getGraphic();
     eng::ECS &ecs = engine.getECS();
     sf::Time elapsed_time = sf::seconds(0);
     sf::Time delta_time = sf::seconds(2);
+    sf::Time boss_time = sf::seconds(20);
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
 
@@ -22,12 +23,12 @@ void mainLoop(eng::Engine &engine, std::shared_ptr<std::vector<sf::Sprite>> spri
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
         }
-        if (graphic.getClock()->getElapsedTime() > elapsed_time && graphic.getClock()->getElapsedTime().asSeconds() < 10) {
-            enemyPreload.preload(engine, sprites);
+        if (graphic.getClock()->getElapsedTime() > boss_time) {
+            bossPreload.preload(engine);
+            boss_time = sf::seconds(boss_time.asSeconds() + 20);
+        } else if (graphic.getClock()->getElapsedTime() > elapsed_time) {
+            enemyPreload.preload(engine);
             elapsed_time = graphic.getClock()->getElapsedTime() + delta_time;
-        } else if (graphic.getClock()->getElapsedTime() > elapsed_time && elapsed_time.asSeconds() != 0) {
-            bossPreload.preload(engine, sprites);
-            elapsed_time = sf::seconds(0);
         }
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
@@ -73,13 +74,13 @@ int main(void)
     // create background
     eng::ParallaxPreload parallaxPreload;
 
-    parallaxPreload.preload(engine, sprites);
+    parallaxPreload.preload(engine);
 
     // create spaceship
     eng::VesselPreload vesselPreload;
 
-    vesselPreload.preload(engine, sprites);
+    vesselPreload.preload(engine);
 
-    mainLoop(engine, sprites);
+    mainLoop(engine);
     return 0;
 }
