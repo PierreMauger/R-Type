@@ -16,7 +16,7 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     this->serializeComponent<SyncID>(packet, std::any_cast<SyncID &>(componentManager.getComponent(typeid(SyncID)).getField(id).value()));
 
     // mask
-    packet.push_back(InfoEntity::POS | InfoEntity::VEL | InfoEntity::SPRITEID);
+    packet.push_back(InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID);
 
     // components
     for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {

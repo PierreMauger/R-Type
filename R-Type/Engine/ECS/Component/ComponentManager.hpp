@@ -35,6 +35,11 @@ namespace eng
                 this->_componentArray[std::type_index(typeid(T))].addData(id, T());
             }
 
+            template <typename T> T &getSingleComponent(std::size_t id)
+            {
+                return std::any_cast<T &>(this->_componentArray[typeid(T)].getField(id).value());
+            }
+
             void addEntity(std::size_t id);
             void removeSingleComponent(std::size_t id, std::type_index type);
             void removeAllComponents(std::size_t id);
