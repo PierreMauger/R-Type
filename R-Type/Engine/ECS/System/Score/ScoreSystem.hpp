@@ -13,6 +13,11 @@ namespace eng
             std::shared_ptr<std::vector<sf::Sprite>> _sprites;
             bool _firstTime;
             std::size_t _death;
+            std::size_t _score;
+            std::size_t _lastSaveScore;
+            std::vector<sf::Text> _text;
+            sf::Font _font;
+            bool findVessel(ComponentManager &componentManager, EntityManager &entityManager, Controllable &Controllable);
             void createVessel(ComponentManager &componentManager, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites,
                               std::shared_ptr<sf::RenderWindow> window);
             void createText(ComponentManager &componentManager, EntityManager &entityManager);

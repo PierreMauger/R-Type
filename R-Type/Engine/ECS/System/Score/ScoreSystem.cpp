@@ -7,19 +7,25 @@ ScoreSystem::ScoreSystem(std::shared_ptr<sf::RenderWindow> _window, std::shared_
     this->_window = _window;
     this->_sprites = _sprites;
     this->_death = 0;
+    this->_score = 0;
+    this->_lastSaveScore = 0;
     this->_firstTime = true;
 }
 
 void ScoreSystem::createText(ComponentManager &componentManager, EntityManager &entityManager)
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::TEXT), componentManager);
-    sf::Font font;
-    if (!font.loadFromFile("R-Type/Assets/Fonts/GameCube.ttf"))
-        throw std::runtime_error("Error: Cannot load font");
-    sf::Text text("Score: 0", font, 20);
 
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, static_cast<float>(this->_window->getSize().x) - 50, 0});
-    componentManager.getComponent(typeid(Text)).emplaceData(id, Text{text});
+    this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf");
+    this->_text.push_back(sf::Text("Death = 0", this->_font, 20));
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(this->_window->getSize().x) - 50, 10, 0});
+    this->_text[0].setPosition(static_cast<float>(this->_window->getSize().x) - 100, 10);
+    componentManager.getComponent(typeid(Text)).emplaceData(id, Text{sf::Text(this->_text[0]), "death"});
+    id = entityManager.addMask((InfoComp::POS | InfoComp::TEXT), componentManager);
+    this->_text.push_back(sf::Text("Score = 0", this->_font, 20));
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(this->_window->getSize().x) - 50, 80, 0});
+    this->_text[1].setPosition(static_cast<float>(this->_window->getSize().x) - 100, 80);
+    componentManager.getComponent(typeid(Text)).emplaceData(id, Text{sf::Text(this->_text[1]), "score"});
 }
 
 void ScoreSystem::createVessel(ComponentManager &componentManager, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites,
@@ -47,27 +53,47 @@ void ScoreSystem::createVessel(ComponentManager &componentManager, EntityManager
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
 }
 
-void ScoreSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
+bool ScoreSystem::findVessel(ComponentManager &componentManager, EntityManager &entityManager, Controllable &controllable)
 {
     auto &masks = entityManager.getMasks();
     std::size_t checkCon = (InfoComp::CONTROLLABLE);
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (!masks[i].has_value())
+            continue;
+        if ((masks[i].value() & checkCon) == checkCon) {
+            controllable = componentManager.getSingleComponent<Controllable>(i);
+            this->_lastSaveScore = controllable.kill;
+            return true;
+        }
+    }
+    return false;
+}
+
+void ScoreSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
+{
+    auto &masks = entityManager.getMasks();
     std::size_t checkText = (InfoComp::TEXT);
-    bool dead = true;
+    Controllable controllable;
 
     if (this->_firstTime) {
         createText(componentManager, entityManager);
         this->_firstTime = false;
     }
+    if (!findVessel(componentManager, entityManager, controllable)) {
+        createVessel(componentManager, entityManager, this->_sprites, this->_window);
+        this->_score = this->_lastSaveScore;
+        this->_death++;
+    }
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value())
             continue;
-        if ((masks[i].value() & checkCon) == checkCon)
-            dead = false;
-        if ((masks[i].value() & checkText) == checkText)
-            componentManager.getSingleComponent<Text>(i).text.setString("Score: " + std::to_string(this->_death));
-    }
-    if (dead) {
-        createVessel(componentManager, entityManager, this->_sprites, this->_window);
-        this->_death++;
+        if ((masks[i].value() & checkText) == checkText) {
+            Text &txt = componentManager.getSingleComponent<Text>(i);
+            if (txt.str == "death" && txt.text.getString() != "Death: " + std::to_string(this->_death))
+                txt.text.setString("Death: " + std::to_string(this->_death));
+            if (txt.str == "score" && txt.text.getString() != "Score: " + std::to_string(this->_score + controllable.kill))
+                txt.text.setString("Score: " + std::to_string(this->_score + controllable.kill));
+        }
     }
 }

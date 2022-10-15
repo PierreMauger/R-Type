@@ -194,8 +194,9 @@ typedef struct DropBonus {
 
 typedef struct Text {
         sf::Text text;
+        std::string str;
 
-        Text(sf::Text text = sf::Text()) : text(text)
+        Text(sf::Text text = sf::Text(), std::string str = "") : text(text), str(str)
         {
         }
 } Text;
