@@ -22,6 +22,7 @@ enum InfoComp {
     SYNCID = 0b1000000000000000,
     DROP = 0b10000000000000000,
     TEXT = 0b100000000000000000,
+    SOUNDID = 0b1000000000000000000,
 };
 
 typedef struct Position {
@@ -207,5 +208,16 @@ typedef struct Text {
         {
         }
 } Text;
+
+typedef struct SoundID {
+        std::size_t id;
+        bool play;
+        bool loop;
+        float pitch;
+
+        SoundID(std::size_t id = 0, bool play = false, bool loop = false, float pitch = 1) : id(id), play(play), loop(loop), pitch(pitch)
+        {
+        }
+} SoundID;
 
 #endif // COMPONENTTYPES_HPP

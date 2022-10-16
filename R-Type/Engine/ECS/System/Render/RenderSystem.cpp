@@ -26,8 +26,10 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
                                        : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay,
                                    1);
             }
-        } else
-            spriteRef.setScale(0, 0);
+        } else {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+        }
     }
 }
 
@@ -48,8 +50,10 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
                 spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);
                 spriteRef.setPosition(pos.x, pos.y - 20);
             }
-        } else
-            spriteRef.setScale(0, 0);
+        } else {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+        }
     }
 }
 
@@ -75,11 +79,11 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(i);
             sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
             spriteRef.setPosition(pos.x, pos.y);
-            if ((masks[i].value() & renderCooldown) == renderCooldown)
+            if (masks[i].has_value() && (masks[i].value() & renderCooldown) == renderCooldown)
                 displayCooldownBar(componentManager, entityManager, spriteRef, i);
-            if ((masks[i].value() & renderLife) == renderLife)
+            if (masks[i].has_value() && (masks[i].value() & renderLife) == renderLife)
                 displayLifeBar(componentManager, entityManager, spriteRef, i);
-            if ((masks[i].value() & renderProj) == renderProj) {
+            if (masks[i].has_value() && (masks[i].value() & renderProj) == renderProj) {
                 Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
                 spriteRef.setScale(proj.size, proj.size);
             }
