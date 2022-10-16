@@ -56,8 +56,6 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     std::size_t editMask = static_cast<std::size_t>(InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID);
     this->serializeComponent<std::size_t>(packet, editMask);
 
-    std::cout << "mask " << editMask << std::endl;
-
     // components
     this->serializeComponent<Position>(packet, componentManager.getSingleComponent<Position &>(id));
     this->serializeComponent<Velocity>(packet, componentManager.getSingleComponent<Velocity &>(id));
@@ -84,6 +82,7 @@ void eng::EntitySerializer::synchronizeEntity(std::vector<uint8_t> packet, Entit
     if (type == EntityType::DESTROY) {
         id = this->getEntityID(syncID, entityManager, componentManager);
         entityManager.removeMask(id);
+        componentManager.removeAllComponents(id);
         return;
     }
     if (type == EntityType::CREATE) {
