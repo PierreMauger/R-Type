@@ -1,7 +1,4 @@
 <map id="R&#45;Type/Engine/ECS/Component/ComponentManager.hpp" name="R&#45;Type/Engine/ECS/Component/ComponentManager.hpp">
 <area shape="rect" id="node1" title="Functions definitions for the ComponentManager containing/handling the engine&#39;s components." alt="" coords="5,5,213,45"/>
-<area shape="rect" id="node2" href="$_e_c_s_8hpp_source.html" title=" " alt="" coords="12,269,207,295"/>
-<area shape="rect" id="node4" href="$_i_system_8hpp_source.html" title=" " alt="" coords="81,93,268,133"/>
-<area shape="rect" id="node3" href="$_engine_8hpp_source.html" title=" " alt="" coords="21,343,197,368"/>
-<area shape="rect" id="node5" href="$_system_manager_8hpp_source.html" title=" " alt="" coords="81,181,268,221"/>
+<area shape="rect" id="node2" href="$_input_8hpp_source.html" title=" " alt="" coords="40,93,179,133"/>
 </map>

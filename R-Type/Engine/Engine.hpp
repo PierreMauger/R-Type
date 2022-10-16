@@ -56,16 +56,26 @@ namespace eng
             /**
              * @brief Get a reference to the engine's graphics.
              * @fn Graphic &getGraphic()
-             * @return A reference to the graphics
+             * @return A reference to the Graphic
             */
             Graphic &getGraphic();
             /**
              * @brief Get a reference to the engine's loader.
              * @fn Loader &getLoader()
-             * @return A reference to the loader
+             * @return A reference to the Loader
             */
             Loader &getLoader();
+            /**
+             * @brief Get a reference to the engine's network.
+             * @fn Network &getNetwork()
+             * @return A reference to the Network
+            */
             Network &getNetwork();
+            /**
+             * @brief Get a reference to the engine's inputs.
+             * @fn Input &getInput()
+             * @return A reference to the Input
+            */
             Input &getInput();
     };
 }

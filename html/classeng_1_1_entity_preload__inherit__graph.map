@@ -1,8 +1,9 @@
 <map id="eng::EntityPreload" name="eng::EntityPreload">
-<area shape="rect" id="node1" title="Preloads an entity." alt="" coords="5,104,135,129"/>
-<area shape="rect" id="node2" href="$classeng_1_1_boss_preload.html" title="Preloads the boss." alt="" coords="205,5,331,31"/>
-<area shape="rect" id="node3" href="$classeng_1_1_cooldown_bar_preload.html" title="Preloads the cooldown bar." alt="" coords="183,55,353,80"/>
-<area shape="rect" id="node4" href="$classeng_1_1_enemy_preload.html" title="Preloads the enemy." alt="" coords="200,104,336,129"/>
-<area shape="rect" id="node5" href="$classeng_1_1_parallax_preload.html" title="Preloads the parallax." alt="" coords="197,153,339,179"/>
-<area shape="rect" id="node6" href="$classeng_1_1_vessel_preload.html" title="Preloads the vessel." alt="" coords="201,203,335,228"/>
+<area shape="rect" id="node1" title="Preloads an entity." alt="" coords="5,129,135,155"/>
+<area shape="rect" id="node2" href="$classeng_1_1_background_music_preload.html" title=" " alt="" coords="183,5,381,31"/>
+<area shape="rect" id="node3" href="$classeng_1_1_boss_preload.html" title="Preloads the boss." alt="" coords="219,55,345,80"/>
+<area shape="rect" id="node4" href="$classeng_1_1_cooldown_bar_preload.html" title="Preloads the cooldown bar." alt="" coords="197,104,367,129"/>
+<area shape="rect" id="node5" href="$classeng_1_1_enemy_preload.html" title="Preloads the enemy." alt="" coords="214,153,350,179"/>
+<area shape="rect" id="node6" href="$classeng_1_1_parallax_preload.html" title="Preloads the parallax." alt="" coords="211,203,353,228"/>
+<area shape="rect" id="node7" href="$classeng_1_1_vessel_preload.html" title="Preloads the vessel." alt="" coords="215,252,349,277"/>
 </map>

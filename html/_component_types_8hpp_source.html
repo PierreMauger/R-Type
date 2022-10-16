@@ -101,189 +101,231 @@ $(function() {
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    LIFEBAR = 0b1000000000000,</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    PARENT = 0b10000000000000,</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    PATERN = 0b100000000000000,</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    DROP = 0b1000000000000000,</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>};</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="struct_position.html">   43</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_position.html">Position</a> {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordtype">float</span> x;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordtype">float</span> y;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordtype">float</span> z;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <a class="code hl_struct" href="struct_position.html">Position</a>(<span class="keywordtype">float</span> x = 0.0f, <span class="keywordtype">float</span> y = 0.0f, <span class="keywordtype">float</span> z = 0.0f) : x(x), y(y), z(z)</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>} <a class="code hl_struct" href="struct_position.html">Position</a>;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="struct_velocity.html">   57</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_velocity.html">Velocity</a> {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordtype">float</span> x;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordtype">float</span> y;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keywordtype">float</span> z;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordtype">float</span> baseSpeed;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_struct" href="struct_velocity.html">Velocity</a>(<span class="keywordtype">float</span> x = 0.0f, <span class="keywordtype">float</span> y = 0.0f, <span class="keywordtype">float</span> z = 0.0f, <span class="keywordtype">float</span> baseSpeed = 0.0) : x(x), y(y), z(z), baseSpeed(baseSpeed)</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        }</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>} <a class="code hl_struct" href="struct_velocity.html">Velocity</a>;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="struct_size.html">   72</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_size.html">Size</a> {</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordtype">float</span> x;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordtype">float</span> y;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <a class="code hl_struct" href="struct_size.html">Size</a>(<span class="keywordtype">float</span> x = 0.0f, <span class="keywordtype">float</span> y = 0.0f) : x(x), y(y)</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>} <a class="code hl_struct" href="struct_size.html">Size</a>;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">   85</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> {</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    HIGH = 0,</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    MEDIUM,</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    LOW</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>};</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="struct_sprite_i_d.html">   95</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_sprite_i_d.html">SpriteID</a> {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        std::size_t id;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> priority;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <a class="code hl_struct" href="struct_sprite_i_d.html">SpriteID</a>(std::size_t i = 0, <a class="code hl_enumeration" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> prio = Priority::HIGH) : id(i), priority(prio)</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        {</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        }</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>} <a class="code hl_struct" href="struct_sprite_i_d.html">SpriteID</a>;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="struct_controllable.html">  108</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_controllable.html">Controllable</a> {</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordtype">bool</span> con;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <a class="code hl_struct" href="struct_controllable.html">Controllable</a>(<span class="keywordtype">bool</span> con = <span class="keyword">true</span>) : con(con)</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        {</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        }</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>} <a class="code hl_struct" href="struct_controllable.html">Controllable</a>;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="struct_parallax.html">  120</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_parallax.html">Parallax</a> {</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordtype">bool</span> par;</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <a class="code hl_struct" href="struct_parallax.html">Parallax</a>(<span class="keywordtype">bool</span> par = <span class="keyword">true</span>) : par(par)</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        }</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>} <a class="code hl_struct" href="struct_parallax.html">Parallax</a>;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="struct_projectile.html">  132</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_projectile.html">Projectile</a> {</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordtype">bool</span> proj;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        std::size_t damage;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="keywordtype">float</span> size;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <a class="code hl_struct" href="struct_projectile.html">Projectile</a>(<span class="keywordtype">bool</span> proj = <span class="keyword">true</span>, std::size_t damage = 1, <span class="keywordtype">float</span> size = 1) : proj(proj), damage(damage), size(size)</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        {</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        }</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>} <a class="code hl_struct" href="struct_projectile.html">Projectile</a>;</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="struct_life.html">  146</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_life.html">Life</a> {</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        std::size_t life;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <a class="code hl_struct" href="struct_life.html">Life</a>(std::size_t life = 1) : life(life)</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        {</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        }</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>} <a class="code hl_struct" href="struct_life.html">Life</a>;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="struct_enemy.html">  158</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_enemy.html">Enemy</a> {</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordtype">bool</span> enemy;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordtype">float</span> lastShoot;</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keywordtype">float</span> shootDelay;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <a class="code hl_struct" href="struct_enemy.html">Enemy</a>(<span class="keywordtype">bool</span> enemy = <span class="keyword">false</span>, <span class="keywordtype">float</span> lastShoot = 0.0f, <span class="keywordtype">float</span> shootDelay = 2.0f) : enemy(enemy), lastShoot(lastShoot), shootDelay(shootDelay)</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        {</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        }</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>} <a class="code hl_struct" href="struct_enemy.html">Enemy</a>;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="struct_appearance.html">  172</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_appearance.html">Appearance</a> {</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="keywordtype">bool</span> app;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        <span class="keywordtype">float</span> end;</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        <a class="code hl_struct" href="struct_appearance.html">Appearance</a>(<span class="keywordtype">bool</span> app = <span class="keyword">false</span>, <span class="keywordtype">float</span> end = 0.0f) : app(app), end(end)</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        {</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        }</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>} <a class="code hl_struct" href="struct_appearance.html">Appearance</a>;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="struct_cooldown_shoot.html">  185</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_cooldown_shoot.html">CooldownShoot</a> {</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keywordtype">float</span> lastShoot;</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keywordtype">float</span> shootDelay;</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        <span class="keywordtype">float</span> size;</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <a class="code hl_struct" href="struct_cooldown_shoot.html">CooldownShoot</a>(<span class="keywordtype">float</span> lastShoot = 0.0f, <span class="keywordtype">float</span> shootDelay = 2.0f, std::size_t size = 1) : lastShoot(lastShoot), shootDelay(shootDelay), size(size)</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        {</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        }</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>} <a class="code hl_struct" href="struct_cooldown_shoot.html">CooldownShoot</a>;</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="struct_cooldown_bar.html">  199</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_cooldown_bar.html">CooldownBar</a> {</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="keywordtype">bool</span> bar;</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <a class="code hl_struct" href="struct_cooldown_bar.html">CooldownBar</a>(<span class="keywordtype">bool</span> bar = <span class="keyword">false</span>) : bar(bar)</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        {</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        }</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>} <a class="code hl_struct" href="struct_cooldown_bar.html">CooldownBar</a>;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno"><a class="line" href="struct_life_bar.html">  211</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_life_bar.html">LifeBar</a> {</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keywordtype">bool</span> bar;</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        std::size_t lifeMax;</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        <a class="code hl_struct" href="struct_life_bar.html">LifeBar</a>(<span class="keywordtype">bool</span> bar = <span class="keyword">false</span>, std::size_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        {</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        }</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>} <a class="code hl_struct" href="struct_life_bar.html">LifeBar</a>;</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="struct_parent.html">  224</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_parent.html">Parent</a> {</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        std::size_t id;</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <a class="code hl_struct" href="struct_parent.html">Parent</a>(std::size_t i = 0) : id(i)</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        {</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        }</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>} <a class="code hl_struct" href="struct_parent.html">Parent</a>;</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="comment">// Type dépendant du patern</span></div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno"><a class="line" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">  237</a></span><span class="comment"></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> {</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    LINE = 0,</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    OSCILLATION,</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    BIGOSCILLATION,</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    CIRCLE</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>};</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="struct_patern.html">  248</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_patern.html">Patern</a> {</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> type;</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        <span class="keywordtype">float</span> angle;</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        sf::Vector2f center;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        <a class="code hl_struct" href="struct_patern.html">Patern</a>(<span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> type = TypePattern::LINE, <span class="keywordtype">float</span> angle = 0.0f, sf::Vector2f center = sf::Vector2f(0.0f, 0.0f)) : type(type), angle(angle), center(center)</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        }</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>} <a class="code hl_struct" href="struct_patern.html">Patern</a>;</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno"><a class="line" href="struct_drop_bonus.html">  262</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_drop_bonus.html">DropBonus</a> {</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        std::size_t id;</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <a class="code hl_struct" href="struct_drop_bonus.html">DropBonus</a>(std::size_t <span class="keywordtype">id</span> = 0) : id(<span class="keywordtype">id</span>)</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        {</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        }</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>} <a class="code hl_struct" href="struct_drop_bonus.html">DropBonus</a>;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span><span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
-<div class="ttc" id="a_component_types_8hpp_html_a315655b1bb5848c063491adffde62b15"><div class="ttname"><a href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a></div><div class="ttdeci">Priority</div><div class="ttdoc">Priority of the sprites to be displayed (background before foreground etc..).</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:85</div></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    SYNCID = 0b1000000000000000,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    DROP = 0b10000000000000000,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    TEXT = 0b100000000000000000,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    SOUNDID = 0b1000000000000000000,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>};</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="struct_position.html">   46</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_position.html">Position</a> {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordtype">float</span> x;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordtype">float</span> y;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordtype">float</span> z;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <a class="code hl_struct" href="struct_position.html">Position</a>(<span class="keywordtype">float</span> x = 0.0f, <span class="keywordtype">float</span> y = 0.0f, <span class="keywordtype">float</span> z = 0.0f) : x(x), y(y), z(z)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>} <a class="code hl_struct" href="struct_position.html">Position</a>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="struct_velocity.html">   60</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_velocity.html">Velocity</a> {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordtype">float</span> x;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordtype">float</span> y;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordtype">float</span> z;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordtype">float</span> baseSpeed;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <a class="code hl_struct" href="struct_velocity.html">Velocity</a>(<span class="keywordtype">float</span> x = 0.0f, <span class="keywordtype">float</span> y = 0.0f, <span class="keywordtype">float</span> z = 0.0f, <span class="keywordtype">float</span> baseSpeed = 0.0) : x(x), y(y), z(z), baseSpeed(baseSpeed)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        }</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>} <a class="code hl_struct" href="struct_velocity.html">Velocity</a>;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="struct_size.html">   75</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_size.html">Size</a> {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordtype">float</span> x;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordtype">float</span> y;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <a class="code hl_struct" href="struct_size.html">Size</a>(<span class="keywordtype">float</span> x = 0.0f, <span class="keywordtype">float</span> y = 0.0f) : x(x), y(y)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>} <a class="code hl_struct" href="struct_size.html">Size</a>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">   88</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    HIGH = 0,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    MEDIUM,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    LOW</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>};</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="struct_sprite_i_d.html">   98</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_sprite_i_d.html">SpriteID</a> {</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        std::size_t id;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> priority;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        std::size_t curFrame;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        std::size_t nbFrame;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordtype">bool</span> signe;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        std::size_t offsetX;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        std::size_t offsetY;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <a class="code hl_struct" href="struct_sprite_i_d.html">SpriteID</a>(std::size_t i = 0, <a class="code hl_enumeration" href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> prio = Priority::HIGH, std::size_t curFrame = 0, std::size_t nbFrame = 0, <span class="keywordtype">bool</span> signe = <span class="keyword">false</span>, std::size_t offsetX = 0,</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                 std::size_t offsetY = 0)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            : id(i), priority(prio), curFrame(curFrame), nbFrame(nbFrame), signe(signe), offsetX(offsetX), offsetY(offsetY)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>} <a class="code hl_struct" href="struct_sprite_i_d.html">SpriteID</a>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="struct_controllable.html">  118</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_controllable.html">Controllable</a> {</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="keywordtype">bool</span> con;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        std::size_t kill;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <a class="code hl_struct" href="struct_controllable.html">Controllable</a>(<span class="keywordtype">bool</span> con = <span class="keyword">true</span>, std::size_t kill = 0) : con(con), kill(kill)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        }</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>} <a class="code hl_struct" href="struct_controllable.html">Controllable</a>;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="struct_parallax.html">  131</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_parallax.html">Parallax</a> {</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="keywordtype">bool</span> par;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <a class="code hl_struct" href="struct_parallax.html">Parallax</a>(<span class="keywordtype">bool</span> par = <span class="keyword">true</span>) : par(par)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        {</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        }</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>} <a class="code hl_struct" href="struct_parallax.html">Parallax</a>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno"><a class="line" href="struct_projectile.html">  143</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_projectile.html">Projectile</a> {</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="keywordtype">bool</span> proj;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        std::size_t damage;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="keywordtype">float</span> size;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <a class="code hl_struct" href="struct_projectile.html">Projectile</a>(<span class="keywordtype">bool</span> proj = <span class="keyword">true</span>, std::size_t damage = 1, <span class="keywordtype">float</span> size = 1) : proj(proj), damage(damage), size(size)</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>} <a class="code hl_struct" href="struct_projectile.html">Projectile</a>;</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="struct_life.html">  157</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_life.html">Life</a> {</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        std::size_t life;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <a class="code hl_struct" href="struct_life.html">Life</a>(std::size_t life = 1) : life(life)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        {</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>} <a class="code hl_struct" href="struct_life.html">Life</a>;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="struct_enemy.html">  169</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_enemy.html">Enemy</a> {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordtype">bool</span> enemy;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        <span class="keywordtype">float</span> lastShoot;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="keywordtype">float</span> shootDelay;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        <a class="code hl_struct" href="struct_enemy.html">Enemy</a>(<span class="keywordtype">bool</span> enemy = <span class="keyword">false</span>, <span class="keywordtype">float</span> lastShoot = 0.0f, <span class="keywordtype">float</span> shootDelay = 2.0f) : enemy(enemy), lastShoot(lastShoot), shootDelay(shootDelay)</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        {</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        }</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>} <a class="code hl_struct" href="struct_enemy.html">Enemy</a>;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno"><a class="line" href="struct_appearance.html">  183</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_appearance.html">Appearance</a> {</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        <span class="keywordtype">bool</span> app;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keywordtype">float</span> end;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <a class="code hl_struct" href="struct_appearance.html">Appearance</a>(<span class="keywordtype">bool</span> app = <span class="keyword">false</span>, <span class="keywordtype">float</span> end = 0.0f) : app(app), end(end)</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        {</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        }</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>} <a class="code hl_struct" href="struct_appearance.html">Appearance</a>;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="struct_cooldown_shoot.html">  196</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_cooldown_shoot.html">CooldownShoot</a> {</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <span class="keywordtype">float</span> lastShoot;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keywordtype">float</span> shootDelay;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordtype">float</span> size;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <a class="code hl_struct" href="struct_cooldown_shoot.html">CooldownShoot</a>(<span class="keywordtype">float</span> lastShoot = 0.0f, <span class="keywordtype">float</span> shootDelay = 2.0f, std::size_t size = 1) : lastShoot(lastShoot), shootDelay(shootDelay), size(size)</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        {</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        }</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>} <a class="code hl_struct" href="struct_cooldown_shoot.html">CooldownShoot</a>;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno"><a class="line" href="struct_cooldown_bar.html">  210</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_cooldown_bar.html">CooldownBar</a> {</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="keywordtype">bool</span> bar;</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <a class="code hl_struct" href="struct_cooldown_bar.html">CooldownBar</a>(<span class="keywordtype">bool</span> bar = <span class="keyword">false</span>) : bar(bar)</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        {</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        }</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>} <a class="code hl_struct" href="struct_cooldown_bar.html">CooldownBar</a>;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno"><a class="line" href="struct_life_bar.html">  222</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_life_bar.html">LifeBar</a> {</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keywordtype">bool</span> bar;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        std::size_t lifeMax;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        <a class="code hl_struct" href="struct_life_bar.html">LifeBar</a>(<span class="keywordtype">bool</span> bar = <span class="keyword">false</span>, std::size_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        {</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        }</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>} <a class="code hl_struct" href="struct_life_bar.html">LifeBar</a>;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno"><a class="line" href="struct_parent.html">  235</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_parent.html">Parent</a> {</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        std::size_t id;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <a class="code hl_struct" href="struct_parent.html">Parent</a>(std::size_t i = 0) : id(i)</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        {</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        }</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>} <a class="code hl_struct" href="struct_parent.html">Parent</a>;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span><span class="comment">// Type dépendant du patern</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno"><a class="line" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">  248</a></span><span class="comment"></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> {</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    LINE = 0,</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    OSCILLATION,</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    BIGOSCILLATION,</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    CIRCLE</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>};</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="struct_patern.html">  259</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_patern.html">Patern</a> {</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        <span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> type;</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keywordtype">float</span> angle;</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        sf::Vector2f center;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <a class="code hl_struct" href="struct_patern.html">Patern</a>(<span class="keyword">enum</span> <a class="code hl_enumeration" href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> type = TypePattern::LINE, <span class="keywordtype">float</span> angle = 0.0f, sf::Vector2f center = sf::Vector2f(0.0f, 0.0f)) : type(type), angle(angle), center(center)</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        }</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>} <a class="code hl_struct" href="struct_patern.html">Patern</a>;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span> </div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno"><a class="line" href="struct_sync_i_d.html">  273</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_sync_i_d.html">SyncID</a> {</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        std::size_t id;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        <a class="code hl_struct" href="struct_sync_i_d.html">SyncID</a>(std::size_t i = 0) : id(i)</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        {</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        }</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>} <a class="code hl_struct" href="struct_sync_i_d.html">SyncID</a>;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno"><a class="line" href="struct_drop_bonus.html">  285</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_drop_bonus.html">DropBonus</a> {</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        std::size_t id;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        <a class="code hl_struct" href="struct_drop_bonus.html">DropBonus</a>(std::size_t <span class="keywordtype">id</span> = 0) : id(<span class="keywordtype">id</span>)</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        {</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        }</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>} <a class="code hl_struct" href="struct_drop_bonus.html">DropBonus</a>;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno"><a class="line" href="struct_text.html">  293</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_text.html">Text</a> {</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        sf::Text text;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        std::string str;</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        <a class="code hl_struct" href="struct_text.html">Text</a>(sf::Text text = sf::Text(), std::string str = <span class="stringliteral">&quot;&quot;</span>) : text(text), str(str)</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        {</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        }</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>} <a class="code hl_struct" href="struct_text.html">Text</a>;</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno"><a class="line" href="struct_sound_i_d.html">  302</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_sound_i_d.html">SoundID</a> {</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        std::size_t id;</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        <span class="keywordtype">bool</span> play;</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        <span class="keywordtype">bool</span> loop;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        <span class="keywordtype">float</span> pitch;</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        <a class="code hl_struct" href="struct_sound_i_d.html">SoundID</a>(std::size_t <span class="keywordtype">id</span> = 0, <span class="keywordtype">bool</span> play = <span class="keyword">false</span>, <span class="keywordtype">bool</span> loop = <span class="keyword">false</span>, <span class="keywordtype">float</span> pitch = 1) : id(<span class="keywordtype">id</span>), play(play), loop(loop), pitch(pitch)</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        {</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        }</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>} <a class="code hl_struct" href="struct_sound_i_d.html">SoundID</a>;</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> </div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
+<div class="ttc" id="a_component_types_8hpp_html_a315655b1bb5848c063491adffde62b15"><div class="ttname"><a href="_component_types_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a></div><div class="ttdeci">Priority</div><div class="ttdoc">Priority of the sprites to be displayed (background before foreground etc..).</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:88</div></div>
 <div class="ttc" id="a_component_types_8hpp_html_aa4d2e0a9444f715e2ab35f936f16ce86"><div class="ttname"><a href="_component_types_8hpp.html#aa4d2e0a9444f715e2ab35f936f16ce86">InfoComp</a></div><div class="ttdeci">InfoComp</div><div class="ttdoc">Masks of the components.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:20</div></div>
-<div class="ttc" id="a_component_types_8hpp_html_aaf5b95d5b986f93429ceb6a7765c9965"><div class="ttname"><a href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a></div><div class="ttdeci">TypePattern</div><div class="ttdoc">The type of pattern that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:237</div></div>
+<div class="ttc" id="a_component_types_8hpp_html_aaf5b95d5b986f93429ceb6a7765c9965"><div class="ttname"><a href="_component_types_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a></div><div class="ttdeci">TypePattern</div><div class="ttdoc">The type of pattern that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:248</div></div>
 <div class="ttc" id="a_includes_8hpp_html"><div class="ttname"><a href="_includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
-<div class="ttc" id="astruct_appearance_html"><div class="ttname"><a href="struct_appearance.html">Appearance</a></div><div class="ttdoc">The appearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:172</div></div>
-<div class="ttc" id="astruct_controllable_html"><div class="ttname"><a href="struct_controllable.html">Controllable</a></div><div class="ttdoc">The controllable component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:108</div></div>
-<div class="ttc" id="astruct_cooldown_bar_html"><div class="ttname"><a href="struct_cooldown_bar.html">CooldownBar</a></div><div class="ttdoc">The cooldownBar component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:199</div></div>
-<div class="ttc" id="astruct_cooldown_shoot_html"><div class="ttname"><a href="struct_cooldown_shoot.html">CooldownShoot</a></div><div class="ttdoc">The cooldownShoot component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:185</div></div>
-<div class="ttc" id="astruct_drop_bonus_html"><div class="ttname"><a href="struct_drop_bonus.html">DropBonus</a></div><div class="ttdoc">The dropBonus component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:262</div></div>
-<div class="ttc" id="astruct_enemy_html"><div class="ttname"><a href="struct_enemy.html">Enemy</a></div><div class="ttdoc">The enemy component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:158</div></div>
-<div class="ttc" id="astruct_life_bar_html"><div class="ttname"><a href="struct_life_bar.html">LifeBar</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:211</div></div>
-<div class="ttc" id="astruct_life_html"><div class="ttname"><a href="struct_life.html">Life</a></div><div class="ttdoc">The life component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:146</div></div>
-<div class="ttc" id="astruct_parallax_html"><div class="ttname"><a href="struct_parallax.html">Parallax</a></div><div class="ttdoc">The parallax component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:120</div></div>
-<div class="ttc" id="astruct_parent_html"><div class="ttname"><a href="struct_parent.html">Parent</a></div><div class="ttdoc">The parent component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:224</div></div>
-<div class="ttc" id="astruct_patern_html"><div class="ttname"><a href="struct_patern.html">Patern</a></div><div class="ttdoc">The patern component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:248</div></div>
-<div class="ttc" id="astruct_position_html"><div class="ttname"><a href="struct_position.html">Position</a></div><div class="ttdoc">The position component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:43</div></div>
-<div class="ttc" id="astruct_projectile_html"><div class="ttname"><a href="struct_projectile.html">Projectile</a></div><div class="ttdoc">The projectile component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:132</div></div>
-<div class="ttc" id="astruct_size_html"><div class="ttname"><a href="struct_size.html">Size</a></div><div class="ttdoc">The size component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:72</div></div>
-<div class="ttc" id="astruct_sprite_i_d_html"><div class="ttname"><a href="struct_sprite_i_d.html">SpriteID</a></div><div class="ttdoc">The spriteID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:95</div></div>
-<div class="ttc" id="astruct_velocity_html"><div class="ttname"><a href="struct_velocity.html">Velocity</a></div><div class="ttdoc">The velocity component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:57</div></div>
+<div class="ttc" id="astruct_appearance_html"><div class="ttname"><a href="struct_appearance.html">Appearance</a></div><div class="ttdoc">The appearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:183</div></div>
+<div class="ttc" id="astruct_controllable_html"><div class="ttname"><a href="struct_controllable.html">Controllable</a></div><div class="ttdoc">The controllable component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:118</div></div>
+<div class="ttc" id="astruct_cooldown_bar_html"><div class="ttname"><a href="struct_cooldown_bar.html">CooldownBar</a></div><div class="ttdoc">The cooldownBar component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:210</div></div>
+<div class="ttc" id="astruct_cooldown_shoot_html"><div class="ttname"><a href="struct_cooldown_shoot.html">CooldownShoot</a></div><div class="ttdoc">The cooldownShoot component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:196</div></div>
+<div class="ttc" id="astruct_drop_bonus_html"><div class="ttname"><a href="struct_drop_bonus.html">DropBonus</a></div><div class="ttdoc">The dropBonus component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:285</div></div>
+<div class="ttc" id="astruct_enemy_html"><div class="ttname"><a href="struct_enemy.html">Enemy</a></div><div class="ttdoc">The enemy component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:169</div></div>
+<div class="ttc" id="astruct_life_bar_html"><div class="ttname"><a href="struct_life_bar.html">LifeBar</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:222</div></div>
+<div class="ttc" id="astruct_life_html"><div class="ttname"><a href="struct_life.html">Life</a></div><div class="ttdoc">The life component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:157</div></div>
+<div class="ttc" id="astruct_parallax_html"><div class="ttname"><a href="struct_parallax.html">Parallax</a></div><div class="ttdoc">The parallax component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:131</div></div>
+<div class="ttc" id="astruct_parent_html"><div class="ttname"><a href="struct_parent.html">Parent</a></div><div class="ttdoc">The parent component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:235</div></div>
+<div class="ttc" id="astruct_patern_html"><div class="ttname"><a href="struct_patern.html">Patern</a></div><div class="ttdoc">The patern component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:259</div></div>
+<div class="ttc" id="astruct_position_html"><div class="ttname"><a href="struct_position.html">Position</a></div><div class="ttdoc">The position component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:46</div></div>
+<div class="ttc" id="astruct_projectile_html"><div class="ttname"><a href="struct_projectile.html">Projectile</a></div><div class="ttdoc">The projectile component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:143</div></div>
+<div class="ttc" id="astruct_size_html"><div class="ttname"><a href="struct_size.html">Size</a></div><div class="ttdoc">The size component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:75</div></div>
+<div class="ttc" id="astruct_sound_i_d_html"><div class="ttname"><a href="struct_sound_i_d.html">SoundID</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:302</div></div>
+<div class="ttc" id="astruct_sprite_i_d_html"><div class="ttname"><a href="struct_sprite_i_d.html">SpriteID</a></div><div class="ttdoc">The spriteID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:98</div></div>
+<div class="ttc" id="astruct_sync_i_d_html"><div class="ttname"><a href="struct_sync_i_d.html">SyncID</a></div><div class="ttdoc">The syncID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:273</div></div>
+<div class="ttc" id="astruct_text_html"><div class="ttname"><a href="struct_text.html">Text</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:293</div></div>
+<div class="ttc" id="astruct_velocity_html"><div class="ttname"><a href="struct_velocity.html">Velocity</a></div><div class="ttdoc">The velocity component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:60</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

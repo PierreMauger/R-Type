@@ -6,5 +6,6 @@ var searchData=
   ['addmanualmask_3',['addManualMask',['../classeng_1_1_entity_manager.html#aa0788a80011917b8805db67fdee5f977',1,'eng::EntityManager']]],
   ['addmask_4',['addMask',['../classeng_1_1_entity_manager.html#a9b200fa478c070bc3dd0046a11dea29f',1,'eng::EntityManager']]],
   ['addsystem_5',['addSystem',['../classeng_1_1_system_manager.html#a487b63a465d75fbb23346258f4fd28fe',1,'eng::SystemManager']]],
-  ['appearance_6',['Appearance',['../struct_appearance.html',1,'']]]
+  ['animationsystem_6',['AnimationSystem',['../classeng_1_1_animation_system.html',1,'eng']]],
+  ['appearance_7',['Appearance',['../struct_appearance.html',1,'']]]
 ];
