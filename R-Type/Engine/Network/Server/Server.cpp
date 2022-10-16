@@ -26,8 +26,7 @@ void Server::initServer()
         boost::bind(&Server::handleMsgUdp,
                     this,
                     boost::asio::placeholders::error,
-                    buffer,
-                    boost::asio::placeholders::bytes_transferred
+                    buffer
                 )
     );
 
@@ -69,7 +68,7 @@ void Server::stop()
         this->_threadContext.join();
 }
 
-void Server::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size)
+void Server::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer)
 {
     if (!error) {
         std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
@@ -91,6 +90,7 @@ void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_
         newConnection->run();
         this->_listConnections.push_back(newConnection);
         // TODO send action structure or message for client connection in dataIn
+        // this->_dataIn.push_back({'C'});
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
     }
@@ -140,6 +140,7 @@ void Server::closeConnection(_B_ASIO_TCP::endpoint endpoint)
     for (auto &connection : this->_listConnections) {
         if (connection->getTcpEndpoint() == endpoint) {
             // TODO send action structure or message for client disconnection in dataIn
+            // this->_dataIn.push_back({'D'});
             connection->closeConnection();
             break;
         } else {
@@ -155,6 +156,7 @@ void Server::updateConnection()
             // if (connection->getThreadConnection().joinable())
                 // connection->getThreadConnection().join();
             // TODO send action structure or message for client disconnection in dataIn
+            // this->_dataIn.push_back({'D'});
             this->_listConnections.erase(std::remove(this->_listConnections.begin(), this->_listConnections.end(), connection), this->_listConnections.end());
         }
     }

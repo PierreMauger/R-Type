@@ -9,7 +9,7 @@ namespace eng
     class Client
     {
         private:
-            void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint);
+            void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, _B_ASIO_UDP::endpoint newEndpoint);
             void initClient();
             void open();
 

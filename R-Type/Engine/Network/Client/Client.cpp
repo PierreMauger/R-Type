@@ -30,7 +30,6 @@ void Client::initClient()
                     this,
                     boost::asio::placeholders::error,
                     buffer,
-                    boost::asio::placeholders::bytes_transferred,
                     newEndpoint
                 )
     );
@@ -78,7 +77,7 @@ void Client::stop()
         this->_threadContext.join();
 }
 
-void Client::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint)
+void Client::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, _B_ASIO_UDP::endpoint newEndpoint)
 {
     if (!error) {
         std::cout << "New UDP message from " << newEndpoint.address().to_string() << ":" << newEndpoint.port() << std::endl;
