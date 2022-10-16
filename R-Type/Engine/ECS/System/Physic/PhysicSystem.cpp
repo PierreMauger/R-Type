@@ -97,7 +97,7 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
             }
         }
     }
-    return true;
+    return false;
 }
 
 bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
