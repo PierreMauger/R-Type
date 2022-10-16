@@ -35,7 +35,7 @@ void ScoreSystem::createVessel(ComponentManager &componentManager, EntityManager
         (InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP),
         componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, 0, 0, 0, 64, 0});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, 0, 64, 0});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, -200, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, 5});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100});

@@ -5,7 +5,7 @@ void eng::BossPreload::preload(Engine &engine)
     std::size_t id = engine.getECS().getEntityManager().addMask(
         (InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATERN | InfoComp::DROP),
         engine.getECS().getComponentManager());
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, 0.3, 0, 96, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, 96, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 150});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{430, -300, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, -2, 0, 2});
