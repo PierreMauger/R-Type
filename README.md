@@ -14,7 +14,6 @@
 - [Requirements](#-requirements)
 - [Building](#-building)
 - [Usage](#-usage)
-- [Documentation](#-documentation)
 - [Authors](#-authors)
 
 </details>
@@ -33,7 +32,6 @@ Supported operating systems:
 
 Dependencies:
 - [Cmake](https://cmake.org/download/) 3.24+
-- [OpenGL](https://www.opengl.org/)
 
 ## 🔧 Building
 
@@ -47,11 +45,6 @@ It will automatically:
 
 One person has to start `r-type_server` to be the server host and can also start `r-type_client` to be a player.
 The other players just have to start `r-type_client` on their end aswell.
-
-## 📝 Documentation
-
-An english html-based local code documentation is available in the root html folder (start with the `index.html` file).
-A network protocol documentation will soon be available at the root.
 
 ## 🤝 Authors
 

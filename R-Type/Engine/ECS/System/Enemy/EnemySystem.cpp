@@ -36,22 +36,22 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
             Position &pos = componentManager.getSingleComponent<Position>(i);
             Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
             Patern &pat = componentManager.getSingleComponent<Patern>(i);
-            if (pat.type == TypePattern::CIRCLE) {
+            if (pat.type == TypePatern::CIRCLE) {
                 pos.x = pat.center.x + std::cos(pat.angle) * (RADIUS * 2);
                 pos.y = pat.center.y + std::sin(pat.angle) * (RADIUS * 2);
                 pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
             }
-            if (pat.type == TypePattern::OSCILLATION) {
+            if (pat.type == TypePatern::OSCILLATION) {
                 pos.x += vel.x;
                 pos.y = pat.center.y + std::sin(pat.angle) * RADIUS;
                 pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC;
             }
-            if (pat.type == TypePattern::BIGOSCILLATION) {
+            if (pat.type == TypePatern::BIGOSCILLATION) {
                 pos.x += vel.x;
                 pos.y = pat.center.y + std::sin(pat.angle) * (RADIUS * 3);
                 pat.angle = this->_clock->getElapsedTime().asSeconds() * (SPEED_OSC / 2);
             }
-            if (pat.type == TypePattern::LINE)
+            if (pat.type == TypePatern::LINE)
                 pos.x += vel.x;
             if ((masks[i].value() & enemy) == enemy) {
                 Enemy &enemy = componentManager.getSingleComponent<Enemy>(i);
