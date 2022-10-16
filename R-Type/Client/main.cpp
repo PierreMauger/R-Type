@@ -1,9 +1,9 @@
 #include "Component/ComponentManager.hpp"
+#include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
-#include "Engine/ECS/PreloadEntities/SoundPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
@@ -86,9 +86,9 @@ int main(void)
 
     vesselPreload.preload(engine);
 
-    eng::SoundPreload soundPreload;
+    eng::BackgroundMusicPreload backgroundMusicPreload;
 
-    soundPreload.preload(engine);
+    backgroundMusicPreload.preload(engine);
 
     mainLoop(engine);
     return 0;

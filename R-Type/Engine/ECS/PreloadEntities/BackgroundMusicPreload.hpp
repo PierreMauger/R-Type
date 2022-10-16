@@ -1,5 +1,5 @@
-#ifndef SOUNDPRELOAD_HPP
-#define SOUNDPRELOAD_HPP
+#ifndef BACKGROUNDMUSICPRELOAD_HPP
+#define BACKGROUNDMUSICPRELOAD_HPP
 
 #include <Includes.hpp>
 
@@ -8,11 +8,11 @@
 
 namespace eng
 {
-    class SoundPreload : public EntityPreload
+    class BackgroundMusicPreload : public EntityPreload
     {
         public:
             void preload(Engine &engine) override;
     };
 }
 
-#endif // SOUNDPRELOAD_HPP
+#endif // BACKGROUNDMUSICPRELOAD_HPP
