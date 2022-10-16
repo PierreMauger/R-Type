@@ -73,6 +73,9 @@ if (NOT Boost_FOUND)
     set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
     find_package(Boost)
 endif()
+set(Boost_INCLUDE_DIR
+    ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/asio/include/
+)
 
 #set include paths
 include_directories(
@@ -153,6 +156,7 @@ set(ENGINE_SRC
 #set include paths
 include_directories(
     ${ENGINE_INC}
+    ${Boost_INCLUDE_DIR}
     ${PROJECT_NAME}
 )
 
@@ -191,6 +195,7 @@ set(CLIENT_SRC
 #set include paths
 include_directories(
     ${CLIENT_INC}
+    ${Boost_INCLUDE_DIR}
     ${PROJECT_NAME}
 )
 
@@ -201,7 +206,7 @@ add_executable(${CLIENT} ${CLIENT_SRC})
 target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${CLIENT} PRIVATE ${BOOST_LIBRARIES})
+target_link_libraries(${CLIENT} PRIVATE ${Boost_LIBRARIES})
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
@@ -230,6 +235,7 @@ set(SERVER_SRC
 #set include paths
 include_directories(
     ${SERVER_INC}
+    ${Boost_INCLUDE_DIR}
     ${PROJECT_NAME}
 )
 
@@ -240,8 +246,8 @@ add_executable(${SERVER} ${SERVER_SRC})
 target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARIES})
 target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${SERVER} PRIVATE ${BOOST_LIBRARIES})
-target_link_libraries(${CLIENT} PRIVATE ${ImGui})
+target_link_libraries(${SERVER} PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(${SERVER} PRIVATE ${ImGui})
 target_link_libraries(${SERVER} PRIVATE ${ENGINE})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
