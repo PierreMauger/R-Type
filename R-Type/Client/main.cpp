@@ -79,7 +79,9 @@ int main(void)
 
     // mainLoop(engine);
     std::vector<uint8_t> packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, componentManager);
+    // std::vector<uint8_t> packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
 
-    engine.getNetwork().getSerializer().synchronizeEntity(packet, engine.getECS().getEntityManager(), componentManager);
+    engine.getNetwork().getSerializer().handlePacket(packet, 5, engine.getECS().getEntityManager(), componentManager);
+    // engine.getNetwork().getSerializer().synchronizeEntity(packet, engine.getECS().getEntityManager(), componentManager);
     return 0;
 }

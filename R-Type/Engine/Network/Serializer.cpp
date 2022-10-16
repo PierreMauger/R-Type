@@ -11,6 +11,16 @@ void eng::Serializer::insertMagic(std::vector<uint8_t> &packet)
     }
 }
 
+bool eng::Serializer::checkMagic(std::vector<uint8_t> &packet, std::size_t adv)
+{
+    for (std::size_t i = 0; i < MAGIC_SIZE; i++) {
+        if (packet[adv + i] != MAGIC[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 std::size_t eng::Serializer::getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t id = 0;
@@ -117,4 +127,24 @@ void eng::Serializer::synchronizeInput(std::vector<uint8_t> packet, std::size_t 
     adv = this->deserializeComponent<sf::Keyboard::Key>(packet, adv, input);
 
     // TODO XAVIER
+}
+
+void eng::Serializer::handlePacket(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager)
+{
+    std::size_t adv = 0;
+
+    if (!this->checkMagic(packet, adv) || !this->checkMagic(packet, packet.size() - MAGIC_SIZE)) {
+        throw std::runtime_error("[ERROR] Bad packet format");
+    }
+    adv += MAGIC_SIZE;
+    switch (packet[adv]) {
+    case ENTITY:
+        this->synchronizeEntity(packet, entityManager, componentManager);
+        break;
+    case INPUT:
+        this->synchronizeInput(packet, id, entityManager, componentManager);
+        break;
+    default:
+        throw std::runtime_error("[ERROR] Unknown packet type");
+    }
 }
