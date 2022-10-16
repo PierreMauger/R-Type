@@ -109,6 +109,7 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/System/
     ${ENGINE_ROOT}/ECS/PreloadEntities/
     ${ENGINE_ROOT}/Graphic/
+    ${ENGINE_ROOT}/Network/UDP/
     ${ENGINE_ROOT}/Network/
 )
 
@@ -147,6 +148,11 @@ set(ENGINE_SRC
 
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
+
+    # Network files
+    ${ENGINE_ROOT}/Network/UDP/EntitySerializer.cpp
+    ${ENGINE_ROOT}/Network/UDP/UDPClient.cpp
+    ${ENGINE_ROOT}/Network/Network.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp

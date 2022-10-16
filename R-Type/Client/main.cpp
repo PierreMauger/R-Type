@@ -72,6 +72,7 @@ int main(void)
     componentManager.bindComponent<LifeBar>();
     componentManager.bindComponent<Parent>();
     componentManager.bindComponent<Patern>();
+    componentManager.bindComponent<SyncID>();
     componentManager.bindComponent<DropBonus>();
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();

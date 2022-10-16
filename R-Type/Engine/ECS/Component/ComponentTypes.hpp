@@ -19,9 +19,10 @@ enum InfoComp {
     LIFEBAR = 0b1000000000000,
     PARENT = 0b10000000000000,
     PATERN = 0b100000000000000,
-    DROP = 0b1000000000000000,
-    TEXT = 0b10000000000000000,
-    SOUNDID = 0b100000000000000000,
+    SYNCID = 0b1000000000000000,
+    DROP = 0b10000000000000000,
+    TEXT = 0b100000000000000000,
+    SOUNDID = 0b1000000000000000000,
 };
 
 typedef struct Position {
@@ -182,6 +183,14 @@ typedef struct Patern {
         {
         }
 } Patern;
+
+typedef struct SyncID {
+        std::size_t id;
+
+        SyncID(std::size_t i = 0) : id(i)
+        {
+        }
+} SyncID;
 
 typedef struct DropBonus {
         std::size_t id;

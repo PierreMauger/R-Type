@@ -31,3 +31,8 @@ std::shared_ptr<sf::Clock> Network::getClock()
 {
     return this->_clock;
 }
+
+Serializer &Network::getSerializer()
+{
+    return this->_serializer;
+}
