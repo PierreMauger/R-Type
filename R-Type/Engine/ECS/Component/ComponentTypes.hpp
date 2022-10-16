@@ -20,6 +20,7 @@ enum InfoComp {
     PARENT = 0b10000000000000,
     PATERN = 0b100000000000000,
     DROP = 0b1000000000000000,
+    TEXT = 0b10000000000000000,
 };
 
 typedef struct Position {
@@ -61,16 +62,26 @@ enum Priority {
 typedef struct SpriteID {
         std::size_t id;
         enum Priority priority;
+        std::size_t curFrame;
+        std::size_t nbFrame;
+        bool signe;
+        float delay;
+        float lastTime;
+        std::size_t offsetX;
+        std::size_t offsetY;
 
-        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH) : id(i), priority(prio)
+        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH, std::size_t curFrame = 0, std::size_t nbFrame = 0, bool signe = false, float delay = 0, float lastTime = 0,
+                 std::size_t offsetX = 0, std::size_t offsetY = 0)
+            : id(i), priority(prio), curFrame(curFrame), nbFrame(nbFrame), signe(signe), delay(delay), lastTime(lastTime), offsetX(offsetX), offsetY(offsetY)
         {
         }
 } SpriteID;
 
 typedef struct Controllable {
         bool con;
+        std::size_t kill;
 
-        Controllable(bool con = true) : con(con)
+        Controllable(bool con = true, std::size_t kill = 0) : con(con), kill(kill)
         {
         }
 } Controllable;
@@ -180,5 +191,14 @@ typedef struct DropBonus {
         {
         }
 } DropBonus;
+
+typedef struct Text {
+        sf::Text text;
+        std::string str;
+
+        Text(sf::Text text = sf::Text(), std::string str = "") : text(text), str(str)
+        {
+        }
+} Text;
 
 #endif // COMPONENTTYPES_HPP
