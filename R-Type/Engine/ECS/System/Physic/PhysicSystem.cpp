@@ -10,7 +10,6 @@ PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t addEntity = masks.size();
     std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS);
 
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
@@ -69,9 +68,9 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                 componentManager.removeAllComponents(j);
                 entityManager.removeMask(j);
                 if (drop.id == 0)
-                    componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2;
+                    componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 > 0.1 ? componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 : 0;
                 if (drop.id == 1)
-                    componentManager.getSingleComponent<CooldownShoot>(i).size += 1;
+                    componentManager.getSingleComponent<CooldownShoot>(i).size < 3 ? componentManager.getSingleComponent<CooldownShoot>(i).size += 1 : 0;
                 return true;
             }
         }
