@@ -4,15 +4,14 @@ eng::Serializer::Serializer()
 {
 }
 
-std::size_t eng::Serializer::insertMagic(_STORAGE_DATA &packet, std::size_t adv)
+void eng::Serializer::insertMagic(std::vector<uint8_t> &packet)
 {
-    for (std::size_t i = 0; i < MAGIC_SIZE; i++) {
-        packet[adv + i] = (uint8_t)MAGIC[i];
+    for (auto elem : MAGIC) {
+        // packet.push_back(elem);
     }
-    return adv + MAGIC_SIZE;
 }
 
-bool eng::Serializer::checkMagic(_STORAGE_DATA &packet, std::size_t adv)
+bool eng::Serializer::checkMagic(std::vector<uint8_t> &packet, std::size_t adv)
 {
     for (std::size_t i = 0; i < MAGIC_SIZE; i++) {
         if (packet[adv + i] != MAGIC[i]) {
@@ -28,69 +27,89 @@ std::size_t eng::Serializer::getEntityID(SyncID syncID, EntityManager &entityMan
     auto masks = entityManager.getMasks();
 
     for (; id < masks.size(); id++) {
-        if (masks[id].has_value() && (masks[id].value() & InfoComp::SYNCID) && componentManager.getSingleComponent<SyncID &>(id).id == syncID.id) {
+        if (masks[id].has_value() && (masks[id].value() & InfoComp::SYNCID) && componentManager.getSingleComponent<SyncID>(id).id == syncID.id) {
             return id;
         }
     }
     throw std::runtime_error("[ERROR] SyncID not found");
 }
 
-std::size_t eng::Serializer::updateEntity(_STORAGE_DATA &packet, std::size_t id, std::size_t adv, ComponentManager &componentManager)
+std::size_t eng::Serializer::updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
 {
     Position pos = {0, 0};
-    Velocity vel = {0, 0};
-    SpriteID spriteID = {0};
+    adv = this->deserializeComponent<Position>(packet, adv, &pos);
+    componentManager.getSingleComponent<Position>(id) = pos;
 
-    adv = this->deserializeComponent<Position>(packet, adv, pos);
-    adv = this->deserializeComponent<Velocity>(packet, adv, vel);
-    adv = this->deserializeComponent<SpriteID>(packet, adv, spriteID);
-    componentManager.getSingleComponent<Position &>(id) = pos;
-    componentManager.getSingleComponent<Velocity &>(id) = vel;
-    componentManager.getSingleComponent<SpriteID &>(id) = spriteID;
+    Velocity vel = {0, 0};
+    adv = this->deserializeComponent<Velocity>(packet, adv, &vel);
+    componentManager.getSingleComponent<Velocity>(id) = vel;
+
+    SpriteID spriteID = {0};
+    adv = this->deserializeComponent(packet, adv, &spriteID);
+    componentManager.getSingleComponent<SpriteID>(id) = spriteID;
     return adv;
+}
+
+_STORAGE_DATA eng::Serializer::convertToArray(std::vector<uint8_t> &packet)
+{
+    _STORAGE_DATA convert = {0};
+
+    for (std::size_t i = 0; i < packet.size(); i++) {
+        convert[i] = packet[i];
+    }
+    return convert;
+}
+
+std::vector<uint8_t> eng::Serializer::convertToVector(_STORAGE_DATA &packet)
+{
+    std::vector<uint8_t> convert;
+
+    for (std::size_t i = 0; i < packet.size(); i++) {
+        convert.push_back(packet[i]);
+    }
+    return convert;
 }
 
 _STORAGE_DATA eng::Serializer::serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager)
 {
-    _STORAGE_DATA packet = {0};
-    std::size_t adv = 0;
+    std::vector<uint8_t> packet;
 
-    adv = this->insertMagic(packet, adv);
+    this->insertMagic(packet);
 
     // header
-    packet[adv++] = (uint8_t)ENTITY;
-    packet[adv++] = (uint8_t)type;
+    PacketType packetType = ENTITY;
+    this->serializeComponent(packet, &packetType);
+    this->serializeComponent(packet, &type);
 
     // sync id
-
-    adv = this->serializeComponent<SyncID>(packet, adv, componentManager.getSingleComponent<SyncID &>(id));
+    this->serializeComponent<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
 
     // mask
     std::size_t editMask = static_cast<std::size_t>(InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID);
-    adv = this->serializeComponent<std::size_t>(packet, adv, editMask);
+    this->serializeComponent<std::size_t>(packet, &editMask);
 
     // components
-    adv = this->serializeComponent<Position>(packet, adv, componentManager.getSingleComponent<Position &>(id));
-    adv = this->serializeComponent<Velocity>(packet, adv, componentManager.getSingleComponent<Velocity &>(id));
-    adv = this->serializeComponent<SpriteID>(packet, adv, componentManager.getSingleComponent<SpriteID &>(id));
+    this->serializeComponent<Position>(packet, &componentManager.getSingleComponent<Position>(id));
+    this->serializeComponent<Velocity>(packet, &componentManager.getSingleComponent<Velocity>(id));
+    this->serializeComponent<SpriteID>(packet, &componentManager.getSingleComponent<SpriteID>(id));
 
-    adv = this->insertMagic(packet, adv);
-    return packet;
+    this->insertMagic(packet);
+    return this->convertToArray(packet);
 }
 
-void eng::Serializer::synchronizeEntity(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager)
+void eng::Serializer::synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
 {
     // skip magic and header
-    std::size_t adv = MAGIC_SIZE + sizeof(uint8_t);
+    std::size_t adv = MAGIC_SIZE + sizeof(PacketType);
     // fields
     EntityType type;
     SyncID syncID = {0};
     std::size_t mask = 0;
     std::size_t id = 0;
 
-    type = static_cast<EntityType>(packet[adv++]);
-    adv = this->deserializeComponent<SyncID>(packet, adv, syncID);
-    adv = this->deserializeComponent<std::size_t>(packet, adv, mask);
+    adv = this->deserializeComponent<EntityType>(packet, adv, &type);
+    adv = this->deserializeComponent<SyncID>(packet, adv, &syncID);
+    adv = this->deserializeComponent<std::size_t>(packet, adv, &mask);
 
     if (type == EntityType::DESTROY) {
         id = this->getEntityID(syncID, entityManager, componentManager);
@@ -100,13 +119,13 @@ void eng::Serializer::synchronizeEntity(_STORAGE_DATA packet, EntityManager &ent
     }
     if (type == EntityType::CREATE) {
         id = entityManager.addMask(mask, componentManager);
-        componentManager.getSingleComponent<SyncID &>(id) = syncID;
+        componentManager.getSingleComponent<SyncID>(id) = syncID;
     } else if (type == EntityType::UPDATE) {
         id = this->getEntityID(syncID, entityManager, componentManager);
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
     }
-    this->updateEntity(packet, id, adv, componentManager);
+    adv = this->updateEntity(packet, id, adv, componentManager);
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
@@ -114,45 +133,51 @@ void eng::Serializer::synchronizeEntity(_STORAGE_DATA packet, EntityManager &ent
 
 _STORAGE_DATA eng::Serializer::serializeInput(sf::Keyboard::Key input)
 {
-    std::size_t adv = 0;
-    _STORAGE_DATA packet = {0};
+    std::vector<uint8_t> packet;
+    PacketType type = INPUT;
 
-    adv = this->insertMagic(packet, adv);
+    this->insertMagic(packet);
 
-    packet[adv++] = INPUT;
-    adv = this->serializeComponent<sf::Keyboard::Key>(packet, adv, input);
-    adv = this->insertMagic(packet, adv);
-    return packet;
+    this->serializeComponent<PacketType>(packet, &type);
+    this->serializeComponent<sf::Keyboard::Key>(packet, &input);
+
+    this->insertMagic(packet);
+    return this->convertToArray(packet);
 }
 
-void eng::Serializer::synchronizeInput(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+void eng::Serializer::synchronizeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                                        std::shared_ptr<sf::Clock> clock)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(uint8_t);
+    std::size_t adv = MAGIC_SIZE + sizeof(PacketType);
     sf::Keyboard::Key keyPress;
 
-    adv = this->deserializeComponent<sf::Keyboard::Key>(packet, adv, keyPress);
-    input.checkInput(id, keyPress, componentManager, entityManager, clock);
+    adv = this->deserializeComponent<sf::Keyboard::Key>(packet, adv, &keyPress);
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
+    input.checkInput(id, keyPress, componentManager, entityManager, clock);
 }
 
 void eng::Serializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                                    std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = 0;
+    std::vector<uint8_t> packetVector = this->convertToVector(packet);
+    PacketType type;
 
-    if (!this->checkMagic(packet, adv)) {
+    if (!this->checkMagic(packetVector, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
     adv += MAGIC_SIZE;
-    switch (packet[adv]) {
+    adv = this->deserializeComponent<PacketType>(packetVector, adv, &type);
+
+    std::cout << "Packet type: " << type << std::endl;
+    switch (type) {
     case ENTITY:
-        this->synchronizeEntity(packet, entityManager, componentManager);
+        this->synchronizeEntity(packetVector, entityManager, componentManager);
         break;
     case INPUT:
-        this->synchronizeInput(packet, id, entityManager, componentManager, input, clock);
+        this->synchronizeInput(packetVector, id, entityManager, componentManager, input, clock);
         break;
     default:
         throw std::runtime_error("[ERROR] Unknown packet type");

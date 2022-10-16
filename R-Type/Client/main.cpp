@@ -93,12 +93,10 @@ int main(void)
 
     // mainLoop(engine);
 
-    auto packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
-    // auto packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
+    _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
+    // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
 
-    for (std::size_t i = 0; i < packet.size(); i++) {
-        if (i > 100)
-            break;
+    for (std::size_t i = 0; i < 70; i++) {
         std::cout << (int)packet[i] << std::endl;
     }
 
