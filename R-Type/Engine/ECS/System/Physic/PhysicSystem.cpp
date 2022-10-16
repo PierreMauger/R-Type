@@ -166,7 +166,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                 pos.x = 0;
             continue;
         }
-        if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+        if (pos.x > _window->getSize().x + 100 || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
             entityManager.removeMask(i);
             componentManager.removeAllComponents(i);
             continue;
@@ -193,7 +193,6 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             Position &pos = componentManager.getSingleComponent<Position>(i);
             Size size = componentManager.getSingleComponent<Size>(i);
             pos.y < 0 ? pos.y = 0 : pos.y;
-            pos.x > _window->getSize().x - size.x ? pos.x = _window->getSize().x - size.x : pos.x;
             pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
         }
     }
