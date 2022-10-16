@@ -3,6 +3,7 @@
 
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
+#include "Engine/Input/Input.hpp"
 #include "Includes.hpp"
 
 #define MAGIC "R-TYPE/AMOGUS"
@@ -52,13 +53,15 @@ namespace eng
             Serializer();
             ~Serializer() = default;
 
-            void handlePacket(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager);
+            void handlePacket(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+                              std::shared_ptr<sf::Clock> clock);
 
             std::vector<uint8_t> serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager);
             void synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
 
             std::vector<uint8_t> serializeInput(sf::Keyboard::Key input);
-            void synchronizeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager);
+            void synchronizeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+                                  std::shared_ptr<sf::Clock> clock);
     };
 }
 

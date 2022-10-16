@@ -119,17 +119,18 @@ std::vector<uint8_t> eng::Serializer::serializeInput(sf::Keyboard::Key input)
     return packet;
 }
 
-void eng::Serializer::synchronizeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager)
+void eng::Serializer::synchronizeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+                                       std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(uint8_t);
-    sf::Keyboard::Key input;
+    sf::Keyboard::Key keyPress;
 
-    adv = this->deserializeComponent<sf::Keyboard::Key>(packet, adv, input);
-
-    // TODO XAVIER
+    keyPress = static_cast<sf::Keyboard::Key>(packet.at(adv++));
+    input.checkInput(id, keyPress, componentManager, entityManager, clock);
 }
 
-void eng::Serializer::handlePacket(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager)
+void eng::Serializer::handlePacket(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+                                   std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = 0;
 
@@ -142,7 +143,7 @@ void eng::Serializer::handlePacket(std::vector<uint8_t> packet, std::size_t id, 
         this->synchronizeEntity(packet, entityManager, componentManager);
         break;
     case INPUT:
-        this->synchronizeInput(packet, id, entityManager, componentManager);
+        this->synchronizeInput(packet, id, entityManager, componentManager, input, clock);
         break;
     default:
         throw std::runtime_error("[ERROR] Unknown packet type");

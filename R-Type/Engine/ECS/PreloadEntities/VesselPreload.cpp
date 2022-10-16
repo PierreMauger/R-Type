@@ -2,13 +2,9 @@
 
 void eng::VesselPreload::preload(Engine &engine)
 {
-    std::size_t id = engine.getECS().getEntityManager().addMask(
-<<<<<<< HEAD
-        (InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::SYNCID),
-=======
-        (InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP),
->>>>>>> 2c7a1d040eddf877a15745581eb079e2866bf7ae
-        engine.getECS().getComponentManager());
+    std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE |
+                                                                 InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::SYNCID),
+                                                                engine.getECS().getComponentManager());
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, 0, 64, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{10, -200, 0});

@@ -27,3 +27,8 @@ Network &Engine::getNetwork()
 {
     return this->_network;
 }
+
+Input &Engine::getInput()
+{
+    return this->_input;
+}
