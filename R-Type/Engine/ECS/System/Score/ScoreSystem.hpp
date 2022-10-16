@@ -13,7 +13,6 @@ namespace eng
             std::shared_ptr<std::vector<sf::Sprite>> _sprites;
             bool _firstTime;
             std::size_t _death;
-            std::size_t _score;
             std::size_t _lastSaveScore;
             std::vector<sf::Text> _text;
             sf::Font _font;

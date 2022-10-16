@@ -65,14 +65,12 @@ typedef struct SpriteID {
         std::size_t curFrame;
         std::size_t nbFrame;
         bool signe;
-        float delay;
-        float lastTime;
         std::size_t offsetX;
         std::size_t offsetY;
 
-        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH, std::size_t curFrame = 0, std::size_t nbFrame = 0, bool signe = false, float delay = 0, float lastTime = 0,
-                 std::size_t offsetX = 0, std::size_t offsetY = 0)
-            : id(i), priority(prio), curFrame(curFrame), nbFrame(nbFrame), signe(signe), delay(delay), lastTime(lastTime), offsetX(offsetX), offsetY(offsetY)
+        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH, std::size_t curFrame = 0, std::size_t nbFrame = 0, bool signe = false, std::size_t offsetX = 0,
+                 std::size_t offsetY = 0)
+            : id(i), priority(prio), curFrame(curFrame), nbFrame(nbFrame), signe(signe), offsetX(offsetX), offsetY(offsetY)
         {
         }
 } SpriteID;
