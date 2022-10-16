@@ -125,6 +125,8 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/GUI/GUISystem.cpp
     ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Animation/AnimationSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Score/ScoreSystem.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ParallaxPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/VesselPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/BossPreload.cpp

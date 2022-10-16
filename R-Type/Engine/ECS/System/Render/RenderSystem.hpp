@@ -13,12 +13,12 @@ namespace eng
         private:
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Clock> _clock;
-            std::vector<sf::Sprite> _sprites;
+            std::shared_ptr<std::vector<sf::Sprite>> _sprites;
             void displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
             void displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
 
         public:
-            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader);
+            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             ~RenderSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
