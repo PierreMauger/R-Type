@@ -91,6 +91,18 @@ int main(void)
 
     backgroundMusicPreload.preload(engine);
 
-    mainLoop(engine);
+    // mainLoop(engine);
+
+    auto packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
+    // auto packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
+
+    for (std::size_t i = 0; i < packet.size(); i++) {
+        if (i > 100)
+            break;
+        std::cout << (int)packet[i] << std::endl;
+    }
+
+    engine.getNetwork().getSerializer().handlePacket(packet, 5, engine.getECS().getEntityManager(), engine.getECS().getComponentManager(), engine.getInput(),
+                                                     engine.getGraphic().getClock());
     return 0;
 }
