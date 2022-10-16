@@ -54,7 +54,7 @@ void GUISystem::drawEntityManager(ComponentManager &componentManager, EntityMana
                     this->_selectedEntity = i;
                 }
             } else if (ImGui::Button(std::string("Create##" + std::to_string(i)).c_str())) {
-                entityManager.addManualMask(i, 0, componentManager);
+                entityManager.addMask(0, componentManager);
             }
         }
         ImGui::EndTable();
@@ -63,7 +63,7 @@ void GUISystem::drawEntityManager(ComponentManager &componentManager, EntityMana
         ImGui::EndChild();
         ImGui::Separator();
         if (ImGui::Button("Add New Entity"))
-            entityManager.addManualMask(masks.size(), std::nullopt, componentManager);
+            entityManager.addMask(std::nullopt, componentManager);
     }
     ImGui::End();
 }

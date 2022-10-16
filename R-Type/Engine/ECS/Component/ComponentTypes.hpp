@@ -33,7 +33,10 @@ enum InfoComp {
     LIFEBAR = 0b1000000000000,
     PARENT = 0b10000000000000,
     PATERN = 0b100000000000000,
-    DROP = 0b1000000000000000,
+    SYNCID = 0b1000000000000000,
+    DROP = 0b10000000000000000,
+    TEXT = 0b100000000000000000,
+    SOUNDID = 0b1000000000000000000,
 };
 
 /**
@@ -95,8 +98,15 @@ enum Priority {
 typedef struct SpriteID {
         std::size_t id;
         enum Priority priority;
+        std::size_t curFrame;
+        std::size_t nbFrame;
+        bool signe;
+        std::size_t offsetX;
+        std::size_t offsetY;
 
-        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH) : id(i), priority(prio)
+        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH, std::size_t curFrame = 0, std::size_t nbFrame = 0, bool signe = false, std::size_t offsetX = 0,
+                 std::size_t offsetY = 0)
+            : id(i), priority(prio), curFrame(curFrame), nbFrame(nbFrame), signe(signe), offsetX(offsetX), offsetY(offsetY)
         {
         }
 } SpriteID;
@@ -107,8 +117,9 @@ typedef struct SpriteID {
 */
 typedef struct Controllable {
         bool con;
+        std::size_t kill;
 
-        Controllable(bool con = true) : con(con)
+        Controllable(bool con = true, std::size_t kill = 0) : con(con), kill(kill)
         {
         }
 } Controllable;
@@ -256,6 +267,18 @@ typedef struct Patern {
 } Patern;
 
 /**
+ * @struct SyncID
+ * @brief The syncID component.
+*/
+typedef struct SyncID {
+        std::size_t id;
+
+        SyncID(std::size_t i = 0) : id(i)
+        {
+        }
+} SyncID;
+
+/**
  * @struct DropBonus
  * @brief The dropBonus component.
 */
@@ -266,5 +289,25 @@ typedef struct DropBonus {
         {
         }
 } DropBonus;
+
+typedef struct Text {
+        sf::Text text;
+        std::string str;
+
+        Text(sf::Text text = sf::Text(), std::string str = "") : text(text), str(str)
+        {
+        }
+} Text;
+
+typedef struct SoundID {
+        std::size_t id;
+        bool play;
+        bool loop;
+        float pitch;
+
+        SoundID(std::size_t id = 0, bool play = false, bool loop = false, float pitch = 1) : id(id), play(play), loop(loop), pitch(pitch)
+        {
+        }
+} SoundID;
 
 #endif // COMPONENTTYPES_HPP

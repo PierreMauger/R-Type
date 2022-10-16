@@ -6,6 +6,8 @@
 */
 
 /// @cond
+#include "Component/ComponentManager.hpp"
+#include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
@@ -26,6 +28,7 @@ void mainLoop(eng::Engine &engine)
     eng::ECS &ecs = engine.getECS();
     sf::Time elapsed_time = sf::seconds(0);
     sf::Time delta_time = sf::seconds(2);
+    sf::Time boss_time = sf::seconds(20);
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
 
@@ -35,12 +38,12 @@ void mainLoop(eng::Engine &engine)
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
         }
-        if (graphic.getClock()->getElapsedTime() > elapsed_time && graphic.getClock()->getElapsedTime().asSeconds() < 10) {
+        if (graphic.getClock()->getElapsedTime() > boss_time) {
+            bossPreload.preload(engine);
+            boss_time = sf::seconds(boss_time.asSeconds() + 20);
+        } else if (graphic.getClock()->getElapsedTime() > elapsed_time) {
             enemyPreload.preload(engine);
             elapsed_time = graphic.getClock()->getElapsedTime() + delta_time;
-        } else if (graphic.getClock()->getElapsedTime() > elapsed_time && elapsed_time.asSeconds() != 0) {
-            bossPreload.preload(engine);
-            elapsed_time = sf::seconds(0);
         }
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
@@ -59,13 +62,19 @@ int main(void)
     eng::SystemManager &systemManager = engine.getECS().getSystemManager();
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
     eng::Graphic &graphic = engine.getGraphic();
+    std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
+    std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
+    eng::Network &network = engine.getNetwork();
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), engine.getLoader()));
+    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
+    systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
+    systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
@@ -82,7 +91,10 @@ int main(void)
     componentManager.bindComponent<LifeBar>();
     componentManager.bindComponent<Parent>();
     componentManager.bindComponent<Patern>();
+    componentManager.bindComponent<SyncID>();
     componentManager.bindComponent<DropBonus>();
+    componentManager.bindComponent<Text>();
+    componentManager.bindComponent<SoundID>();
 
     // create background
     eng::ParallaxPreload parallaxPreload;
@@ -93,6 +105,10 @@ int main(void)
     eng::VesselPreload vesselPreload;
 
     vesselPreload.preload(engine);
+
+    eng::BackgroundMusicPreload backgroundMusicPreload;
+
+    backgroundMusicPreload.preload(engine);
 
     mainLoop(engine);
     return 0;

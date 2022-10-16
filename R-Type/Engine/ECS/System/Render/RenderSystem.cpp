@@ -2,11 +2,11 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites)
 {
     this->_clock = clock;
     this->_window = window;
-    this->_sprites = loader.getSprites();
+    this->_sprites = sprites;
 }
 
 void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
@@ -26,8 +26,10 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
                                        : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay,
                                    1);
             }
-        } else
-            spriteRef.setScale(0, 0);
+        } else {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+        }
     }
 }
 
@@ -48,8 +50,10 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
                 spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);
                 spriteRef.setPosition(pos.x, pos.y - 20);
             }
-        } else
-            spriteRef.setScale(0, 0);
+        } else {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+        }
     }
 }
 
@@ -61,21 +65,25 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
     std::size_t renderProj = (InfoComp::PROJECTILE);
+    std::size_t renderText = (InfoComp::TEXT);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
+    std::vector<sf::Text> stockText;
 
     for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value() && (masks[i].value() & renderText) == renderText)
+            stockText.push_back(componentManager.getSingleComponent<Text>(i).text);
         if (masks[i].has_value() && (masks[i].value() & render) == render) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
             SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(i);
-            sf::Sprite &spriteRef = this->_sprites[spriteId.id];
+            sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
             spriteRef.setPosition(pos.x, pos.y);
-            if ((masks[i].value() & renderCooldown) == renderCooldown)
+            if (masks[i].has_value() && (masks[i].value() & renderCooldown) == renderCooldown)
                 displayCooldownBar(componentManager, entityManager, spriteRef, i);
-            if ((masks[i].value() & renderLife) == renderLife)
+            if (masks[i].has_value() && (masks[i].value() & renderLife) == renderLife)
                 displayLifeBar(componentManager, entityManager, spriteRef, i);
-            if ((masks[i].value() & renderProj) == renderProj) {
+            if (masks[i].has_value() && (masks[i].value() & renderProj) == renderProj) {
                 Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
                 spriteRef.setScale(proj.size, proj.size);
             }
@@ -97,6 +105,8 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     }
     for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
         this->_window->draw(stockSpriteMedium[i]);
+    for (std::size_t i = 0; i < stockText.size(); i++)
+        this->_window->draw(stockText[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
 }

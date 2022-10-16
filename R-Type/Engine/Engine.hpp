@@ -11,7 +11,9 @@
 /// @cond
 #include "Engine/ECS/ECS.hpp"
 #include "Engine/Graphic/Graphic.hpp"
+#include "Engine/Input/Input.hpp"
 #include "Engine/Loader/Loader.hpp"
+#include "Engine/Network/Network.hpp"
 /// @endcond
 
 /**
@@ -30,6 +32,8 @@ namespace eng
             Loader _loader;
             ECS _ecs;
             Graphic _graphic;
+            Network _network;
+            Input _input;
 
         public:
             /**
@@ -61,6 +65,8 @@ namespace eng
              * @return A reference to the loader
             */
             Loader &getLoader();
+            Network &getNetwork();
+            Input &getInput();
     };
 }
 

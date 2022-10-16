@@ -4,7 +4,7 @@ using namespace eng;
 
 Graphic::Graphic()
 {
-    this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "R-Type");
+    this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "R-Type", sf::Style::Close);
     this->_event = std::make_shared<sf::Event>();
     this->_clock = std::make_shared<sf::Clock>();
     this->_window->setFramerateLimit(60);

@@ -30,11 +30,12 @@ namespace eng
         private:
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Clock> _clock;
-            std::vector<sf::Sprite> _sprites;
+            std::shared_ptr<std::vector<sf::Sprite>> _sprites;
             void displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
             void displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
 
         public:
+<<<<<<< HEAD
             /**
              * @brief PhysicSystem constructor.
              * @fn PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
@@ -47,6 +48,9 @@ namespace eng
              * @brief RenderSystem destructor.
              * @fn ~RenderSystem
             */
+=======
+            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites);
+>>>>>>> 90197073cf3632fe21f6a30be244b2a96f037148
             ~RenderSystem() = default;
             /**
              * @brief Update the render system.
