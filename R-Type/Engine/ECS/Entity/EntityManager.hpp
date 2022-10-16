@@ -16,7 +16,6 @@ namespace eng
 
             std::vector<std::optional<std::size_t>> &getMasks();
             std::size_t addMask(std::optional<std::size_t> mask, ComponentManager &componentManager);
-            void addManualMask(std::size_t id, std::optional<std::size_t> mask, ComponentManager &componentManager);
             void removeMask(std::size_t id);
             void updateMask(std::size_t id, std::optional<std::size_t> mask);
     };
