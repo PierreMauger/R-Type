@@ -1,3 +1,10 @@
+/**
+ * @file Includes.hpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief The standard c++ includes needed for this project.
+ * @copyright Epitech Rennes 2022
+*/
+
 #ifndef INCLUDES_HPP
 #define INCLUDES_HPP
 
@@ -8,13 +15,6 @@
 #include <any>
 #include <array>
 #include <bitset>
-/**
- * @file Includes.hpp
- * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
- * @brief The standard c++ includes needed for this project.
- * @copyright Epitech Rennes 2022
-*/
-
 #include <condition_variable>
 #include <cstring>
 #include <deque>
