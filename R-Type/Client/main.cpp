@@ -20,7 +20,9 @@ void mainLoop(eng::Engine &engine)
 
     while (graphic.getWindow()->isOpen()) {
         while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
+#ifndef NDEBUG
             ImGui::SFML::ProcessEvent(*graphic.getEvent());
+#endif
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
         }
@@ -45,14 +47,15 @@ int main(void)
     eng::Graphic &graphic = engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
-    eng::Network &network = engine.getNetwork();
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
+#ifndef NDEBUG
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
+#endif
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
     systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
