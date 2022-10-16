@@ -11,7 +11,6 @@ namespace eng
             void handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer);
             void initConnection();
 
-        protected:
             boost::asio::io_context &_ioContext;
             _B_ASIO_UDP::endpoint _udpEndpoint;
             _B_ASIO_TCP::endpoint _tcpEndpoint;

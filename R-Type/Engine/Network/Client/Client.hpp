@@ -13,7 +13,6 @@ namespace eng
             void initClient();
             void open();
 
-        protected:
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::resolver _resolver;
             _B_ASIO_UDP::socket _udpSocket;

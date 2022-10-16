@@ -13,7 +13,6 @@ namespace eng
             void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer);
             void initServer();
 
-        protected:
             boost::asio::io_context _ioContext;
             _B_ASIO_UDP::socket _udpSocket;
             _B_ASIO_TCP::acceptor _acceptor;
@@ -21,9 +20,6 @@ namespace eng
             _QUEUE_TYPE _dataIn;
             std::thread _threadContext;
             _B_ASIO_UDP::endpoint _tmpEndpoint;
-
-            _STORAGE_DATA _bufferUdp;
-            size_t _bufferUdpSize;
 
         public:
             Server(uint16_t portUdp, uint16_t portTcp);
