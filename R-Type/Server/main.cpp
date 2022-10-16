@@ -1,4 +1,3 @@
-#include "Network/Server/Server.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
@@ -6,6 +5,7 @@
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
+#include "Network/Server/Server.hpp"
 
 int main(int ac, char **av)
 {
@@ -19,6 +19,7 @@ int main(int ac, char **av)
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
     eng::Graphic &graphic = engine.getGraphic();
     eng::Network &network = engine.getNetwork();
+    std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
 
     // Setup Server
     network.initServer(std::stoi(av[1]), std::stoi(av[2]));
@@ -26,9 +27,11 @@ int main(int ac, char **av)
     // Setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), engine.getLoader()));
+    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
+    systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
