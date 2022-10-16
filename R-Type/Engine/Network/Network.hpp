@@ -2,8 +2,8 @@
 #define NETWORK_HPP_
 
 #include "Engine/Network/Client/Client.hpp"
+#include "Engine/Network/Serializer.hpp"
 #include "Engine/Network/Server/Server.hpp"
-#include "Engine/Network/UDP/UDPClient.hpp"
 #include "Includes.hpp"
 
 namespace eng
@@ -15,6 +15,8 @@ namespace eng
             std::shared_ptr<Server> _server;
             std::shared_ptr<Client> _client;
 
+            Serializer _serializer;
+
         public:
             Network();
             ~Network() = default;
@@ -23,9 +25,7 @@ namespace eng
             std::shared_ptr<Server> getServer();
             std::shared_ptr<Client> getClient();
             std::shared_ptr<sf::Clock> getClock();
-
-            // TODO remove
-            UDPClient _udpClient;
+            Serializer &getSerializer();
     };
 } // namespace eng
 

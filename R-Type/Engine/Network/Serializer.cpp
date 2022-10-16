@@ -1,17 +1,17 @@
-#include "Engine/Network/UDP/EntitySerializer.hpp"
+#include "Engine/Network/Serializer.hpp"
 
-eng::EntitySerializer::EntitySerializer()
+eng::Serializer::Serializer()
 {
 }
 
-void eng::EntitySerializer::insertMagic(std::vector<uint8_t> &packet)
+void eng::Serializer::insertMagic(std::vector<uint8_t> &packet)
 {
     for (auto elem : MAGIC) {
         packet.push_back(elem);
     }
 }
 
-std::size_t eng::EntitySerializer::getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager)
+std::size_t eng::Serializer::getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t id = 0;
     auto masks = entityManager.getMasks();
@@ -24,7 +24,7 @@ std::size_t eng::EntitySerializer::getEntityID(SyncID syncID, EntityManager &ent
     throw std::runtime_error("[ERROR] SyncID not found");
 }
 
-std::size_t eng::EntitySerializer::updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
+std::size_t eng::Serializer::updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
 {
     Position pos = {0, 0};
     Velocity vel = {0, 0};
@@ -39,7 +39,7 @@ std::size_t eng::EntitySerializer::updateEntity(std::vector<uint8_t> &packet, st
     return adv;
 }
 
-std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager)
+std::vector<uint8_t> eng::Serializer::serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager)
 {
     std::vector<uint8_t> packet;
 
@@ -65,7 +65,7 @@ std::vector<uint8_t> eng::EntitySerializer::serializeEntity(std::size_t id, Enti
     return packet;
 }
 
-void eng::EntitySerializer::synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
+void eng::Serializer::synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
 {
     // skip magic and header
     std::size_t adv = MAGIC_SIZE + sizeof(uint8_t);
@@ -94,4 +94,27 @@ void eng::EntitySerializer::synchronizeEntity(std::vector<uint8_t> packet, Entit
         throw std::runtime_error("[ERROR] Unknown entity type");
     }
     adv = this->updateEntity(packet, id, adv, componentManager);
+}
+
+std::vector<uint8_t> eng::Serializer::serializeInput(sf::Keyboard::Key input)
+{
+    std::vector<uint8_t> packet;
+
+    this->insertMagic(packet);
+
+    packet.push_back(INPUT);
+    this->serializeComponent<sf::Keyboard::Key>(packet, input);
+
+    this->insertMagic(packet);
+    return packet;
+}
+
+void eng::Serializer::synchronizeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager)
+{
+    std::size_t adv = MAGIC_SIZE + sizeof(uint8_t);
+    sf::Keyboard::Key input;
+
+    adv = this->deserializeComponent<sf::Keyboard::Key>(packet, adv, input);
+
+    // TODO XAVIER
 }
