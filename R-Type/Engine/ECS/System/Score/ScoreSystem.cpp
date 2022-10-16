@@ -7,7 +7,6 @@ ScoreSystem::ScoreSystem(std::shared_ptr<sf::RenderWindow> _window, std::shared_
     this->_window = _window;
     this->_sprites = _sprites;
     this->_death = 0;
-    this->_score = 0;
     this->_lastSaveScore = 0;
     this->_firstTime = true;
 }
@@ -16,7 +15,8 @@ void ScoreSystem::createText(ComponentManager &componentManager, EntityManager &
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::TEXT), componentManager);
 
-    this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf");
+    if (!this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf"))
+        throw std::runtime_error("Error: Cannot load font");
     this->_text.push_back(sf::Text("Death = 0", this->_font, 20));
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(this->_window->getSize().x) - 50, 10, 0});
     this->_text[0].setPosition(static_cast<float>(this->_window->getSize().x) - 100, 10);
@@ -35,15 +35,16 @@ void ScoreSystem::createVessel(ComponentManager &componentManager, EntityManager
         (InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP),
         componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, 0, 0, 0, 32, 0});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, 0, 64, 0});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, -200, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, 5});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100});
-    componentManager.getComponent(typeid(Controllable)).emplaceData(id, Controllable{true});
+    componentManager.getComponent(typeid(Controllable)).emplaceData(id, Controllable{true, this->_lastSaveScore});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1});
-    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{32, 14});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{64, 28});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
-    sprites->at(6).setTextureRect(sf::IntRect(0, 0, 32, 14));
+    sprites->at(6).setTextureRect(sf::IntRect(0, 0, 64, 28));
+    this->_lastSaveScore = 0;
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
 
@@ -82,7 +83,6 @@ void ScoreSystem::update(ComponentManager &componentManager, EntityManager &enti
     }
     if (!findVessel(componentManager, entityManager, controllable)) {
         createVessel(componentManager, entityManager, this->_sprites, this->_window);
-        this->_score = this->_lastSaveScore;
         this->_death++;
     }
     for (std::size_t i = 0; i < masks.size(); i++) {
@@ -92,8 +92,8 @@ void ScoreSystem::update(ComponentManager &componentManager, EntityManager &enti
             Text &txt = componentManager.getSingleComponent<Text>(i);
             if (txt.str == "death" && txt.text.getString() != "Death: " + std::to_string(this->_death))
                 txt.text.setString("Death: " + std::to_string(this->_death));
-            if (txt.str == "score" && txt.text.getString() != "Score: " + std::to_string(this->_score + controllable.kill))
-                txt.text.setString("Score: " + std::to_string(this->_score + controllable.kill));
+            if (txt.str == "score" && txt.text.getString() != "Score: " + std::to_string(controllable.kill))
+                txt.text.setString("Score: " + std::to_string(controllable.kill));
         }
     }
 }

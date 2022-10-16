@@ -106,6 +106,11 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
 
     if (masks[i].has_value() && (masks[i].value() & physicProj) == physicProj) {
         Parent &par = componentManager.getSingleComponent<Parent>(i);
+        if (!masks[par.id].has_value()) {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+            return false;
+        }
         for (std::size_t j = 0; j < masks.size(); j++) {
             if (masks[j].has_value() && ((masks[j].value() & physicCon) == physicCon || (masks[j].value() & physicEne) == physicEne) && par.id != j) {
                 if (((masks[j].value() & physicApp) == physicApp && componentManager.getSingleComponent<Appearance>(j).app) ||
@@ -145,40 +150,40 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t physicAppear = (InfoComp::APP);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
-        if (masks[i].has_value() && (masks[i].value() & physicSpeed) == physicSpeed) {
+        if (!masks[i].has_value() || (masks[i].value() & physicSpeed) != physicSpeed)
+            continue;
+        Position &pos = componentManager.getSingleComponent<Position>(i);
+        Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
+        if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
+            continue;
+        if ((masks[i].value() & physicPar) == physicPar) {
+            pos.x += vel.x;
+            if (pos.x <= -static_cast<int>(_window->getSize().x))
+                pos.x = 0;
+            continue;
+        }
+        if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+            entityManager.removeMask(i);
+            componentManager.removeAllComponents(i);
+            continue;
+        }
+        if ((masks[i].value() & physicPat) != physicPat) {
+            pos.x += vel.x;
+            pos.y += vel.y;
+            if (this->collisionEnemy(i, componentManager, entityManager, pos))
+                continue;
+            if (this->collisionBonus(i, componentManager, entityManager, pos))
+                continue;
+            if (this->collisionFireball(i, componentManager, entityManager, pos))
+                continue;
+        }
+        if (masks[i].has_value() && (masks[i].value() & physicControl) == physicControl) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
-            Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
-            if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
-                continue;
-            if ((masks[i].value() & physicPar) == physicPar) {
-                pos.x += vel.x;
-                if (pos.x <= -static_cast<int>(_window->getSize().x))
-                    pos.x = 0;
-                continue;
-            }
-            if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
-                entityManager.removeMask(i);
-                componentManager.removeAllComponents(i);
-                continue;
-            }
-            if ((masks[i].value() & physicPat) != physicPat) {
-                pos.x += vel.x;
-                pos.y += vel.y;
-                if (this->collisionFireball(i, componentManager, entityManager, pos))
-                    continue;
-                if (this->collisionEnemy(i, componentManager, entityManager, pos))
-                    continue;
-                if (this->collisionBonus(i, componentManager, entityManager, pos))
-                    continue;
-            }
-            if ((masks[i].value() & physicControl) == physicControl) {
-                Position &pos = componentManager.getSingleComponent<Position>(i);
-                Size &size = componentManager.getSingleComponent<Size>(i);
-                pos.x < 0 ? pos.x = 0 : pos.x;
-                pos.y < 0 ? pos.y = 0 : pos.y;
-                pos.x > _window->getSize().x - size.x ? pos.x = _window->getSize().x - size.x : pos.x;
-                pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
-            }
+            Size &size = componentManager.getSingleComponent<Size>(i);
+            pos.x < 0 ? pos.x = 0 : pos.x;
+            pos.y < 0 ? pos.y = 0 : pos.y;
+            pos.x > _window->getSize().x - size.x ? pos.x = _window->getSize().x - size.x : pos.x;
+            pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
         }
     }
 }
