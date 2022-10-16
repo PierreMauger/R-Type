@@ -177,9 +177,8 @@ enum TypePatern {
 typedef struct Patern {
         enum TypePatern type;
         float angle;
-        sf::Vector2f center;
 
-        Patern(enum TypePatern type = TypePatern::LINE, float angle = 0.0f, sf::Vector2f center = sf::Vector2f(0.0f, 0.0f)) : type(type), angle(angle), center(center)
+        Patern(enum TypePatern type = TypePatern::LINE, float angle = 0.0f) : type(type), angle(angle)
         {
         }
 } Patern;

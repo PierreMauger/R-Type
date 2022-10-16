@@ -239,10 +239,6 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         ImGui::InputScalar("Model ID", ImGuiDataType_U64, &parent.id, &increment);
         break;
     }
-    case 14: {
-        Patern &patern = componentManager.getSingleComponent<Patern>(this->_selectedEntity);
-        break;
-    }
     default:
         break;
     }
