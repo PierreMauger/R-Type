@@ -13,6 +13,9 @@ AnimationSystem::AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_p
     this->_delay[2] = 0.075;
     this->_delay[5] = 0.3f;
     this->_delay[6] = 0.0f;
+    this->_lastTime[2] = 0.0f;
+    this->_lastTime[5] = 0.0f;
+    this->_lastTime[6] = 0.0f;
 }
 
 void AnimationSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
