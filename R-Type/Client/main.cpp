@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief Main client file that initializes the engine with its systems, components and graphics then starts the main game loop.
+ * @copyright Epitech Rennes 2022
+ */
+
+/// @cond
 #include "Component/ComponentManager.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
@@ -7,7 +15,13 @@
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
+/// @endcond
 
+/**
+ * @brief Main game loop running the R-Type.
+ * @fn void mainLoop(eng::Engine &engine)
+ * @param engine A reference to the engine containing the graphics and the ECS.
+ */
 void mainLoop(eng::Engine &engine)
 {
     eng::Graphic &graphic = engine.getGraphic();
@@ -39,6 +53,11 @@ void mainLoop(eng::Engine &engine)
     }
 }
 
+/**
+ * @brief Main function ran first when the r-type_client exectuable is launched.
+ * @details Initializes the engine and the systems, components and graphics it'll contain then start the main loop.
+ * @fn int main(void)
+ */
 int main(void)
 {
     eng::Engine engine;
@@ -82,12 +101,10 @@ int main(void)
 
     // create background
     eng::ParallaxPreload parallaxPreload;
-
     parallaxPreload.preload(engine);
 
     // create spaceship
     eng::VesselPreload vesselPreload;
-
     vesselPreload.preload(engine);
 
     eng::BackgroundMusicPreload backgroundMusicPreload;
