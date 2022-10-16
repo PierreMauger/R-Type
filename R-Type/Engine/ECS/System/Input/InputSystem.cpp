@@ -11,7 +11,6 @@ InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::C
 void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager, std::size_t damage)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t addEntity = masks.size();
     std::size_t sizeMask = (InfoComp::SIZE | InfoComp::COOLDOWNSHOOT);
     Size size;
     CooldownShoot sizeProj;
@@ -20,14 +19,17 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
         size = componentManager.getSingleComponent<Size>(id);
         sizeProj = componentManager.getSingleComponent<CooldownShoot>(id);
     }
-    entityManager.addManualMask(addEntity, (InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE),
-                                componentManager);
+    std::size_t addEntity = entityManager.addMask(
+        (InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((damage == 2) ? 4 : 3), Priority::MEDIUM});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + (size.y / 2 - (30 * sizeProj.size / 2)), pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{15, 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, damage, sizeProj.size});
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55 * sizeProj.size, 30 * sizeProj.size});
+    addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+    float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));
+    componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, pitch});
 }
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)

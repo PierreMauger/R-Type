@@ -1,4 +1,5 @@
 #include "Component/ComponentManager.hpp"
+#include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
@@ -43,6 +44,7 @@ int main(void)
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
     eng::Graphic &graphic = engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
+    std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
     eng::Network &network = engine.getNetwork();
 
     // setup system & component
@@ -53,6 +55,7 @@ int main(void)
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
+    systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
@@ -69,8 +72,10 @@ int main(void)
     componentManager.bindComponent<LifeBar>();
     componentManager.bindComponent<Parent>();
     componentManager.bindComponent<Patern>();
+    componentManager.bindComponent<SyncID>();
     componentManager.bindComponent<DropBonus>();
     componentManager.bindComponent<Text>();
+    componentManager.bindComponent<SoundID>();
 
     // create background
     eng::ParallaxPreload parallaxPreload;
@@ -81,6 +86,10 @@ int main(void)
     eng::VesselPreload vesselPreload;
 
     vesselPreload.preload(engine);
+
+    eng::BackgroundMusicPreload backgroundMusicPreload;
+
+    backgroundMusicPreload.preload(engine);
 
     mainLoop(engine);
     return 0;

@@ -4,7 +4,7 @@ using namespace eng;
 
 Engine::Engine()
 {
-    // this->_loader.loadSounds()
+    this->_loader.loadSounds({"R-Type/Assets/Sound"});
     this->_loader.loadSprites({"R-Type/Assets/Sprites", "R-Type/Assets/Sprites/Parallax"});
 }
 
@@ -26,4 +26,9 @@ Loader &Engine::getLoader()
 Network &Engine::getNetwork()
 {
     return this->_network;
+}
+
+Input &Engine::getInput()
+{
+    return this->_input;
 }

@@ -108,7 +108,9 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/Component/
     ${ENGINE_ROOT}/ECS/System/
     ${ENGINE_ROOT}/ECS/PreloadEntities/
+    ${ENGINE_ROOT}/Input/
     ${ENGINE_ROOT}/Graphic/
+    ${ENGINE_ROOT}/Network/UDP/
     ${ENGINE_ROOT}/Network/
 )
 
@@ -127,11 +129,13 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Animation/AnimationSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Score/ScoreSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Sound/SoundSystem.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ParallaxPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/VesselPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/BossPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/CooldownBarPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/EnemyPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/BackgroundMusicPreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Network files
@@ -139,12 +143,16 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/Network/Connection.cpp
     ${ENGINE_ROOT}/Network/Server/Server.cpp
     ${ENGINE_ROOT}/Network/Client/Client.cpp
+    ${ENGINE_ROOT}/Network/Serializer.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp
 
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
+
+    # Input files
+    ${ENGINE_ROOT}/Input/Input.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
