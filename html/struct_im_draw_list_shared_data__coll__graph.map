@@ -1,17 +1,18 @@
 <map id="ImDrawListSharedData" name="ImDrawListSharedData">
-<area shape="rect" id="node1" title=" " alt="" coords="803,367,958,393"/>
-<area shape="rect" id="node2" href="$struct_im_vec2.html" title=" " alt="" coords="29,333,96,358"/>
-<area shape="rect" id="node8" href="$struct_im_font_atlas.html" title=" " alt="" coords="307,541,399,566"/>
-<area shape="rect" id="node11" href="$struct_im_font_atlas_custom_rect.html" title=" " alt="" coords="799,154,963,179"/>
-<area shape="rect" id="node13" href="$struct_im_font_config.html" title=" " alt="" coords="831,266,930,291"/>
-<area shape="rect" id="node3" href="$struct_im_font.html" title=" " alt="" coords="604,210,667,235"/>
-<area shape="rect" id="node9" href="$struct_im_vector.html" title=" " alt="" coords="807,458,954,483"/>
-<area shape="rect" id="node4" href="$struct_im_vector.html" title=" " alt="" coords="291,227,414,253"/>
-<area shape="rect" id="node5" href="$struct_im_vector.html" title=" " alt="" coords="277,178,428,203"/>
-<area shape="rect" id="node6" href="$struct_im_vector.html" title=" " alt="" coords="267,14,439,39"/>
-<area shape="rect" id="node7" href="$struct_im_font_glyph.html" title=" " alt="" coords="15,67,111,93"/>
-<area shape="rect" id="node10" href="$struct_im_vector.html" title=" " alt="" coords="1043,484,1244,524"/>
-<area shape="rect" id="node12" href="$struct_im_vector.html" title=" " alt="" coords="1056,569,1231,594"/>
-<area shape="rect" id="node14" href="$struct_im_vec4.html" title=" " alt="" coords="29,491,96,517"/>
-<area shape="rect" id="node15" href="$struct_im_font_builder_i_o.html" title=" " alt="" coords="5,586,120,611"/>
+<area shape="rect" id="node1" title=" " alt="" coords="803,77,958,102"/>
+<area shape="rect" id="node2" href="$struct_im_vec2.html" title=" " alt="" coords="29,231,96,257"/>
+<area shape="rect" id="node8" href="$struct_im_font_atlas.html" title=" " alt="" coords="307,249,399,274"/>
+<area shape="rect" id="node12" href="$struct_im_font_atlas_custom_rect.html" title=" " alt="" coords="799,127,963,153"/>
+<area shape="rect" id="node14" href="$struct_im_font_config.html" title=" " alt="" coords="831,486,930,511"/>
+<area shape="rect" id="node3" href="$struct_im_font.html" title=" " alt="" coords="604,394,667,419"/>
+<area shape="rect" id="node10" href="$struct_im_vector.html" title=" " alt="" coords="807,355,954,381"/>
+<area shape="rect" id="node4" href="$struct_im_vector.html" title=" " alt="" coords="291,383,414,409"/>
+<area shape="rect" id="node5" href="$struct_im_vector.html" title=" " alt="" coords="277,334,428,359"/>
+<area shape="rect" id="node6" href="$struct_im_vector.html" title=" " alt="" coords="267,547,439,573"/>
+<area shape="rect" id="node7" href="$struct_im_font_glyph.html" title=" " alt="" coords="15,453,111,478"/>
+<area shape="rect" id="node9" href="$classvoid.html" title="Check an input. id, sf::Keyboard::Key input, ComponentManager &amp;componentManager, EntityManager &amp;entit..." alt="" coords="41,570,85,595"/>
+<area shape="rect" id="node11" href="$struct_im_vector.html" title=" " alt="" coords="1043,161,1244,201"/>
+<area shape="rect" id="node13" href="$struct_im_vector.html" title=" " alt="" coords="1056,239,1231,265"/>
+<area shape="rect" id="node15" href="$struct_im_vec4.html" title=" " alt="" coords="29,94,96,119"/>
+<area shape="rect" id="node16" href="$struct_im_font_builder_i_o.html" title=" " alt="" coords="5,391,120,417"/>
 </map>

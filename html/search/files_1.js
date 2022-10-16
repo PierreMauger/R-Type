@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['client_2ehpp_0',['Client.hpp',['../_client_8hpp.html',1,'']]],
-  ['component_2ehpp_1',['Component.hpp',['../_component_8hpp.html',1,'']]],
-  ['componentmanager_2ehpp_2',['ComponentManager.hpp',['../_component_manager_8hpp.html',1,'']]],
-  ['componenttypes_2ehpp_3',['ComponentTypes.hpp',['../_component_types_8hpp.html',1,'']]],
-  ['connection_2ehpp_4',['Connection.hpp',['../_connection_8hpp.html',1,'']]],
-  ['cooldownbarpreload_2ehpp_5',['CooldownBarPreload.hpp',['../_cooldown_bar_preload_8hpp.html',1,'']]]
+  ['backgroundmusicpreload_2ehpp_0',['BackgroundMusicPreload.hpp',['../_background_music_preload_8hpp.html',1,'']]],
+  ['bosspreload_2ehpp_1',['BossPreload.hpp',['../_boss_preload_8hpp.html',1,'']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['netcommon_2ehpp_0',['NetCommon.hpp',['../_net_common_8hpp.html',1,'']]],
-  ['network_2ehpp_1',['Network.hpp',['../_network_8hpp.html',1,'']]]
+  ['main_2ecpp_0',['main.cpp',['../_client_2main_8cpp.html',1,'(Global Namespace)'],['../_server_2main_8cpp.html',1,'(Global Namespace)']]]
 ];

@@ -1,4 +1,5 @@
 <map id="stbtt_fontinfo" name="stbtt_fontinfo">
-<area shape="rect" id="node1" title=" " alt="" coords="5,167,101,192"/>
-<area shape="rect" id="node2" href="$structstbtt____buf.html" title=" " alt="" coords="14,5,93,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="22,167,118,192"/>
+<area shape="rect" id="node2" href="$classvoid.html" title="Check an input. id, sf::Keyboard::Key input, ComponentManager &amp;componentManager, EntityManager &amp;entit..." alt="" coords="5,5,49,31"/>
+<area shape="rect" id="node3" href="$structstbtt____buf.html" title=" " alt="" coords="73,5,152,31"/>
 </map>
