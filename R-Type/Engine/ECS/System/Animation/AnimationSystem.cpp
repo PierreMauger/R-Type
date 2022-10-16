@@ -9,7 +9,7 @@ AnimationSystem::AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_p
     this->_sprites = sprites;
     this->_sprites->at(2).setTextureRect(sf::IntRect(0, 0, 63, 48));
     this->_sprites->at(5).setTextureRect(sf::IntRect(0, 0, 96, 96));
-    this->_sprites->at(6).setTextureRect(sf::IntRect(0, 0, 32, 14));
+    this->_sprites->at(6).setTextureRect(sf::IntRect(0, 0, 64, 28));
 }
 
 void AnimationSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
