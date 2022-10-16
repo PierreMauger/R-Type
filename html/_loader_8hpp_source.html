@@ -78,39 +78,51 @@ $(function() {
   <div class="headertitle"><div class="title">Loader.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef LOADER_HPP</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define LOADER_HPP</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Includes.hpp&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeng.html">eng</a></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>{</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="classeng_1_1_loader.html">    8</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classeng_1_1_loader.html">Loader</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>            std::vector&lt;sf::Texture&gt; _textures;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            std::vector&lt;sf::Sprite&gt; _sprites;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>            std::vector&lt;sf::SoundBuffer&gt; _sounds;</div>
+<a href="_loader_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef LOADER_HPP</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define LOADER_HPP</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>            <a class="code hl_class" href="classeng_1_1_loader.html">Loader</a>();</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            <a class="code hl_class" href="classeng_1_1_loader.html">~Loader</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            std::vector&lt;sf::Texture&gt; &amp;getTextures();</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            std::vector&lt;sf::Sprite&gt; &amp;getSprites();</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            std::vector&lt;sf::SoundBuffer&gt; &amp;getSounds();</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="keywordtype">void</span> loadSprites(std::vector&lt;std::string&gt; path);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordtype">void</span> loadSounds(std::vector&lt;std::string&gt; path);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            sf::Texture &amp;getTexture(std::size_t index);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            sf::Sprite &amp;getSprite(std::size_t index);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            sf::SoundBuffer &amp;getSound(std::size_t index);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    };</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeng.html">eng</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classeng_1_1_loader.html">   25</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classeng_1_1_loader.html">Loader</a></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            std::vector&lt;sf::Texture&gt; _textures;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            std::vector&lt;sf::Sprite&gt; _sprites;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            std::vector&lt;sf::SoundBuffer&gt; _sounds;</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif </span><span class="comment">// LOADER_HPP</span></div>
-<div class="ttc" id="aclasseng_1_1_loader_html"><div class="ttname"><a href="classeng_1_1_loader.html">eng::Loader</a></div><div class="ttdef"><b>Definition:</b> Loader.hpp:9</div></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <a class="code hl_function" href="classeng_1_1_loader.html#a0e275fd69b174991f8e03433dc944695">Loader</a>();</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classeng_1_1_loader.html#a5133b46245a7baa84c6378f1ea613d4c">   42</a></span>            <a class="code hl_function" href="classeng_1_1_loader.html#a5133b46245a7baa84c6378f1ea613d4c">~Loader</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            std::vector&lt;sf::Texture&gt; &amp;<a class="code hl_function" href="classeng_1_1_loader.html#a19f3784dc5a3fb232aa44f5a4e3ad068">getTextures</a>();</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            std::vector&lt;sf::Sprite&gt; &amp;<a class="code hl_function" href="classeng_1_1_loader.html#a8d0f43337f0802f0ba8d819783a197fb">getSprites</a>();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            std::vector&lt;sf::SoundBuffer&gt; &amp;<a class="code hl_function" href="classeng_1_1_loader.html#a7132010035692b85df6a1247c3ddaffa">getSounds</a>();</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classeng_1_1_loader.html#a7439279a697d4302b5c9e37621da5193">loadSprites</a>(std::vector&lt;std::string&gt; path);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="classeng_1_1_loader.html#ac2469d7946ce50b6f33a658c0562d10a">loadSounds</a>(std::vector&lt;std::string&gt; path);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            sf::Texture &amp;<a class="code hl_function" href="classeng_1_1_loader.html#a120b88bed843d9b2819a6d15ff026df5">getTexture</a>(std::size_t index);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            sf::Sprite &amp;<a class="code hl_function" href="classeng_1_1_loader.html#afe20aebae6bd1de517158e9ad68446da">getSprite</a>(std::size_t index);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            sf::SoundBuffer &amp;<a class="code hl_function" href="classeng_1_1_loader.html#a60cfc74cdb1a728264e0b750c930764d">getSound</a>(std::size_t index);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    };</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="preprocessor">#endif </span><span class="comment">// LOADER_HPP</span></div>
+<div class="ttc" id="a_includes_8hpp_html"><div class="ttname"><a href="_includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html"><div class="ttname"><a href="classeng_1_1_loader.html">eng::Loader</a></div><div class="ttdoc">The Engine's loader (sprites, sounds...).</div><div class="ttdef"><b>Definition:</b> Loader.hpp:26</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a0e275fd69b174991f8e03433dc944695"><div class="ttname"><a href="classeng_1_1_loader.html#a0e275fd69b174991f8e03433dc944695">eng::Loader::Loader</a></div><div class="ttdeci">Loader()</div><div class="ttdoc">Loader constructor.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:7</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a120b88bed843d9b2819a6d15ff026df5"><div class="ttname"><a href="classeng_1_1_loader.html#a120b88bed843d9b2819a6d15ff026df5">eng::Loader::getTexture</a></div><div class="ttdeci">sf::Texture &amp; getTexture(std::size_t index)</div><div class="ttdoc">Get a reference to a textures' vector texture.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:75</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a19f3784dc5a3fb232aa44f5a4e3ad068"><div class="ttname"><a href="classeng_1_1_loader.html#a19f3784dc5a3fb232aa44f5a4e3ad068">eng::Loader::getTextures</a></div><div class="ttdeci">std::vector&lt; sf::Texture &gt; &amp; getTextures()</div><div class="ttdoc">Get a reference to the vector of sprite textures.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:11</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a5133b46245a7baa84c6378f1ea613d4c"><div class="ttname"><a href="classeng_1_1_loader.html#a5133b46245a7baa84c6378f1ea613d4c">eng::Loader::~Loader</a></div><div class="ttdeci">~Loader()=default</div><div class="ttdoc">Loader destructor.</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a60cfc74cdb1a728264e0b750c930764d"><div class="ttname"><a href="classeng_1_1_loader.html#a60cfc74cdb1a728264e0b750c930764d">eng::Loader::getSound</a></div><div class="ttdeci">sf::SoundBuffer &amp; getSound(std::size_t index)</div><div class="ttdoc">Get a reference to a sounds' vector sound.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:85</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a7132010035692b85df6a1247c3ddaffa"><div class="ttname"><a href="classeng_1_1_loader.html#a7132010035692b85df6a1247c3ddaffa">eng::Loader::getSounds</a></div><div class="ttdeci">std::vector&lt; sf::SoundBuffer &gt; &amp; getSounds()</div><div class="ttdoc">Get a reference to the vector of sounds.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:21</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a7439279a697d4302b5c9e37621da5193"><div class="ttname"><a href="classeng_1_1_loader.html#a7439279a697d4302b5c9e37621da5193">eng::Loader::loadSprites</a></div><div class="ttdeci">void loadSprites(std::vector&lt; std::string &gt; path)</div><div class="ttdoc">Load the sprites.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:26</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_a8d0f43337f0802f0ba8d819783a197fb"><div class="ttname"><a href="classeng_1_1_loader.html#a8d0f43337f0802f0ba8d819783a197fb">eng::Loader::getSprites</a></div><div class="ttdeci">std::vector&lt; sf::Sprite &gt; &amp; getSprites()</div><div class="ttdoc">Get a reference to the vector of sprites.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:16</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_ac2469d7946ce50b6f33a658c0562d10a"><div class="ttname"><a href="classeng_1_1_loader.html#ac2469d7946ce50b6f33a658c0562d10a">eng::Loader::loadSounds</a></div><div class="ttdeci">void loadSounds(std::vector&lt; std::string &gt; path)</div><div class="ttdoc">Load the sounds.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:52</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html_afe20aebae6bd1de517158e9ad68446da"><div class="ttname"><a href="classeng_1_1_loader.html#afe20aebae6bd1de517158e9ad68446da">eng::Loader::getSprite</a></div><div class="ttdeci">sf::Sprite &amp; getSprite(std::size_t index)</div><div class="ttdoc">Get a reference to a sprites' vector sprite.</div><div class="ttdef"><b>Definition:</b> Loader.cpp:80</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -81,19 +81,98 @@ $(function() {
   <div class="headertitle"><div class="title">eng::SystemManager Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Manager of the systems.  
+ <a href="classeng_1_1_system_manager.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_system_manager_8hpp_source.html">SystemManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ada0d9c39415d79a782fc262000652769"><td class="memItemLeft" align="right" valign="top"><a id="ada0d9c39415d79a782fc262000652769" name="ada0d9c39415d79a782fc262000652769"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addSystem</b> (std::shared_ptr&lt; <a class="el" href="classeng_1_1_i_system.html">ISystem</a> &gt; system)</td></tr>
-<tr class="separator:ada0d9c39415d79a782fc262000652769"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bff085361f0e502523f5f237212a78b"><td class="memItemLeft" align="right" valign="top"><a id="a0bff085361f0e502523f5f237212a78b" name="a0bff085361f0e502523f5f237212a78b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updateSystems</b> (<a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1_entity_manager.html">EntityManager</a> &amp;entityManager)</td></tr>
-<tr class="separator:a0bff085361f0e502523f5f237212a78b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b2b145fe14b21e3e28731694af06784"><td class="memItemLeft" align="right" valign="top"><a id="a7b2b145fe14b21e3e28731694af06784" name="a7b2b145fe14b21e3e28731694af06784"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SystemManager</b> ()</td></tr>
+<tr class="memdesc:a7b2b145fe14b21e3e28731694af06784"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_physic_system.html" title="System of the physics.">PhysicSystem</a> constructor. <br /></td></tr>
+<tr class="separator:a7b2b145fe14b21e3e28731694af06784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c15a5614bd3ee8e9bf3e95117a4f0cb"><td class="memItemLeft" align="right" valign="top"><a id="a8c15a5614bd3ee8e9bf3e95117a4f0cb" name="a8c15a5614bd3ee8e9bf3e95117a4f0cb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>~SystemManager</b> ()</td></tr>
+<tr class="memdesc:a8c15a5614bd3ee8e9bf3e95117a4f0cb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_physic_system.html" title="System of the physics.">PhysicSystem</a> destructor. <br /></td></tr>
+<tr class="separator:a8c15a5614bd3ee8e9bf3e95117a4f0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a487b63a465d75fbb23346258f4fd28fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_system_manager.html#a487b63a465d75fbb23346258f4fd28fe">addSystem</a> (std::shared_ptr&lt; <a class="el" href="classeng_1_1_i_system.html">ISystem</a> &gt; system)</td></tr>
+<tr class="memdesc:a487b63a465d75fbb23346258f4fd28fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a system.  <a href="classeng_1_1_system_manager.html#a487b63a465d75fbb23346258f4fd28fe">More...</a><br /></td></tr>
+<tr class="separator:a487b63a465d75fbb23346258f4fd28fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a842c809fa208e1da2c379cad1a398c75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_system_manager.html#a842c809fa208e1da2c379cad1a398c75">updateSystems</a> (<a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1_entity_manager.html">EntityManager</a> &amp;entityManager)</td></tr>
+<tr class="memdesc:a842c809fa208e1da2c379cad1a398c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the systems.  <a href="classeng_1_1_system_manager.html#a842c809fa208e1da2c379cad1a398c75">More...</a><br /></td></tr>
+<tr class="separator:a842c809fa208e1da2c379cad1a398c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaa97eff5f8bfebf08a973ceb3ed4ab5"><td class="memItemLeft" align="right" valign="top"><a id="aeaa97eff5f8bfebf08a973ceb3ed4ab5" name="aeaa97eff5f8bfebf08a973ceb3ed4ab5"></a>
 std::vector&lt; std::shared_ptr&lt; <a class="el" href="classeng_1_1_i_system.html">ISystem</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSystems</b> ()</td></tr>
 <tr class="separator:aeaa97eff5f8bfebf08a973ceb3ed4ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Manager of the systems. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a487b63a465d75fbb23346258f4fd28fe" name="a487b63a465d75fbb23346258f4fd28fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a487b63a465d75fbb23346258f4fd28fe">&#9670;&#160;</a></span>addSystem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::SystemManager::addSystem </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classeng_1_1_i_system.html">ISystem</a> &gt;&#160;</td>
+          <td class="paramname"><em>system</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a system. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">system</td><td>A shared pointer to the system to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a842c809fa208e1da2c379cad1a398c75" name="a842c809fa208e1da2c379cad1a398c75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a842c809fa208e1da2c379cad1a398c75">&#9670;&#160;</a></span>updateSystems()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::SystemManager::updateSystems </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>componentManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1_entity_manager.html">EntityManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>entityManager</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the systems. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">componentManager</td><td>A reference to the component manager. </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the entity manager. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>R-Type/Engine/ECS/System/<a class="el" href="_system_manager_8hpp_source.html">SystemManager.hpp</a></li>
 <li>R-Type/Engine/ECS/System/SystemManager.cpp</li>

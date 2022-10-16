@@ -1,10 +1,26 @@
 var searchData=
 [
-  ['getcomponent_0',['getComponent',['../classeng_1_1_component_manager.html#a1621bc29d13bd811ceee2c72fda145d8',1,'eng::ComponentManager::getComponent(std::type_index type)'],['../classeng_1_1_component_manager.html#a57e4da9f5a0a92b89f9981095a176010',1,'eng::ComponentManager::getComponent(std::size_t index)']]],
-  ['getcomponentarray_1',['getComponentArray',['../classeng_1_1_component_manager.html#a5b3bdf66ef0045f6e89df48c03c2480b',1,'eng::ComponentManager']]],
-  ['getcomponenttype_2',['getComponentType',['../classeng_1_1_component_manager.html#aad2d611b77e67145ed39a7f509a37036',1,'eng::ComponentManager']]],
-  ['getfield_3',['getField',['../classeng_1_1_component.html#ac95f5a1750eec792d37aa5cb7f56ac4d',1,'eng::Component']]],
-  ['getsinglecomponent_4',['getSingleComponent',['../classeng_1_1_component_manager.html#abcf69ca871f6b57cad1341b0b9013988',1,'eng::ComponentManager']]],
-  ['getsize_5',['getSize',['../classeng_1_1_component.html#ab0d2a3794cf0655e3a73bf78a5a0b736',1,'eng::Component']]],
-  ['guisystem_6',['GUISystem',['../classeng_1_1_g_u_i_system.html#a0b012a2dc4bebc0451803b179c349060',1,'eng::GUISystem']]]
+  ['getclock_0',['getClock',['../classeng_1_1_graphic.html#abd479728deb1610ee6ed4244ddb09b30',1,'eng::Graphic']]],
+  ['getcomponent_1',['getComponent',['../classeng_1_1_component_manager.html#a1621bc29d13bd811ceee2c72fda145d8',1,'eng::ComponentManager::getComponent(std::type_index type)'],['../classeng_1_1_component_manager.html#a57e4da9f5a0a92b89f9981095a176010',1,'eng::ComponentManager::getComponent(std::size_t index)']]],
+  ['getcomponentarray_2',['getComponentArray',['../classeng_1_1_component_manager.html#a5b3bdf66ef0045f6e89df48c03c2480b',1,'eng::ComponentManager']]],
+  ['getcomponentmanager_3',['getComponentManager',['../classeng_1_1_e_c_s.html#af4d80c46e9434ef2c74e86ec87d6cb8e',1,'eng::ECS']]],
+  ['getcomponenttype_4',['getComponentType',['../classeng_1_1_component_manager.html#aad2d611b77e67145ed39a7f509a37036',1,'eng::ComponentManager']]],
+  ['getecs_5',['getECS',['../classeng_1_1_engine.html#a0a7df22d92fc350010f78ce0b3c24e1d',1,'eng::Engine']]],
+  ['getentitymanager_6',['getEntityManager',['../classeng_1_1_e_c_s.html#ac4e26458181f77274cd63d1954ea9ec3',1,'eng::ECS']]],
+  ['getevent_7',['getEvent',['../classeng_1_1_graphic.html#a66e907fd12128c091d640da3ab919229',1,'eng::Graphic']]],
+  ['getfield_8',['getField',['../classeng_1_1_component.html#ac95f5a1750eec792d37aa5cb7f56ac4d',1,'eng::Component']]],
+  ['getgraphic_9',['getGraphic',['../classeng_1_1_engine.html#ae214b1d5ce36883ea8b750a10f86562f',1,'eng::Engine']]],
+  ['getloader_10',['getLoader',['../classeng_1_1_engine.html#a19602cfee4299c7f346ae86ac89264d7',1,'eng::Engine']]],
+  ['getsinglecomponent_11',['getSingleComponent',['../classeng_1_1_component_manager.html#abcf69ca871f6b57cad1341b0b9013988',1,'eng::ComponentManager']]],
+  ['getsize_12',['getSize',['../classeng_1_1_component.html#ab0d2a3794cf0655e3a73bf78a5a0b736',1,'eng::Component']]],
+  ['getsound_13',['getSound',['../classeng_1_1_loader.html#a60cfc74cdb1a728264e0b750c930764d',1,'eng::Loader']]],
+  ['getsounds_14',['getSounds',['../classeng_1_1_loader.html#a7132010035692b85df6a1247c3ddaffa',1,'eng::Loader']]],
+  ['getsprite_15',['getSprite',['../classeng_1_1_loader.html#afe20aebae6bd1de517158e9ad68446da',1,'eng::Loader']]],
+  ['getsprites_16',['getSprites',['../classeng_1_1_loader.html#a8d0f43337f0802f0ba8d819783a197fb',1,'eng::Loader']]],
+  ['getsystemmanager_17',['getSystemManager',['../classeng_1_1_e_c_s.html#a6ee076085a85323b6566b2079b481a51',1,'eng::ECS']]],
+  ['gettexture_18',['getTexture',['../classeng_1_1_loader.html#a120b88bed843d9b2819a6d15ff026df5',1,'eng::Loader']]],
+  ['gettextures_19',['getTextures',['../classeng_1_1_loader.html#a19f3784dc5a3fb232aa44f5a4e3ad068',1,'eng::Loader']]],
+  ['getwindow_20',['getWindow',['../classeng_1_1_graphic.html#a5828f68f06f401efb205bba3f4e82793',1,'eng::Graphic']]],
+  ['graphic_21',['Graphic',['../classeng_1_1_graphic.html#a141e9578d0dfc999ff9487a9d70c3627',1,'eng::Graphic']]],
+  ['guisystem_22',['GUISystem',['../classeng_1_1_g_u_i_system.html#a0b012a2dc4bebc0451803b179c349060',1,'eng::GUISystem']]]
 ];

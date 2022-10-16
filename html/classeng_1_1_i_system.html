@@ -81,12 +81,17 @@ $(function() {
   <div class="headertitle"><div class="title">eng::ISystem Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Interface of the system.  
+ <a href="classeng_1_1_i_system.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_i_system_8hpp_source.html">ISystem.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for eng::ISystem:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeng_1_1_i_system__inherit__graph.png" border="0" usemap="#aeng_1_1_i_system_inherit__map" alt="Inheritance graph"/></div>
 <map name="aeng_1_1_i_system_inherit__map" id="aeng_1_1_i_system_inherit__map">
-<area shape="rect" title=" " alt="" coords="253,5,351,31"/>
+<area shape="rect" title="Interface of the system." alt="" coords="253,5,351,31"/>
 <area shape="rect" href="classeng_1_1_enemy_system.html" title="System of an enemy." alt="" coords="5,79,143,104"/>
 <area shape="rect" href="classeng_1_1_g_u_i_system.html" title="System of the GUI." alt="" coords="167,79,285,104"/>
 <area shape="rect" href="classeng_1_1_physic_system.html" title="System of the physics." alt="" coords="310,79,446,104"/>
@@ -96,12 +101,19 @@ Inheritance diagram for eng::ISystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af878f22561aaf55e63d6b9f95912ddec"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_i_system.html#af878f22561aaf55e63d6b9f95912ddec">update</a> (<a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1_entity_manager.html">EntityManager</a> &amp;entityManager)=0</td></tr>
-<tr class="separator:af878f22561aaf55e63d6b9f95912ddec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a614a9416bd10f22072ccc2d6e239878a"><td class="memItemLeft" align="right" valign="top"><a id="a614a9416bd10f22072ccc2d6e239878a" name="a614a9416bd10f22072ccc2d6e239878a"></a>
+virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ISystem</b> ()=default</td></tr>
+<tr class="memdesc:a614a9416bd10f22072ccc2d6e239878a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_physic_system.html" title="System of the physics.">PhysicSystem</a> destructor. <br /></td></tr>
+<tr class="separator:a614a9416bd10f22072ccc2d6e239878a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b21391ba4e486362640cb0a8f08f5a8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_i_system.html#a7b21391ba4e486362640cb0a8f08f5a8">update</a> (<a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1_entity_manager.html">EntityManager</a> &amp;entityManager)=0</td></tr>
+<tr class="memdesc:a7b21391ba4e486362640cb0a8f08f5a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract update function.  <a href="classeng_1_1_i_system.html#a7b21391ba4e486362640cb0a8f08f5a8">More...</a><br /></td></tr>
+<tr class="separator:a7b21391ba4e486362640cb0a8f08f5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="af878f22561aaf55e63d6b9f95912ddec" name="af878f22561aaf55e63d6b9f95912ddec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af878f22561aaf55e63d6b9f95912ddec">&#9670;&#160;</a></span>update()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Interface of the system. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7b21391ba4e486362640cb0a8f08f5a8" name="a7b21391ba4e486362640cb0a8f08f5a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b21391ba4e486362640cb0a8f08f5a8">&#9670;&#160;</a></span>update()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -110,7 +122,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void eng::ISystem::update </td>
+          <td class="memname">void eng::ISystem::update </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;&#160;</td>
           <td class="paramname"><em>componentManager</em>, </td>
@@ -133,6 +145,15 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Abstract update function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">componentManager</td><td>A reference to the component manager. </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the entity manager. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Implemented in <a class="el" href="classeng_1_1_enemy_system.html#a2aabee4a349dcde16658ada55b3ce8f8">eng::EnemySystem</a>, <a class="el" href="classeng_1_1_g_u_i_system.html#ac9f116523a1a8917b2fb614a7acde3de">eng::GUISystem</a>, <a class="el" href="classeng_1_1_physic_system.html#ad17de18b5747625b74a8ed5281d21747">eng::PhysicSystem</a>, and <a class="el" href="classeng_1_1_render_system.html#afffc726304f526eeae6d05c18b894206">eng::RenderSystem</a>.</p>
 

@@ -19,5 +19,6 @@ var searchData=
   ['stbtt_5fvertex_16',['stbtt_vertex',['../structstbtt__vertex.html',1,'']]],
   ['stbundorecord_17',['StbUndoRecord',['../struct_stb_undo_record.html',1,'']]],
   ['stbundostate_18',['StbUndoState',['../struct_stb_undo_state.html',1,'']]],
-  ['systemmanager_19',['SystemManager',['../classeng_1_1_system_manager.html',1,'eng']]]
+  ['systemmanager_19',['SystemManager',['../classeng_1_1_system_manager.html',1,'eng::SystemManager'],['../classeng_1_1_system_manager.html#a7b2b145fe14b21e3e28731694af06784',1,'eng::SystemManager::SystemManager()']]],
+  ['systemmanager_2ehpp_20',['SystemManager.hpp',['../_system_manager_8hpp.html',1,'']]]
 ];

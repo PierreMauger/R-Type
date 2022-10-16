@@ -83,9 +83,9 @@ $(function() {
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define RENDERSYSTEM_HPP</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_g_u_i_system_8hpp.html">Engine/ECS/System/GUI/GUISystem.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;Engine/ECS/System/ISystem.hpp&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;Engine/Loader/Loader.hpp&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;Includes.hpp&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_i_system_8hpp.html">Engine/ECS/System/ISystem.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_loader_8hpp.html">Engine/Loader/Loader.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="_includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeng.html">eng</a></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>{</div>
@@ -107,10 +107,13 @@ $(function() {
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#endif </span><span class="comment">// RENDERSYSTEM_HPP</span></div>
 <div class="ttc" id="a_g_u_i_system_8hpp_html"><div class="ttname"><a href="_g_u_i_system_8hpp.html">GUISystem.hpp</a></div><div class="ttdoc">System of the GUI (Game User Interface).</div></div>
+<div class="ttc" id="a_i_system_8hpp_html"><div class="ttname"><a href="_i_system_8hpp.html">ISystem.hpp</a></div><div class="ttdoc">Interface of the system.</div></div>
+<div class="ttc" id="a_includes_8hpp_html"><div class="ttname"><a href="_includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
+<div class="ttc" id="a_loader_8hpp_html"><div class="ttname"><a href="_loader_8hpp.html">Loader.hpp</a></div><div class="ttdoc">The Engine's loader (sprites, sounds...).</div></div>
 <div class="ttc" id="aclasseng_1_1_component_manager_html"><div class="ttname"><a href="classeng_1_1_component_manager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1_entity_manager_html"><div class="ttname"><a href="classeng_1_1_entity_manager.html">eng::EntityManager</a></div><div class="ttdoc">The engine's EntityManager.</div><div class="ttdef"><b>Definition:</b> EntityManager.hpp:26</div></div>
-<div class="ttc" id="aclasseng_1_1_i_system_html"><div class="ttname"><a href="classeng_1_1_i_system.html">eng::ISystem</a></div><div class="ttdef"><b>Definition:</b> ISystem.hpp:11</div></div>
-<div class="ttc" id="aclasseng_1_1_loader_html"><div class="ttname"><a href="classeng_1_1_loader.html">eng::Loader</a></div><div class="ttdef"><b>Definition:</b> Loader.hpp:9</div></div>
+<div class="ttc" id="aclasseng_1_1_i_system_html"><div class="ttname"><a href="classeng_1_1_i_system.html">eng::ISystem</a></div><div class="ttdoc">Interface of the system.</div><div class="ttdef"><b>Definition:</b> ISystem.hpp:28</div></div>
+<div class="ttc" id="aclasseng_1_1_loader_html"><div class="ttname"><a href="classeng_1_1_loader.html">eng::Loader</a></div><div class="ttdoc">The Engine's loader (sprites, sounds...).</div><div class="ttdef"><b>Definition:</b> Loader.hpp:26</div></div>
 <div class="ttc" id="aclasseng_1_1_render_system_html"><div class="ttname"><a href="classeng_1_1_render_system.html">eng::RenderSystem</a></div><div class="ttdoc">System of the render.</div><div class="ttdef"><b>Definition:</b> RenderSystem.hpp:29</div></div>
 <div class="ttc" id="aclasseng_1_1_render_system_html_a41d740f7b6de416592691bcb589ac463"><div class="ttname"><a href="classeng_1_1_render_system.html#a41d740f7b6de416592691bcb589ac463">eng::RenderSystem::~RenderSystem</a></div><div class="ttdeci">~RenderSystem()=default</div><div class="ttdoc">RenderSystem destructor.</div></div>
 <div class="ttc" id="aclasseng_1_1_render_system_html_afffc726304f526eeae6d05c18b894206"><div class="ttname"><a href="classeng_1_1_render_system.html#afffc726304f526eeae6d05c18b894206">eng::RenderSystem::update</a></div><div class="ttdeci">void update(ComponentManager &amp;componentManager, EntityManager &amp;entityManager)</div><div class="ttdoc">Update the render system.</div><div class="ttdef"><b>Definition:</b> RenderSystem.cpp:56</div></div>

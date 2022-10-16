@@ -78,29 +78,33 @@ $(function() {
   <div class="headertitle"><div class="title">ISystem.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef ISYSTEM_HPP</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define ISYSTEM_HPP</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="_component_manager_8hpp.html">Engine/ECS/Component/ComponentManager.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="_entity_manager_8hpp.html">Engine/ECS/Entity/EntityManager.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Includes.hpp&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeng.html">eng</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classeng_1_1_i_system.html">   10</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classeng_1_1_i_system.html">ISystem</a></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>            <span class="keyword">virtual</span> <a class="code hl_class" href="classeng_1_1_i_system.html">~ISystem</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> update(<a class="code hl_class" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager, <a class="code hl_class" href="classeng_1_1_entity_manager.html">EntityManager</a> &amp;entityManager) = 0;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    };</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#endif </span><span class="comment">// ISYSTEM_HPP</span></div>
+<a href="_i_system_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#ifndef ISYSTEM_HPP</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define ISYSTEM_HPP</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_component_manager_8hpp.html">Engine/ECS/Component/ComponentManager.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_entity_manager_8hpp.html">Engine/ECS/Entity/EntityManager.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeng.html">eng</a></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>{</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classeng_1_1_i_system.html">   27</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classeng_1_1_i_system.html">ISystem</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classeng_1_1_i_system.html#a614a9416bd10f22072ccc2d6e239878a">   34</a></span>            <span class="keyword">virtual</span> <a class="code hl_function" href="classeng_1_1_i_system.html#a614a9416bd10f22072ccc2d6e239878a">~ISystem</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classeng_1_1_i_system.html#a7b21391ba4e486362640cb0a8f08f5a8">   41</a></span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classeng_1_1_i_system.html#a7b21391ba4e486362640cb0a8f08f5a8">update</a>(<a class="code hl_class" href="classeng_1_1_component_manager.html">ComponentManager</a> &amp;componentManager, <a class="code hl_class" href="classeng_1_1_entity_manager.html">EntityManager</a> &amp;entityManager) = 0;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    };</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#endif </span><span class="comment">// ISYSTEM_HPP</span></div>
 <div class="ttc" id="a_component_manager_8hpp_html"><div class="ttname"><a href="_component_manager_8hpp.html">ComponentManager.hpp</a></div><div class="ttdoc">Functions definitions for the ComponentManager containing/handling the engine's components.</div></div>
 <div class="ttc" id="a_entity_manager_8hpp_html"><div class="ttname"><a href="_entity_manager_8hpp.html">EntityManager.hpp</a></div><div class="ttdoc">Functions definitions for the EntityManager containing/handling the entities' masks.</div></div>
+<div class="ttc" id="a_includes_8hpp_html"><div class="ttname"><a href="_includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
 <div class="ttc" id="aclasseng_1_1_component_manager_html"><div class="ttname"><a href="classeng_1_1_component_manager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1_entity_manager_html"><div class="ttname"><a href="classeng_1_1_entity_manager.html">eng::EntityManager</a></div><div class="ttdoc">The engine's EntityManager.</div><div class="ttdef"><b>Definition:</b> EntityManager.hpp:26</div></div>
-<div class="ttc" id="aclasseng_1_1_i_system_html"><div class="ttname"><a href="classeng_1_1_i_system.html">eng::ISystem</a></div><div class="ttdef"><b>Definition:</b> ISystem.hpp:11</div></div>
+<div class="ttc" id="aclasseng_1_1_i_system_html"><div class="ttname"><a href="classeng_1_1_i_system.html">eng::ISystem</a></div><div class="ttdoc">Interface of the system.</div><div class="ttdef"><b>Definition:</b> ISystem.hpp:28</div></div>
+<div class="ttc" id="aclasseng_1_1_i_system_html_a614a9416bd10f22072ccc2d6e239878a"><div class="ttname"><a href="classeng_1_1_i_system.html#a614a9416bd10f22072ccc2d6e239878a">eng::ISystem::~ISystem</a></div><div class="ttdeci">virtual ~ISystem()=default</div><div class="ttdoc">PhysicSystem destructor.</div></div>
+<div class="ttc" id="aclasseng_1_1_i_system_html_a7b21391ba4e486362640cb0a8f08f5a8"><div class="ttname"><a href="classeng_1_1_i_system.html#a7b21391ba4e486362640cb0a8f08f5a8">eng::ISystem::update</a></div><div class="ttdeci">virtual void update(ComponentManager &amp;componentManager, EntityManager &amp;entityManager)=0</div><div class="ttdoc">Abstract update function.</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

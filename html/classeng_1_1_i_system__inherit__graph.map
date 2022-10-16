@@ -1,5 +1,5 @@
 <map id="eng::ISystem" name="eng::ISystem">
-<area shape="rect" id="node1" title=" " alt="" coords="253,5,351,31"/>
+<area shape="rect" id="node1" title="Interface of the system." alt="" coords="253,5,351,31"/>
 <area shape="rect" id="node2" href="$classeng_1_1_enemy_system.html" title="System of an enemy." alt="" coords="5,79,143,104"/>
 <area shape="rect" id="node3" href="$classeng_1_1_g_u_i_system.html" title="System of the GUI." alt="" coords="167,79,285,104"/>
 <area shape="rect" id="node4" href="$classeng_1_1_physic_system.html" title="System of the physics." alt="" coords="310,79,446,104"/>
