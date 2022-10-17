@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief The Engine's ECS (Entity Component System, see the readme for more infos).
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef ECS_HPP
 #define ECS_HPP
@@ -25,9 +25,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
+    /**
+     * @brief The Engine's ECS (Entity Component System, see the readme for more infos).
+     * @class ECS
+    */
     class ECS
     {
         private:
@@ -39,37 +43,37 @@ namespace eng
             /**
              * @brief ECS constructor.
              * @fn ECS()
-             */
+            */
             ECS();
             /**
              * @brief ECS destructor.
              * @fn ~ECS()
-             */
+            */
             ~ECS() = default;
 
             /**
              * @brief Get a reference to the ECS' EntityManager.
              * @fn EntityManager &getEntityManager()
              * @return The EntityManager
-             */
+            */
             EntityManager &getEntityManager();
             /**
              * @brief Get a reference to the ECS' ComponentManager.
              * @fn ComponentManager &getComponentManager()
              * @return The ComponentManager
-             */
+            */
             ComponentManager &getComponentManager();
             /**
              * @brief Get a reference to the ECS' SystemManager.
              * @fn SystemManager &getSystemManager()
              * @return The SystemManager
-             */
+            */
             SystemManager &getSystemManager();
 
             /**
              * @brief Update the ECS.
              * @fn void update()
-             */
+            */
             void update();
     };
 }

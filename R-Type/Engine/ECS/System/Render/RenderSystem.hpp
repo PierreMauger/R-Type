@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief System of the render (graphics).
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef RENDERSYSTEM_HPP
 #define RENDERSYSTEM_HPP
@@ -18,13 +18,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
     /**
      * @brief System of the render.
      * @class RenderSystem
-     */
+    */
     class RenderSystem : public virtual ISystem
     {
         private:
@@ -36,24 +36,24 @@ namespace eng
 
         public:
             /**
-             * @brief PhysicSystem constructor.
-             * @fn PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
+             * @brief RenderSystem constructor.
+             * @fn RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader)
              * @param window A shared pointer to the SFML render window.
              * @param clock A shared pointer to the clock of the game (for render timings and such).
-             * @param sprites A shared pointer to the vector of sprites.
-             */
-            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites);
+             * @param loader A reference to the loader (with the images to render).
+            */
+            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader);
             /**
              * @brief RenderSystem destructor.
              * @fn ~RenderSystem
-             */
+            */
             ~RenderSystem() = default;
             /**
              * @brief Update the render system.
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the component manager.
              * @param entityManager A reference to the entity manager.
-             */
+            */
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }

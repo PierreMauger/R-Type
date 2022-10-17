@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief System of the physics.
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef PHYSICSYSTEM_HPP
 #define PHYSICSYSTEM_HPP
@@ -15,13 +15,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
     /**
      * @brief System of the physics.
      * @class PhysicSystem
-     */
+    */
     class PhysicSystem : public virtual ISystem
     {
         private:
@@ -40,19 +40,19 @@ namespace eng
              * @brief PhysicSystem constructor.
              * @fn PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
              * @param window A shared pointer to the SFML render window.
-             */
+            */
             PhysicSystem(std::shared_ptr<sf::RenderWindow> window);
             /**
              * @brief PhysicSystem destructor.
              * @fn ~PhysicSystem
-             */
+            */
             ~PhysicSystem() = default;
             /**
              * @brief Update the physics system.
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the component manager.
              * @param entityManager A reference to the entity manager.
-             */
+            */
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }

@@ -1,9 +1,9 @@
 /**
- * @file EntityPreload.hpp
+ * @file EnemyPreload.hpp
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
- * @brief Preload an entity (parent class of the other preloads).
+ * @brief Preload the enemy.
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef ENEMYPRELOAD_HPP
 #define ENEMYPRELOAD_HPP
@@ -18,13 +18,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
     /**
-     * @brief Preloads an entity.
-     * @class EntityPreload
-     */
+     * @brief Preloads the enemy.
+     * @class EnemyPreload
+    */
     class EnemyPreload : public EntityPreload
     {
         public:

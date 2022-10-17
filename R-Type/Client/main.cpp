@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief Main client file that initializes the engine with its systems, components and graphics then starts the main game loop.
  * @copyright Epitech Rennes 2022
- */
+*/
 
 /// @cond
 #include "Component/ComponentManager.hpp"
@@ -21,7 +21,7 @@
  * @brief Main game loop running the R-Type.
  * @fn void mainLoop(eng::Engine &engine)
  * @param engine A reference to the engine containing the graphics and the ECS.
- */
+*/
 void mainLoop(eng::Engine &engine)
 {
     eng::Graphic &graphic = engine.getGraphic();
@@ -34,9 +34,7 @@ void mainLoop(eng::Engine &engine)
 
     while (graphic.getWindow()->isOpen()) {
         while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
-#ifndef NDEBUG
             ImGui::SFML::ProcessEvent(*graphic.getEvent());
-#endif
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
         }
@@ -57,7 +55,7 @@ void mainLoop(eng::Engine &engine)
  * @brief Main function ran first when the r-type_client exectuable is launched.
  * @details Initializes the engine and the systems, components and graphics it'll contain then start the main loop.
  * @fn int main(void)
- */
+*/
 int main(void)
 {
     eng::Engine engine;
@@ -66,15 +64,14 @@ int main(void)
     eng::Graphic &graphic = engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
+    eng::Network &network = engine.getNetwork();
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
-#ifndef NDEBUG
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
-#endif
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
     systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
@@ -101,10 +98,12 @@ int main(void)
 
     // create background
     eng::ParallaxPreload parallaxPreload;
+
     parallaxPreload.preload(engine);
 
     // create spaceship
     eng::VesselPreload vesselPreload;
+
     vesselPreload.preload(engine);
 
     eng::BackgroundMusicPreload backgroundMusicPreload;

@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief Preload the boss.
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef BOSSPRELOAD_HPP
 #define BOSSPRELOAD_HPP
@@ -18,13 +18,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
     /**
      * @brief Preloads the boss.
      * @class BossPreload
-     */
+    */
     class BossPreload : public EntityPreload
     {
         public:
@@ -32,7 +32,7 @@ namespace eng
              * @brief Preloads the boss.
              * @fn void preload(Engine &engine) override
              * @param engine A reference to the engine.
-             */
+            */
             void preload(Engine &engine) override;
     };
 }

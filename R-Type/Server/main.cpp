@@ -1,3 +1,13 @@
+/**
+ * @file main.cpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief Main server file.
+ * @copyright Epitech Rennes 2022
+*/
+
+/// @cond
+#include "Engine.hpp"
+#include "Includes.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
@@ -6,7 +16,12 @@
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 #include "Network/Server/Server.hpp"
+/// @endcond
 
+/**
+ * @brief Main function ran first when the r-type_server exectuable is launched.
+ * @fn int main(int ac, char **av)
+*/
 int main(int ac, char **av)
 {
     if (ac != 3) {

@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief Preload the vessel (player).
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef VESSELPRELOAD_HPP
 #define VESSELPRELOAD_HPP
@@ -18,13 +18,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
     /**
      * @brief Preloads the vessel.
      * @class VesselPreload
-     */
+    */
     class VesselPreload : public EntityPreload
     {
         public:
@@ -32,7 +32,7 @@ namespace eng
              * @brief Preloads the vessel.
              * @fn VesselPreload
              * @param engine A reference to the engine.
-             */
+            */
             void preload(Engine &engine) override;
     };
 }

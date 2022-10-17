@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief System of an enemy.
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef ENEMYSYSTEM_HPP
 #define ENEMYSYSTEM_HPP
@@ -18,13 +18,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
     /**
      * @brief System of an enemy.
      * @class EnemySystem
-     */
+    */
     class EnemySystem : public virtual ISystem
     {
         private:
@@ -36,19 +36,19 @@ namespace eng
              * @brief EnemySystem constructor.
              * @fn EnemySystem(std::shared_ptr<sf::Clock> clock)
              * @param clock The clock of the game (for enemy animations, patterns and such).
-             */
+            */
             EnemySystem(std::shared_ptr<sf::Clock> clock);
             /**
              * @brief EnemySystem constructor.
              * @fn ~EnemySystem()
-             */
+            */
             ~EnemySystem() = default;
             /**
              * @brief Update the enemy system.
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the component manager.
              * @param entityManager A reference to the entity manager.
-             */
+            */
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }

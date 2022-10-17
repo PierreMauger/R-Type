@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief The Sound system
  * @copyright Epitech Rennes 2022
- */
+*/
 
 #ifndef SOUNDSYSTEM_HPP
 #define SOUNDSYSTEM_HPP
@@ -16,13 +16,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
- */
+*/
 namespace eng
 {
     /**
      * @brief The Sound system
      * @class SoundSystem
-     */
+    */
     class SoundSystem : public virtual ISystem
     {
         private:
@@ -36,19 +36,19 @@ namespace eng
              * @fn SoundSystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
              * @param clock A shared pointer to the clock
              * @param soundBuffer A shared pointer to sound buffer
-             */
+            */
             SoundSystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer);
             /**
              * @brief SoundSystem destructor
              * @fn ~SoundSystem()
-             */
+            */
             ~SoundSystem() = default;
             /**
              * @brief Update the SoundSystem
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the ComponentManager
              * @param entityManager A reference to the EntityManager
-             */
+            */
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }
