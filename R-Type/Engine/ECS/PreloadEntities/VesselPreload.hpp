@@ -10,8 +10,13 @@ namespace eng
 {
     class VesselPreload : public EntityPreload
     {
+        private:
+            size_t _id;
+            size_t _syncId;
         public:
             void preload(Engine &engine) override;
+            void setSyncId(Engine &engine, std::size_t syncId);
+            size_t getSyncId();
     };
 }
 

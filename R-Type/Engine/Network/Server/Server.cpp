@@ -166,3 +166,8 @@ _QUEUE_TYPE &Server::getQueue()
 {
     return this->_dataIn;
 }
+
+std::vector<boost::shared_ptr<Connection>> &Server::getConnections()
+{
+    return this->_listConnections;
+}

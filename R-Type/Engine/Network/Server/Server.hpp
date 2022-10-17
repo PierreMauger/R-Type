@@ -38,6 +38,7 @@ namespace eng
             void updateConnection();
 
             _QUEUE_TYPE &getQueue();
+            std::vector<boost::shared_ptr<Connection>> &getConnections();
     };
 } // namespace eng
 

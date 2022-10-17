@@ -6,6 +6,22 @@
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 #include "Network/Server/Server.hpp"
+#include "Network/Connection.hpp"
+
+void updatePlayers(eng::Engine &engine, std::map<size_t, boost::shared_ptr<eng::Connection>> &players)
+{
+    std::vector<boost::shared_ptr<eng::Connection>> &listConnections = engine.getNetwork().getServer()->getConnections();
+    eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
+    eng::VesselPreload vesselPreload;
+    size_t tmpId = 0;
+
+    if (listConnections.size() > players.size()) {
+        for (auto &player : players) {
+            if (player)
+        }
+        players.emplace()
+    }
+}
 
 void mainLoop(eng::Engine &engine)
 {
@@ -17,6 +33,7 @@ void mainLoop(eng::Engine &engine)
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
     _QUEUE_TYPE &queue = engine.getNetwork().getServer()->getQueue();
+    std::map<size_t, boost::shared_ptr<eng::Connection>> players;
     size_t refreshTick = 5;
     // eng::VesselPreload playerVessel;
 
