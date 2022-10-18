@@ -12,7 +12,6 @@ namespace eng
     {
         public:
             void preload(Engine &engine) override;
-            void preloadScore(Engine &engine, std::size_t kill, std::size_t death);
     };
 }
 
