@@ -118,7 +118,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/ECS.cpp
     ${ENGINE_ROOT}/ECS/Entity/EntityManager.cpp
     ${ENGINE_ROOT}/ECS/Component/ComponentManager.cpp
-    ${ENGINE_ROOT}/ECS/Component/Component.cpp
+    ${ENGINE_ROOT}/ECS/Component/SparseArray.cpp
     ${ENGINE_ROOT}/ECS/System/SystemManager.cpp
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp

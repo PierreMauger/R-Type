@@ -6,19 +6,19 @@ ComponentManager::ComponentManager()
 {
 }
 
-std::map<std::type_index, Component> &ComponentManager::getComponentArray()
+std::map<std::type_index, SparseArray> &ComponentManager::getComponentArray()
 {
     return this->_componentArray;
 }
 
-Component &ComponentManager::getComponent(std::type_index type)
+SparseArray &ComponentManager::getComponent(std::type_index type)
 {
     if (this->_componentArray.find(type) == this->_componentArray.end())
         throw std::runtime_error("Component not found");
     return this->_componentArray[type];
 }
 
-Component &ComponentManager::getComponent(std::size_t index)
+SparseArray &ComponentManager::getComponent(std::size_t index)
 {
     if (index >= this->_componentArray.size())
         throw std::runtime_error("Component not found");
