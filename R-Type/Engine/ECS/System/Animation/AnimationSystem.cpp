@@ -43,10 +43,10 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
                 continue;
             if (!already && this->_clock->getElapsedTime().asSeconds() >= this->_lastTime[spriteID.id] + this->_delay[spriteID.id]) {
                 if (spriteID.curFrame == 0)
-                    spriteID.signe = false;
+                    spriteID.sign = false;
                 if (spriteID.curFrame == spriteID.nbFrame)
-                    spriteID.signe = true;
-                spriteID.signe == false ? spriteID.curFrame++ : spriteID.curFrame--;
+                    spriteID.sign = true;
+                spriteID.sign == false ? spriteID.curFrame++ : spriteID.curFrame--;
                 this->_sprites->at(spriteID.id).setTextureRect(sf::IntRect(spriteID.curFrame * spriteID.offsetX, spriteID.curFrame * spriteID.offsetY, sz.x, sz.y));
                 this->_lastTime[spriteID.id] = this->_clock->getElapsedTime().asSeconds();
                 already = true;
