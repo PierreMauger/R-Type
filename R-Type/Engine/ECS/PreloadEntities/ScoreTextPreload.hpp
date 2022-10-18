@@ -1,5 +1,5 @@
-#ifndef VESSELPRELOAD_HPP
-#define VESSELPRELOAD_HPP
+#ifndef SCORETEXTPRELOAD_HPP
+#define SCORETEXTPRELOAD_HPP
 
 #include <Includes.hpp>
 
@@ -8,7 +8,7 @@
 
 namespace eng
 {
-    class VesselPreload : public EntityPreload
+    class ScoreTextPreload : public EntityPreload
     {
         public:
             void preload(Engine &engine) override;
@@ -16,4 +16,4 @@ namespace eng
     };
 }
 
-#endif // VESSELPRELOAD_HPP
+#endif // SCORETEXTPRELOAD_HPP

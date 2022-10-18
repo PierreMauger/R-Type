@@ -5,8 +5,26 @@
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
+#include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
+
+bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
+{
+    auto &masks = entityManager.getMasks();
+    std::size_t checkCon = (InfoComp::CONTROLLABLE);
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (!masks[i].has_value())
+            continue;
+        if ((masks[i].value() & checkCon) == checkCon) {
+            kill = componentManager.getSingleComponent<Controllable>(i).kill;
+            return true;
+        }
+    }
+    death++;
+    return false;
+}
 
 void mainLoop(eng::Engine &engine)
 {
@@ -17,7 +35,11 @@ void mainLoop(eng::Engine &engine)
     sf::Time boss_time = sf::seconds(20);
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
+    eng::VesselPreload vesselPreload;
+    std::size_t death = 0;
+    std::size_t kill = 0;
 
+    vesselPreload.preload(engine);
     while (graphic.getWindow()->isOpen()) {
         while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
 #ifndef NDEBUG
@@ -26,6 +48,8 @@ void mainLoop(eng::Engine &engine)
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
         }
+        if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
+            vesselPreload.preloadScore(engine, kill, death);
         if (graphic.getClock()->getElapsedTime() > boss_time) {
             bossPreload.preload(engine);
             boss_time = sf::seconds(boss_time.asSeconds() + 20);
@@ -57,7 +81,7 @@ int main(void)
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
 #endif
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
-    systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
+    systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
     systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
     componentManager.bindComponent<Position>();
@@ -70,6 +94,7 @@ int main(void)
     componentManager.bindComponent<Life>();
     componentManager.bindComponent<Enemy>();
     componentManager.bindComponent<Appearance>();
+    componentManager.bindComponent<Disappearance>();
     componentManager.bindComponent<CooldownShoot>();
     componentManager.bindComponent<CooldownBar>();
     componentManager.bindComponent<LifeBar>();
@@ -79,20 +104,20 @@ int main(void)
     componentManager.bindComponent<DropBonus>();
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
+    componentManager.bindComponent<SpriteAttribut>();
 
     // create background
     eng::ParallaxPreload parallaxPreload;
 
     parallaxPreload.preload(engine);
 
-    // create spaceship
-    eng::VesselPreload vesselPreload;
-
-    vesselPreload.preload(engine);
-
     eng::BackgroundMusicPreload backgroundMusicPreload;
 
     backgroundMusicPreload.preload(engine);
+
+    eng::ScoreTextPreload scoreTextPreload;
+
+    scoreTextPreload.preload(engine);
 
     mainLoop(engine);
     return 0;
