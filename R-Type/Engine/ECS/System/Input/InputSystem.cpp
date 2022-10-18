@@ -28,8 +28,8 @@ void InputSystem::createShoot(std::size_t id, ComponentManager &componentManager
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, damage, sizeProj.size});
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55 * sizeProj.size, 30 * sizeProj.size});
     addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-    sizeProj.size == 1 ? componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, 1})
-                       : componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, 1 - (sizeProj.size / 10)});
+    float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));
+    componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, pitch});
 }
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
