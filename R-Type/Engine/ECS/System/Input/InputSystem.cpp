@@ -36,21 +36,25 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
 {
     auto &masks = entityManager.getMasks();
     std::size_t input = (InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
+    std::size_t app = (InfoComp::APP);
+    std::size_t dis = (InfoComp::DIS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
-        if (masks[i].has_value() && (masks[i].value() & input) == input) {
-            Position &pos = componentManager.getSingleComponent<Position>(i);
-            Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
-            CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(i);
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
-                sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-                createShoot(i, componentManager, pos, entityManager, 2);
-            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) {
-                sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-                createShoot(i, componentManager, pos, entityManager, 1);
-            }
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = vel.baseSpeed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = vel.baseSpeed : vel.x = 0);
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = vel.baseSpeed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = vel.baseSpeed : vel.y = 0);
+        if (!masks[i].has_value() || (masks[i].value() & input) != input ||
+        ((masks[i].value() & app) == app && componentManager.getSingleComponent<Appearance>(i).app) ||
+        ((masks[i].value() & dis) == dis && componentManager.getSingleComponent<Disappearance>(i).dis))
+            continue;
+        Position &pos = componentManager.getSingleComponent<Position>(i);
+        Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
+        CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(i);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
+            sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
+            createShoot(i, componentManager, pos, entityManager, 2);
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) {
+            sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
+            createShoot(i, componentManager, pos, entityManager, 1);
         }
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = vel.baseSpeed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = vel.baseSpeed : vel.x = 0);
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = vel.baseSpeed * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = vel.baseSpeed : vel.y = 0);
     }
 }

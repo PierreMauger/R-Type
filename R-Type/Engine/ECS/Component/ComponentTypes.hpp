@@ -14,15 +14,17 @@ enum InfoComp {
     LIFE = 1 << 7,
     ENEMY = 1 << 8,
     APP = 1 << 9,
-    COOLDOWNSHOOT = 1 << 10,
-    COOLDOWNBAR = 1 << 11,
-    LIFEBAR = 1 << 12,
-    PARENT = 1 << 13,
-    PATERN = 1 << 14,
-    SYNCID = 1 << 15,
-    DROP = 1 << 16,
-    TEXT = 1 << 17,
-    SOUNDID = 1 << 18,
+    DIS = 1 << 10,
+    COOLDOWNSHOOT = 1 << 11,
+    COOLDOWNBAR = 1 << 12,
+    LIFEBAR = 1 << 13,
+    PARENT = 1 << 14,
+    PATERN = 1 << 15,
+    SYNCID = 1 << 16,
+    DROP = 1 << 17,
+    TEXT = 1 << 18,
+    SOUNDID = 1 << 19,
+    SPRITEAT = 1 << 20,
 };
 
 typedef struct {
@@ -55,6 +57,8 @@ typedef struct {
         std::size_t curFrame = 0;
         std::size_t nbFrame = 0;
         bool sign = false;
+        float lastTime = 0.0f;
+        float delay = 0.0f;
         std::size_t offsetX = 0;
         std::size_t offsetY = 0;
 } SpriteID;
@@ -62,6 +66,7 @@ typedef struct {
 typedef struct {
         bool con = false;
         std::size_t kill = 0;
+        std::size_t death = 0;
 } Controllable;
 
 typedef struct {
@@ -88,6 +93,11 @@ typedef struct {
         bool app = false;
         float end = 0.0f;
 } Appearance;
+
+typedef struct {
+        bool dis = false;
+        float end = 0.0f;
+} Disappearance;
 
 typedef struct {
         float lastShoot = 0.0f;
@@ -130,8 +140,9 @@ typedef struct {
 } DropBonus;
 
 typedef struct {
-        sf::Text text = sf::Text();
         std::string str = "";
+        std::size_t value = 0;
+        sf::Vector2f pos = {0.0f, 0.0f};
 } Text;
 
 typedef struct {
@@ -140,5 +151,11 @@ typedef struct {
         bool loop = false;
         float pitch = 1.0f;
 } SoundID;
+
+typedef struct {
+        float rotation = 0;
+        sf::IntRect rect = sf::IntRect();
+        sf::Color color = sf::Color::White;
+} SpriteAttribut;
 
 #endif // COMPONENTTYPES_HPP
