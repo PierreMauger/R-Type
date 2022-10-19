@@ -111,8 +111,9 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
 
     if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
         for (std::size_t j = 0; j < masks.size(); j++) {
-            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol && this->checkColision(
-                pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
+            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol &&
+                this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
+                                    componentManager.getSingleComponent<Size>(j))) {
                 if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
                     componentManager.getSingleComponent<Disappearance>(i).dis = true;
                 else {

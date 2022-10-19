@@ -3,13 +3,13 @@
 void eng::BossPreload::preload(Engine &engine)
 {
     float randY = createRandom(180, 420);
-    std::size_t id = engine.getECS().getEntityManager().addMask(
-        (InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATERN | InfoComp::DROP | InfoComp::SPRITEAT),
-        engine.getECS().getComponentManager());
+    std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE |
+                                                                 InfoComp::SIZE | InfoComp::PATERN | InfoComp::DROP | InfoComp::SPRITEAT),
+                                                                engine.getECS().getComponentManager());
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, 0, 0.2, 96, 0});
     engine.getECS().getComponentManager().getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}});
     engine.getECS().getComponentManager().getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, randY});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{530, -300, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(engine.getGraphic().getWindow()->getSize().x - 280), -300, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, -2, 0, 2});
     engine.getECS().getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern::CIRCLE, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true, 0, 0.4});

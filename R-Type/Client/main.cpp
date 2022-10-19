@@ -4,15 +4,15 @@
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
-#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
 
 bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t checkCon = (InfoComp::CONTROLLABLE);
+    std::size_t checkCon = (eng::InfoComp::CONTROLLABLE);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value())
@@ -38,6 +38,7 @@ void mainLoop(eng::Engine &engine)
     eng::VesselPreload vesselPreload;
     std::size_t death = 0;
     std::size_t kill = 0;
+    sf::View view = engine.getGraphic().getWindow()->getDefaultView();
 
     vesselPreload.preload(engine);
     while (graphic.getWindow()->isOpen()) {
@@ -47,6 +48,10 @@ void mainLoop(eng::Engine &engine)
 #endif
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
+            if (graphic.getEvent()->type == sf::Event::Resized) {
+                sf::FloatRect visibleArea(0, 0, graphic.getEvent()->size.width, graphic.getEvent()->size.height);
+                graphic.getWindow()->setView(sf::View(visibleArea));
+            }
         }
         if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
             vesselPreload.preloadScore(engine, kill, death);
