@@ -6,14 +6,14 @@
 
 namespace eng
 {
-    class Component
+    class SparseArray
     {
         private:
-            std::vector<std::optional<std::any>> _component;
+            std::vector<std::optional<std::any>> _data;
 
         public:
-            Component();
-            ~Component() = default;
+            SparseArray();
+            ~SparseArray() = default;
 
             void addData(std::size_t id, std::any data);
             void emplaceData(std::size_t id, std::any data);

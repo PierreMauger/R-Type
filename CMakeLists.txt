@@ -121,7 +121,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/ECS.cpp
     ${ENGINE_ROOT}/ECS/Entity/EntityManager.cpp
     ${ENGINE_ROOT}/ECS/Component/ComponentManager.cpp
-    ${ENGINE_ROOT}/ECS/Component/Component.cpp
+    ${ENGINE_ROOT}/ECS/Component/SparseArray.cpp
     ${ENGINE_ROOT}/ECS/System/SystemManager.cpp
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp
@@ -137,6 +137,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/PreloadEntities/CooldownBarPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/EnemyPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/BackgroundMusicPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/ScoreTextPreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Network files

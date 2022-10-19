@@ -31,7 +31,7 @@ int main(int ac, char **av)
     systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
-    systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
+    systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();

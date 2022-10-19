@@ -4,9 +4,27 @@
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
+#include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Engine.hpp"
 #include "Includes.hpp"
+
+bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
+{
+    auto &masks = entityManager.getMasks();
+    std::size_t checkCon = (InfoComp::CONTROLLABLE);
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (!masks[i].has_value())
+            continue;
+        if ((masks[i].value() & checkCon) == checkCon) {
+            kill = componentManager.getSingleComponent<Controllable>(i).kill;
+            return true;
+        }
+    }
+    death++;
+    return false;
+}
 
 void mainLoop(eng::Engine &engine)
 {
@@ -17,7 +35,11 @@ void mainLoop(eng::Engine &engine)
     sf::Time boss_time = sf::seconds(20);
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
+    eng::VesselPreload vesselPreload;
+    std::size_t death = 0;
+    std::size_t kill = 0;
 
+    vesselPreload.preload(engine);
     while (graphic.getWindow()->isOpen()) {
         while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
 #ifndef NDEBUG
@@ -26,6 +48,8 @@ void mainLoop(eng::Engine &engine)
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
         }
+        if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
+            vesselPreload.preloadScore(engine, kill, death);
         if (graphic.getClock()->getElapsedTime() > boss_time) {
             bossPreload.preload(engine);
             boss_time = sf::seconds(boss_time.asSeconds() + 20);
@@ -57,7 +81,7 @@ int main(void)
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
 #endif
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
-    systemManager.addSystem(std::make_shared<eng::ScoreSystem>(graphic.getWindow(), sprites));
+    systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
     systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
     componentManager.bindComponent<Position>();
@@ -70,6 +94,7 @@ int main(void)
     componentManager.bindComponent<Life>();
     componentManager.bindComponent<Enemy>();
     componentManager.bindComponent<Appearance>();
+    componentManager.bindComponent<Disappearance>();
     componentManager.bindComponent<CooldownShoot>();
     componentManager.bindComponent<CooldownBar>();
     componentManager.bindComponent<LifeBar>();
@@ -79,31 +104,27 @@ int main(void)
     componentManager.bindComponent<DropBonus>();
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
+    componentManager.bindComponent<SpriteAttribut>();
 
     // create background
     eng::ParallaxPreload parallaxPreload;
+    eng::BackgroundMusicPreload backgroundMusicPreload;
+    eng::ScoreTextPreload scoreTextPreload;
 
     parallaxPreload.preload(engine);
-
-    // create spaceship
-    eng::VesselPreload vesselPreload;
-
-    vesselPreload.preload(engine);
-
-    eng::BackgroundMusicPreload backgroundMusicPreload;
-
     backgroundMusicPreload.preload(engine);
+    scoreTextPreload.preload(engine);
 
     // mainLoop(engine);
 
-    _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
+    // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
     // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
 
-    for (std::size_t i = 0; i < 70; i++) {
-        std::cout << (int)packet[i] << std::endl;
-    }
+    // for (std::size_t i = 0; i < 70; i++) {
+    //     std::cout << (int)packet[i] << std::endl;
+    // }
 
-    engine.getNetwork().getSerializer().handlePacket(packet, 5, engine.getECS().getEntityManager(), engine.getECS().getComponentManager(), engine.getInput(),
-                                                     engine.getGraphic().getClock());
+    // engine.getNetwork().getSerializer().handlePacket(packet, 5, engine.getECS().getEntityManager(), engine.getECS().getComponentManager(), engine.getInput(),
+    //                                                  engine.getGraphic().getClock());
     return 0;
 }

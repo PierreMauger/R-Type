@@ -7,7 +7,7 @@ eng::Serializer::Serializer()
 void eng::Serializer::insertMagic(std::vector<uint8_t> &packet)
 {
     for (auto elem : MAGIC) {
-        // packet.push_back(elem);
+        packet.push_back(elem);
     }
 }
 
@@ -102,7 +102,7 @@ void eng::Serializer::synchronizeEntity(std::vector<uint8_t> packet, EntityManag
     // skip magic and header
     std::size_t adv = MAGIC_SIZE + sizeof(PacketType);
     // fields
-    EntityType type;
+    EntityType type = EntityType::UPDATE;
     SyncID syncID = {0};
     std::size_t mask = 0;
     std::size_t id = 0;
@@ -149,7 +149,7 @@ void eng::Serializer::synchronizeInput(std::vector<uint8_t> packet, std::size_t 
                                        std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(PacketType);
-    sf::Keyboard::Key keyPress;
+    sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
 
     adv = this->deserializeComponent<sf::Keyboard::Key>(packet, adv, &keyPress);
     if (!this->checkMagic(packet, adv)) {
@@ -163,7 +163,7 @@ void eng::Serializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityM
 {
     std::size_t adv = 0;
     std::vector<uint8_t> packetVector = this->convertToVector(packet);
-    PacketType type;
+    PacketType type = PacketType::ENTITY;
 
     if (!this->checkMagic(packetVector, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
@@ -171,7 +171,6 @@ void eng::Serializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityM
     adv += MAGIC_SIZE;
     adv = this->deserializeComponent<PacketType>(packetVector, adv, &type);
 
-    std::cout << "Packet type: " << type << std::endl;
     switch (type) {
     case ENTITY:
         this->synchronizeEntity(packetVector, entityManager, componentManager);
