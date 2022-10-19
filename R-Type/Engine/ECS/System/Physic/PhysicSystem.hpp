@@ -13,6 +13,7 @@ namespace eng
             sf::Rect<float> _rect2;
             void createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager);
             bool checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
+            bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
             bool checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2);
             bool collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);

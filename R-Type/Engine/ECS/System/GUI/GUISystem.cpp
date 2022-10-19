@@ -218,6 +218,7 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         CooldownShoot &cdShoot = componentManager.getSingleComponent<CooldownShoot>(this->_selectedEntity);
         ImGui::SliderFloat("Last shoot", &cdShoot.lastShoot, 0.0f, 10.0f);
         ImGui::SliderFloat("Shoot delay", &cdShoot.shootDelay, 0.0f, 10.0f);
+        ImGui::SliderFloat("Size", &cdShoot.size, 0.0f, 10.0f);
         break;
     }
     case 11: {
@@ -236,10 +237,6 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         Parent &parent = componentManager.getSingleComponent<Parent>(this->_selectedEntity);
         const ImU64 increment = 1;
         ImGui::InputScalar("Model ID", ImGuiDataType_U64, &parent.id, &increment);
-        break;
-    }
-    case 14: {
-        Patern &patern = componentManager.getSingleComponent<Patern>(this->_selectedEntity);
         break;
     }
     default:

@@ -11,11 +11,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 if(UNIX)
     set(CMAKE_CXX_FLAGS "-std=c++20 -O3 -Wall -Wextra")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -Werror")
 else()
     set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /Wall /EHsc")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /WX")
 endif()
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/build/_deps/sfml-src/cmake")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -120,7 +118,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/ECS.cpp
     ${ENGINE_ROOT}/ECS/Entity/EntityManager.cpp
     ${ENGINE_ROOT}/ECS/Component/ComponentManager.cpp
-    ${ENGINE_ROOT}/ECS/Component/Component.cpp
+    ${ENGINE_ROOT}/ECS/Component/SparseArray.cpp
     ${ENGINE_ROOT}/ECS/System/SystemManager.cpp
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp
@@ -136,6 +134,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/PreloadEntities/CooldownBarPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/EnemyPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/BackgroundMusicPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/ScoreTextPreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Network files

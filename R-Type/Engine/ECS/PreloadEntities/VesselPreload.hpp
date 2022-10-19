@@ -15,8 +15,7 @@ namespace eng
             size_t _syncId;
         public:
             void preload(Engine &engine) override;
-            void setSyncId(Engine &engine, std::size_t syncId);
-            size_t getSyncId();
+            void preloadScore(Engine &engine, std::size_t kill, std::size_t death);
     };
 }
 
