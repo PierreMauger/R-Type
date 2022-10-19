@@ -117,14 +117,17 @@ int main(void)
 
     // mainLoop(engine);
 
-    // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
-    // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
+    eng::VesselPreload vesselPreload;
+    vesselPreload.preload(engine);
 
-    // for (std::size_t i = 0; i < 70; i++) {
-    //     std::cout << (int)packet[i] << std::endl;
-    // }
+    // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeEntity(8, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
+    _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
 
-    // engine.getNetwork().getSerializer().handlePacket(packet, 5, engine.getECS().getEntityManager(), engine.getECS().getComponentManager(), engine.getInput(),
-    //                                                  engine.getGraphic().getClock());
+    for (std::size_t i = 0; i < 70; i++) {
+        std::cout << (int)packet[i] << std::endl;
+    }
+
+    engine.getNetwork().getSerializer().handlePacket(packet, 8, engine.getECS().getEntityManager(), engine.getECS().getComponentManager(), engine.getInput(),
+                                                     engine.getGraphic().getClock());
     return 0;
 }

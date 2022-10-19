@@ -14,13 +14,17 @@ namespace eng
 {
     enum PacketType {
         ENTITY,
-        INPUT
+        INPUT,
+
+        UNKNOWN_PACKET
     };
 
     enum EntityType {
         CREATE,
         DESTROY,
-        UPDATE
+        UPDATE,
+
+        UNKNOWN_ENTITY
     };
 
     class Serializer
@@ -29,7 +33,7 @@ namespace eng
             template <typename T> void serializeComponent(std::vector<uint8_t> &packet, T *component)
             {
                 for (uint8_t i = 0; i < sizeof(T); i++) {
-                    packet.push_back(((uint8_t *)&component)[i]);
+                    packet.push_back(((uint8_t *)component)[i]);
                 }
             };
 
@@ -38,7 +42,7 @@ namespace eng
                 std::size_t i = 0;
 
                 for (; i < sizeof(T); i++) {
-                    ((std::size_t *)&component)[i] = packet[adv + i];
+                    ((uint8_t *)component)[i] = packet.at(adv + i);
                 }
                 return (adv + i);
             };
