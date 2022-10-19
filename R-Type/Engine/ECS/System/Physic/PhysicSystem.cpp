@@ -61,8 +61,6 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
     if (dis.dis) {
         pos.y -= -vel.baseSpeed;
         sprite.rotation += 20;
-        if (sprite.color != sf::Color::Black)
-            sprite.color = sf::Color::Black;
         if (pos.y >= dis.end) {
             vel.y = 0;
             dis.dis = false;
