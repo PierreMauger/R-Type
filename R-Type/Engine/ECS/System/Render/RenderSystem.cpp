@@ -93,6 +93,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
                 spriteRef.setTextureRect(componentManager.getSingleComponent<SpriteAttribut>(i).rect);
                 spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(i).rotation);
                 spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(i).color);
+                spriteRef.setScale(componentManager.getSingleComponent<SpriteAttribut>(i).scale);
             }
             if (masks[i].has_value() && (masks[i].value() & renderCooldown) == renderCooldown)
                 displayCooldownBar(componentManager, entityManager, spriteRef, i);

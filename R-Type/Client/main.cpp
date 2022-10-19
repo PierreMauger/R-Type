@@ -26,6 +26,29 @@ bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &compon
     return false;
 }
 
+void updateSize(eng::Engine &engine)
+{
+    std::shared_ptr<sf::RenderWindow> window = engine.getGraphic().getWindow();
+    eng::EntityManager &entityManager = engine.getECS().getEntityManager();
+    eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
+    auto &masks = entityManager.getMasks();
+    std::size_t checkText = (eng::InfoComp::TEXT);
+    std::size_t checkCooldownBar = (eng::InfoComp::COOLDOWNBAR | eng::InfoComp::POS);
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (!masks[i].has_value())
+            continue;
+        if ((masks[i].value() & checkText) == checkText) {
+            Text &text = componentManager.getSingleComponent<Text>(i);
+            text.pos.x = static_cast<float>(window->getSize().x - 100);
+        }
+        if ((masks[i].value() & checkCooldownBar) == checkCooldownBar) {
+            Position &cb = componentManager.getSingleComponent<Position>(i);
+            cb.y = static_cast<float>(engine.getGraphic().getWindow()->getSize().y) - 20;
+        }
+    }
+}
+
 void mainLoop(eng::Engine &engine)
 {
     eng::Graphic &graphic = engine.getGraphic();
@@ -38,7 +61,6 @@ void mainLoop(eng::Engine &engine)
     eng::VesselPreload vesselPreload;
     std::size_t death = 0;
     std::size_t kill = 0;
-    sf::View view = engine.getGraphic().getWindow()->getDefaultView();
 
     vesselPreload.preload(engine);
     while (graphic.getWindow()->isOpen()) {
@@ -51,6 +73,7 @@ void mainLoop(eng::Engine &engine)
             if (graphic.getEvent()->type == sf::Event::Resized) {
                 sf::FloatRect visibleArea(0, 0, graphic.getEvent()->size.width, graphic.getEvent()->size.height);
                 graphic.getWindow()->setView(sf::View(visibleArea));
+                updateSize(engine);
             }
         }
         if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))

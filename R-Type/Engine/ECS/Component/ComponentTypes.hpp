@@ -159,6 +159,7 @@ typedef struct {
         float rotation = 0;
         sf::IntRect rect = sf::IntRect();
         sf::Color color = sf::Color::White;
+        sf::Vector2f scale = {1.0f, 1.0f};
 } SpriteAttribut;
 
 #endif // COMPONENTTYPES_HPP
