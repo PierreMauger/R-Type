@@ -4,6 +4,26 @@ eng::Serializer::Serializer()
 {
 }
 
+_STORAGE_DATA eng::Serializer::convertToArray(std::vector<uint8_t> &packet)
+{
+    _STORAGE_DATA convert = {0};
+
+    for (std::size_t i = 0; i < packet.size(); i++) {
+        convert[i] = packet[i];
+    }
+    return convert;
+}
+
+std::vector<uint8_t> eng::Serializer::convertToVector(_STORAGE_DATA &packet)
+{
+    std::vector<uint8_t> convert;
+
+    for (std::size_t i = 0; i < packet.size(); i++) {
+        convert.push_back(packet[i]);
+    }
+    return convert;
+}
+
 void eng::Serializer::insertMagic(std::vector<uint8_t> &packet)
 {
     for (auto elem : MAGIC) {
@@ -34,6 +54,82 @@ std::size_t eng::Serializer::getEntityID(SyncID syncID, EntityManager &entityMan
     throw std::runtime_error("[ERROR] SyncID not found");
 }
 
+void eng::Serializer::pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager)
+{
+    for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
+        if ((mask & (1 << i)) == 0) {
+            continue;
+        }
+        switch (i) {
+        case 0:
+            this->serializeComponent<Position>(packet, &componentManager.getSingleComponent<Position>(id));
+            break;
+        case 1:
+            this->serializeComponent<Velocity>(packet, &componentManager.getSingleComponent<Velocity>(id));
+            break;
+        case 2:
+            this->serializeComponent<Size>(packet, &componentManager.getSingleComponent<Size>(id));
+            break;
+        case 3:
+            this->serializeComponent<SpriteID>(packet, &componentManager.getSingleComponent<SpriteID>(id));
+            break;
+        case 4:
+            this->serializeComponent<Controllable>(packet, &componentManager.getSingleComponent<Controllable>(id));
+            break;
+        case 5:
+            this->serializeComponent<Parallax>(packet, &componentManager.getSingleComponent<Parallax>(id));
+            break;
+        case 6:
+            this->serializeComponent<Projectile>(packet, &componentManager.getSingleComponent<Projectile>(id));
+            break;
+        case 7:
+            this->serializeComponent<Life>(packet, &componentManager.getSingleComponent<Life>(id));
+            break;
+        case 8:
+            this->serializeComponent<Enemy>(packet, &componentManager.getSingleComponent<Enemy>(id));
+            break;
+        case 9:
+            this->serializeComponent<Appearance>(packet, &componentManager.getSingleComponent<Appearance>(id));
+            break;
+        case 10:
+            this->serializeComponent<Disappearance>(packet, &componentManager.getSingleComponent<Disappearance>(id));
+            break;
+        case 11:
+            this->serializeComponent<CooldownShoot>(packet, &componentManager.getSingleComponent<CooldownShoot>(id));
+            break;
+        case 12:
+            this->serializeComponent<CooldownBar>(packet, &componentManager.getSingleComponent<CooldownBar>(id));
+            break;
+        case 13:
+            this->serializeComponent<LifeBar>(packet, &componentManager.getSingleComponent<LifeBar>(id));
+            break;
+        case 14:
+            this->serializeComponent<Parent>(packet, &componentManager.getSingleComponent<Parent>(id));
+            break;
+        case 15:
+            this->serializeComponent<Patern>(packet, &componentManager.getSingleComponent<Patern>(id));
+            break;
+        case 16:
+            this->serializeComponent<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
+            break;
+        case 17:
+            this->serializeComponent<DropBonus>(packet, &componentManager.getSingleComponent<DropBonus>(id));
+            break;
+        case 18:
+            this->serializeComponent<Text>(packet, &componentManager.getSingleComponent<Text>(id));
+            break;
+        case 19:
+            this->serializeComponent<SoundID>(packet, &componentManager.getSingleComponent<SoundID>(id));
+            break;
+        case 20:
+            this->serializeComponent<SpriteAttribut>(packet, &componentManager.getSingleComponent<SpriteAttribut>(id));
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 std::size_t eng::Serializer::updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
 {
     Position pos = {0, 0};
@@ -50,27 +146,7 @@ std::size_t eng::Serializer::updateEntity(std::vector<uint8_t> &packet, std::siz
     return adv;
 }
 
-_STORAGE_DATA eng::Serializer::convertToArray(std::vector<uint8_t> &packet)
-{
-    _STORAGE_DATA convert = {0};
-
-    for (std::size_t i = 0; i < packet.size(); i++) {
-        convert[i] = packet[i];
-    }
-    return convert;
-}
-
-std::vector<uint8_t> eng::Serializer::convertToVector(_STORAGE_DATA &packet)
-{
-    std::vector<uint8_t> convert;
-
-    for (std::size_t i = 0; i < packet.size(); i++) {
-        convert.push_back(packet[i]);
-    }
-    return convert;
-}
-
-_STORAGE_DATA eng::Serializer::serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager)
+_STORAGE_DATA eng::Serializer::serializeEntity(std::size_t id, EntityType type, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::vector<uint8_t> packet;
 
@@ -85,13 +161,14 @@ _STORAGE_DATA eng::Serializer::serializeEntity(std::size_t id, EntityType type, 
     this->serializeComponent<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
 
     // mask
-    std::size_t editMask = static_cast<std::size_t>(InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID);
-    this->serializeComponent<std::size_t>(packet, &editMask);
+    std::optional<std::size_t> mask = entityManager.getMasks()[id];
+    if (!entityManager.getMasks()[id].has_value()) {
+        throw std::runtime_error("[ERROR] Entity has no mask");
+    }
+    this->serializeComponent<std::size_t>(packet, &entityManager.getMasks()[id].value());
 
     // components
-    this->serializeComponent<Position>(packet, &componentManager.getSingleComponent<Position>(id));
-    this->serializeComponent<Velocity>(packet, &componentManager.getSingleComponent<Velocity>(id));
-    this->serializeComponent<SpriteID>(packet, &componentManager.getSingleComponent<SpriteID>(id));
+    this->pushComponents(packet, mask.value(), id, componentManager);
 
     this->insertMagic(packet);
     return this->convertToArray(packet);
@@ -99,9 +176,7 @@ _STORAGE_DATA eng::Serializer::serializeEntity(std::size_t id, EntityType type, 
 
 void eng::Serializer::synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
 {
-    // skip magic and header
     std::size_t adv = MAGIC_SIZE + sizeof(PacketType);
-    // fields
     EntityType type = EntityType::UNKNOWN_ENTITY;
     SyncID syncID = {0};
     std::size_t mask = 0;
