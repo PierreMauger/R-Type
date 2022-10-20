@@ -8,20 +8,20 @@
 #include "Network/Server/Server.hpp"
 #include "Network/Connection.hpp"
 
-void updatePlayers(eng::Engine &engine, std::map<size_t, boost::shared_ptr<eng::Connection>> &players)
-{
-    std::vector<boost::shared_ptr<eng::Connection>> &listConnections = engine.getNetwork().getServer()->getConnections();
-    eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
-    eng::VesselPreload vesselPreload;
-    size_t tmpId = 0;
+// void updatePlayers(eng::Engine &engine, std::map<size_t, boost::shared_ptr<eng::Connection>> &players)
+// {
+//     std::vector<boost::shared_ptr<eng::Connection>> &listConnections = engine.getNetwork().getServer()->getConnections();
+//     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
+//     eng::VesselPreload vesselPreload;
+//     size_t tmpId = 0;
 
-    if (listConnections.size() > players.size()) {
-        for (auto &player : players) {
-            if (player)
-        }
-        players.emplace()
-    }
-}
+//     if (listConnections.size() > players.size()) {
+//         for (auto &player : players) {
+//             if (player)
+//         }
+//         players.emplace()
+//     }
+// }
 
 void mainLoop(eng::Engine &engine)
 {
@@ -32,7 +32,7 @@ void mainLoop(eng::Engine &engine)
     sf::Time boss_time = sf::seconds(20);
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
-    _QUEUE_TYPE &queue = engine.getNetwork().getServer()->getQueue();
+    _QUEUE_TYPE &queueIn = engine.getNetwork().getServer()->getQueueIn();
     std::map<size_t, boost::shared_ptr<eng::Connection>> players;
     size_t refreshTick = 5;
     // eng::VesselPreload playerVessel;
@@ -44,9 +44,9 @@ void mainLoop(eng::Engine &engine)
                 graphic.getWindow()->close();
         }
         for (size_t count = 0; count < refreshTick; count++) {
-            if (!queue.empty()) {
+            if (!queueIn.empty()) {
                 // dataConnectionCheck(queue.pop_front());
-                _STORAGE_DATA data = queue.pop_front();
+                _STORAGE_DATA data = queueIn.pop_front();
                 std::cout << "Message: " << data.data() << std::endl;
             } else {
                 break;

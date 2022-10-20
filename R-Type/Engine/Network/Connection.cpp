@@ -26,11 +26,12 @@ Connection::~Connection()
 {
 }
 
-void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer)
+void Connection::handleMsgTcp(boost::system::error_code error, size_t size)
 {
     if (!error) {
         std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
-        this->_dataIn.push_back(buffer);
+        std::cout << "Message Size: " << size << std::endl;
+        this->_dataIn.push_back(this->_tcpTmpBuffer);
     } else if (error == boost::asio::error::eof) {
         this->closeConnection();
         std::cout << "Connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << " closed" << std::endl;
@@ -43,19 +44,19 @@ void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buf
 
 void Connection::initConnection()
 {
-    _STORAGE_DATA buffer;
+    this->_tcpTmpBuffer.fill(0);
     this->_tcpSocket.async_receive(
-        boost::asio::buffer(buffer),
+        boost::asio::buffer(this->_tcpTmpBuffer),
         boost::bind(&Connection::handleMsgTcp,
                     this,
                     boost::asio::placeholders::error,
-                    buffer
+                    boost::asio::placeholders::bytes_transferred
                 )
     );
 }
 
 void Connection::run()
-{
+{   
     this->initConnection();
 }
 

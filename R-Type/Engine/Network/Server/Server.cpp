@@ -19,14 +19,14 @@ Server::~Server()
 
 void Server::initServer()
 {
-    _STORAGE_DATA buffer;
+    this->_udpTmpBuffer.fill(0);
     this->_udpSocket.async_receive_from(
-        boost::asio::buffer(buffer),
+        boost::asio::buffer(this->_udpTmpBuffer),
         this->_tmpEndpoint,
         boost::bind(&Server::handleMsgUdp,
                     this,
                     boost::asio::placeholders::error,
-                    buffer
+                    boost::asio::placeholders::bytes_transferred
                 )
     );
 
@@ -68,11 +68,12 @@ void Server::stop()
         this->_threadContext.join();
 }
 
-void Server::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer)
+void Server::handleMsgUdp(const boost::system::error_code &error, size_t size)
 {
     if (!error) {
         std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
-        this->_dataIn.push_back(buffer);
+        std::cout << "Message Size: " << size << std::endl;
+        this->_dataIn.push_back(this->_udpTmpBuffer);
     } else {
         std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;
     }
@@ -162,9 +163,14 @@ void Server::updateConnection()
     }
 }
 
-_QUEUE_TYPE &Server::getQueue()
+_QUEUE_TYPE &Server::getQueueIn()
 {
     return this->_dataIn;
+}
+
+_QUEUE_TYPE &Server::getQueueOut()
+{
+    return this->_dataOut;
 }
 
 std::vector<boost::shared_ptr<Connection>> &Server::getConnections()

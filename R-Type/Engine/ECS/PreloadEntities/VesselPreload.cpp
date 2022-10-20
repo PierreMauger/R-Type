@@ -23,7 +23,7 @@ void eng::VesselPreload::preload(Engine &engine)
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::HIGH});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(engine.getGraphic().getWindow()->getSize().y) - 20, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(idBar, Parent{this->_id});
+    engine.getECS().getComponentManager().getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     engine.getECS().getComponentManager().getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
 }
 

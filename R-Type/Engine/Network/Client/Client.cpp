@@ -21,16 +21,14 @@ Client::~Client()
 
 void Client::initClient()
 {
-    _STORAGE_DATA buffer;
-    _B_ASIO_UDP::endpoint newEndpoint;
+    this->_udpTmpBuffer.fill(0);
     this->_udpSocket.async_receive_from(
-        boost::asio::buffer(buffer),
-        newEndpoint,
+        boost::asio::buffer(this->_udpTmpBuffer),
+        this->_tmpEndpoint,
         boost::bind(&Client::handleMsgUdp,
                     this,
                     boost::asio::placeholders::error,
-                    buffer,
-                    newEndpoint
+                    boost::asio::placeholders::bytes_transferred
                 )
     );
 }
@@ -77,11 +75,12 @@ void Client::stop()
         this->_threadContext.join();
 }
 
-void Client::handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, _B_ASIO_UDP::endpoint newEndpoint)
+void Client::handleMsgUdp(const boost::system::error_code &error, size_t size)
 {
     if (!error) {
-        std::cout << "New UDP message from " << newEndpoint.address().to_string() << ":" << newEndpoint.port() << std::endl;
-        this->_dataIn.push_back(buffer);
+        std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
+        std::cout << "Message Size: " << size << std::endl;
+        this->_dataIn.push_back(this->_udpTmpBuffer);
     } else {
         std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;
     }
@@ -100,7 +99,12 @@ void Client::udpMsg(_STORAGE_DATA data)
     this->_connection->udpMsg(data);
 }
 
-_QUEUE_TYPE &Client::getQueue()
+_QUEUE_TYPE &Client::getQueueIn()
 {
     return this->_dataIn;
+}
+
+_QUEUE_TYPE &Client::getQueueOut()
+{
+    return this->_dataOut;
 }
