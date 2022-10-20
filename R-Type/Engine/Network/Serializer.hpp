@@ -14,13 +14,17 @@ namespace eng
 {
     enum PacketType {
         ENTITY,
-        INPUT
+        INPUT,
+
+        UNKNOWN_PACKET
     };
 
     enum EntityType {
         CREATE,
         DESTROY,
-        UPDATE
+        UPDATE,
+
+        UNKNOWN_ENTITY
     };
 
     class Serializer
@@ -29,7 +33,7 @@ namespace eng
             template <typename T> void serializeComponent(std::vector<uint8_t> &packet, T *component)
             {
                 for (uint8_t i = 0; i < sizeof(T); i++) {
-                    packet.push_back(((uint8_t *)&component)[i]);
+                    packet.push_back(((uint8_t *)component)[i]);
                 }
             };
 
@@ -38,9 +42,14 @@ namespace eng
                 std::size_t i = 0;
 
                 for (; i < sizeof(T); i++) {
-                    ((std::size_t *)&component)[i] = packet[adv + i];
+                    ((uint8_t *)component)[i] = packet.at(adv + i);
                 }
                 return (adv + i);
+            };
+
+            template <typename T> void assignComponent(std::size_t id, ComponentManager &componentManager, T &component)
+            {
+                componentManager.getSingleComponent<T>(id) = component;
             };
 
             void insertMagic(std::vector<uint8_t> &packet);
@@ -49,6 +58,7 @@ namespace eng
             std::size_t getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager);
 
             std::size_t updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager);
+            void pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager);
 
             _STORAGE_DATA convertToArray(std::vector<uint8_t> &packet);
             std::vector<uint8_t> convertToVector(_STORAGE_DATA &packet);
@@ -60,7 +70,7 @@ namespace eng
             void handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                               std::shared_ptr<sf::Clock> clock);
 
-            _STORAGE_DATA serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager);
+            _STORAGE_DATA serializeEntity(std::size_t id, EntityType type, EntityManager &entityManager, ComponentManager &componentManager);
             void synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
 
             _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
