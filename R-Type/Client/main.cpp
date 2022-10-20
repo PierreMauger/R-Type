@@ -115,9 +115,9 @@ int main(void)
     backgroundMusicPreload.preload(engine);
     scoreTextPreload.preload(engine);
 
-    // mainLoop(engine);
+    mainLoop(engine);
 
-    // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeEntity(5, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
+    // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeEntity(8, eng::EntityType::UPDATE, engine.getECS().getComponentManager());
     // _STORAGE_DATA packet = engine.getNetwork().getSerializer().serializeInput(sf::Keyboard::Left);
 
     // for (std::size_t i = 0; i < 70; i++) {
