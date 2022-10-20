@@ -4,7 +4,6 @@ using namespace eng;
 
 Network::Network()
 {
-    this->_clock = std::make_shared<sf::Clock>();
 }
 
 void Network::initServer(uint16_t portUdp, uint16_t portTcp)
@@ -25,11 +24,6 @@ std::shared_ptr<Server> Network::getServer()
 std::shared_ptr<Client> Network::getClient()
 {
     return this->_client;
-}
-
-std::shared_ptr<sf::Clock> Network::getClock()
-{
-    return this->_clock;
 }
 
 Serializer &Network::getSerializer()

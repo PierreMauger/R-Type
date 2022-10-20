@@ -28,7 +28,8 @@ void Connection::handleMsgTcp(boost::system::error_code error, size_t size)
 {
     if (!error) {
         std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
-        std::cout << "Message Size: " << size << std::endl;
+        if (size != _NET_BUFFER_SIZE)
+            std::cout << "Invalid TCP message size : " << size << std::endl;
         this->_dataIn.push_back(this->_tcpTmpBuffer);
     } else if (error == boost::asio::error::eof) {
         this->closeConnection();

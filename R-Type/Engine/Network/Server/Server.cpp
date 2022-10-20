@@ -70,7 +70,8 @@ void Server::handleMsgUdp(const boost::system::error_code &error, size_t size)
 {
     if (!error) {
         std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
-        std::cout << "Message Size: " << size << std::endl;
+        if (size != _NET_BUFFER_SIZE)
+            std::cout << "Invalid UDP message size : " << size << std::endl;
         this->_dataIn.push_back(this->_udpTmpBuffer);
     } else {
         std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;

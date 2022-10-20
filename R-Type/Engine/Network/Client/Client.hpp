@@ -29,6 +29,7 @@ namespace eng
 
             void run();
             void stop();
+            bool isConnected();
 
             void tcpMsg(_STORAGE_DATA data);
             void udpMsg(_STORAGE_DATA data);
