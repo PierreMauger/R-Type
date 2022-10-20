@@ -27,11 +27,11 @@ void mainLoop(eng::Engine &engine)
 {
     eng::Graphic &graphic = engine.getGraphic();
     eng::ECS &ecs = engine.getECS();
-    sf::Time elapsed_time = sf::seconds(0);
-    sf::Time delta_time = sf::seconds(2);
-    sf::Time boss_time = sf::seconds(20);
-    eng::EnemyPreload enemyPreload;
-    eng::BossPreload bossPreload;
+    // sf::Time elapsed_time = sf::seconds(0);
+    // sf::Time delta_time = sf::seconds(2);
+    // sf::Time boss_time = sf::seconds(20);
+    // eng::EnemyPreload enemyPreload;
+    // eng::BossPreload bossPreload;
     _QUEUE_TYPE &queueIn = engine.getNetwork().getServer()->getQueueIn();
     std::map<size_t, boost::shared_ptr<eng::Connection>> players;
     size_t refreshTick = 5;
