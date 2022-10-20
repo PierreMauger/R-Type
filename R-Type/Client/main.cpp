@@ -51,13 +51,10 @@ void updateSize(eng::Engine &engine)
 
 void mainLoop(eng::Engine &engine)
 {
+    eng::Network &network = engine.getNetwork();
+
     eng::Graphic &graphic = engine.getGraphic();
     eng::ECS &ecs = engine.getECS();
-    sf::Time elapsed_time = sf::seconds(0);
-    sf::Time delta_time = sf::seconds(2);
-    sf::Time boss_time = sf::seconds(20);
-    eng::EnemyPreload enemyPreload;
-    eng::BossPreload bossPreload;
     eng::VesselPreload vesselPreload;
     std::size_t death = 0;
     std::size_t kill = 0;
@@ -78,27 +75,30 @@ void mainLoop(eng::Engine &engine)
         }
         if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
             vesselPreload.preloadScore(engine, kill, death);
-        if (graphic.getClock()->getElapsedTime() > boss_time) {
-            bossPreload.preload(engine);
-            boss_time = sf::seconds(boss_time.asSeconds() + 20);
-        } else if (graphic.getClock()->getElapsedTime() > elapsed_time) {
-            enemyPreload.preload(engine);
-            elapsed_time = graphic.getClock()->getElapsedTime() + delta_time;
-        }
+        if (!network.getClient()->isConnected())
+            graphic.getWindow()->close();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
     }
 }
 
-int main(void)
+int main(int ac, char **av)
 {
+    if (ac != 4) {
+        std::cerr << "Usage: ./R-Type [ip] [portUdp] [portTcp]" << std::endl;
+        return 84;
+    }
+
     eng::Engine engine;
     eng::SystemManager &systemManager = engine.getECS().getSystemManager();
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
+    eng::Network &network = engine.getNetwork();
     eng::Graphic &graphic = engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
+
+    network.initClient(av[1], std::stoi(av[2]), std::stoi(av[3]));
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
@@ -147,6 +147,7 @@ int main(void)
 
     scoreTextPreload.preload(engine);
 
+    network.getClient()->run();
     mainLoop(engine);
     return 0;
 }

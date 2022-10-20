@@ -8,10 +8,9 @@ namespace eng
     class Connection : public boost::enable_shared_from_this<Connection>
     {
         private:
-            void handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer);
+            void handleMsgTcp(boost::system::error_code error, size_t size);
             void initConnection();
 
-        protected:
             boost::asio::io_context &_ioContext;
             _B_ASIO_UDP::endpoint _udpEndpoint;
             _B_ASIO_TCP::endpoint _tcpEndpoint;
@@ -19,6 +18,7 @@ namespace eng
             _B_ASIO_TCP::socket _tcpSocket;
             _QUEUE_TYPE &_dataIn;
             std::thread _threadConnection;
+            _STORAGE_DATA _tcpTmpBuffer;
 
         public:
             Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket);

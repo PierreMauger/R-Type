@@ -7,7 +7,6 @@ Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, 
     _udpSocket(udpSocket),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
-    // _threadConnection(&Connection::run, this)
 {
 }
 
@@ -18,7 +17,6 @@ Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost
     _udpSocket(udpSocket),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
-    // _threadConnection(&Connection::run, this)
 {
 }
 
@@ -26,14 +24,17 @@ Connection::~Connection()
 {
 }
 
-void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buffer)
+void Connection::handleMsgTcp(boost::system::error_code error, size_t size)
 {
     if (!error) {
         std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
-        std::cout << "Message: " << buffer.data() << std::endl;
-        this->_dataIn.push_back(buffer);
+        if (size != _NET_BUFFER_SIZE)
+            std::cout << "Invalid TCP message size : " << size << std::endl;
+        this->_dataIn.push_back(this->_tcpTmpBuffer);
     } else if (error == boost::asio::error::eof) {
+        this->closeConnection();
         std::cout << "Connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << " closed" << std::endl;
+        return;
     } else {
         std::cerr << "handleMsgTcp Error: " << error.message() << std::endl;
     }
@@ -42,20 +43,22 @@ void Connection::handleMsgTcp(boost::system::error_code error, _STORAGE_DATA buf
 
 void Connection::initConnection()
 {
-    _STORAGE_DATA buffer;
+    this->_tcpTmpBuffer.fill(0);
     this->_tcpSocket.async_receive(
-        boost::asio::buffer(buffer),
+        boost::asio::buffer(this->_tcpTmpBuffer),
         boost::bind(&Connection::handleMsgTcp,
                     this,
                     boost::asio::placeholders::error,
-                    buffer
+                    boost::asio::placeholders::bytes_transferred
                 )
     );
 }
 
 void Connection::run()
-{
-    this->initConnection();
+{   
+    this->_threadConnection = std::thread([this]() {
+        this->initConnection();
+    });
 }
 
 _B_ASIO_TCP::socket &Connection::getTcpSocket()
