@@ -50,18 +50,16 @@ void Server::run()
 
 void Server::stop()
 {
-    // Stop all connections
     if (this->_udpSocket.is_open())
         this->_udpSocket.close();
     for (auto &connection : this->_listConnections) {
         if (connection->isConnected())
             connection->closeConnection();
-        // if (connection->getThreadConnection().joinable())
-            // connection->getThreadConnection().join();
+        if (connection->getThreadConnection().joinable())
+            connection->getThreadConnection().join();
     }
     this->_listConnections.clear();
 
-    // Stop the ioContext
     if (!this->_ioContext.stopped())
         this->_ioContext.stop();
     if (this->_threadContext.joinable())
@@ -90,8 +88,6 @@ void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_
         std::cout << "New TCP connection from " << ip << ":" << port << std::endl;
         newConnection->run();
         this->_listConnections.push_back(newConnection);
-        // TODO send action structure or message for client connection in dataIn
-        // this->_dataIn.push_back({'C'});
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
     }
@@ -140,8 +136,6 @@ void Server::closeConnection(_B_ASIO_TCP::endpoint endpoint)
 {
     for (auto &connection : this->_listConnections) {
         if (connection->getTcpEndpoint() == endpoint) {
-            // TODO send action structure or message for client disconnection in dataIn
-            // this->_dataIn.push_back({'D'});
             connection->closeConnection();
             break;
         } else {
@@ -154,10 +148,8 @@ void Server::updateConnection()
 {
     for (auto &connection : this->_listConnections) {
         if (!connection->isConnected()) {
-            // if (connection->getThreadConnection().joinable())
-                // connection->getThreadConnection().join();
-            // TODO send action structure or message for client disconnection in dataIn
-            // this->_dataIn.push_back({'D'});
+            if (connection->getThreadConnection().joinable())
+                connection->getThreadConnection().join();
             this->_listConnections.erase(std::remove(this->_listConnections.begin(), this->_listConnections.end(), connection), this->_listConnections.end());
         }
     }

@@ -67,8 +67,8 @@ void Client::stop()
         this->_udpSocket.close();
     if (this->_connection->getTcpSocket().is_open())
         this->_connection->getTcpSocket().close();
-    // if (this->_connection->getThreadConnection().joinable())
-        // this->_connection->getThreadConnection().join();
+    if (this->_connection->getThreadConnection().joinable())
+        this->_connection->getThreadConnection().join();
     if (!this->_ioContext.stopped())
         this->_ioContext.stop();
     if (this->_threadContext.joinable())

@@ -7,7 +7,6 @@ Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, 
     _udpSocket(udpSocket),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
-    // _threadConnection(&Connection::run, this)
 {
 }
 
@@ -18,7 +17,6 @@ Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost
     _udpSocket(udpSocket),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
-    // _threadConnection(&Connection::run, this)
 {
 }
 
@@ -57,7 +55,9 @@ void Connection::initConnection()
 
 void Connection::run()
 {   
-    this->initConnection();
+    this->_threadConnection = std::thread([this]() {
+        this->initConnection();
+    });
 }
 
 _B_ASIO_TCP::socket &Connection::getTcpSocket()
