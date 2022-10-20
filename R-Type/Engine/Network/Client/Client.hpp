@@ -9,17 +9,19 @@ namespace eng
     class Client
     {
         private:
-            void handleMsgUdp(const boost::system::error_code &error, _STORAGE_DATA buffer, size_t size, _B_ASIO_UDP::endpoint newEndpoint);
+            void handleMsgUdp(const boost::system::error_code &error, size_t size);
             void initClient();
             void open();
 
-        protected:
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::resolver _resolver;
             _B_ASIO_UDP::socket _udpSocket;
             boost::shared_ptr<Connection> _connection;
             _QUEUE_TYPE _dataIn;
+            _QUEUE_TYPE _dataOut;
             std::thread _threadContext;
+            _B_ASIO_UDP::endpoint _tmpEndpoint;
+            _STORAGE_DATA _udpTmpBuffer;
 
         public:
             Client(std::string ip, uint16_t portUdp, uint16_t portTcp);
@@ -27,11 +29,13 @@ namespace eng
 
             void run();
             void stop();
+            bool isConnected();
 
             void tcpMsg(_STORAGE_DATA data);
             void udpMsg(_STORAGE_DATA data);
 
-            void updateAction(size_t msgCount);
+            _QUEUE_TYPE &getQueueIn();
+            _QUEUE_TYPE &getQueueOut();
     };
 } // namespace eng
 
