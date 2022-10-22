@@ -3,29 +3,32 @@
 
 #include "Includes.hpp"
 
-enum InfoComp {
-    POS = 1 << 0,
-    VEL = 1 << 1,
-    SIZE = 1 << 2,
-    SPRITEID = 1 << 3,
-    CONTROLLABLE = 1 << 4,
-    PARALLAX = 1 << 5,
-    PROJECTILE = 1 << 6,
-    LIFE = 1 << 7,
-    ENEMY = 1 << 8,
-    APP = 1 << 9,
-    DIS = 1 << 10,
-    COOLDOWNSHOOT = 1 << 11,
-    COOLDOWNBAR = 1 << 12,
-    LIFEBAR = 1 << 13,
-    PARENT = 1 << 14,
-    PATERN = 1 << 15,
-    SYNCID = 1 << 16,
-    DROP = 1 << 17,
-    TEXT = 1 << 18,
-    SOUNDID = 1 << 19,
-    SPRITEAT = 1 << 20,
-};
+namespace eng
+{
+    enum InfoComp {
+        POS = 1 << 0,
+        VEL = 1 << 1,
+        SIZE = 1 << 2,
+        SPRITEID = 1 << 3,
+        CONTROLLABLE = 1 << 4,
+        PARALLAX = 1 << 5,
+        PROJECTILE = 1 << 6,
+        LIFE = 1 << 7,
+        ENEMY = 1 << 8,
+        APP = 1 << 9,
+        DIS = 1 << 10,
+        COOLDOWNSHOOT = 1 << 11,
+        COOLDOWNBAR = 1 << 12,
+        LIFEBAR = 1 << 13,
+        PARENT = 1 << 14,
+        PATERN = 1 << 15,
+        SYNCID = 1 << 16,
+        DROP = 1 << 17,
+        TEXT = 1 << 18,
+        SOUNDID = 1 << 19,
+        SPRITEAT = 1 << 20,
+    };
+}
 
 typedef struct {
         float x = 0.0f;
@@ -37,7 +40,8 @@ typedef struct {
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
-        float baseSpeed = 0.0f;
+        float baseSpeedX = 0.0f;
+        float baseSpeedY = 0.0f;
 } Velocity;
 
 typedef struct {
@@ -154,8 +158,9 @@ typedef struct {
 
 typedef struct {
         float rotation = 0;
-        sf::IntRect rect = sf::IntRect();
+        sf::FloatRect rect = sf::FloatRect();
         sf::Color color = sf::Color::White;
+        sf::Vector2f scale = {1.0f, 1.0f};
 } SpriteAttribut;
 
 #endif // COMPONENTTYPES_HPP

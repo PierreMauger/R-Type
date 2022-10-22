@@ -22,9 +22,6 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
             SpriteAttribut &spriteAT = componentManager.getSingleComponent<SpriteAttribut>(i);
             Size &sz = componentManager.getSingleComponent<Size>(i);
             if (masks[i].has_value() && (masks[i].value() & contMask) == contMask) {
-                spriteAT.rect.width = sz.x;
-                spriteAT.rect.height = sz.y;
-                spriteAT.rect.top = spriteID.offsetY;
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     spriteAT.rect.left = spriteID.offsetX * 2;
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -43,8 +40,6 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
                 spriteID.sign == false ? spriteID.curFrame++ : spriteID.curFrame--;
                 spriteAT.rect.left = spriteID.offsetX * spriteID.curFrame;
                 spriteAT.rect.top = spriteID.offsetY * spriteID.curFrame;
-                spriteAT.rect.width = sz.x;
-                spriteAT.rect.height = sz.y;
                 spriteID.lastTime = this->_clock->getElapsedTime().asSeconds();
             }
         }

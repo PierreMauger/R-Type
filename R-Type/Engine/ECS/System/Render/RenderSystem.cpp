@@ -90,18 +90,15 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
             spriteRef.setPosition(pos.x, pos.y);
             if (masks[i].has_value() && (masks[i].value() & renderAnim) == renderAnim) {
-                spriteRef.setTextureRect(componentManager.getSingleComponent<SpriteAttribut>(i).rect);
+                spriteRef.setTextureRect(static_cast<sf::IntRect>(componentManager.getSingleComponent<SpriteAttribut>(i).rect));
                 spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(i).rotation);
                 spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(i).color);
+                spriteRef.setScale(componentManager.getSingleComponent<SpriteAttribut>(i).scale);
             }
             if (masks[i].has_value() && (masks[i].value() & renderCooldown) == renderCooldown)
                 displayCooldownBar(componentManager, entityManager, spriteRef, i);
             if (masks[i].has_value() && (masks[i].value() & renderLife) == renderLife)
                 displayLifeBar(componentManager, entityManager, spriteRef, i);
-            if (masks[i].has_value() && (masks[i].value() & renderProj) == renderProj) {
-                Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
-                spriteRef.setScale(proj.size, proj.size);
-            }
             if (spriteId.priority == Priority::HIGH)
                 stockSpriteHigh.push_back(spriteRef);
             if (spriteId.priority == Priority::MEDIUM)

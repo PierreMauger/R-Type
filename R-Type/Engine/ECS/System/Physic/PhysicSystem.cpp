@@ -41,7 +41,7 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (app.app) {
-        pos.y -= -vel.baseSpeed;
+        pos.y -= -vel.baseSpeedY;
         if (sprite.color.a != 50)
             sprite.color = sf::Color(255, 255, 255, 50);
         if (pos.y >= app.end) {
@@ -59,7 +59,7 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
     Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (dis.dis) {
-        pos.y -= -vel.baseSpeed;
+        pos.y -= -vel.baseSpeedY;
         sprite.rotation += 20;
         if (pos.y >= dis.end) {
             vel.y = 0;
@@ -109,8 +109,9 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
 
     if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
         for (std::size_t j = 0; j < masks.size(); j++) {
-            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol && this->checkColision(
-                pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
+            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol &&
+                this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
+                                    componentManager.getSingleComponent<Size>(j))) {
                 if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
                     componentManager.getSingleComponent<Disappearance>(i).dis = true;
                 else {

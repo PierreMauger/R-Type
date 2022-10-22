@@ -4,16 +4,16 @@
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
-#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Engine.hpp"
-#include "Server/Server.hpp"
 #include "Includes.hpp"
+#include "Server/Server.hpp"
 
 bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t checkCon = (InfoComp::CONTROLLABLE);
+    std::size_t checkCon = (eng::InfoComp::CONTROLLABLE);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value())
@@ -30,7 +30,7 @@ bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &compon
 void mainLoop(eng::Engine &engine)
 {
     _QUEUE_TYPE &dataIn = engine.getNetwork().getServer()->getQueueIn();
-    size_t refreshTick = 5;
+    std::size_t refreshTick = 5;
     std::map<std::string, boost::shared_ptr<eng::Connection>> players;
 
     eng::Graphic &graphic = engine.getGraphic();
@@ -50,8 +50,12 @@ void mainLoop(eng::Engine &engine)
 #ifndef NDEBUG
             ImGui::SFML::ProcessEvent(*graphic.getEvent());
 #endif
-            if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            if (graphic.getEvent()->type == sf::Event::Closed)
                 graphic.getWindow()->close();
+            if (graphic.getEvent()->type == sf::Event::Resized) {
+                engine.updateSizeWindow();
+                graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
+            }
         }
         if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
             vesselPreload.preloadScore(engine, kill, death);
@@ -89,19 +93,21 @@ int main(int ac, char **av)
     eng::Network &network = engine.getNetwork();
     eng::Graphic &graphic = engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
+    std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
 
     network.initServer(std::stoi(av[1]), std::stoi(av[2]));
 
     // setup system & component
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
+    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
+    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
+    //systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
