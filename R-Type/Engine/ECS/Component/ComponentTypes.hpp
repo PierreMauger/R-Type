@@ -40,7 +40,8 @@ typedef struct {
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
-        float baseSpeed = 0.0f;
+        float baseSpeedX = 0.0f;
+        float baseSpeedY = 0.0f;
 } Velocity;
 
 typedef struct {
@@ -157,7 +158,7 @@ typedef struct {
 
 typedef struct {
         float rotation = 0;
-        sf::IntRect rect = sf::IntRect();
+        sf::FloatRect rect = sf::FloatRect();
         sf::Color color = sf::Color::White;
         sf::Vector2f scale = {1.0f, 1.0f};
 } SpriteAttribut;

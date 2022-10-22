@@ -41,7 +41,7 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (app.app) {
-        pos.y -= -vel.baseSpeed;
+        pos.y -= -vel.baseSpeedY;
         if (sprite.color.a != 50)
             sprite.color = sf::Color(255, 255, 255, 50);
         if (pos.y >= app.end) {
@@ -59,7 +59,7 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
     Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (dis.dis) {
-        pos.y -= -vel.baseSpeed;
+        pos.y -= -vel.baseSpeedY;
         sprite.rotation += 20;
         if (pos.y >= dis.end) {
             vel.y = 0;
