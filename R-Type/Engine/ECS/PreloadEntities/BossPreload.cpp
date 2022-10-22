@@ -6,15 +6,24 @@ void eng::BossPreload::preload(Engine &engine)
     std::shared_ptr<sf::Vector2f> screenSize = engine.getGraphic().getScreenSize();
     float randY = createRandom(180 / screenSize->y * windowsSize.y, 420 / screenSize->y * windowsSize.y);
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE |
-        InfoComp::SIZE | InfoComp::PATERN | InfoComp::DROP | InfoComp::SPRITEAT), engine.getECS().getComponentManager());
-            
+                                                                 InfoComp::SIZE | InfoComp::PATERN | InfoComp::DROP | InfoComp::SPRITEAT),
+                                                                engine.getECS().getComponentManager());
+
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, 0, 0.2, 96, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}, sf::Color::White, {
-        1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
+    engine.getECS()
+        .getComponentManager()
+        .getComponent(typeid(SpriteAttribut))
+        .emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
     engine.getECS().getComponentManager().getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, randY});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{
-        static_cast<float>(engine.getGraphic().getWindow()->getSize().x - (300 / screenSize->x * windowsSize.x)), -96 / screenSize->y * windowsSize.y, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, -2 / screenSize->y * windowsSize.y * -1, 0, 2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y});
+    engine.getECS()
+        .getComponentManager()
+        .getComponent(typeid(Position))
+        .emplaceData(id,
+                     Position{static_cast<float>(engine.getGraphic().getWindow()->getSize().x - (300 / screenSize->x * windowsSize.x)), -96 / screenSize->y * windowsSize.y, 0});
+    engine.getECS()
+        .getComponentManager()
+        .getComponent(typeid(Velocity))
+        .emplaceData(id, Velocity{0, -2 / screenSize->y * windowsSize.y * -1, 0, 2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y});
     engine.getECS().getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern::CIRCLE, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true, 0, 0.4});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{96 / screenSize->x * windowsSize.x, 96 / screenSize->y * windowsSize.y});
