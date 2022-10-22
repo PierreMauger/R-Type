@@ -27,7 +27,7 @@ bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &compon
     return false;
 }
 
-void updateSizeWindow(eng::Engine &engine, sf::Vector2f lastSize)
+void updateSizeWindow(eng::Engine &engine)
 {
     std::shared_ptr<sf::RenderWindow> window = engine.getGraphic().getWindow();
     eng::EntityManager &entityManager = engine.getECS().getEntityManager();
@@ -39,6 +39,7 @@ void updateSizeWindow(eng::Engine &engine, sf::Vector2f lastSize)
     std::size_t checkSpeed = (eng::InfoComp::VEL);
     std::size_t checkParSize = (eng::InfoComp::SPRITEAT | eng::InfoComp::PARALLAX);
     std::size_t checkSize = (eng::InfoComp::SIZE | eng::InfoComp::SPRITEAT);
+    sf::Vector2f lastSize = engine.getGraphic().getLastSize();
 
     window->setView(sf::View(sf::FloatRect(0, 0, engine.getGraphic().getEvent()->size.width, engine.getGraphic().getEvent()->size.height)));
     for (std::size_t i = 0; i < masks.size(); i++) {
@@ -112,7 +113,7 @@ void mainLoop(eng::Engine &engine)
             if (graphic.getEvent()->type == sf::Event::Closed)
                 graphic.getWindow()->close();
             if (graphic.getEvent()->type == sf::Event::Resized) {
-                updateSizeWindow(engine, graphic.getLastSize());
+                updateSizeWindow(engine);
                 graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
             }
         }
