@@ -20,7 +20,6 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
         if (masks[i].has_value() && (masks[i].value() & spriteMask) == spriteMask) {
             SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(i);
             SpriteAttribut &spriteAT = componentManager.getSingleComponent<SpriteAttribut>(i);
-            Size &sz = componentManager.getSingleComponent<Size>(i);
             if (masks[i].has_value() && (masks[i].value() & contMask) == contMask) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
                     spriteAT.rect.left = spriteID.offsetX * 2;

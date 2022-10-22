@@ -70,7 +70,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderCooldown = (InfoComp::PARENT | InfoComp::COOLDOWNBAR);
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
-    std::size_t renderProj = (InfoComp::PROJECTILE);
     std::size_t renderText = (InfoComp::TEXT);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
