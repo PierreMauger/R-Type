@@ -11,6 +11,7 @@ namespace eng
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Event> _event;
             std::shared_ptr<sf::Clock> _clock;
+            sf::Vector2f _screenSize;
 
         public:
             Graphic();
@@ -18,6 +19,7 @@ namespace eng
             std::shared_ptr<sf::RenderWindow> getWindow();
             std::shared_ptr<sf::Event> getEvent();
             std::shared_ptr<sf::Clock> getClock();
+            sf::Vector2f &getScreenSize();
     };
 }
 

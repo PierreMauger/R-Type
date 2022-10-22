@@ -4,16 +4,16 @@
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
-#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Engine.hpp"
-#include "Server/Server.hpp"
 #include "Includes.hpp"
+#include "Server/Server.hpp"
 
 bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t checkCon = (InfoComp::CONTROLLABLE);
+    std::size_t checkCon = (eng::InfoComp::CONTROLLABLE);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value())

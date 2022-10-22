@@ -4,7 +4,8 @@ using namespace eng;
 
 Graphic::Graphic()
 {
-    this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "R-Type");
+    this->_screenSize = {sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height};
+    this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(this->_screenSize.x, this->_screenSize.y), "R-Type", sf::Style::Resize);
     this->_event = std::make_shared<sf::Event>();
     this->_clock = std::make_shared<sf::Clock>();
     this->_window->setFramerateLimit(60);
@@ -24,4 +25,9 @@ std::shared_ptr<sf::Event> Graphic::getEvent()
 std::shared_ptr<sf::Clock> Graphic::getClock()
 {
     return this->_clock;
+}
+
+sf::Vector2f &Graphic::getScreenSize()
+{
+    return this->_screenSize;
 }
