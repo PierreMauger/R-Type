@@ -15,7 +15,7 @@ AnimationSystem::AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_p
 void AnimationSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SIZE);
+    std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SIZE1);
     std::size_t appMask = (InfoComp::APP);
     std::size_t contMask = (InfoComp::CONTROLLABLE);
 

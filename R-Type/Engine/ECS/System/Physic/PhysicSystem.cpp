@@ -11,12 +11,12 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
 {
     auto &masks = entityManager.getMasks();
     std::size_t addEntity = masks.size();
-    std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS);
+    std::size_t physicDrop = (InfoComp::SIZE1 | InfoComp::POS);
 
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
         Size &size = componentManager.getSingleComponent<Size>(id);
         Position &pos = componentManager.getSingleComponent<Position>(id);
-        entityManager.addManualMask(addEntity, (InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE), componentManager);
+        entityManager.addManualMask(addEntity, (InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE1), componentManager);
         componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{4, Priority::MEDIUM});
         componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
         componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
@@ -49,8 +49,8 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
 bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS | InfoComp::DROP);
-    std::size_t physicCont = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE);
+    std::size_t physicDrop = (InfoComp::SIZE1 | InfoComp::POS | InfoComp::DROP);
+    std::size_t physicCont = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE1);
 
     if (!masks[i].has_value() || (masks[i].value() & physicCont) != physicCont)
         return false;
@@ -78,7 +78,7 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
-    std::size_t physicCol = (InfoComp::POS | InfoComp::ENEMY | InfoComp::SIZE);
+    std::size_t physicCol = (InfoComp::POS | InfoComp::ENEMY | InfoComp::SIZE1);
 
     if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
         for (std::size_t j = 0; j < masks.size(); j++) {
@@ -139,7 +139,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicSpeed = (InfoComp::VEL | InfoComp::POS);
-    std::size_t physicControl = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE);
+    std::size_t physicControl = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE1);
     std::size_t physicPar = (InfoComp::VEL | InfoComp::POS | InfoComp::PARALLAX);
     std::size_t physicPat = (InfoComp::PATERN);
     std::size_t physicAppear = (InfoComp::APP);

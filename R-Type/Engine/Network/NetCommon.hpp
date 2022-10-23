@@ -8,13 +8,14 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <SDKDDKVer.h>
 
-#include <boost/asio.hpp>
-#include <boost/bind/bind.hpp>
-#include <boost/array.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include "boost/asio.hpp"
+#include "boost/bind/bind.hpp"
+#include "boost/array.hpp"
+#include "boost/shared_ptr.hpp"
+#include "boost/make_shared.hpp"
+#include "boost/enable_shared_from_this.hpp"
 
 #include "Queue.hpp"
 

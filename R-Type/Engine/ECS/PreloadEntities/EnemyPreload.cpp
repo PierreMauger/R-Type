@@ -3,7 +3,7 @@
 void eng::EnemyPreload::preload(Engine &engine)
 {
     std::size_t id = engine.getECS().getEntityManager().addMask(
-        (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATERN), engine.getECS().getComponentManager());
+        (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE1 | InfoComp::PATERN), engine.getECS().getComponentManager());
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{2, Priority::MEDIUM, 0, 2, false, 0.4, 0, 63, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{800, 200, 0});

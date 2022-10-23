@@ -13,16 +13,15 @@ if(UNIX)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -Werror")
 else()
-    set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /Wall /EHsc")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /WX")
+    # set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /Wall /EHsc")
+    # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
+    # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /WX")
 endif()
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/build/_deps/sfml-src/cmake")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 set(CMAKE_THREADS_LIBS_INIT Threads::Threads)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-set(BUILD_SHARED_LIBS ON)
+set(BUILD_SHARED_LIBS OFF)
 include(ProcessorCount)
 ProcessorCount(CMAKE_BUILD_PARALLEL_LEVEL)
 set(SFML_BUILD_EXAMPLES OFF)
@@ -56,26 +55,25 @@ set(ImGui_SRC
 #fetch required deps
 find_package(OpenGL REQUIRED)
 
-if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/sfml-build/")
-    FetchContent_Declare(SFML GIT_REPOSITORY https://github.com/SFML/SFML.git GIT_TAG 2.6.x GIT_PROGRESS TRUE)
+if (NOT sfml_POPULATED)
+    FetchContent_Declare(
+        SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 2.6.x
+        GIT_PROGRESS TRUE)
     FetchContent_MakeAvailable(SFML)
 endif()
-if (NOT SFML_FOUND)
-    set(SFML_DIR ${CMAKE_BINARY_DIR}/_deps/sfml-build/)
-    find_package(SFML COMPONENTS system window graphics audio)
-endif()
 
-if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/boost-build/")
-    FetchContent_Declare(Boost GIT_REPOSITORY https://github.com/boostorg/boost.git GIT_PROGRESS TRUE)
+if (NOT boost_POPULATED)
+    FetchContent_Declare(
+        Boost
+        GIT_REPOSITORY https://github.com/boostorg/boost.git
+        GIT_PROGRESS TRUE
+        GIT_TAG master
+        CONFIGURE_COMMAND ""
+    )
     FetchContent_MakeAvailable(Boost)
 endif()
-if (NOT Boost_FOUND)
-    set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
-    find_package(Boost)
-endif()
-set(Boost_INCLUDE_DIR
-    ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/asio/include/
-)
 
 #set include paths
 include_directories(
@@ -86,11 +84,7 @@ include_directories(
 #set source files
 add_library(${ImGui} ${ImGui_SRC})
 
-target_link_libraries(${ImGui} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${ImGui} PRIVATE ${OPENGL_LIBRARIES})
-target_link_libraries(${ImGui} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-set_target_properties(${ImGui} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
-set_target_properties(${ImGui} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
+target_link_libraries(${ImGui} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 
 #install target
 install(TARGETS ${ImGui})
@@ -156,7 +150,8 @@ set(ENGINE_SRC
 #set include paths
 include_directories(
     ${ENGINE_INC}
-    ${Boost_INCLUDE_DIR}
+    ${BOOST_LIBRARY_INCLUDES}
+    ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/numeric/conversion/include
     ${PROJECT_NAME}
 )
 
@@ -164,13 +159,8 @@ include_directories(
 add_library(${ENGINE} ${ENGINE_SRC})
 
 #link library/executable with deps
-target_link_libraries(${ENGINE} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARIES})
-target_link_libraries(${ENGINE} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${ENGINE} PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(${ENGINE} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 target_link_libraries(${ENGINE} PRIVATE ${ImGui})
-set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
-set_target_properties(${ENGINE} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR})
 
 #install target
 install(TARGETS ${ENGINE})
@@ -195,7 +185,8 @@ set(CLIENT_SRC
 #set include paths
 include_directories(
     ${CLIENT_INC}
-    ${Boost_INCLUDE_DIR}
+    ${BOOST_LIBRARY_INCLUDES}
+    ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/numeric/conversion/include
     ${PROJECT_NAME}
 )
 
@@ -203,10 +194,7 @@ include_directories(
 add_executable(${CLIENT} ${CLIENT_SRC})
 
 #link library/executable with deps
-target_link_libraries(${CLIENT} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARIES})
-target_link_libraries(${CLIENT} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${CLIENT} PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(${CLIENT} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
 set_target_properties(${CLIENT} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
@@ -235,7 +223,8 @@ set(SERVER_SRC
 #set include paths
 include_directories(
     ${SERVER_INC}
-    ${Boost_INCLUDE_DIR}
+    ${BOOST_LIBRARY_INCLUDES}
+    ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/numeric/conversion/include
     ${PROJECT_NAME}
 )
 
@@ -243,10 +232,7 @@ include_directories(
 add_executable(${SERVER} ${SERVER_SRC})
 
 #link library/executable with deps
-target_link_libraries(${SERVER} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARIES})
-target_link_libraries(${SERVER} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
-target_link_libraries(${SERVER} PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(${SERVER} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 target_link_libraries(${SERVER} PRIVATE ${ImGui})
 target_link_libraries(${SERVER} PRIVATE ${ENGINE})
 set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR})
@@ -261,10 +247,6 @@ install(TARGETS ${SERVER})
 if(WIN32)
   add_custom_command(
     TARGET ${ENGINE} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-window-d-2.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-graphics-d-2.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-system-d-2.dll ${CMAKE_SOURCE_DIR}
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-build/lib/${CMAKE_BUILD_TYPE}/sfml-audio-d-2.dll ${CMAKE_SOURCE_DIR}
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/_deps/sfml-src/extlibs/bin/x64/openal32.dll ${CMAKE_SOURCE_DIR}
   )
 endif()

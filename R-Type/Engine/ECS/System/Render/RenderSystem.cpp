@@ -35,7 +35,7 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
 {
     auto &masks = entityManager.getMasks();
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
-    std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
+    std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE1);
 
     if (masks[i].has_value() && (masks[i].value() & lifeBarParent) == lifeBarParent) {
         std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;

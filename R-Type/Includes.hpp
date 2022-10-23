@@ -29,5 +29,6 @@
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
+#include <SDKDDKVer.h>
 
 #endif // INCLUDES_HPP

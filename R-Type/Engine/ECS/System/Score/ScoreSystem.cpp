@@ -32,7 +32,7 @@ void ScoreSystem::createVessel(ComponentManager &componentManager, EntityManager
                                std::shared_ptr<sf::RenderWindow> window)
 {
     std::size_t id = entityManager.addMask(
-        (InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP),
+        (InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE1 | InfoComp::APP),
         componentManager);
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, 0, 0, 0, 32, 0});
