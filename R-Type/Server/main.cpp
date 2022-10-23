@@ -2,6 +2,7 @@
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"
+#include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
@@ -38,9 +39,11 @@ void mainLoop(eng::Engine &engine)
     sf::Time elapsed_time = sf::seconds(0);
     sf::Time delta_time = sf::seconds(6);
     sf::Time boss_time = sf::seconds(30);
+    sf::Time devourer_time = sf::seconds(2);
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
     eng::VesselPreload vesselPreload;
+    eng::DevourerPreload devourerPreload;
     std::size_t death = 0;
     std::size_t kill = 0;
 
@@ -59,12 +62,16 @@ void mainLoop(eng::Engine &engine)
         }
         if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
             vesselPreload.preloadScore(engine, kill, death);
-        if (graphic.getClock()->getElapsedTime() > boss_time) {
+        /* if (graphic.getClock()->getElapsedTime() > boss_time) {
             bossPreload.preload(engine);
             boss_time = sf::seconds(boss_time.asSeconds() + 30);
         } else if (graphic.getClock()->getElapsedTime() > elapsed_time) {
             enemyPreload.preload(engine);
             elapsed_time = graphic.getClock()->getElapsedTime() + delta_time;
+        } */
+        if (graphic.getClock()->getElapsedTime() > devourer_time) {
+            devourerPreload.preload(engine);
+            devourer_time = sf::seconds(devourer_time.asSeconds() + 3000);
         }
         for (size_t count = 0; count < refreshTick; count++) {
             if (!dataIn.empty()) {
@@ -107,7 +114,7 @@ int main(int ac, char **av)
 #endif
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
-    //systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
+    // systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
