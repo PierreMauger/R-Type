@@ -12,7 +12,7 @@
 bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t checkCon = (InfoComp::CONTROLLABLE);
+    std::size_t checkCon = (eng::InfoComp::CONTROLLABLE);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value())
@@ -28,13 +28,10 @@ bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &compon
 
 void mainLoop(eng::Engine &engine)
 {
+    eng::Network &network = engine.getNetwork();
+
     eng::Graphic &graphic = engine.getGraphic();
     eng::ECS &ecs = engine.getECS();
-    sf::Time elapsed_time = sf::seconds(0);
-    sf::Time delta_time = sf::seconds(2);
-    sf::Time boss_time = sf::seconds(20);
-    eng::EnemyPreload enemyPreload;
-    eng::BossPreload bossPreload;
     eng::VesselPreload vesselPreload;
     std::size_t death = 0;
     std::size_t kill = 0;
@@ -47,40 +44,47 @@ void mainLoop(eng::Engine &engine)
 #endif
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
+            if (graphic.getEvent()->type == sf::Event::Resized) {
+                engine.updateSizeWindow();
+                graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
+            }
         }
         if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
             vesselPreload.preloadScore(engine, kill, death);
-        if (graphic.getClock()->getElapsedTime() > boss_time) {
-            bossPreload.preload(engine);
-            boss_time = sf::seconds(boss_time.asSeconds() + 20);
-        } else if (graphic.getClock()->getElapsedTime() > elapsed_time) {
-            enemyPreload.preload(engine);
-            elapsed_time = graphic.getClock()->getElapsedTime() + delta_time;
-        }
+        if (!network.getClient()->isConnected())
+            graphic.getWindow()->close();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
     }
 }
 
-int main(void)
+int main(int ac, char **av)
 {
+    if (ac != 4) {
+        std::cerr << "Usage: ./R-Type [ip] [portUdp] [portTcp]" << std::endl;
+        return 84;
+    }
+
     eng::Engine engine;
     eng::SystemManager &systemManager = engine.getECS().getSystemManager();
     eng::ComponentManager &componentManager = engine.getECS().getComponentManager();
+    eng::Network &network = engine.getNetwork();
     eng::Graphic &graphic = engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
 
+    network.initClient(av[1], std::stoi(av[2]), std::stoi(av[3]));
+
     // setup system & component
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
+    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
     systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock()));
+    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
     systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
@@ -115,6 +119,7 @@ int main(void)
     backgroundMusicPreload.preload(engine);
     scoreTextPreload.preload(engine);
 
+    network.getClient()->run();
     mainLoop(engine);
 
     eng::VesselPreload vesselPreload;

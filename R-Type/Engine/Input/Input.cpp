@@ -37,13 +37,13 @@ void eng::Input::checkInput(std::size_t id, sf::Keyboard::Key input, ComponentMa
         Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
         CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(id);
         if (input == sf::Keyboard::Key::Left)
-            vel.x = vel.baseSpeed * -1;
+            vel.x = vel.baseSpeedX * -1;
         if (input == sf::Keyboard::Key::Right)
-            vel.x = vel.baseSpeed;
+            vel.x = vel.baseSpeedX;
         if (input == sf::Keyboard::Key::Up)
-            vel.y = vel.baseSpeed * -1;
+            vel.y = vel.baseSpeedY * -1;
         if (input == sf::Keyboard::Key::Down)
-            vel.y = vel.baseSpeed;
+            vel.y = vel.baseSpeedY;
         if (input == sf::Keyboard::Key::Enter && clock->getElapsedTime().asSeconds() > sht.lastShoot) {
             sht.lastShoot = clock->getElapsedTime().asSeconds() + sht.shootDelay;
             this->createShoot(id, componentManager, pos, entityManager, 2);
