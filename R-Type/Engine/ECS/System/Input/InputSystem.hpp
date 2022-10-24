@@ -2,8 +2,6 @@
 #define INPUTSYSTEM_HPP
 
 #include "Engine/ECS/System/ISystem.hpp"
-#include "imgui-SFML.h"
-#include "imgui.h"
 
 namespace eng
 {

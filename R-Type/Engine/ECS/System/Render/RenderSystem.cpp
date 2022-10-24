@@ -71,16 +71,26 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
     std::size_t renderText = (InfoComp::TEXT);
+    std::size_t renderButton = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::BUTTON);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
+    std::vector<sf::Sprite> stockButton;
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & renderText) == renderText) {
             this->_text.setString(componentManager.getSingleComponent<Text>(i).str + std::to_string(componentManager.getSingleComponent<Text>(i).value));
             this->_text.setPosition(componentManager.getSingleComponent<Text>(i).pos);
             stockText.push_back(this->_text);
+            continue;
+        }
+        if (masks[i].has_value() && (masks[i].value() & renderButton) == renderButton) {
+            Position &pos = componentManager.getSingleComponent<Position>(i);
+            SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(i);
+            sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
+            spriteRef.setPosition(pos.x, pos.y);
+            stockButton.push_back(spriteRef);
             continue;
         }
         if (masks[i].has_value() && (masks[i].value() & render) == render) {
@@ -120,4 +130,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         this->_window->draw(stockText[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
+
+
 }
