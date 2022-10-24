@@ -63,17 +63,14 @@ if (NOT SFML_FOUND)
     find_package(SFML COMPONENTS system window graphics audio)
 endif()
 
-# if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/boost-build/")
-#     FetchContent_Declare(Boost GIT_REPOSITORY https://github.com/boostorg/boost.git GIT_PROGRESS TRUE)
-#     FetchContent_MakeAvailable(Boost)
-# endif()
-# if (NOT Boost_FOUND)
-#     set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
-#     find_package(Boost)
-# endif()
-
-set(Boost_INCLUDE_DIR  /usr/local/Cellar/boost/1.80.0/include)
-set(Boost_LIBRARY_DIR  /usr/local/Cellar/boost/1.80.0/lib)
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/_deps/boost-build/")
+    FetchContent_Declare(Boost GIT_REPOSITORY https://github.com/boostorg/boost.git GIT_PROGRESS TRUE)
+    FetchContent_MakeAvailable(Boost)
+endif()
+if (NOT Boost_FOUND)
+    set(Boost_INCLUDE_DIR ${CMAKE_BINARY_DIR}/_deps/boost-src/libs/config/include)
+    find_package(Boost)
+endif()
 
 #set include paths
 include_directories(
