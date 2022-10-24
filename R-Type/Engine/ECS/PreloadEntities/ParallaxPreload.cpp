@@ -2,30 +2,39 @@
 
 void eng::ParallaxPreload::preload(Engine &engine)
 {
-    std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX), engine.getECS().getComponentManager());
+    std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT),
+                                                                engine.getECS().getComponentManager());
+    float x = engine.getGraphic().getWindow()->getSize().x;
+    float y = engine.getGraphic().getWindow()->getSize().y;
+    ComponentManager &componentManager = engine.getECS().getComponentManager();
 
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{7, Priority::HIGH});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.2, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX), engine.getECS().getComponentManager());
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{11, Priority::HIGH});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.6, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX), engine.getECS().getComponentManager());
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{8, Priority::HIGH});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 100, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX), engine.getECS().getComponentManager());
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{10, Priority::HIGH});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 250, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1.5, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX), engine.getECS().getComponentManager());
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{9, Priority::HIGH});
-    engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{0, 100, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{-2, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{10, Priority::HIGH});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, sf::FloatRect(0, 0, 800, 600), sf::Color::White, sf::Vector2f(x / 800, y / 600)});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.2, 0, 0});
+    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT), componentManager);
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{14, Priority::HIGH});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, sf::FloatRect(0, 0, 800, 600), sf::Color::White, sf::Vector2f(x / 800, y / 600)});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 0, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-0.6, 0, 0});
+    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT), componentManager);
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, sf::FloatRect(0, 0, 800, 600), sf::Color::White, sf::Vector2f(x / 800, y / 600)});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{11, Priority::HIGH});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 100, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1, 0, 0});
+    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT), componentManager);
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{13, Priority::HIGH});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, sf::FloatRect(0, 0, 800, 600), sf::Color::White, sf::Vector2f(x / 800, y / 600)});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 250, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1.5, 0, 0});
+    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
+    id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT), componentManager);
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{12, Priority::HIGH});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, sf::FloatRect(0, 0, 800, 600), sf::Color::White, sf::Vector2f(x / 800, y / 600)});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 100, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-2, 0, 0});
+    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
 }

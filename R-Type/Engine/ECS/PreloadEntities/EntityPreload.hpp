@@ -13,6 +13,14 @@ namespace eng
             virtual ~EntityPreload() = default;
 
             virtual void preload(Engine &engine) = 0;
+
+            float createRandom(float min, float max)
+            {
+                std::random_device rd;
+                std::mt19937 gen(rd());
+                std::uniform_real_distribution<> dis(min, max);
+                return dis(gen);
+            }
     };
 }
 

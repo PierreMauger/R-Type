@@ -3,54 +3,50 @@
 
 #include "Includes.hpp"
 
-enum InfoComp {
-    POS = 0b1,
-    VEL = 0b10,
-    SIZE1 = 0b100,
-    SPRITEID = 0b1000,
-    CONTROLLABLE = 0b10000,
-    PARALLAX = 0b100000,
-    PROJECTILE = 0b1000000,
-    LIFE = 0b10000000,
-    ENEMY = 0b100000000,
-    APP = 0b1000000000,
-    COOLDOWNSHOOT = 0b10000000000,
-    COOLDOWNBAR = 0b100000000000,
-    LIFEBAR = 0b1000000000000,
-    PARENT = 0b10000000000000,
-    PATERN = 0b100000000000000,
-    DROP = 0b1000000000000000,
-    TEXT = 0b10000000000000000,
-};
+namespace eng
+{
+    enum InfoComp {
+        POS = 1 << 0,
+        VEL = 1 << 1,
+        SIZE = 1 << 2,
+        SPRITEID = 1 << 3,
+        CONTROLLABLE = 1 << 4,
+        PARALLAX = 1 << 5,
+        PROJECTILE = 1 << 6,
+        LIFE = 1 << 7,
+        ENEMY = 1 << 8,
+        APP = 1 << 9,
+        DIS = 1 << 10,
+        COOLDOWNSHOOT = 1 << 11,
+        COOLDOWNBAR = 1 << 12,
+        LIFEBAR = 1 << 13,
+        PARENT = 1 << 14,
+        PATERN = 1 << 15,
+        SYNCID = 1 << 16,
+        DROP = 1 << 17,
+        TEXT = 1 << 18,
+        SOUNDID = 1 << 19,
+        SPRITEAT = 1 << 20,
+    };
+}
 
 typedef struct Position {
-        float x;
-        float y;
-        float z;
-
-        Position(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z)
-        {
-        }
+        float x = 0.0f;
+        float y = 0.0f;
+        float z = 0.0f;
 } Position;
 
 typedef struct Velocity {
-        float x;
-        float y;
-        float z;
-        float baseSpeed;
-
-        Velocity(float x = 0.0f, float y = 0.0f, float z = 0.0f, float baseSpeed = 0.0) : x(x), y(y), z(z), baseSpeed(baseSpeed)
-        {
-        }
+        float x = 0.0f;
+        float y = 0.0f;
+        float z = 0.0f;
+        float baseSpeedX = 0.0f;
+        float baseSpeedY = 0.0f;
 } Velocity;
 
 typedef struct Size {
-        float x;
-        float y;
-
-        Size(float x = 0.0f, float y = 0.0f) : x(x), y(y)
-        {
-        }
+        float x = 0.0f;
+        float y = 0.0f;
 } Size;
 
 enum Priority {
@@ -60,110 +56,70 @@ enum Priority {
 };
 
 typedef struct SpriteID {
-        std::size_t id;
-        enum Priority priority;
-        std::size_t curFrame;
-        std::size_t nbFrame;
-        bool signe;
-        float delay;
-        float lastTime;
-        std::size_t offsetX;
-        std::size_t offsetY;
-
-        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH, std::size_t curFrame = 0, std::size_t nbFrame = 0, bool signe = false, float delay = 0, float lastTime = 0,
-                 std::size_t offsetX = 0, std::size_t offsetY = 0)
-            : id(i), priority(prio), curFrame(curFrame), nbFrame(nbFrame), signe(signe), delay(delay), lastTime(lastTime), offsetX(offsetX), offsetY(offsetY)
-        {
-        }
+        std::size_t id = 0;
+        enum Priority priority = Priority::HIGH;
+        std::size_t curFrame = 0;
+        std::size_t nbFrame = 0;
+        bool sign = false;
+        float lastTime = 0.0f;
+        float delay = 0.0f;
+        std::size_t offsetX = 0;
+        std::size_t offsetY = 0;
 } SpriteID;
 
 typedef struct Controllable {
-        bool con;
-        std::size_t kill;
-
-        Controllable(bool con = true, std::size_t kill = 0) : con(con), kill(kill)
-        {
-        }
+        bool con = false;
+        std::size_t kill = 0;
+        std::size_t death = 0;
 } Controllable;
 
 typedef struct Parallax {
-        bool par;
-
-        Parallax(bool par = true) : par(par)
-        {
-        }
+        bool par = true;
 } Parallax;
 
 typedef struct Projectile {
-        bool proj;
-        std::size_t damage;
-        float size;
-
-        Projectile(bool proj = true, std::size_t damage = 1, float size = 1) : proj(proj), damage(damage), size(size)
-        {
-        }
+        bool proj = true;
+        std::size_t damage = 1;
+        float size = 1.0f;
 } Projectile;
 
 typedef struct Life {
-        std::size_t life;
-
-        Life(std::size_t life = 1) : life(life)
-        {
-        }
+        std::size_t life = 1;
 } Life;
 
 typedef struct Enemy {
-        bool enemy;
-        float lastShoot;
-        float shootDelay;
-
-        Enemy(bool enemy = false, float lastShoot = 0.0f, float shootDelay = 2.0f) : enemy(enemy), lastShoot(lastShoot), shootDelay(shootDelay)
-        {
-        }
+        bool enemy = false;
+        float lastShoot = 0.0f;
+        float shootDelay = 2.0f;
 } Enemy;
 
 typedef struct Appearance {
-        bool app;
-        float end;
-
-        Appearance(bool app = false, float end = 0.0f) : app(app), end(end)
-        {
-        }
+        bool app = false;
+        float end = 0.0f;
 } Appearance;
 
-typedef struct CooldownShoot {
-        float lastShoot;
-        float shootDelay;
-        float size;
+typedef struct Disappearance {
+        bool dis = false;
+        float end = 0.0f;
+} Disappearance;
 
-        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f, std::size_t size = 1) : lastShoot(lastShoot), shootDelay(shootDelay), size(size)
-        {
-        }
+typedef struct CooldownShoot {
+        float lastShoot = 0.0f;
+        float shootDelay = 2.0f;
+        float size = 1.0f;
 } CooldownShoot;
 
 typedef struct CooldownBar {
-        bool bar;
-
-        CooldownBar(bool bar = false) : bar(bar)
-        {
-        }
+        bool bar = false;
 } CooldownBar;
 
 typedef struct LifeBar {
-        bool bar;
-        std::size_t lifeMax;
-
-        LifeBar(bool bar = false, std::size_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)
-        {
-        }
+        bool bar = false;
+        std::size_t lifeMax = 1;
 } LifeBar;
 
 typedef struct Parent {
-        std::size_t id;
-
-        Parent(std::size_t i = 0) : id(i)
-        {
-        }
+        std::size_t id = 0;
 } Parent;
 
 // Type dépendant du patern
@@ -175,30 +131,36 @@ enum TypePatern {
 };
 
 typedef struct Patern {
-        enum TypePatern type;
-        float angle;
-        sf::Vector2f center;
-
-        Patern(enum TypePatern type = TypePatern::LINE, float angle = 0.0f, sf::Vector2f center = sf::Vector2f(0.0f, 0.0f)) : type(type), angle(angle), center(center)
-        {
-        }
+        enum TypePatern type = TypePatern::LINE;
+        float angle = 0.0f;
 } Patern;
 
-typedef struct DropBonus {
-        std::size_t id;
+typedef struct SyncID {
+        std::size_t id = 0;
+} SyncID;
 
-        DropBonus(std::size_t id = 0) : id(id)
-        {
-        }
+typedef struct DropBonus {
+        std::size_t id = 0;
 } DropBonus;
 
 typedef struct Text {
-        sf::Text text;
-        std::string str;
-
-        Text(sf::Text text = sf::Text(), std::string str = "") : text(text), str(str)
-        {
-        }
+        std::string str = "";
+        std::size_t value = 0;
+        sf::Vector2f pos = {0.0f, 0.0f};
 } Text;
+
+typedef struct SoundID {
+        std::size_t id = 0;
+        bool play = false;
+        bool loop = false;
+        float pitch = 1.0f;
+} SoundID;
+
+typedef struct SpriteAttribut {
+        float rotation = 0;
+        sf::FloatRect rect = sf::FloatRect();
+        sf::Color color = sf::Color::White;
+        sf::Vector2f scale = {1.0f, 1.0f};
+} SpriteAttribut;
 
 #endif // COMPONENTTYPES_HPP

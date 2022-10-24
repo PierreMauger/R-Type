@@ -10,17 +10,21 @@ PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t addEntity = masks.size();
-    std::size_t physicDrop = (InfoComp::SIZE1 | InfoComp::POS);
+    std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS);
 
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
         Size &size = componentManager.getSingleComponent<Size>(id);
         Position &pos = componentManager.getSingleComponent<Position>(id);
-        entityManager.addManualMask(addEntity, (InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE1), componentManager);
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{4, Priority::MEDIUM});
+        std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE), componentManager);
+        if (drop == 0)
+            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{8, Priority::MEDIUM});
+        if (drop == 1)
+            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{7, Priority::MEDIUM});
         componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
         componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
-        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55, 30});
+        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18, 16});
+        addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{0, false, false});
     }
 }
 
@@ -35,11 +39,33 @@ bool PhysicSystem::checkColision(Position &pos, Position &pos2, Size &sz, Size &
 bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel)
 {
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
+    SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (app.app) {
-        pos.y -= -vel.baseSpeed;
+        pos.y -= -vel.baseSpeedY;
+        if (sprite.color.a != 50)
+            sprite.color = sf::Color(255, 255, 255, 50);
         if (pos.y >= app.end) {
             vel.y = 0;
             app.app = false;
+            sprite.color = sf::Color::White;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel)
+{
+    Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
+    SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
+    if (dis.dis) {
+        pos.y -= -vel.baseSpeedY;
+        sprite.rotation += 20;
+        if (pos.y >= dis.end) {
+            vel.y = 0;
+            dis.dis = false;
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
         }
         return true;
     }
@@ -49,26 +75,26 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
 bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t physicDrop = (InfoComp::SIZE1 | InfoComp::POS | InfoComp::DROP);
-    std::size_t physicCont = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE1);
+    std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS | InfoComp::DROP);
+    std::size_t physicCont = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE);
 
     if (!masks[i].has_value() || (masks[i].value() & physicCont) != physicCont)
         return false;
     Size &size = componentManager.getSingleComponent<Size>(i);
     for (std::size_t j = 0; j < masks.size(); j++) {
-        if (masks[j].has_value() && ((masks[j].value() & physicDrop) == physicDrop)) {
-            Size &size2 = componentManager.getSingleComponent<Size>(j);
-            Position &pos2 = componentManager.getSingleComponent<Position>(j);
-            DropBonus &drop = componentManager.getSingleComponent<DropBonus>(j);
-            if (this->checkColision(pos, pos2, size, size2)) {
-                componentManager.removeAllComponents(j);
-                entityManager.removeMask(j);
-                if (drop.id == 0)
-                    componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2;
-                if (drop.id == 1)
-                    componentManager.getSingleComponent<CooldownShoot>(i).shootDelay += 1;
-                return true;
-            }
+        if (!masks[j].has_value() || ((masks[j].value() & physicDrop) != physicDrop))
+            continue;
+        Size &size2 = componentManager.getSingleComponent<Size>(j);
+        Position &pos2 = componentManager.getSingleComponent<Position>(j);
+        DropBonus &drop = componentManager.getSingleComponent<DropBonus>(j);
+        if (this->checkColision(pos, pos2, size, size2)) {
+            componentManager.removeAllComponents(j);
+            entityManager.removeMask(j);
+            if (drop.id == 0)
+                componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 > 0.1 ? componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 : 0;
+            if (drop.id == 1)
+                componentManager.getSingleComponent<CooldownShoot>(i).size < 3 ? componentManager.getSingleComponent<CooldownShoot>(i).size += 1 : 0;
+            return true;
         }
     }
     return false;
@@ -78,17 +104,21 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
-    std::size_t physicCol = (InfoComp::POS | InfoComp::ENEMY | InfoComp::SIZE1);
+    std::size_t physicCol = (InfoComp::POS | InfoComp::ENEMY | InfoComp::SIZE);
+    std::size_t physicDis = (InfoComp::DIS);
 
     if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
         for (std::size_t j = 0; j < masks.size(); j++) {
-            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol) {
-                if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
-                                        componentManager.getSingleComponent<Size>(j))) {
+            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol &&
+                this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
+                                    componentManager.getSingleComponent<Size>(j))) {
+                if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
+                    componentManager.getSingleComponent<Disappearance>(i).dis = true;
+                else {
                     componentManager.removeAllComponents(i);
                     entityManager.removeMask(i);
-                    return true;
                 }
+                return true;
             }
         }
     }
@@ -100,15 +130,22 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
     auto &masks = entityManager.getMasks();
     std::size_t physicProj = (InfoComp::PROJECTILE | InfoComp::PARENT | InfoComp::POS);
     std::size_t physicApp = (InfoComp::APP);
+    std::size_t physicDis = (InfoComp::DIS);
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
     std::size_t physicEne = (InfoComp::ENEMY);
     std::size_t physicDrop = (InfoComp::DROP);
 
     if (masks[i].has_value() && (masks[i].value() & physicProj) == physicProj) {
         Parent &par = componentManager.getSingleComponent<Parent>(i);
+        if (!masks[par.id].has_value()) {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+            return false;
+        }
         for (std::size_t j = 0; j < masks.size(); j++) {
             if (masks[j].has_value() && ((masks[j].value() & physicCon) == physicCon || (masks[j].value() & physicEne) == physicEne) && par.id != j) {
                 if (((masks[j].value() & physicApp) == physicApp && componentManager.getSingleComponent<Appearance>(j).app) ||
+                    ((masks[j].value() & physicDis) == physicDis && componentManager.getSingleComponent<Disappearance>(j).dis) ||
                     ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
                 if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
@@ -121,12 +158,20 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                         if ((masks[j].value() & physicDrop) == physicDrop)
                             this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
                         hp.life = 0;
-                        componentManager.removeAllComponents(j);
-                        entityManager.removeMask(j);
+                        if (masks[j].has_value() && (masks[j].value() & physicDis) == physicDis)
+                            componentManager.getSingleComponent<Disappearance>(j).dis = true;
+                        else {
+                            componentManager.removeAllComponents(j);
+                            entityManager.removeMask(j);
+                        }
                     } else
                         hp.life -= proj.damage;
-                    componentManager.removeAllComponents(i);
-                    entityManager.removeMask(i);
+                    if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
+                        componentManager.getSingleComponent<Disappearance>(i).dis = true;
+                    else {
+                        componentManager.removeAllComponents(i);
+                        entityManager.removeMask(i);
+                    }
                     return true;
                 }
             }
@@ -139,46 +184,55 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicSpeed = (InfoComp::VEL | InfoComp::POS);
-    std::size_t physicControl = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE1);
+    std::size_t physicControl = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE);
     std::size_t physicPar = (InfoComp::VEL | InfoComp::POS | InfoComp::PARALLAX);
     std::size_t physicPat = (InfoComp::PATERN);
     std::size_t physicAppear = (InfoComp::APP);
+    std::size_t physicDis = (InfoComp::DIS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
-        if (masks[i].has_value() && (masks[i].value() & physicSpeed) == physicSpeed) {
+        if (!masks[i].has_value() || (masks[i].value() & physicSpeed) != physicSpeed)
+            continue;
+        Position &pos = componentManager.getSingleComponent<Position>(i);
+        Velocity vel = componentManager.getSingleComponent<Velocity>(i);
+        if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
+            continue;
+        if ((masks[i].value() & physicDis) == physicDis && checkDisappearance(entityManager, componentManager, i, pos, vel))
+            continue;
+        if ((masks[i].value() & physicPar) == physicPar) {
+            pos.x += vel.x;
+            if (pos.x <= -static_cast<int>(_window->getSize().x))
+                pos.x = 0;
+            continue;
+        }
+        if (pos.x > _window->getSize().x + 100 || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+            entityManager.removeMask(i);
+            componentManager.removeAllComponents(i);
+            continue;
+        }
+        pos.x += vel.x;
+        pos.y += vel.y;
+        if ((masks[i].value() & physicPat) != physicPat) {
+            if (this->collisionEnemy(i, componentManager, entityManager, pos))
+                continue;
+            if (this->collisionBonus(i, componentManager, entityManager, pos))
+                continue;
+            if (this->collisionFireball(i, componentManager, entityManager, pos))
+                continue;
+        }
+        if (masks[i].has_value() && (masks[i].value() & physicControl) == physicControl) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
-            Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
-            if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
-                continue;
-            if ((masks[i].value() & physicPar) == physicPar) {
-                pos.x += vel.x;
-                if (pos.x <= -static_cast<int>(_window->getSize().x))
-                    pos.x = 0;
-                continue;
-            }
-            if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
-                entityManager.removeMask(i);
-                componentManager.removeAllComponents(i);
-                continue;
-            }
-            if ((masks[i].value() & physicPat) != physicPat) {
-                pos.x += vel.x;
-                pos.y += vel.y;
-                if (this->collisionFireball(i, componentManager, entityManager, pos))
-                    continue;
-                if (this->collisionEnemy(i, componentManager, entityManager, pos))
-                    continue;
-                if (this->collisionBonus(i, componentManager, entityManager, pos))
-                    continue;
-            }
-            if ((masks[i].value() & physicControl) == physicControl) {
-                Position &pos = componentManager.getSingleComponent<Position>(i);
-                Size &size = componentManager.getSingleComponent<Size>(i);
-                pos.x < 0 ? pos.x = 0 : pos.x;
-                pos.y < 0 ? pos.y = 0 : pos.y;
-                pos.x > _window->getSize().x - size.x ? pos.x = _window->getSize().x - size.x : pos.x;
-                pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
-            }
+            Size size = componentManager.getSingleComponent<Size>(i);
+            pos.x < 0 ? pos.x = 0 : pos.x;
+            pos.y < 0 ? pos.y = 0 : pos.y;
+            pos.x > _window->getSize().x - size.x ? pos.x = _window->getSize().x - size.x : pos.x;
+            pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
+        }
+        if (masks[i].has_value() && (masks[i].value() & physicPat) == physicPat) {
+            Position &pos = componentManager.getSingleComponent<Position>(i);
+            Size size = componentManager.getSingleComponent<Size>(i);
+            pos.y < 0 ? pos.y = 0 : pos.y;
+            pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
         }
     }
 }

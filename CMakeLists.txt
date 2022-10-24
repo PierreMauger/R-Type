@@ -11,11 +11,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 if(UNIX)
     set(CMAKE_CXX_FLAGS "-std=c++20 -O3 -Wall -Wextra")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -Werror")
 else()
-    # set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /Wall /EHsc")
-    # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
-    # set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /WX")
+    set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /Wall /EHsc")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
 endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -82,6 +80,7 @@ endif()
 #set include paths
 include_directories(
     ${ImGui_INC}
+    ${Boost_INCLUDE_DIR}
     ${PROJECT_NAME}
 )
 
@@ -110,6 +109,7 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/Component/
     ${ENGINE_ROOT}/ECS/System/
     ${ENGINE_ROOT}/ECS/PreloadEntities/
+    ${ENGINE_ROOT}/Input/
     ${ENGINE_ROOT}/Graphic/
     ${ENGINE_ROOT}/Network/
 )
@@ -120,7 +120,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/ECS.cpp
     ${ENGINE_ROOT}/ECS/Entity/EntityManager.cpp
     ${ENGINE_ROOT}/ECS/Component/ComponentManager.cpp
-    ${ENGINE_ROOT}/ECS/Component/Component.cpp
+    ${ENGINE_ROOT}/ECS/Component/SparseArray.cpp
     ${ENGINE_ROOT}/ECS/System/SystemManager.cpp
     ${ENGINE_ROOT}/ECS/System/Render/RenderSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Physic/PhysicSystem.cpp
@@ -129,11 +129,14 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Input/InputSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Animation/AnimationSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Score/ScoreSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/Sound/SoundSystem.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ParallaxPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/VesselPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/BossPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/CooldownBarPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/EnemyPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/BackgroundMusicPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/ScoreTextPreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Network files
@@ -141,12 +144,16 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/Network/Connection.cpp
     ${ENGINE_ROOT}/Network/Server/Server.cpp
     ${ENGINE_ROOT}/Network/Client/Client.cpp
+    ${ENGINE_ROOT}/Network/Serializer.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp
 
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
+
+    # Input files
+    ${ENGINE_ROOT}/Input/Input.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp

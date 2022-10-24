@@ -21,15 +21,15 @@
 #include <mutex>
 #include <optional>
 #include <queue>
-#include <set>
 #include <random>
+#include <set>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
-#if defined(_WIN32) || defined(WIN32)
+#ifdef _WIN32
     #include <SDKDDKVer.h>
 #endif
 

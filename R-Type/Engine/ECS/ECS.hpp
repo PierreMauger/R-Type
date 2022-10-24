@@ -10,6 +10,7 @@
 #include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 #include "Engine/ECS/System/Render/RenderSystem.hpp"
 #include "Engine/ECS/System/Score/ScoreSystem.hpp"
+#include "Engine/ECS/System/Sound/SoundSystem.hpp"
 #include "Engine/ECS/System/SystemManager.hpp"
 
 namespace eng
