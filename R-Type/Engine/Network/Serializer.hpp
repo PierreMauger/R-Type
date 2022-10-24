@@ -4,6 +4,7 @@
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Engine/Input/Input.hpp"
+#include "Engine/Network/NetCommon.hpp"
 #include "Includes.hpp"
 
 #define MAGIC "R-TYPE/AMOGUS"
@@ -13,33 +14,42 @@ namespace eng
 {
     enum PacketType {
         ENTITY,
-        INPUT
+        INPUT,
+
+        UNKNOWN_PACKET
     };
 
     enum EntityType {
         CREATE,
         DESTROY,
-        UPDATE
+        UPDATE,
+
+        UNKNOWN_ENTITY
     };
 
     class Serializer
     {
         private:
-            template <typename T> void serializeComponent(std::vector<uint8_t> &packet, T &component)
+            template <typename T> void serializeComponent(std::vector<uint8_t> &packet, T *component)
             {
                 for (uint8_t i = 0; i < sizeof(T); i++) {
-                    packet.push_back(((uint8_t *)&component)[i]);
+                    packet.push_back(((uint8_t *)component)[i]);
                 }
             };
 
-            template <typename T> std::size_t deserializeComponent(std::vector<uint8_t> &packet, std::size_t adv, T &component)
+            template <typename T> std::size_t deserializeComponent(std::vector<uint8_t> &packet, std::size_t adv, T *component)
             {
                 std::size_t i = 0;
 
                 for (; i < sizeof(T); i++) {
-                    ((std::size_t *)&component)[i] = packet[adv + i];
+                    ((uint8_t *)component)[i] = packet.at(adv + i);
                 }
                 return (adv + i);
+            };
+
+            template <typename T> void assignComponent(std::size_t id, ComponentManager &componentManager, T &component)
+            {
+                componentManager.getSingleComponent<T>(id) = component;
             };
 
             void insertMagic(std::vector<uint8_t> &packet);
@@ -47,19 +57,31 @@ namespace eng
 
             std::size_t getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager);
 
-            std::size_t updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager);
+            void pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager);
+            void getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager);
+
+            template <typename T> void updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
+            {
+                T component = T();
+
+                adv = deserializeComponent(packet, adv, &component);
+                assignComponent(id, componentManager, component);
+            };
+
+            _STORAGE_DATA convertToArray(std::vector<uint8_t> &packet);
+            std::vector<uint8_t> convertToVector(_STORAGE_DATA &packet);
 
         public:
             Serializer();
             ~Serializer() = default;
 
-            void handlePacket(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+            void handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                               std::shared_ptr<sf::Clock> clock);
 
-            std::vector<uint8_t> serializeEntity(std::size_t id, EntityType type, ComponentManager &componentManager);
+            _STORAGE_DATA serializeEntity(std::size_t id, EntityType type, EntityManager &entityManager, ComponentManager &componentManager);
             void synchronizeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
 
-            std::vector<uint8_t> serializeInput(sf::Keyboard::Key input);
+            _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
             void synchronizeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                                   std::shared_ptr<sf::Clock> clock);
     };

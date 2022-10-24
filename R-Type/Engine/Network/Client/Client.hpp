@@ -2,7 +2,6 @@
 #define CLIENT_HPP_
 
 #include "Connection.hpp"
-#include "NetCommon.hpp"
 
 namespace eng
 {

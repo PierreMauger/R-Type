@@ -112,15 +112,11 @@ int main(int ac, char **av)
 
     // create background
     eng::ParallaxPreload parallaxPreload;
-
-    parallaxPreload.preload(engine);
-
     eng::BackgroundMusicPreload backgroundMusicPreload;
-
-    backgroundMusicPreload.preload(engine);
-
     eng::ScoreTextPreload scoreTextPreload;
 
+    parallaxPreload.preload(engine);
+    backgroundMusicPreload.preload(engine);
     scoreTextPreload.preload(engine);
 
     network.getClient()->run();
