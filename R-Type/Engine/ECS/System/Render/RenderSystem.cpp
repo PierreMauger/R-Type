@@ -7,7 +7,6 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
     this->_clock = clock;
     this->_window = window;
     this->_sprites = sprites;
-    std::cout << _sprites->size() << std::endl;
     if (!this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf"))
         throw std::runtime_error("Error: Font not found");
     this->_text.setFont(this->_font);
