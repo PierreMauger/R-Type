@@ -109,6 +109,7 @@ int main(int ac, char **av)
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
+    componentManager.bindComponent<Button>();
 
     // create background
     eng::ParallaxPreload parallaxPreload;

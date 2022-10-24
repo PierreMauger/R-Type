@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 
-void eng::EnemyPreload::preload(Engine &engine)
+using namespace eng;
+
+void EnemyPreload::preload(Engine &engine)
 {
     std::size_t rand = static_cast<std::size_t>(createRandom(0, 3));
     float randY = createRandom(150, 450);

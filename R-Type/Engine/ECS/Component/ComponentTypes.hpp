@@ -27,6 +27,7 @@ namespace eng
         TEXT = 1 << 18,
         SOUNDID = 1 << 19,
         SPRITEAT = 1 << 20,
+        BUTTON = 1 << 21,
     };
 }
 
@@ -131,7 +132,7 @@ enum TypePatern {
 };
 
 typedef struct {
-        enum TypePatern type = TypePatern::LINE;
+        TypePatern type = LINE;
         float angle = 0.0f;
 } Patern;
 
@@ -162,5 +163,16 @@ typedef struct {
         sf::Color color = sf::Color::White;
         sf::Vector2f scale = {1.0f, 1.0f};
 } SpriteAttribut;
+
+enum ButtonType {
+        QUIT = 0,
+        PLAY,
+        BACK,
+};
+
+typedef struct {
+        sf::FloatRect rect = sf::FloatRect();
+        ButtonType type = QUIT;
+} Button;
 
 #endif // COMPONENTTYPES_HPP

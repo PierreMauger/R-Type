@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 
-void eng::VesselPreload::preload(Engine &engine)
+using namespace eng;
+
+void VesselPreload::preload(Engine &engine)
 {
     ComponentManager &componentManager = engine.getECS().getComponentManager();
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE |
@@ -30,7 +32,7 @@ void eng::VesselPreload::preload(Engine &engine)
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
 }
 
-void eng::VesselPreload::preloadScore(Engine &engine, std::size_t kill, std::size_t death)
+void VesselPreload::preloadScore(Engine &engine, std::size_t kill, std::size_t death)
 {
     ComponentManager &componentManager = engine.getECS().getComponentManager();
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE |

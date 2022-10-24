@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 
-void eng::BossPreload::preload(Engine &engine)
+using namespace eng;
+
+void BossPreload::preload(Engine &engine)
 {
     sf::Vector2u windowsSize = engine.getGraphic().getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = engine.getGraphic().getScreenSize();

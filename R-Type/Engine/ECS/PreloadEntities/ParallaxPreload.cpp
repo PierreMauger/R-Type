@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 
-void eng::ParallaxPreload::preload(Engine &engine)
+using namespace eng;
+
+void ParallaxPreload::preload(Engine &engine)
 {
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT),
                                                                 engine.getECS().getComponentManager());

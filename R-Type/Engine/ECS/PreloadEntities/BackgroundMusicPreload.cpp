@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 
-void eng::BackgroundMusicPreload::preload(Engine &engine)
+using namespace eng;
+
+void BackgroundMusicPreload::preload(Engine &engine)
 {
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::SOUNDID), engine.getECS().getComponentManager());
 
