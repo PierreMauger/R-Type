@@ -9,6 +9,14 @@
 
 namespace eng
 {
+    enum CrudType {
+        CREATE,
+        DESTROY,
+        UPDATE,
+
+        UNKNOWN
+    };
+
     class Serializer
     {
         protected:

@@ -10,19 +10,11 @@
 
 namespace eng
 {
-    enum PacketType {
+    enum GamePacketType {
         ENTITY,
         INPUT,
 
-        UNKNOWN_PACKET
-    };
-
-    enum EntityType {
-        CREATE,
-        DESTROY,
-        UPDATE,
-
-        UNKNOWN_ENTITY
+        UNKNOWN_GAME
     };
 
     class GameSerializer : private Serializer
@@ -65,7 +57,7 @@ namespace eng
             void handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                               std::shared_ptr<sf::Clock> clock);
 
-            _STORAGE_DATA serializeEntity(std::size_t id, EntityType type, EntityManager &entityManager, ComponentManager &componentManager);
+            _STORAGE_DATA serializeEntity(std::size_t id, CrudType type, EntityManager &entityManager, ComponentManager &componentManager);
             void deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
 
             _STORAGE_DATA serializeInput(sf::Keyboard::Key input);

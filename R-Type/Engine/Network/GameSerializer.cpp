@@ -169,15 +169,15 @@ void eng::GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_
     }
 }
 
-_STORAGE_DATA eng::GameSerializer::serializeEntity(std::size_t id, EntityType type, EntityManager &entityManager, ComponentManager &componentManager)
+_STORAGE_DATA eng::GameSerializer::serializeEntity(std::size_t id, CrudType type, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::vector<uint8_t> packet;
 
     this->insertMagic(packet);
 
     // header
-    PacketType packetType = PacketType::ENTITY;
-    this->serializeComponent(packet, &packetType);
+    GamePacketType GamePacketType = GamePacketType::ENTITY;
+    this->serializeComponent(packet, &GamePacketType);
     this->serializeComponent(packet, &type);
 
     // sync id
@@ -199,26 +199,26 @@ _STORAGE_DATA eng::GameSerializer::serializeEntity(std::size_t id, EntityType ty
 
 void eng::GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(PacketType);
-    EntityType type = EntityType::UNKNOWN_ENTITY;
+    std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
+    CrudType type = CrudType::UNKNOWN;
     SyncID syncID = {0};
     std::size_t mask = 0;
     std::size_t id = 0;
 
-    this->deserializeComponent<EntityType>(packet, adv, &type);
+    this->deserializeComponent<CrudType>(packet, adv, &type);
     this->deserializeComponent<SyncID>(packet, adv, &syncID);
     this->deserializeComponent<std::size_t>(packet, adv, &mask);
 
-    if (type == EntityType::DESTROY) {
+    if (type == CrudType::DESTROY) {
         id = this->getEntityID(syncID, entityManager, componentManager);
         entityManager.removeMask(id);
         componentManager.removeAllComponents(id);
         return;
     }
-    if (type == EntityType::CREATE) {
+    if (type == CrudType::CREATE) {
         id = entityManager.addMask(mask, componentManager);
         componentManager.getSingleComponent<SyncID>(id) = syncID;
-    } else if (type == EntityType::UPDATE) {
+    } else if (type == CrudType::UPDATE) {
         id = this->getEntityID(syncID, entityManager, componentManager);
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
@@ -232,11 +232,11 @@ void eng::GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityM
 _STORAGE_DATA eng::GameSerializer::serializeInput(sf::Keyboard::Key input)
 {
     std::vector<uint8_t> packet;
-    PacketType type = PacketType::INPUT;
+    GamePacketType type = GamePacketType::INPUT;
 
     this->insertMagic(packet);
 
-    this->serializeComponent<PacketType>(packet, &type);
+    this->serializeComponent<GamePacketType>(packet, &type);
     this->serializeComponent<sf::Keyboard::Key>(packet, &input);
 
     this->insertMagic(packet);
@@ -246,7 +246,7 @@ _STORAGE_DATA eng::GameSerializer::serializeInput(sf::Keyboard::Key input)
 void eng::GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                                            std::shared_ptr<sf::Clock> clock)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(PacketType);
+    std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
     sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
 
     this->deserializeComponent<sf::Keyboard::Key>(packet, adv, &keyPress);
@@ -261,13 +261,13 @@ void eng::GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, Ent
 {
     std::size_t adv = 0;
     std::vector<uint8_t> packetVector = this->convertToVector(packet);
-    PacketType type;
+    GamePacketType type;
 
     if (!this->checkMagic(packetVector, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
     adv += MAGIC_SIZE;
-    this->deserializeComponent<PacketType>(packetVector, adv, &type);
+    this->deserializeComponent<GamePacketType>(packetVector, adv, &type);
     switch (type) {
     case ENTITY:
         this->deserializeEntity(packetVector, entityManager, componentManager);

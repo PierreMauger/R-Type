@@ -13,6 +13,24 @@
 
 namespace eng
 {
+    enum MenuPacketType {
+        ROOM_EDIT,
+        ROOM_ACTION,
+        EVENT,
+
+        UNKNOWN_MENU
+    };
+
+    enum RoomAction {
+        JOIN,
+        LEAVE,
+        READY,
+        UNREADY,
+        START,
+
+        UNKNOWN_ACTION
+    };
+
     class MenuSerializer : private Serializer
     {
         private:
