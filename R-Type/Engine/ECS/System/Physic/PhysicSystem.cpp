@@ -30,8 +30,8 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
 
 bool PhysicSystem::checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2)
 {
-    this->_rect1 = sf::Rect(pos.x, pos.y, sz.x - 10, sz.y - 10);
-    this->_rect2 = sf::Rect(pos2.x, pos2.y, sz2.x - 10, sz2.y - 10);
+    this->_rect1 = sf::Rect(pos.x, pos.y, sz.x, sz.y);
+    this->_rect2 = sf::Rect(pos2.x, pos2.y, sz2.x, sz2.y);
 
     return (this->_rect1.intersects(this->_rect2));
 }
@@ -59,8 +59,8 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
     Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (dis.dis) {
-        pos.y -= -vel.baseSpeedY;
-        sprite.rotation += 20;
+        pos.y -= -vel.baseSpeedY * 4;
+        sprite.rotation += 60;
         if (pos.y >= dis.end) {
             vel.y = 0;
             dis.dis = false;

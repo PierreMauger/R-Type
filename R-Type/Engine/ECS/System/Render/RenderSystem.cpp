@@ -2,11 +2,13 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites,
+                           std::shared_ptr<sf::Vector2f> screenSize)
 {
     this->_clock = clock;
     this->_window = window;
     this->_sprites = sprites;
+    this->_screenSize = screenSize;
     if (!this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf"))
         throw std::runtime_error("Error: Font not found");
     this->_text.setFont(this->_font);
@@ -20,15 +22,17 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
 
     std::size_t cooldownBarParent = (InfoComp::COOLDOWNBAR | InfoComp::SPRITEID | InfoComp::PARENT);
     std::size_t cooldownBarChild = (InfoComp::COOLDOWNSHOOT);
+    std::size_t size = 100 / this->_screenSize->x * this->_window->getSize().x;
+    this->_window->getSize();
 
     if (masks[i].has_value() && (masks[i].value() & cooldownBarParent) == cooldownBarParent) {
         std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
         if (masks[idPar].has_value()) {
             if ((masks[idPar].value() & cooldownBarChild) == cooldownBarChild) {
                 CooldownShoot &cooldownShoot = componentManager.getSingleComponent<CooldownShoot>(idPar);
-                spriteRef.setScale(((this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay) > 100
-                                       ? 100
-                                       : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * 100 / cooldownShoot.shootDelay,
+                spriteRef.setScale(((this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * size / cooldownShoot.shootDelay) > size
+                                       ? size
+                                       : (this->_clock->getElapsedTime().asSeconds() - cooldownShoot.lastShoot + cooldownShoot.shootDelay) * size / cooldownShoot.shootDelay,
                                    1);
             }
         } else {
@@ -78,6 +82,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & renderText) == renderText) {
+            this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
             this->_text.setString(componentManager.getSingleComponent<Text>(i).str + std::to_string(componentManager.getSingleComponent<Text>(i).value));
             this->_text.setPosition(componentManager.getSingleComponent<Text>(i).pos);
             stockText.push_back(this->_text);

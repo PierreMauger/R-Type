@@ -101,13 +101,13 @@ int main(int ac, char **av)
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
     systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites, graphic.getScreenSize()));
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
 #endif
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
-    //systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
+    // systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
