@@ -8,7 +8,9 @@
 #include <string>
 #include <thread>
 #include <vector>
-#include <SDKDDKVer.h>
+#if defined(_WIN32) || defined(WIN32)
+    #include <SDKDDKVer.h>
+#endif
 
 #include "boost/asio.hpp"
 #include "boost/bind/bind.hpp"

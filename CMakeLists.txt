@@ -88,6 +88,7 @@ include_directories(
 #set source files
 add_library(${ImGui} ${ImGui_SRC})
 
+target_link_libraries(${ImGui} PRIVATE ${OPENGL_LIBRARY})
 target_link_libraries(${ImGui} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 
 #install target
@@ -163,6 +164,7 @@ include_directories(
 add_library(${ENGINE} ${ENGINE_SRC})
 
 #link library/executable with deps
+target_link_libraries(${ENGINE} PRIVATE ${OPENGL_LIBRARY})
 target_link_libraries(${ENGINE} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 target_link_libraries(${ENGINE} PRIVATE ${ImGui})
 
@@ -198,6 +200,7 @@ include_directories(
 add_executable(${CLIENT} ${CLIENT_SRC})
 
 #link library/executable with deps
+target_link_libraries(${CLIENT} PRIVATE ${OPENGL_LIBRARY})
 target_link_libraries(${CLIENT} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 target_link_libraries(${CLIENT} PRIVATE ${ImGui})
 target_link_libraries(${CLIENT} PRIVATE ${ENGINE})
@@ -236,6 +239,7 @@ include_directories(
 add_executable(${SERVER} ${SERVER_SRC})
 
 #link library/executable with deps
+target_link_libraries(${SERVER} PRIVATE ${OPENGL_LIBRARY})
 target_link_libraries(${SERVER} PRIVATE sfml-system sfml-window sfml-graphics sfml-audio)
 target_link_libraries(${SERVER} PRIVATE ${ImGui})
 target_link_libraries(${SERVER} PRIVATE ${ENGINE})

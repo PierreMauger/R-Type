@@ -29,6 +29,8 @@
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
-#include <SDKDDKVer.h>
+#if defined(_WIN32) || defined(WIN32)
+    #include <SDKDDKVer.h>
+#endif
 
 #endif // INCLUDES_HPP
