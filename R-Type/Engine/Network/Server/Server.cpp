@@ -2,13 +2,12 @@
 
 using namespace eng;
 
-Server::Server(uint16_t portUdp, uint16_t portTcp) :
+Server::Server(uint16_t portTcp) :
     _ioContext(),
-    _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), portUdp)),
     _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
-    if (portUdp == portTcp)
-        throw std::runtime_error("Invalid port, must be different and between 0 and 65535");
+    // if (portTcp)
+        // throw std::runtime_error("Invalid port, must be different and between 0 and 65535");
     this->initServer();
 }
 
@@ -19,18 +18,7 @@ Server::~Server()
 
 void Server::initServer()
 {
-    this->_udpTmpBuffer.fill(0);
-    this->_udpSocket.async_receive_from(
-        boost::asio::buffer(this->_udpTmpBuffer),
-        this->_tmpEndpoint,
-        boost::bind(&Server::handleMsgUdp,
-                    this,
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred
-                )
-    );
-
-    boost::shared_ptr<Connection> newConnection = boost::make_shared<Connection>(this->_ioContext, this->_dataIn, this->_udpSocket);
+    boost::shared_ptr<Connection> newConnection = boost::make_shared<Connection>(this->_ioContext, this->_dataIn);
     this->_acceptor.async_accept(newConnection->getTcpSocket(),
         boost::bind(&Server::handleNewTcp,
                     this,
@@ -50,8 +38,7 @@ void Server::run()
 
 void Server::stop()
 {
-    if (this->_udpSocket.is_open())
-        this->_udpSocket.close();
+
     for (auto &connection : this->_listConnections) {
         if (connection->isConnected())
             connection->closeConnection();
@@ -64,19 +51,6 @@ void Server::stop()
         this->_ioContext.stop();
     if (this->_threadContext.joinable())
         this->_threadContext.join();
-}
-
-void Server::handleMsgUdp(const boost::system::error_code &error, size_t size)
-{
-    if (!error) {
-        std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
-        if (size != _NET_BUFFER_SIZE)
-            std::cout << "Invalid UDP message size : " << size << std::endl;
-        this->_dataIn.push_back(this->_udpTmpBuffer);
-    } else {
-        std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;
-    }
-    this->initServer();
 }
 
 void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection)

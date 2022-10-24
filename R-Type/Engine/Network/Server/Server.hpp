@@ -10,21 +10,17 @@ namespace eng
     {
         private:
             void handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection);
-            void handleMsgUdp(const boost::system::error_code &error, size_t size);
             void initServer();
 
             boost::asio::io_context _ioContext;
-            _B_ASIO_UDP::socket _udpSocket;
             _B_ASIO_TCP::acceptor _acceptor;
             std::vector<boost::shared_ptr<Connection>> _listConnections;
             _QUEUE_TYPE _dataIn;
             _QUEUE_TYPE _dataOut;
             std::thread _threadContext;
-            _B_ASIO_UDP::endpoint _tmpEndpoint;
-            _STORAGE_DATA _udpTmpBuffer;
 
         public:
-            Server(uint16_t portUdp, uint16_t portTcp);
+            Server(uint16_t portTcp);
             ~Server();
 
             void run();

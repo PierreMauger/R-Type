@@ -2,19 +2,21 @@
 
 using namespace eng;
 
-Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket) :
+Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn) :
     _ioContext(ioContext),
-    _udpSocket(udpSocket),
+    _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
+    _udpSocketOut(ioContext),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
 {
 }
 
-Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn, _B_ASIO_UDP::socket &udpSocket) :
+Connection::Connection(std::string ip, uint16_t portUdp, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn) :
     _ioContext(ioContext),
-    _udpEndpoint(boost::asio::ip::address::from_string(ip), portUdp),
+    _udpEndpoint(),
     _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp),
-    _udpSocket(udpSocket),
+    _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(boost::asio::ip::address::from_string(ip), portUdp)),
+    _udpSocketOut(ioContext),
     _tcpSocket(ioContext),
     _dataIn(dataIn)
 {
@@ -24,21 +26,43 @@ Connection::~Connection()
 {
 }
 
-void Connection::handleMsgTcp(boost::system::error_code error, size_t size)
+void Connection::handleMsgTcp(boost::system::error_code &error, size_t size)
 {
     if (!error) {
-        std::cout << "New TCP message from " << this->_tcpEndpoint << std::endl;
+        std::cout << "[~] New TCP message from " << this->_tcpEndpoint << std::endl;
         if (size != _NET_BUFFER_SIZE)
-            std::cout << "Invalid TCP message size : " << size << std::endl;
+            std::cout << "[?] TCP message size : " << size << std::endl;
         this->_dataIn.push_back(this->_tcpTmpBuffer);
     } else if (error == boost::asio::error::eof) {
         this->closeConnection();
         std::cout << "Connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << " closed" << std::endl;
         return;
     } else {
-        std::cerr << "handleMsgTcp Error: " << error.message() << std::endl;
+        std::cerr << "[!] handleMsgTcp Error: " << error.message() << std::endl;
     }
     this->initConnection();
+}
+
+void Connection::handleMsgUdp(boost::system::error_code &error, size_t size)
+{
+    if (!error) {
+        std::cout << "[~] New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
+        if (size != _NET_BUFFER_SIZE)
+            std::cout << "[?] UDP message size : " << size << std::endl;
+        this->_dataIn.push_back(this->_udpTmpBuffer);
+    } else {
+        std::cerr << "[!] handleMsgUdp Error: " << error.message() << std::endl;
+    }
+    this->initConnection();
+}
+
+void Connection::open()
+{
+    this->_udpSocketOut.open(_B_ASIO_UDP::v4());
+    if (this->_udpSocketOut.is_open())
+        std::cout << "UDP socket is opened" << std::endl;
+    else
+        throw std::runtime_error("UDP socket can't be opened");
 }
 
 void Connection::initConnection()
@@ -47,6 +71,17 @@ void Connection::initConnection()
     this->_tcpSocket.async_receive(
         boost::asio::buffer(this->_tcpTmpBuffer),
         boost::bind(&Connection::handleMsgTcp,
+                    this,
+                    boost::asio::placeholders::error,
+                    boost::asio::placeholders::bytes_transferred
+                )
+    );
+
+    this->_udpTmpBuffer.fill(0);
+    this->_udpSocketIn.async_receive_from(
+        boost::asio::buffer(this->_udpTmpBuffer),
+        this->_tmpEndpoint,
+        boost::bind(&Connection::handleMsgUdp,
                     this,
                     boost::asio::placeholders::error,
                     boost::asio::placeholders::bytes_transferred
@@ -66,6 +101,16 @@ _B_ASIO_TCP::socket &Connection::getTcpSocket()
     return this->_tcpSocket;
 }
 
+_B_ASIO_UDP::socket &Connection::getUdpSocketIn()
+{
+    return this->_udpSocketIn;
+}
+
+_B_ASIO_UDP::socket &Connection::getUdpSocketOut()
+{
+    return this->_udpSocketOut;
+}
+
 bool Connection::isConnected()
 {
     return this->_tcpSocket.is_open();
@@ -73,7 +118,10 @@ bool Connection::isConnected()
 
 void Connection::closeConnection()
 {
-    this->_tcpSocket.close();
+    if (this->_udpSocketOut.is_open())
+        this->_udpSocketOut.close();
+    if (this->_tcpSocket.is_open())
+        this->_tcpSocket.close();
 }
 
 void Connection::setUdpEndpoint(std::string ip, uint16_t port)
@@ -108,5 +156,5 @@ void Connection::tcpMsg(_STORAGE_DATA data)
 
 void Connection::udpMsg(_STORAGE_DATA data)
 {
-    this->_udpSocket.send_to(boost::asio::buffer(data), this->_udpEndpoint);
+    this->_udpSocketOut.send_to(boost::asio::buffer(data), this->_udpEndpoint);
 }
