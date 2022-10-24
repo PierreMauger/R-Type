@@ -26,7 +26,7 @@ std::shared_ptr<Client> Network::getClient()
     return this->_client;
 }
 
-Serializer &Network::getSerializer()
+GameSerializer &Network::getSerializer()
 {
     return this->_serializer;
 }

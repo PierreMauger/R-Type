@@ -145,6 +145,8 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/Network/Server/Server.cpp
     ${ENGINE_ROOT}/Network/Client/Client.cpp
     ${ENGINE_ROOT}/Network/Serializer.cpp
+    ${ENGINE_ROOT}/Network/GameSerializer.cpp
+    ${ENGINE_ROOT}/Network/MenuSerializer.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp

@@ -2,7 +2,7 @@
 #define NETWORK_HPP_
 
 #include "Engine/Network/Client/Client.hpp"
-#include "Engine/Network/Serializer.hpp"
+#include "Engine/Network/GameSerializer.hpp"
 #include "Engine/Network/Server/Server.hpp"
 #include "Includes.hpp"
 
@@ -14,7 +14,7 @@ namespace eng
             std::shared_ptr<Server> _server;
             std::shared_ptr<Client> _client;
 
-            Serializer _serializer;
+            GameSerializer _serializer;
 
         public:
             Network();
@@ -23,7 +23,7 @@ namespace eng
             void initClient(std::string ip, uint16_t portUdp, uint16_t portTcp);
             std::shared_ptr<Server> getServer();
             std::shared_ptr<Client> getClient();
-            Serializer &getSerializer();
+            GameSerializer &getSerializer();
     };
 } // namespace eng
 
