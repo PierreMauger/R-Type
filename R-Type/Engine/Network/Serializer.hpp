@@ -57,8 +57,16 @@ namespace eng
 
             std::size_t getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager);
 
-            std::size_t updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager);
             void pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager);
+            void getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager);
+
+            template <typename T> void updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
+            {
+                T component = T();
+
+                adv = deserializeComponent(packet, adv, &component);
+                assignComponent(id, componentManager, component);
+            };
 
             _STORAGE_DATA convertToArray(std::vector<uint8_t> &packet);
             std::vector<uint8_t> convertToVector(_STORAGE_DATA &packet);

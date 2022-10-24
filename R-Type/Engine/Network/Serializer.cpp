@@ -130,20 +130,80 @@ void eng::Serializer::pushComponents(std::vector<uint8_t> &packet, std::size_t m
     }
 }
 
-std::size_t eng::Serializer::updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
+void eng::Serializer::getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager)
 {
-    Position pos = {0, 0};
-    adv = this->deserializeComponent<Position>(packet, adv, &pos);
-    componentManager.getSingleComponent<Position>(id) = pos;
-
-    Velocity vel = {0, 0};
-    adv = this->deserializeComponent<Velocity>(packet, adv, &vel);
-    componentManager.getSingleComponent<Velocity>(id) = vel;
-
-    SpriteID spriteID = {0};
-    adv = this->deserializeComponent(packet, adv, &spriteID);
-    componentManager.getSingleComponent<SpriteID>(id) = spriteID;
-    return adv;
+    for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
+        if ((mask & (1 << i)) == 0) {
+            continue;
+        }
+        switch (i) {
+        case 0:
+            this->updateEntity<Position>(packet, id, adv, componentManager);
+            break;
+        case 1:
+            this->updateEntity<Velocity>(packet, id, adv, componentManager);
+            break;
+        case 2:
+            this->updateEntity<Size>(packet, id, adv, componentManager);
+            break;
+        case 3:
+            this->updateEntity<SpriteID>(packet, id, adv, componentManager);
+            break;
+        case 4:
+            this->updateEntity<Controllable>(packet, id, adv, componentManager);
+            break;
+        case 5:
+            this->updateEntity<Parallax>(packet, id, adv, componentManager);
+            break;
+        case 6:
+            this->updateEntity<Projectile>(packet, id, adv, componentManager);
+            break;
+        case 7:
+            this->updateEntity<Life>(packet, id, adv, componentManager);
+            break;
+        case 8:
+            this->updateEntity<Enemy>(packet, id, adv, componentManager);
+            break;
+        case 9:
+            this->updateEntity<Appearance>(packet, id, adv, componentManager);
+            break;
+        case 10:
+            this->updateEntity<Disappearance>(packet, id, adv, componentManager);
+            break;
+        case 11:
+            this->updateEntity<CooldownShoot>(packet, id, adv, componentManager);
+            break;
+        case 12:
+            this->updateEntity<CooldownBar>(packet, id, adv, componentManager);
+            break;
+        case 13:
+            this->updateEntity<LifeBar>(packet, id, adv, componentManager);
+            break;
+        case 14:
+            this->updateEntity<Parent>(packet, id, adv, componentManager);
+            break;
+        case 15:
+            this->updateEntity<Patern>(packet, id, adv, componentManager);
+            break;
+        case 16:
+            this->updateEntity<SyncID>(packet, id, adv, componentManager);
+            break;
+        case 17:
+            this->updateEntity<DropBonus>(packet, id, adv, componentManager);
+            break;
+        case 18:
+            this->updateEntity<Text>(packet, id, adv, componentManager);
+            break;
+        case 19:
+            this->updateEntity<SoundID>(packet, id, adv, componentManager);
+            break;
+        case 20:
+            this->updateEntity<SpriteAttribut>(packet, id, adv, componentManager);
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 _STORAGE_DATA eng::Serializer::serializeEntity(std::size_t id, EntityType type, EntityManager &entityManager, ComponentManager &componentManager)
@@ -200,7 +260,7 @@ void eng::Serializer::synchronizeEntity(std::vector<uint8_t> packet, EntityManag
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
     }
-    adv = this->updateEntity(packet, id, adv, componentManager);
+    this->getComponents(packet, id, mask, adv, componentManager);
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
