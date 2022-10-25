@@ -71,7 +71,7 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
             dis.dis = false;
             if (mask[i].has_value() && (mask[i].value() & InfoComp::CONTROLLABLE) == InfoComp::CONTROLLABLE) {
                 Controllable &con = componentManager.getSingleComponent<Controllable>(i);
-                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death, this->_window->getSize(), this->_screenSize);
+                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death + 1, this->_window->getSize(), this->_screenSize);
             }
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
