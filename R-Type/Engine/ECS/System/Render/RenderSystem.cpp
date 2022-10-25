@@ -23,7 +23,6 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
     std::size_t cooldownBarParent = (InfoComp::COOLDOWNBAR | InfoComp::SPRITEID | InfoComp::PARENT);
     std::size_t cooldownBarChild = (InfoComp::COOLDOWNSHOOT);
     std::size_t size = 100 / this->_screenSize->x * this->_window->getSize().x;
-    this->_window->getSize();
 
     if (masks[i].has_value() && (masks[i].value() & cooldownBarParent) == cooldownBarParent) {
         std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
@@ -57,7 +56,7 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
                 Position &pos = componentManager.getSingleComponent<Position>(idPar);
                 Size &sz = componentManager.getSingleComponent<Size>(idPar);
                 spriteRef.setScale(life.life * sz.x / lifeBar.lifeMax, 1);
-                spriteRef.setPosition(pos.x, pos.y - 20);
+                spriteRef.setPosition(pos.x, pos.y - (20 / this->_screenSize->x * this->_window->getSize().x));
             }
         } else {
             componentManager.removeAllComponents(i);
