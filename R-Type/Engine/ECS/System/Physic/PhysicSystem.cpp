@@ -1,10 +1,13 @@
 #include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
+
 using namespace eng;
 
-PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
+PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
 {
     this->_window = window;
+    this->_screenSize = screenSize;
 }
 
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
@@ -56,14 +59,20 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
 
 bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel)
 {
+    auto &mask = entityManager.getMasks();
     Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
+
     if (dis.dis) {
         pos.y -= -vel.baseSpeedY * 4;
         sprite.rotation += 60;
         if (pos.y >= dis.end) {
             vel.y = 0;
             dis.dis = false;
+            if (mask[i].has_value() && (mask[i].value() & InfoComp::CONTROLLABLE) == InfoComp::CONTROLLABLE) {
+                Controllable &con = componentManager.getSingleComponent<Controllable>(i);
+                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death, this->_window->getSize(), this->_screenSize);
+            }
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
         }
