@@ -15,9 +15,9 @@ void eng::Client::initSystems()
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
+    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites, graphic.getScreenSize()));
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
 #endif
@@ -66,31 +66,11 @@ void eng::Client::initEntities()
     vesselPreload.preload(this->_engine);
 }
 
-// TODO REMOVE THIS **
-bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
-{
-    auto &masks = entityManager.getMasks();
-    std::size_t checkCon = (eng::InfoComp::CONTROLLABLE);
-
-    for (std::size_t i = 0; i < masks.size(); i++) {
-        if (!masks[i].has_value())
-            continue;
-        if ((masks[i].value() & checkCon) == checkCon) {
-            kill = componentManager.getSingleComponent<Controllable>(i).kill;
-            return true;
-        }
-    }
-    death++;
-    return false;
-}
-
 void eng::Client::mainLoop()
 {
     eng::Graphic &graphic = this->_engine.getGraphic();
     eng::ECS &ecs = this->_engine.getECS();
     eng::VesselPreload vesselPreload;
-    std::size_t death = 0;
-    std::size_t kill = 0;
 
     this->_network.run();
     while (graphic.getWindow()->isOpen()) {
@@ -105,8 +85,6 @@ void eng::Client::mainLoop()
                 graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
             }
         }
-        if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
-            vesselPreload.preloadScore(this->_engine, kill, death);
         if (!this->_network.isConnected())
             graphic.getWindow()->close();
         graphic.getWindow()->clear(sf::Color::Black);

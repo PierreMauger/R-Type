@@ -11,8 +11,10 @@ void eng::EnemyPreload::preload(Engine &engine)
     std::shared_ptr<sf::Vector2f> screenSize = engine.getGraphic().getScreenSize();
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{2, Priority::MEDIUM, 0, 2, false, 0, 0.075, 63, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 63, 48}, sf::Color::White, {
-        1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
+    engine.getECS()
+        .getComponentManager()
+        .getComponent(typeid(SpriteAttribut))
+        .emplaceData(id, SpriteAttribut{0, {0, 0, 63, 48}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x + 80), randY, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{2 / screenSize->x * windowsSize.x * -1, 0, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(rand), 0});

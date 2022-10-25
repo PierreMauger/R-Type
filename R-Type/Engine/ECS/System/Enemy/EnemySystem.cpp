@@ -13,18 +13,19 @@ void EnemySystem::createShoot(std::size_t id, ComponentManager &componentManager
 {
     std::size_t addEntity;
     Size size = componentManager.getSingleComponent<Size>(id);
+    sf::Vector2f sizeFire = sf::Vector2f(55 / this->_screenSize->x * _window->getSize().x, 30 / this->_screenSize->y * _window->getSize().y);
 
-    addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE | InfoComp::SPRITEAT),
-                                      componentManager);
+    addEntity = entityManager.addMask(
+        (InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE | InfoComp::SPRITEAT),
+        componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{9, Priority::MEDIUM});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 55, 30}, sf::Color::White,
-        {1 / _screenSize->x * _window->getSize().x, 1 / _screenSize->y * _window->getSize().y}});
-    componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2,
-        (pos.y + ((size.y / 2 - (30 / 2)) / _screenSize->y * _window->getSize().y)), pos.z});
+    componentManager.getComponent(typeid(SpriteAttribut))
+        .emplaceData(addEntity, SpriteAttribut{0, {0, 0, 55, 30}, sf::Color::White, {1 / _screenSize->x * _window->getSize().x, 1 / _screenSize->y * _window->getSize().y}});
+    componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x, pos.y + size.y / 2 - sizeFire.y / 2, pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{15 / this->_screenSize->x * _window->getSize().x * -1, 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, 1});
-    componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{55 / this->_screenSize->x * _window->getSize().x, 30 / this->_screenSize->y * _window->getSize().y});
+    componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x, sizeFire.y});
 }
 
 void EnemySystem::update(ComponentManager &componentManager, EntityManager &entityManager)

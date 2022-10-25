@@ -15,9 +15,9 @@ void eng::Server::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
 
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow()));
+    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites, graphic.getScreenSize()));
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
 #endif
@@ -61,24 +61,6 @@ void eng::Server::initEntities()
     scoreTextPreload.preload(this->_engine);
 }
 
-// TODO REMOVE THIS **
-bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &componentManager, std::size_t &death, std::size_t &kill)
-{
-    auto &masks = entityManager.getMasks();
-    std::size_t checkCon = (eng::InfoComp::CONTROLLABLE);
-
-    for (std::size_t i = 0; i < masks.size(); i++) {
-        if (!masks[i].has_value())
-            continue;
-        if ((masks[i].value() & checkCon) == checkCon) {
-            kill = componentManager.getSingleComponent<Controllable>(i).kill;
-            return true;
-        }
-    }
-    death++;
-    return false;
-}
-
 // TODO make do separated function
 void eng::Server::mainLoop()
 {
@@ -94,8 +76,6 @@ void eng::Server::mainLoop()
     eng::EnemyPreload enemyPreload;
     eng::BossPreload bossPreload;
     eng::VesselPreload vesselPreload;
-    std::size_t death = 0;
-    std::size_t kill = 0;
 
     vesselPreload.preload(this->_engine);
     while (graphic.getWindow()->isOpen()) {
@@ -110,8 +90,6 @@ void eng::Server::mainLoop()
                 graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
             }
         }
-        if (!findVessel(ecs.getEntityManager(), ecs.getComponentManager(), death, kill))
-            vesselPreload.preloadScore(this->_engine, kill, death);
         if (graphic.getClock()->getElapsedTime() > boss_time) {
             bossPreload.preload(this->_engine);
             boss_time = sf::seconds(boss_time.asSeconds() + 30);
