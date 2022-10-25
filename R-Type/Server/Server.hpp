@@ -20,6 +20,8 @@ namespace eng
             Engine _engine;
             ServerNetwork _network;
 
+            // std::vector
+
             void initSystems();
             void initComponents();
             void initEntities();
