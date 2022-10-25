@@ -31,12 +31,23 @@ namespace eng
         UNKNOWN_ACTION
     };
 
+    enum MenuEvent {
+        GAME_START,
+        GAME_END,
+
+        UNKNOWN_EVENT
+    };
+
     class MenuSerializer : private Serializer
     {
         private:
         public:
             MenuSerializer();
             ~MenuSerializer() = default;
+
+            void handlePacket(_STORAGE_DATA packet); // TODO vector of rooms
+
+            // _STORAGE_DATA serializeRoomEdit(std::string name, std::size_t maxPlayers, std::size_t nbPlayers, bool isReady);
     };
 }
 
