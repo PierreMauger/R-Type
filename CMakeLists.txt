@@ -140,11 +140,10 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Network files
-    ${ENGINE_ROOT}/Network/Network.cpp
     ${ENGINE_ROOT}/Network/Connection.cpp
-    ${ENGINE_ROOT}/Network/Server/Server.cpp
-    ${ENGINE_ROOT}/Network/Client/Client.cpp
     ${ENGINE_ROOT}/Network/Serializer.cpp
+    ${ENGINE_ROOT}/Network/GameSerializer.cpp
+    ${ENGINE_ROOT}/Network/MenuSerializer.cpp
 
     # Graphic files
     ${ENGINE_ROOT}/Graphic/Graphic.cpp
@@ -188,11 +187,14 @@ set(CLIENT_ROOT ${PROJECT_NAME}/Client)
 
 #fetch include paths
 set(CLIENT_INC
+    ${CLIENT_ROOT}
 )
 
 #fetch source files
 set(CLIENT_SRC
     ${CLIENT_ROOT}/main.cpp
+    ${CLIENT_ROOT}/Client.cpp
+    ${CLIENT_ROOT}/ClientNetwork.cpp
 )
 
 #set include paths
@@ -227,11 +229,14 @@ set(SERVER_ROOT ${PROJECT_NAME}/Server)
 
 #fetch include paths
 set(SERVER_INC
+    ${SERVER_ROOT}
 )
 
 #fetch source files
 set(SERVER_SRC
     ${SERVER_ROOT}/main.cpp
+    ${SERVER_ROOT}/Server.cpp
+    ${SERVER_ROOT}/ServerNetwork.cpp
 )
 
 #set include paths

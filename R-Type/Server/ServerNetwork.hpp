@@ -1,16 +1,16 @@
-#ifndef SERVER_HPP_
-#define SERVER_HPP_
+#ifndef SERVERNETWORK_HPP_
+#define SERVERNETWORK_HPP_
 
 #include "Connection.hpp"
 
 namespace eng
 {
-    class Server
+    class ServerNetwork
     {
         private:
             void handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection);
             void handleMsgUdp(const boost::system::error_code &error, size_t size);
-            void initServer();
+            void initServerNetwork();
 
             boost::asio::io_context _ioContext;
             _B_ASIO_UDP::socket _udpSocket;
@@ -23,8 +23,8 @@ namespace eng
             _STORAGE_DATA _udpTmpBuffer;
 
         public:
-            Server(uint16_t portUdp, uint16_t portTcp);
-            ~Server();
+            ServerNetwork(uint16_t portUdp, uint16_t portTcp);
+            ~ServerNetwork();
 
             void run();
             void stop();
@@ -44,4 +44,4 @@ namespace eng
     };
 } // namespace eng
 
-#endif /* !SERVER_HPP_ */
+#endif /* !SERVERNETWORK_HPP_ */

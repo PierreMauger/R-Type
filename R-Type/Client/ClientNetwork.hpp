@@ -1,15 +1,15 @@
-#ifndef CLIENT_HPP_
-#define CLIENT_HPP_
+#ifndef CLIENTNETWORK_HPP_
+#define CLIENTNETWORK_HPP_
 
 #include "Connection.hpp"
 
 namespace eng
 {
-    class Client
+    class ClientNetwork
     {
         private:
             void handleMsgUdp(const boost::system::error_code &error, size_t size);
-            void initClient();
+            void initClientNetwork();
             void open();
 
             boost::asio::io_context _ioContext;
@@ -23,8 +23,8 @@ namespace eng
             _STORAGE_DATA _udpTmpBuffer;
 
         public:
-            Client(std::string ip, uint16_t portUdp, uint16_t portTcp);
-            ~Client();
+            ClientNetwork(std::string ip, uint16_t portUdp, uint16_t portTcp);
+            ~ClientNetwork();
 
             void run();
             void stop();
@@ -38,4 +38,4 @@ namespace eng
     };
 } // namespace eng
 
-#endif /* !CLIENT_HPP_ */
+#endif /* !CLIENTNETWORK_HPP_ */

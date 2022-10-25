@@ -1,54 +1,37 @@
-#include "Server/Server.hpp"
+#include "ServerNetwork.hpp"
 
 using namespace eng;
 
-Server::Server(uint16_t portUdp, uint16_t portTcp) :
-    _ioContext(),
-    _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), portUdp)),
-    _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
+ServerNetwork::ServerNetwork(uint16_t portUdp, uint16_t portTcp)
+    : _ioContext(), _udpSocket(_ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), portUdp)), _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
     if (portUdp == portTcp)
         throw std::runtime_error("Invalid port, must be different and between 0 and 65535");
-    this->initServer();
+    this->initServerNetwork();
 }
 
-Server::~Server()
+ServerNetwork::~ServerNetwork()
 {
     this->stop();
 }
 
-void Server::initServer()
+void ServerNetwork::initServerNetwork()
 {
     this->_udpTmpBuffer.fill(0);
-    this->_udpSocket.async_receive_from(
-        boost::asio::buffer(this->_udpTmpBuffer),
-        this->_tmpEndpoint,
-        boost::bind(&Server::handleMsgUdp,
-                    this,
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred
-                )
-    );
+    this->_udpSocket.async_receive_from(boost::asio::buffer(this->_udpTmpBuffer), this->_tmpEndpoint,
+                                        boost::bind(&ServerNetwork::handleMsgUdp, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 
     boost::shared_ptr<Connection> newConnection = boost::make_shared<Connection>(this->_ioContext, this->_dataIn, this->_udpSocket);
-    this->_acceptor.async_accept(newConnection->getTcpSocket(),
-        boost::bind(&Server::handleNewTcp,
-                    this,
-                    boost::asio::placeholders::error,
-                    newConnection
-                )
-    );
+    this->_acceptor.async_accept(newConnection->getTcpSocket(), boost::bind(&ServerNetwork::handleNewTcp, this, boost::asio::placeholders::error, newConnection));
 }
 
-void Server::run()
+void ServerNetwork::run()
 {
-    this->_threadContext = std::thread([this]() {
-        this->_ioContext.run();
-    });
+    this->_threadContext = std::thread([this]() { this->_ioContext.run(); });
     std::cout << "Server is running" << std::endl;
 }
 
-void Server::stop()
+void ServerNetwork::stop()
 {
     if (this->_udpSocket.is_open())
         this->_udpSocket.close();
@@ -66,7 +49,7 @@ void Server::stop()
         this->_threadContext.join();
 }
 
-void Server::handleMsgUdp(const boost::system::error_code &error, size_t size)
+void ServerNetwork::handleMsgUdp(const boost::system::error_code &error, size_t size)
 {
     if (!error) {
         std::cout << "New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
@@ -76,10 +59,10 @@ void Server::handleMsgUdp(const boost::system::error_code &error, size_t size)
     } else {
         std::cerr << "handleMsgUdp Error: " << error.message() << std::endl;
     }
-    this->initServer();
+    this->initServerNetwork();
 }
 
-void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection)
+void ServerNetwork::handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection)
 {
     if (!error) {
         newConnection->setTcpEndpoint(newConnection->getTcpSocket().remote_endpoint());
@@ -92,10 +75,10 @@ void Server::handleNewTcp(const boost::system::error_code &error, boost::shared_
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
     }
-    this->initServer();
+    this->initServerNetwork();
 }
 
-void Server::tcpMsgCli(_B_ASIO_TCP::endpoint endpoint, _STORAGE_DATA data)
+void ServerNetwork::tcpMsgCli(_B_ASIO_TCP::endpoint endpoint, _STORAGE_DATA data)
 {
     for (auto &connection : this->_listConnections) {
         if (connection->getTcpEndpoint() == endpoint) {
@@ -107,7 +90,7 @@ void Server::tcpMsgCli(_B_ASIO_TCP::endpoint endpoint, _STORAGE_DATA data)
     }
 }
 
-void Server::udpMsgCli(_B_ASIO_UDP::endpoint endpoint, _STORAGE_DATA data)
+void ServerNetwork::udpMsgCli(_B_ASIO_UDP::endpoint endpoint, _STORAGE_DATA data)
 {
     for (auto &connection : this->_listConnections) {
         if (connection->getUdpEndpoint() == endpoint) {
@@ -119,21 +102,21 @@ void Server::udpMsgCli(_B_ASIO_UDP::endpoint endpoint, _STORAGE_DATA data)
     }
 }
 
-void Server::tcpMsgAll(_STORAGE_DATA data)
+void ServerNetwork::tcpMsgAll(_STORAGE_DATA data)
 {
     for (auto &connection : this->_listConnections) {
         connection->tcpMsg(data);
     }
 }
 
-void Server::udpMsgAll(_STORAGE_DATA data)
+void ServerNetwork::udpMsgAll(_STORAGE_DATA data)
 {
     for (auto &connection : this->_listConnections) {
         connection->udpMsg(data);
     }
 }
 
-void Server::closeConnection(_B_ASIO_TCP::endpoint endpoint)
+void ServerNetwork::closeConnection(_B_ASIO_TCP::endpoint endpoint)
 {
     for (auto &connection : this->_listConnections) {
         if (connection->getTcpEndpoint() == endpoint) {
@@ -145,7 +128,7 @@ void Server::closeConnection(_B_ASIO_TCP::endpoint endpoint)
     }
 }
 
-void Server::updateConnection()
+void ServerNetwork::updateConnection()
 {
     for (auto &connection : this->_listConnections) {
         if (!connection->isConnected()) {
@@ -156,17 +139,17 @@ void Server::updateConnection()
     }
 }
 
-_QUEUE_TYPE &Server::getQueueIn()
+_QUEUE_TYPE &ServerNetwork::getQueueIn()
 {
     return this->_dataIn;
 }
 
-_QUEUE_TYPE &Server::getQueueOut()
+_QUEUE_TYPE &ServerNetwork::getQueueOut()
 {
     return this->_dataOut;
 }
 
-std::vector<boost::shared_ptr<Connection>> &Server::getConnections()
+std::vector<boost::shared_ptr<Connection>> &ServerNetwork::getConnections()
 {
     return this->_listConnections;
 }
