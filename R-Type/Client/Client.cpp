@@ -1,10 +1,11 @@
 #include "Client.hpp"
 
-eng::Client::Client(std::string ip, uint16_t portUdp, uint16_t portTcp) : _network(ip, portUdp, portTcp)
+eng::Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
 {
     this->initSystems();
     this->initComponents();
     this->initEntities();
+    this->_network.run();
 }
 
 void eng::Client::initSystems()
@@ -68,11 +69,13 @@ void eng::Client::initEntities()
 
 void eng::Client::mainLoop()
 {
+    _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
+    std::size_t refreshTick = 5;
+
     eng::Graphic &graphic = this->_engine.getGraphic();
     eng::ECS &ecs = this->_engine.getECS();
     eng::VesselPreload vesselPreload;
 
-    this->_network.run();
     while (graphic.getWindow()->isOpen()) {
         while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
 #ifndef NDEBUG
@@ -83,6 +86,13 @@ void eng::Client::mainLoop()
             if (graphic.getEvent()->type == sf::Event::Resized) {
                 this->_engine.updateSizeWindow();
                 graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
+            }
+        }
+        for (size_t count = 0; count < refreshTick; count++) {
+            if (!dataIn.empty()) {
+                std::cout << "Message: " << dataIn.pop_front().data() << std::endl;
+            } else {
+                break;
             }
         }
         if (!this->_network.isConnected())

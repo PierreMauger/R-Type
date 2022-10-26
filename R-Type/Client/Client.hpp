@@ -25,7 +25,7 @@ namespace eng
             void initEntities();
 
         public:
-            Client(std::string ip, uint16_t portUdp, uint16_t portTcp);
+            Client(std::string ip, uint16_t portTcp);
             ~Client() = default;
 
             void mainLoop();
