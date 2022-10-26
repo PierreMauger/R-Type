@@ -29,6 +29,8 @@ bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &compon
 void mainLoop(eng::Engine &engine)
 {
     eng::Network &network = engine.getNetwork();
+    _QUEUE_TYPE &dataIn = network.getClient()->getQueueIn();
+    size_t refreshTick = 5;
 
     eng::Graphic &graphic = engine.getGraphic();
     eng::ECS &ecs = engine.getECS();
@@ -49,6 +51,15 @@ void mainLoop(eng::Engine &engine)
             vesselPreload.preloadScore(engine, kill, death);
         if (!network.getClient()->isConnected())
             graphic.getWindow()->close();
+        for (size_t count = 0; count < refreshTick; count++) {
+            if (!dataIn.empty()) {
+                std::cout << "Message: " << dataIn.pop_front().data() << std::endl;
+            } else {
+                break;
+            }
+        }
+        network.getClient()->tcpMsg({'C', 'T'});
+        network.getClient()->udpMsg({'C', 'U'});
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
@@ -57,9 +68,9 @@ void mainLoop(eng::Engine &engine)
 
 int main(int ac, char **av)
 {
-    if (ac != 4) {
-        std::cerr << "Usage: ./R-Type [ip] [portUdp] [portTcp]" << std::endl;
-        return 84;
+    if (ac != 3) {
+        std::cerr << "Usage: ./R-Type [ip] [portTcp]" << std::endl;
+        return 1;
     }
 
     eng::Engine engine;
@@ -70,7 +81,7 @@ int main(int ac, char **av)
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(engine.getLoader().getSounds());
 
-    network.initClient(av[1], std::stoi(av[2]), std::stoi(av[3]));
+    network.initClient(av[1], std::stoi(av[2]));
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));

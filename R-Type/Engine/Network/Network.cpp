@@ -6,14 +6,14 @@ Network::Network()
 {
 }
 
-void Network::initServer(uint16_t portUdp, uint16_t portTcp)
+void Network::initServer(uint16_t portTcp)
 {
-    this->_server = std::make_shared<Server>(portUdp, portTcp);
+    this->_server = std::make_shared<Server>(portTcp);
 }
 
-void Network::initClient(std::string ip, uint16_t portUdp, uint16_t portTcp)
+void Network::initClient(std::string ip, uint16_t portTcp)
 {
-    this->_client = std::make_shared<Client>(ip, portUdp, portTcp);
+    this->_client = std::make_shared<Client>(ip, portTcp);
 }
 
 std::shared_ptr<Server> Network::getServer()

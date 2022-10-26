@@ -29,7 +29,8 @@ bool findVessel(eng::EntityManager &entityManager, eng::ComponentManager &compon
 
 void mainLoop(eng::Engine &engine)
 {
-    _QUEUE_TYPE &dataIn = engine.getNetwork().getServer()->getQueueIn();
+    eng::Network &network = engine.getNetwork();
+    _QUEUE_TYPE &dataIn = network.getServer()->getQueueIn();
     size_t refreshTick = 5;
     std::map<std::string, boost::shared_ptr<eng::Connection>> players;
 
@@ -69,6 +70,8 @@ void mainLoop(eng::Engine &engine)
                 break;
             }
         }
+        // engine.getNetwork().getServer()->tcpMsgAll({'S', 'T'});
+        // engine.getNetwork().getServer()->udpMsgAll({'S', 'U'});
         engine.getNetwork().getServer()->updateConnection();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
@@ -78,8 +81,8 @@ void mainLoop(eng::Engine &engine)
 
 int main(int ac, char **av)
 {
-    if (ac != 3) {
-        std::cerr << "Usage: ./r-type_server [portUDP] [portTCP]" << std::endl;
+    if (ac != 2) {
+        std::cerr << "Usage: ./r-type_server [portTCP]" << std::endl;
         return 1;
     }
 
@@ -90,7 +93,7 @@ int main(int ac, char **av)
     eng::Graphic &graphic = engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(engine.getLoader().getSprites());
 
-    network.initServer(std::stoi(av[1]), std::stoi(av[2]));
+    network.initServer(std::stoi(av[1]));
 
     // setup system & component
     systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock()));
