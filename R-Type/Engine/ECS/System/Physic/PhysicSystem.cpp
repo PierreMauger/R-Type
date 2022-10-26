@@ -64,8 +64,8 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
 
     if (dis.dis) {
-        pos.y -= -vel.baseSpeedY * 4;
-        sprite.rotation += 60;
+        pos.y -= -vel.baseSpeedY * 3;
+        sprite.rotation += 40;
         if (pos.y >= dis.end) {
             vel.y = 0;
             dis.dis = false;
