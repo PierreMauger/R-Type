@@ -14,7 +14,7 @@ Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
 Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
     : _ioContext(ioContext),
       _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp),
-      _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(boost::asio::ip::address::from_string(ip), 0)),
+      _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
       _udpSocketOut(ioContext),
       _tcpSocket(ioContext),
       _dataIn(dataIn)
