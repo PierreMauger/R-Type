@@ -113,5 +113,7 @@ void eng::MenuSerializer::deserializeRoomAction(std::vector<uint8_t> packet, std
         throw std::runtime_error("[ERROR] Bad packet format");
     }
 
+    auto roomIt = getRoom(rooms, id);
+
     // TODO: handle action
 }
