@@ -2,7 +2,6 @@
 
 void eng::EnemyPreload::preload(Engine &engine)
 {
-    std::cout << "EnemyPreload" << std::endl;
     sf::Vector2u windowsSize = engine.getGraphic().getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = engine.getGraphic().getScreenSize();
     std::size_t rand = static_cast<std::size_t>(createRandom(0, 3));
