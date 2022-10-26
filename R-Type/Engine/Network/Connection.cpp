@@ -130,10 +130,8 @@ void Connection::closeConnection()
         this->_udpSocketOut.close();
     if (this->_udpSocketIn.is_open())
         this->_udpSocketIn.close();
-    if (this->_tcpSocket.is_open()) {
-        this->_tcpSocket.shutdown(_B_ASIO_TCP::socket::shutdown_both);
+    if (this->_tcpSocket.is_open())
         this->_tcpSocket.close();
-    }
 }
 
 void Connection::setUdpEndpoint(std::string ip, uint16_t port)
