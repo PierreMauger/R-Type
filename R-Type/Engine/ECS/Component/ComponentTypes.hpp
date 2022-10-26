@@ -89,8 +89,6 @@ typedef struct Life {
 
 typedef struct Enemy {
         bool enemy = false;
-        float lastShoot = 0.0f;
-        float shootDelay = 2.0f;
 } Enemy;
 
 typedef struct Appearance {

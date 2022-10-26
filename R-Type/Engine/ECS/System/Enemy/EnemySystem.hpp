@@ -14,7 +14,6 @@ namespace eng
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
-            void createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager);
 
         public:
             EnemySystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);

@@ -1,6 +1,7 @@
 #include "Server.hpp"
 
-eng::Server::Server(uint16_t portTcp) : _network(portTcp)
+eng::Server::Server(uint16_t portTcp)
+    : _network(portTcp)
 {
     this->initSystems();
     this->initComponents();
