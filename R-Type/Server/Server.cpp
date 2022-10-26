@@ -1,10 +1,11 @@
 #include "Server.hpp"
 
-eng::Server::Server(uint16_t portUdp, uint16_t portTcp) : _network(portUdp, portTcp)
+eng::Server::Server(uint16_t portTcp) : _network(portTcp)
 {
     this->initSystems();
     this->initComponents();
     this->initEntities();
+    this->_network.run();
 }
 
 // TODO see if graph is usefull on serv

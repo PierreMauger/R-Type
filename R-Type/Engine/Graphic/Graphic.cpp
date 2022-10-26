@@ -6,6 +6,7 @@ Graphic::Graphic()
 {
     this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "R-Type");
     this->_screenSize = std::make_shared<sf::Vector2f>(this->_window->getSize().x, this->_window->getSize().x);
+    this->_lastSize = sf::Vector2f(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
     this->_event = std::make_shared<sf::Event>();
     this->_clock = std::make_shared<sf::Clock>();
     this->_window->setFramerateLimit(60);

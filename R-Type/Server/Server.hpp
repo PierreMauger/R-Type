@@ -28,7 +28,7 @@ namespace eng
             void initEntities();
 
         public:
-            Server(uint16_t portUdp, uint16_t portTcp);
+            Server(uint16_t portTcp);
             ~Server() = default;
 
             void mainLoop();
