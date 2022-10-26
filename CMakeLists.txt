@@ -237,6 +237,7 @@ set(SERVER_SRC
     ${SERVER_ROOT}/main.cpp
     ${SERVER_ROOT}/Server.cpp
     ${SERVER_ROOT}/ServerNetwork.cpp
+    ${SERVER_ROOT}/Room.cpp
 )
 
 #set include paths

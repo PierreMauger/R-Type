@@ -10,6 +10,7 @@
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Includes.hpp"
+#include "Room.hpp"
 #include "ServerNetwork.hpp"
 
 namespace eng
@@ -19,6 +20,8 @@ namespace eng
         private:
             Engine _engine;
             ServerNetwork _network;
+
+            std::vector<Room> _rooms;
 
             void initSystems();
             void initComponents();
