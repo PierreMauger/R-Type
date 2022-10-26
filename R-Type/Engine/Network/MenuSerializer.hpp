@@ -5,6 +5,7 @@
 #include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Network/NetCommon.hpp"
+#include "Engine/Network/Room.hpp"
 #include "Engine/Network/Serializer.hpp"
 #include "Includes.hpp"
 
@@ -41,13 +42,24 @@ namespace eng
     class MenuSerializer : private Serializer
     {
         private:
+            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, std::size_t id);
+
+            void editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers);
+
         public:
             MenuSerializer();
             ~MenuSerializer() = default;
 
-            void handlePacket(_STORAGE_DATA packet); // TODO vector of rooms
+            void handlePacket(_STORAGE_DATA packet);
 
-            // _STORAGE_DATA serializeRoomEdit(std::string name, std::size_t maxPlayers, std::size_t nbPlayers, bool isReady);
+            _STORAGE_DATA serializeRoomEdit(CrudType editType, Room &room);
+            void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms);
+
+            _STORAGE_DATA serializeRoomAction(std::size_t id, RoomAction action);
+            void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms);
+
+            _STORAGE_DATA serializeEvent(MenuEvent event);
+            // void deserializeEvent(std::vector<uint8_t> packet);
     };
 }
 

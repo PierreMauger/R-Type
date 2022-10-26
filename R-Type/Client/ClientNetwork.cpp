@@ -17,8 +17,7 @@ ClientNetwork::~ClientNetwork()
 
 void ClientNetwork::initClientNetwork()
 {
-    _B_ASIO_TCP::resolver::results_type endpoints = this->_resolver.resolve(this->_connection->getTcpEndpoint());
-    boost::asio::connect(this->_connection->getTcpSocket(), endpoints);
+    this->_connection->getTcpSocket().connect(this->_connection->getTcpEndpoint());
     if (!this->_connection->getTcpSocket().is_open())
         throw std::runtime_error("TCP socket can't be connected");
 
