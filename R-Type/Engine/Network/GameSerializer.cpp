@@ -25,67 +25,67 @@ void eng::GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size
         }
         switch (i) {
         case 0:
-            this->serializeComponent<Position>(packet, &componentManager.getSingleComponent<Position>(id));
+            this->serializeData<Position>(packet, &componentManager.getSingleComponent<Position>(id));
             break;
         case 1:
-            this->serializeComponent<Velocity>(packet, &componentManager.getSingleComponent<Velocity>(id));
+            this->serializeData<Velocity>(packet, &componentManager.getSingleComponent<Velocity>(id));
             break;
         case 2:
-            this->serializeComponent<Size>(packet, &componentManager.getSingleComponent<Size>(id));
+            this->serializeData<Size>(packet, &componentManager.getSingleComponent<Size>(id));
             break;
         case 3:
-            this->serializeComponent<SpriteID>(packet, &componentManager.getSingleComponent<SpriteID>(id));
+            this->serializeData<SpriteID>(packet, &componentManager.getSingleComponent<SpriteID>(id));
             break;
         case 4:
-            this->serializeComponent<Controllable>(packet, &componentManager.getSingleComponent<Controllable>(id));
+            this->serializeData<Controllable>(packet, &componentManager.getSingleComponent<Controllable>(id));
             break;
         case 5:
-            this->serializeComponent<Parallax>(packet, &componentManager.getSingleComponent<Parallax>(id));
+            this->serializeData<Parallax>(packet, &componentManager.getSingleComponent<Parallax>(id));
             break;
         case 6:
-            this->serializeComponent<Projectile>(packet, &componentManager.getSingleComponent<Projectile>(id));
+            this->serializeData<Projectile>(packet, &componentManager.getSingleComponent<Projectile>(id));
             break;
         case 7:
-            this->serializeComponent<Life>(packet, &componentManager.getSingleComponent<Life>(id));
+            this->serializeData<Life>(packet, &componentManager.getSingleComponent<Life>(id));
             break;
         case 8:
-            this->serializeComponent<Enemy>(packet, &componentManager.getSingleComponent<Enemy>(id));
+            this->serializeData<Enemy>(packet, &componentManager.getSingleComponent<Enemy>(id));
             break;
         case 9:
-            this->serializeComponent<Appearance>(packet, &componentManager.getSingleComponent<Appearance>(id));
+            this->serializeData<Appearance>(packet, &componentManager.getSingleComponent<Appearance>(id));
             break;
         case 10:
-            this->serializeComponent<Disappearance>(packet, &componentManager.getSingleComponent<Disappearance>(id));
+            this->serializeData<Disappearance>(packet, &componentManager.getSingleComponent<Disappearance>(id));
             break;
         case 11:
-            this->serializeComponent<CooldownShoot>(packet, &componentManager.getSingleComponent<CooldownShoot>(id));
+            this->serializeData<CooldownShoot>(packet, &componentManager.getSingleComponent<CooldownShoot>(id));
             break;
         case 12:
-            this->serializeComponent<CooldownBar>(packet, &componentManager.getSingleComponent<CooldownBar>(id));
+            this->serializeData<CooldownBar>(packet, &componentManager.getSingleComponent<CooldownBar>(id));
             break;
         case 13:
-            this->serializeComponent<LifeBar>(packet, &componentManager.getSingleComponent<LifeBar>(id));
+            this->serializeData<LifeBar>(packet, &componentManager.getSingleComponent<LifeBar>(id));
             break;
         case 14:
-            this->serializeComponent<Parent>(packet, &componentManager.getSingleComponent<Parent>(id));
+            this->serializeData<Parent>(packet, &componentManager.getSingleComponent<Parent>(id));
             break;
         case 15:
-            this->serializeComponent<Patern>(packet, &componentManager.getSingleComponent<Patern>(id));
+            this->serializeData<Patern>(packet, &componentManager.getSingleComponent<Patern>(id));
             break;
         case 16:
-            this->serializeComponent<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
+            this->serializeData<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
             break;
         case 17:
-            this->serializeComponent<DropBonus>(packet, &componentManager.getSingleComponent<DropBonus>(id));
+            this->serializeData<DropBonus>(packet, &componentManager.getSingleComponent<DropBonus>(id));
             break;
         case 18:
-            this->serializeComponent<Text>(packet, &componentManager.getSingleComponent<Text>(id));
+            this->serializeData<Text>(packet, &componentManager.getSingleComponent<Text>(id));
             break;
         case 19:
-            this->serializeComponent<SoundID>(packet, &componentManager.getSingleComponent<SoundID>(id));
+            this->serializeData<SoundID>(packet, &componentManager.getSingleComponent<SoundID>(id));
             break;
         case 20:
-            this->serializeComponent<SpriteAttribut>(packet, &componentManager.getSingleComponent<SpriteAttribut>(id));
+            this->serializeData<SpriteAttribut>(packet, &componentManager.getSingleComponent<SpriteAttribut>(id));
             break;
         default:
             break;
@@ -176,19 +176,19 @@ _STORAGE_DATA eng::GameSerializer::serializeEntity(std::size_t id, CrudType type
     this->insertMagic(packet);
 
     // header
-    GamePacketType GamePacketType = GamePacketType::ENTITY;
-    this->serializeComponent(packet, &GamePacketType);
-    this->serializeComponent(packet, &type);
+    GamePacketType gamePacketType = GamePacketType::ENTITY;
+    this->serializeData(packet, &gamePacketType);
+    this->serializeData(packet, &type);
 
     // sync id
-    this->serializeComponent<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
+    this->serializeData<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
 
     // mask
     std::optional<std::size_t> mask = entityManager.getMasks()[id];
     if (!entityManager.getMasks()[id].has_value()) {
         throw std::runtime_error("[ERROR] Entity has no mask");
     }
-    this->serializeComponent<std::size_t>(packet, &entityManager.getMasks()[id].value());
+    this->serializeData<std::size_t>(packet, &entityManager.getMasks()[id].value());
 
     // components
     this->pushComponents(packet, mask.value(), id, componentManager);
@@ -205,11 +205,11 @@ void eng::GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityM
     std::size_t mask = 0;
     std::size_t id = 0;
 
-    this->deserializeComponent<CrudType>(packet, adv, &type);
-    this->deserializeComponent<SyncID>(packet, adv, &syncID);
-    this->deserializeComponent<std::size_t>(packet, adv, &mask);
+    this->deserializeData<CrudType>(packet, adv, &type);
+    this->deserializeData<SyncID>(packet, adv, &syncID);
+    this->deserializeData<std::size_t>(packet, adv, &mask);
 
-    if (type == CrudType::DESTROY) {
+    if (type == CrudType::DESTROY) { // TODO if destroyed dosnt check magic
         id = this->getEntityID(syncID, entityManager, componentManager);
         entityManager.removeMask(id);
         componentManager.removeAllComponents(id);
@@ -236,8 +236,8 @@ _STORAGE_DATA eng::GameSerializer::serializeInput(sf::Keyboard::Key input)
 
     this->insertMagic(packet);
 
-    this->serializeComponent<GamePacketType>(packet, &type);
-    this->serializeComponent<sf::Keyboard::Key>(packet, &input);
+    this->serializeData<GamePacketType>(packet, &type);
+    this->serializeData<sf::Keyboard::Key>(packet, &input);
 
     this->insertMagic(packet);
     return this->convertToData(packet);
@@ -249,7 +249,7 @@ void eng::GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::siz
     std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
     sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
 
-    this->deserializeComponent<sf::Keyboard::Key>(packet, adv, &keyPress);
+    this->deserializeData<sf::Keyboard::Key>(packet, adv, &keyPress);
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
@@ -267,7 +267,7 @@ void eng::GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, Ent
         throw std::runtime_error("[ERROR] Bad packet format");
     }
     adv += MAGIC_SIZE;
-    this->deserializeComponent<GamePacketType>(packetVector, adv, &type);
+    this->deserializeData<GamePacketType>(packetVector, adv, &type);
     switch (type) {
     case ENTITY:
         this->deserializeEntity(packetVector, entityManager, componentManager);
