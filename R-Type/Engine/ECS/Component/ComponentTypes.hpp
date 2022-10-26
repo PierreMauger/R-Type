@@ -60,6 +60,7 @@ typedef struct SpriteID {
         enum Priority priority = Priority::HIGH;
         std::size_t curFrame = 0;
         std::size_t nbFrame = 0;
+        bool autoLoop = false;
         bool sign = false;
         float lastTime = 0.0f;
         float delay = 0.0f;
