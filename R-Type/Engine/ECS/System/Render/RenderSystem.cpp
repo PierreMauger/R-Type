@@ -71,7 +71,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
     std::size_t renderText = (InfoComp::TEXT);
-    std::size_t renderButton = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::BUTTON);
+    std::size_t renderButton = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::BUTTON);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
@@ -130,6 +130,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         this->_window->draw(stockText[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
-
-
+    for (std::size_t i = 0; i < stockButton.size(); i++)
+        this->_window->draw(stockButton[i]);
 }

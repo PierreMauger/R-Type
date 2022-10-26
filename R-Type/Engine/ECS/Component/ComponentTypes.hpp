@@ -171,7 +171,6 @@ enum ButtonType {
 };
 
 typedef struct {
-        sf::FloatRect rect = sf::FloatRect();
         ButtonType type = QUIT;
 } Button;
 
