@@ -28,6 +28,8 @@ Connection::~Connection()
 
 void Connection::handleMsgTcp(const boost::system::error_code &error, size_t size)
 {
+    if (!this->checkConnection())
+        return;
     if (!error) {
         std::cout << "[~] New TCP message from " << this->_tcpEndpoint << std::endl;
         if (size != _NET_BUFFER_SIZE)
@@ -45,6 +47,8 @@ void Connection::handleMsgTcp(const boost::system::error_code &error, size_t siz
 
 void Connection::handleMsgUdp(const boost::system::error_code &error, size_t size)
 {
+    if (!this->checkConnection())
+        return;
     if (!error) {
         std::cout << "[~] New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
         if (size != _NET_BUFFER_SIZE)
@@ -125,7 +129,10 @@ void Connection::closeConnection()
 {
     if (this->_udpSocketOut.is_open())
         this->_udpSocketOut.close();
+    if (this->_udpSocketIn.is_open())
+        this->_udpSocketIn.close();
     if (this->_tcpSocket.is_open()) {
+        this->_tcpSocket.shutdown(_B_ASIO_TCP::socket::shutdown_both);
         this->_tcpSocket.close();
     }
 }
