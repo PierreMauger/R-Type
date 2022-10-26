@@ -2,8 +2,8 @@
 
 int main(int ac, char **av)
 {
-    if (ac != 3) {
-        std::cerr << "Usage: ./R-Type [ip] [portTcp]" << std::endl;
+    if (ac != 2) {
+        std::cerr << "Usage: ./R-Type [portTcp]" << std::endl;
         return 84;
     }
 

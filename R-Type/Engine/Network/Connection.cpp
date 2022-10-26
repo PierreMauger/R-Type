@@ -79,7 +79,7 @@ void Connection::initConnection()
     this->_tcpSocket.async_receive(
         boost::asio::buffer(this->_tcpTmpBuffer),
         boost::bind(&Connection::handleMsgTcp,
-                    this,
+                    shared_from_this(),
                     boost::asio::placeholders::error,
                     boost::asio::placeholders::bytes_transferred));
 
@@ -88,7 +88,7 @@ void Connection::initConnection()
         boost::asio::buffer(this->_udpTmpBuffer),
         this->_tmpEndpoint,
         boost::bind(&Connection::handleMsgUdp,
-                    this,
+                    shared_from_this(),
                     boost::asio::placeholders::error,
                     boost::asio::placeholders::bytes_transferred));
 }
