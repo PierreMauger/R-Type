@@ -63,6 +63,47 @@ void eng::Server::initEntities()
     scoreTextPreload.preload(this->_engine);
 }
 
+void eng::Server::manageEvent()
+{
+    eng::Graphic &graphic = this->_engine.getGraphic();
+
+    while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
+#ifndef NDEBUG
+        ImGui::SFML::ProcessEvent(*graphic.getEvent());
+#endif
+        if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            graphic.getWindow()->close();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && !graphic.isFullscreen()) {
+            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen);
+            graphic.getWindow()->setFramerateLimit(60);
+            graphic.setFullscreen(true);
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && graphic.isFullscreen()) {
+            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Default);
+            graphic.getWindow()->setFramerateLimit(60);
+            graphic.setFullscreen(false);
+        }
+        if (graphic.getEvent()->type == sf::Event::Resized) {
+            this->_engine.updateSizeWindow();
+            graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
+        }
+    }
+}
+
+void eng::Server::manageEnemy()
+{
+    eng::Graphic &graphic = this->_engine.getGraphic();
+    eng::EnemyPreload enemyPreload;
+    eng::BossPreload bossPreload;
+
+    if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
+        bossPreload.preload(this->_engine);
+        this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
+    } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
+        enemyPreload.preload(this->_engine);
+        this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
+    }
+}
+
 // TODO make do separated function
 void eng::Server::mainLoop()
 {
@@ -72,33 +113,12 @@ void eng::Server::mainLoop()
 
     eng::Graphic &graphic = this->_engine.getGraphic();
     eng::ECS &ecs = this->_engine.getECS();
-    sf::Time elapsed_time = sf::seconds(0);
-    sf::Time delta_time = sf::seconds(6);
-    sf::Time boss_time = sf::seconds(30);
-    eng::EnemyPreload enemyPreload;
-    eng::BossPreload bossPreload;
     eng::VesselPreload vesselPreload;
 
     vesselPreload.preload(this->_engine);
     while (graphic.getWindow()->isOpen()) {
-        while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
-#ifndef NDEBUG
-            ImGui::SFML::ProcessEvent(*graphic.getEvent());
-#endif
-            if (graphic.getEvent()->type == sf::Event::Closed)
-                graphic.getWindow()->close();
-            if (graphic.getEvent()->type == sf::Event::Resized) {
-                this->_engine.updateSizeWindow();
-                graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
-            }
-        }
-        if (graphic.getClock()->getElapsedTime() > boss_time) {
-            bossPreload.preload(this->_engine);
-            boss_time = sf::seconds(boss_time.asSeconds() + 30);
-        } else if (graphic.getClock()->getElapsedTime() > elapsed_time) {
-            enemyPreload.preload(this->_engine);
-            elapsed_time = graphic.getClock()->getElapsedTime() + delta_time;
-        }
+        this->manageEvent();
+        this->manageEnemy();
         for (size_t count = 0; count < refreshTick; count++) {
             if (!dataIn.empty()) {
                 std::cout << "Message: " << dataIn.pop_front().data() << std::endl;

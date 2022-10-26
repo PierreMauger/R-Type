@@ -22,10 +22,15 @@ namespace eng
             ServerNetwork _network;
 
             std::vector<Room> _rooms;
+            sf::Time _elapsedTime = sf::seconds(0);
+            sf::Time _deltaTime = sf::seconds(6);
+            sf::Time _bossTime = sf::seconds(30);
 
             void initSystems();
             void initComponents();
             void initEntities();
+            void manageEvent();
+            void manageEnemy();
 
         public:
             Server(uint16_t portTcp);

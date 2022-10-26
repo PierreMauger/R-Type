@@ -4,6 +4,7 @@ using namespace eng;
 
 Graphic::Graphic()
 {
+    this->_isFullscreen = false;
     this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "R-Type");
     this->_screenSize = std::make_shared<sf::Vector2f>(this->_window->getSize().x, this->_window->getSize().x);
     this->_lastSize = sf::Vector2f(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
@@ -48,4 +49,14 @@ void Graphic::setLastSize(sf::Vector2f lastSize)
 std::shared_ptr<sf::Vector2f> Graphic::getScreenSize()
 {
     return this->_screenSize;
+}
+
+bool Graphic::isFullscreen()
+{
+    return this->_isFullscreen;
+}
+
+void Graphic::setFullscreen(bool isFullscreen)
+{
+    this->_isFullscreen = isFullscreen;
 }
