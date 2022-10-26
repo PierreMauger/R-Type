@@ -13,6 +13,7 @@ namespace eng
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::Vector2f> _screenSize;
             sf::Vector2f _lastSize;
+            bool _isFullscreen;
 
         public:
             Graphic();
@@ -22,8 +23,10 @@ namespace eng
             std::shared_ptr<sf::Clock> getClock();
             sf::Vector2f &getLastSize();
             std::shared_ptr<sf::Vector2f> getScreenSize();
+            bool isFullscreen();
             void setScreenSize(sf::Vector2f screenSize);
             void setLastSize(sf::Vector2f lastSize);
+            void setFullscreen(bool isFullscreen);
     };
 }
 
