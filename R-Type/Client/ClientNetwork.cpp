@@ -17,12 +17,9 @@ ClientNetwork::~ClientNetwork()
 
 void ClientNetwork::initClientNetwork()
 {
-    // _B_ASIO_TCP::resolver::results_type endpoints = this->_resolver.resolve(this->_connection->getTcpEndpoint());
     this->_connection->getTcpSocket().connect(this->_connection->getTcpEndpoint());
     if (!this->_connection->getTcpSocket().is_open())
         throw std::runtime_error("TCP socket can't be connected");
-
-    std::cout << "IP: " << this->_connection->getTcpEndpoint().address().to_string() << std::endl;
 
     uint16_t portUdp = 0;
     this->_connection->getTcpSocket().read_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
