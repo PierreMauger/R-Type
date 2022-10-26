@@ -9,6 +9,7 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::RenderWindow> _window;
+            std::shared_ptr<sf::Vector2f> _screenSize;
             sf::Rect<float> _rect1;
             sf::Rect<float> _rect2;
             void createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager);
@@ -20,7 +21,7 @@ namespace eng
             bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
 
         public:
-            PhysicSystem(std::shared_ptr<sf::RenderWindow> window);
+            PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
             ~PhysicSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };

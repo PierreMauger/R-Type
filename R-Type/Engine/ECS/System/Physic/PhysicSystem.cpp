@@ -1,10 +1,13 @@
 #include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
+
 using namespace eng;
 
-PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
+PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
 {
     this->_window = window;
+    this->_screenSize = screenSize;
 }
 
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
@@ -30,8 +33,8 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
 
 bool PhysicSystem::checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2)
 {
-    this->_rect1 = sf::Rect(pos.x, pos.y, sz.x - 10, sz.y - 10);
-    this->_rect2 = sf::Rect(pos2.x, pos2.y, sz2.x - 10, sz2.y - 10);
+    this->_rect1 = sf::Rect(pos.x, pos.y, sz.x, sz.y);
+    this->_rect2 = sf::Rect(pos2.x, pos2.y, sz2.x, sz2.y);
 
     return (this->_rect1.intersects(this->_rect2));
 }
@@ -41,7 +44,7 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (app.app) {
-        pos.y -= -vel.baseSpeed;
+        pos.y -= -vel.baseSpeedY;
         if (sprite.color.a != 50)
             sprite.color = sf::Color(255, 255, 255, 50);
         if (pos.y >= app.end) {
@@ -56,14 +59,20 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
 
 bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel)
 {
+    auto &mask = entityManager.getMasks();
     Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
+
     if (dis.dis) {
-        pos.y -= -vel.baseSpeed;
-        sprite.rotation += 20;
+        pos.y -= -vel.baseSpeedY * 4;
+        sprite.rotation += 60;
         if (pos.y >= dis.end) {
             vel.y = 0;
             dis.dis = false;
+            if (mask[i].has_value() && (mask[i].value() & InfoComp::CONTROLLABLE) == InfoComp::CONTROLLABLE) {
+                Controllable &con = componentManager.getSingleComponent<Controllable>(i);
+                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death + 1, this->_window->getSize(), this->_screenSize);
+            }
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
         }
@@ -109,8 +118,9 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
 
     if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
         for (std::size_t j = 0; j < masks.size(); j++) {
-            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol && this->checkColision(
-                pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
+            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol &&
+                this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
+                                    componentManager.getSingleComponent<Size>(j))) {
                 if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
                     componentManager.getSingleComponent<Disappearance>(i).dis = true;
                 else {
