@@ -1,6 +1,6 @@
 #include "Room.hpp"
 
-eng::Room::Room()
+eng::Room::Room(std::size_t id, std::string name, std::size_t maxPlayers) : _id(id), _name(name), _maxPlayers(maxPlayers), _nbPlayers(0)
 {
 }
 

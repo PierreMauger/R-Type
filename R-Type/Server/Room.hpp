@@ -14,7 +14,7 @@ namespace eng
             std::size_t _nbPlayers;
 
         public:
-            Room();
+            Room(std::size_t id, std::string name, std::size_t maxPlayers);
             ~Room() = default;
 
             std::size_t getId() const;
