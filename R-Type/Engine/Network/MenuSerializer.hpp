@@ -42,7 +42,7 @@ namespace eng
     class MenuSerializer : private Serializer
     {
         private:
-            Room getRoom(std::vector<Room> rooms, std::size_t id);
+            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, std::size_t id);
 
             void editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers);
 
