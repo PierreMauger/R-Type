@@ -22,6 +22,8 @@ void ClientNetwork::initClientNetwork()
     if (!this->_connection->getTcpSocket().is_open())
         throw std::runtime_error("TCP socket can't be connected");
 
+    std::cout << "IP: " << this->_connection->getTcpEndpoint().address().to_string() << std::endl;
+
     uint16_t portUdp = 0;
     this->_connection->getTcpSocket().read_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
 
