@@ -196,6 +196,7 @@ typedef struct LifeBar {
 */
 typedef struct Parent {
         std::size_t id = 0;
+        bool follow = false;
 } Parent;
 
 // Type dépendant du patern

@@ -5,11 +5,12 @@ void eng::ProjectilePreload::createShoot(EntityManager &entityManager, Component
 {
     auto &masks = entityManager.getMasks();
     std::size_t sizeMask = (InfoComp::SIZE | InfoComp::COOLDOWNSHOOT | InfoComp::POS);
+    sf::Vector2f sizeProjScreen{screenSize->x / (1920 / 1), screenSize->y / (1080 / 1)};
     Size size = {0, 0};
     CooldownShoot sizeProj = {0, 0};
     Position pos = {0, 0};
     bool enemy = masks[id].has_value() && (masks[id].value() & InfoComp::ENEMY) == InfoComp::ENEMY ? true : false;
-    sf::Vector2f sizeFire = sf::Vector2f(56 / screenSize->x * windowsSize.x, 32 / screenSize->y * windowsSize.y);
+    sf::Vector2f sizeFire = sf::Vector2f(56 * sizeProjScreen.x / screenSize->x * windowsSize.x, 32 * sizeProjScreen.y / screenSize->y * windowsSize.y);
     std::size_t addEntity = entityManager.addMask(
         (InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE | InfoComp::SPRITEAT),
         componentManager);
@@ -26,14 +27,14 @@ void eng::ProjectilePreload::createShoot(EntityManager &entityManager, Component
     componentManager.getComponent(typeid(SpriteAttribut))
         .emplaceData(
             addEntity,
-            SpriteAttribut{0, {0, 0, 56, 32}, sf::Color::White, {(sizeProj.size / screenSize->x * windowsSize.x), sizeProj.size / screenSize->y * windowsSize.y}});
+            SpriteAttribut{0, {0, 0, 56, 32}, sf::Color::White, {(sizeProj.size / screenSize->x * windowsSize.x) * sizeProjScreen.x, (sizeProj.size / screenSize->y * windowsSize.y) * sizeProjScreen.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x, (pos.y + (size.y / 2)) - (sizeFire.y * sizeProj.size / 2), pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{15 / screenSize->x * windowsSize.x * (enemy ? -1 : 1), 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, damage, sizeProj.size});
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * sizeProj.size, sizeFire.y * sizeProj.size});
-    addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
     if (!enemy) {
+        addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
         float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2
                                                                                   : (1 - (sizeProj.size / 10));
         componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, pitch});

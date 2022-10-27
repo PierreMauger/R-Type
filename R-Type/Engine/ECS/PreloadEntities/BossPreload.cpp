@@ -4,7 +4,8 @@ void eng::BossPreload::preload(Engine &engine)
 {
     sf::Vector2u windowsSize = engine.getGraphic().getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = engine.getGraphic().getScreenSize();
-    float randY = createRandom(180 / screenSize->y * windowsSize.y, 420 / screenSize->y * windowsSize.y);
+    float randY = createRandom(200 / screenSize->y * windowsSize.y, windowsSize.y);
+    sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE |
                                                                  InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT),
                                                                 engine.getECS().getComponentManager());
@@ -13,7 +14,7 @@ void eng::BossPreload::preload(Engine &engine)
     engine.getECS()
         .getComponentManager()
         .getComponent(typeid(SpriteAttribut))
-        .emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}, sf::Color::White, {2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y}});
+        .emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
     engine.getECS().getComponentManager().getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, randY});
     engine.getECS()
         .getComponentManager()
@@ -23,10 +24,10 @@ void eng::BossPreload::preload(Engine &engine)
     engine.getECS()
         .getComponentManager()
         .getComponent(typeid(Velocity))
-        .emplaceData(id, Velocity{0, -2 / screenSize->y * windowsSize.y * -1, 0, 2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y});
+        .emplaceData(id, Velocity{0, size.x / screenSize->y * windowsSize.y, 0, size.y / screenSize->x * windowsSize.x, size.x / screenSize->y * windowsSize.y});
     engine.getECS().getComponentManager().getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CIRCLE, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
-    engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{96 * 2 / screenSize->x * windowsSize.x, 96 * 2 / screenSize->y * windowsSize.y});
+    engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{96 * size.x / screenSize->x * windowsSize.x, 96 * size.y / screenSize->y * windowsSize.y});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{10});
     engine.getECS().getComponentManager().getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{1});
     engine.getECS().getComponentManager().getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 0.5});
