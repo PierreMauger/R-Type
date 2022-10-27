@@ -44,6 +44,7 @@ namespace eng
             void removeSingleComponent(std::size_t id, std::type_index type);
             void removeAllComponents(std::size_t id);
             void updateComponent(std::size_t id);
+            void clear();
     };
 }
 

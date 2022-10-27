@@ -21,6 +21,7 @@ namespace eng
 
             std::size_t getSize();
             std::optional<std::any> &getField(std::size_t id);
+            void clear();
     };
 }
 

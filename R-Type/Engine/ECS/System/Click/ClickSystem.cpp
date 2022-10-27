@@ -12,7 +12,6 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
 {
     auto &masks = entityManager.getMasks();
     std::size_t button = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
-    sf::Vector2u windowsSize = this->_window->getSize();
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & button) == button) {
@@ -26,9 +25,11 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                 if (mousePos.x >= pos.x && mousePos.x <= pos.x + spriteAt.rect.width &&
                     mousePos.y >= pos.y && mousePos.y <= pos.y + spriteAt.rect.height) {
                     if (button.type == ButtonType::PLAY) {
-                        std::cout << "Play" << std::endl;
+                        componentManager.clear();
+                        entityManager.clear();
+                        // Load game and connect to server
                     } else if (button.type == ButtonType::QUIT) {
-                        std::cout << "Quit" << std::endl;
+                        this->_window->close();
                     }
                 }
             }
