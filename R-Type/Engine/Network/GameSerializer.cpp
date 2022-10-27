@@ -70,7 +70,7 @@ void eng::GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size
             this->serializeData<Parent>(packet, &componentManager.getSingleComponent<Parent>(id));
             break;
         case 15:
-            this->serializeData<Patern>(packet, &componentManager.getSingleComponent<Patern>(id));
+            this->serializeData<Pattern>(packet, &componentManager.getSingleComponent<Pattern>(id));
             break;
         case 16:
             this->serializeData<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
@@ -146,7 +146,7 @@ void eng::GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_
             this->updateEntity<Parent>(packet, id, adv, componentManager);
             break;
         case 15:
-            this->updateEntity<Patern>(packet, id, adv, componentManager);
+            this->updateEntity<Pattern>(packet, id, adv, componentManager);
             break;
         case 16:
             this->updateEntity<SyncID>(packet, id, adv, componentManager);

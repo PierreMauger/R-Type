@@ -8,7 +8,7 @@ void eng::EnemyPreload::preload(Engine &engine)
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
     float randY = createRandom(0, windowsSize.y);
     std::size_t id = engine.getECS().getEntityManager().addMask(
-        (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATERN | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT),
+        (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT),
         engine.getECS().getComponentManager());
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{2, Priority::MEDIUM, 0, 2, false, false, 0, 0.075, 63, 0});
@@ -18,7 +18,7 @@ void eng::EnemyPreload::preload(Engine &engine)
         .emplaceData(id, SpriteAttribut{0, {0, 0, 63, 48}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
     engine.getECS().getComponentManager().getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x + 80 / screenSize->x * windowsSize.x), randY, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Velocity)).emplaceData(id, Velocity{(screenSize->x / (1920 / 3)) / screenSize->x * windowsSize.x * -1, 0, 0});
-    engine.getECS().getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern(rand), 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern(rand), 0});
     engine.getECS().getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{63 * size.x / screenSize->x * windowsSize.x, 48 * size.y / screenSize->y * windowsSize.y});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{2});

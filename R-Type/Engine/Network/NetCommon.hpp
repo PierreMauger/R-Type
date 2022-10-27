@@ -1,3 +1,10 @@
+/**
+ * @file NetCommon.hpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief Includes and ressource for boost asio used by the network.
+ * @copyright Epitech Rennes 2022
+*/
+
 #ifndef NETCOMMON_HPP_
 #define NETCOMMON_HPP_
 

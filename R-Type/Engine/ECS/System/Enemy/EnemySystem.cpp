@@ -15,7 +15,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
 {
     auto &masks = entityManager.getMasks();
     std::size_t appear = (InfoComp::APP);
-    std::size_t enemyData = (InfoComp::POS | InfoComp::VEL | InfoComp::PATERN);
+    std::size_t enemyData = (InfoComp::POS | InfoComp::VEL | InfoComp::PATTERN);
     std::size_t cooldownEnemy = (InfoComp::COOLDOWNSHOOT);
     std::size_t eneParent = (InfoComp::PARENT | InfoComp::POS);
 
@@ -31,17 +31,17 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
         }
         if ((masks[i].value() & enemyData) == enemyData) {
             Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
-            Patern &pat = componentManager.getSingleComponent<Patern>(i);
-            if (pat.type == TypePatern::CIRCLE) {
+            Pattern &pat = componentManager.getSingleComponent<Pattern>(i);
+            if (pat.type == TypePattern::CIRCLE) {
                 vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;
                 vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
                 pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
             }
-            if (pat.type == TypePatern::OSCILLATION) {
+            if (pat.type == TypePattern::OSCILLATION) {
                 vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
                 pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC;
             }
-            if (pat.type == TypePatern::BIGOSCILLATION) {
+            if (pat.type == TypePattern::BIGOSCILLATION) {
                 vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
                 pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 3;
             }

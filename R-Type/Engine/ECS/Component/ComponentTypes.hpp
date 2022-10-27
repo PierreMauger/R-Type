@@ -1,8 +1,21 @@
+/**
+ * @file ComponentTypes.hpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief Ressources header containing the components' masks with their structs definitions.
+ * @copyright Epitech Rennes 2022
+*/
+
 #ifndef COMPONENTTYPES_HPP
 #define COMPONENTTYPES_HPP
 
+/// @cond
 #include "Includes.hpp"
+/// @endcond
 
+/**
+ * @enum InfoComp
+ * @brief Masks of the components.
+*/
 namespace eng
 {
     enum InfoComp {
@@ -21,7 +34,7 @@ namespace eng
         COOLDOWNBAR = 1 << 12,
         LIFEBAR = 1 << 13,
         PARENT = 1 << 14,
-        PATERN = 1 << 15,
+        PATTERN = 1 << 15,
         SYNCID = 1 << 16,
         DROP = 1 << 17,
         TEXT = 1 << 18,
@@ -30,12 +43,20 @@ namespace eng
     };
 }
 
+/**
+ * @struct Position
+ * @brief The position component.
+*/
 typedef struct Position {
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
 } Position;
 
+/**
+ * @struct Velocity
+ * @brief The velocity component.
+*/
 typedef struct Velocity {
         float x = 0.0f;
         float y = 0.0f;
@@ -44,17 +65,29 @@ typedef struct Velocity {
         float baseSpeedY = 0.0f;
 } Velocity;
 
+/**
+ * @struct Size
+ * @brief The size component.
+*/
 typedef struct Size {
         float x = 0.0f;
         float y = 0.0f;
 } Size;
 
+/**
+ * @enum Priority
+ * @brief Priority of the sprites to be displayed (background before foreground etc..).
+*/
 enum Priority {
     HIGH = 0,
     MEDIUM,
     LOW
 };
 
+/**
+ * @struct SpriteID
+ * @brief The spriteID component.
+*/
 typedef struct SpriteID {
         std::size_t id = 0;
         enum Priority priority = Priority::HIGH;
@@ -68,87 +101,155 @@ typedef struct SpriteID {
         std::size_t offsetY = 0;
 } SpriteID;
 
+/**
+ * @struct Controllable
+ * @brief The controllable component.
+*/
 typedef struct Controllable {
         bool con = false;
         std::size_t kill = 0;
         std::size_t death = 0;
 } Controllable;
 
+/**
+ * @struct Parallax
+ * @brief The parallax component.
+*/
 typedef struct Parallax {
         bool par = true;
 } Parallax;
 
+/**
+ * @struct Projectile
+ * @brief The projectile component.
+*/
 typedef struct Projectile {
         bool proj = true;
         std::size_t damage = 1;
         float size = 1.0f;
 } Projectile;
 
+/**
+ * @struct Life
+ * @brief The life component.
+*/
 typedef struct Life {
         std::size_t life = 1;
 } Life;
 
+/**
+ * @struct Enemy
+ * @brief The enemy component.
+*/
 typedef struct Enemy {
         bool enemy = false;
 } Enemy;
 
+/**
+ * @struct Appearance
+ * @brief The appearance component.
+*/
 typedef struct Appearance {
         bool app = false;
         float end = 0.0f;
 } Appearance;
 
+/**
+ * @struct Disappearance
+ * @brief The disappearance component.
+*/
 typedef struct Disappearance {
         bool dis = false;
         float end = 0.0f;
 } Disappearance;
 
+/**
+ * @struct CooldownShoot
+ * @brief The cooldownShoot component.
+*/
 typedef struct CooldownShoot {
         float lastShoot = 0.0f;
         float shootDelay = 2.0f;
         float size = 1.0f;
 } CooldownShoot;
 
+/**
+ * @struct CooldownBar
+ * @brief The cooldownBar component.
+*/
 typedef struct CooldownBar {
         bool bar = false;
 } CooldownBar;
 
+/**
+ * @struct Lifebar
+ * @brief The lifebar component.
+*/
 typedef struct LifeBar {
         bool bar = false;
         std::size_t lifeMax = 1;
 } LifeBar;
 
+/**
+ * @struct Parent
+ * @brief The parent component.
+*/
 typedef struct Parent {
         std::size_t id = 0;
         bool follow = false;
 } Parent;
 
 // Type dépendant du patern
-enum TypePatern {
+/**
+ * @enum TypePattern
+ * @brief The type of pattern that an enemy has.
+*/
+enum TypePattern {
     LINE = 0,
     OSCILLATION,
     BIGOSCILLATION,
     CIRCLE
 };
 
-typedef struct Patern {
-        enum TypePatern type = TypePatern::LINE;
+/**
+ * @struct Pattern
+ * @brief The patern component.
+*/
+typedef struct Pattern {
+        enum TypePattern type = TypePattern::LINE;
         float angle = 0.0f;
-} Patern;
+} Pattern;
 
+/**
+ * @struct SyncID
+ * @brief The syncID component.
+*/
 typedef struct SyncID {
         std::size_t id = 0;
 } SyncID;
 
+/**
+ * @struct DropBonus
+ * @brief The dropBonus component.
+*/
 typedef struct DropBonus {
         std::size_t id = 0;
 } DropBonus;
 
+/**
+ * @struct Text
+ * @brief The text component.
+*/
 typedef struct Text {
         std::string str = "";
         std::size_t value = 0;
         sf::Vector2f pos = {0.0f, 0.0f};
 } Text;
 
+/**
+ * @struct SoundID
+ * @brief The soundID component.
+*/
 typedef struct SoundID {
         std::size_t id = 0;
         bool play = false;
@@ -156,6 +257,10 @@ typedef struct SoundID {
         float pitch = 1.0f;
 } SoundID;
 
+/**
+ * @struct SpriteAttribut
+ * @brief The spriteAttribut component.
+*/
 typedef struct SpriteAttribut {
         float rotation = 0;
         sf::FloatRect rect = sf::FloatRect();

@@ -7,7 +7,7 @@ void eng::BossPreload::preload(Engine &engine)
     float randY = createRandom(200 / screenSize->y * windowsSize.y, windowsSize.y);
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
     std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE |
-                                                                 InfoComp::SIZE | InfoComp::PATERN | InfoComp::DROP | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT),
+                                                                 InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT),
                                                                 engine.getECS().getComponentManager());
 
     engine.getECS().getComponentManager().getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, false, 0, 0.2, 96, 0});
@@ -25,7 +25,7 @@ void eng::BossPreload::preload(Engine &engine)
         .getComponentManager()
         .getComponent(typeid(Velocity))
         .emplaceData(id, Velocity{0, size.x / screenSize->y * windowsSize.y, 0, size.y / screenSize->x * windowsSize.x, size.x / screenSize->y * windowsSize.y});
-    engine.getECS().getComponentManager().getComponent(typeid(Patern)).emplaceData(id, Patern{TypePatern::CIRCLE, 0});
+    engine.getECS().getComponentManager().getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CIRCLE, 0});
     engine.getECS().getComponentManager().getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     engine.getECS().getComponentManager().getComponent(typeid(Size)).emplaceData(id, Size{96 * size.x / screenSize->x * windowsSize.x, 96 * size.y / screenSize->y * windowsSize.y});
     engine.getECS().getComponentManager().getComponent(typeid(Life)).emplaceData(id, Life{10});

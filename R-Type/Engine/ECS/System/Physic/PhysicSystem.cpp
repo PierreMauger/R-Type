@@ -195,7 +195,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t physicSpeed = (InfoComp::VEL | InfoComp::POS);
     std::size_t physicControl = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE);
     std::size_t physicPar = (InfoComp::VEL | InfoComp::POS | InfoComp::PARALLAX);
-    std::size_t physicPat = (InfoComp::PATERN);
+    std::size_t physicPat = (InfoComp::PATTERN);
     std::size_t physicAppear = (InfoComp::APP);
     std::size_t physicDis = (InfoComp::DIS);
 

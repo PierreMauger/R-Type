@@ -142,7 +142,7 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                         componentManager.addComponent<Parent>(this->_selectedEntity);
                         break;
                     case 15:
-                        componentManager.addComponent<Patern>(this->_selectedEntity);
+                        componentManager.addComponent<Pattern>(this->_selectedEntity);
                         break;
                     case 16:
                         componentManager.addComponent<SyncID>(this->_selectedEntity);
