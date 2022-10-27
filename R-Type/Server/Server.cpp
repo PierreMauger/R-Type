@@ -46,7 +46,7 @@ void eng::Server::initComponents()
     componentManager.bindComponent<CooldownBar>();
     componentManager.bindComponent<LifeBar>();
     componentManager.bindComponent<Parent>();
-    componentManager.bindComponent<Patern>();
+    componentManager.bindComponent<Pattern>();
     componentManager.bindComponent<SyncID>();
     componentManager.bindComponent<DropBonus>();
     componentManager.bindComponent<Text>();

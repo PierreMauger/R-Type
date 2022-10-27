@@ -1,16 +1,38 @@
+/**
+ * @file VesselPreload.hpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief Preload the vessel (player).
+ * @copyright Epitech Rennes 2022
+*/
+
 #ifndef VESSELPRELOAD_HPP
 #define VESSELPRELOAD_HPP
 
+/// @cond
 #include <Includes.hpp>
 
 #include "Engine/ECS/ECS.hpp"
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
+/// @endcond
 
+/**
+ * @brief Engine namespace.
+ * @namespace eng
+*/
 namespace eng
 {
+    /**
+     * @brief Preloads the vessel.
+     * @class VesselPreload
+    */
     class VesselPreload : public EntityPreload
     {
         public:
+            /**
+             * @brief Preloads the vessel.
+             * @fn VesselPreload
+             * @param engine A reference to the engine.
+            */
             void preload(Engine &engine) override;
             static void preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize,
                                      std::shared_ptr<sf::Vector2f> screenSize);
