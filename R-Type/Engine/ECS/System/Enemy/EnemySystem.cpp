@@ -17,10 +17,18 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t appear = (InfoComp::APP);
     std::size_t enemyData = (InfoComp::POS | InfoComp::VEL | InfoComp::PATERN);
     std::size_t cooldownEnemy = (InfoComp::COOLDOWNSHOOT);
+    std::size_t eneParent = (InfoComp::PARENT | InfoComp::POS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value() || ((masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app))
             continue;
+        if ((masks[i].value() & eneParent) == eneParent && componentManager.getSingleComponent<Parent>(i).follow == true) {
+            Position &pos = componentManager.getSingleComponent<Position>(i);
+            Position &parentPos = componentManager.getSingleComponent<Position>(componentManager.getSingleComponent<Parent>(i).id);
+            pos.x = parentPos.x;
+            pos.y = parentPos.y;
+            continue;
+        }
         if ((masks[i].value() & enemyData) == enemyData) {
             Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
             Patern &pat = componentManager.getSingleComponent<Patern>(i);
