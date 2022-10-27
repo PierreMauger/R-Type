@@ -86,8 +86,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
             if (componentManager.getSingleComponent<Text>(i).hasValue)
                 this->_text.setString(componentManager.getSingleComponent<Text>(i).str + std::to_string(componentManager.getSingleComponent<Text>(i).value));
-            else
+            else {
                 this->_text.setString(componentManager.getSingleComponent<Text>(i).str);
+                this->_text.setOrigin(this->_text.getLocalBounds().width / 2, this->_text.getLocalBounds().height / 2);
+            }
             this->_text.setPosition(componentManager.getSingleComponent<Text>(i).pos);
             stockText.push_back(this->_text);
         }
