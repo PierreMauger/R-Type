@@ -9,7 +9,7 @@ void eng::VesselPreload::preload(Engine &engine)
     sf::Vector2u windowsSize = engine.getGraphic().getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = engine.getGraphic().getScreenSize();
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, 0, 0, 0, 64, 0});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, false, false, 0, 0, 64, 0});
     componentManager.getComponent(typeid(SpriteAttribut))
         .emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, 28 / screenSize->y * windowsSize.y * -1, 0});
