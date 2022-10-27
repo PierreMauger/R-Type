@@ -13,7 +13,6 @@ PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t addEntity = masks.size();
     std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS);
 
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
@@ -204,7 +203,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
         if (!masks[i].has_value() || (masks[i].value() & physicSpeed) != physicSpeed)
             continue;
         Position &pos = componentManager.getSingleComponent<Position>(i);
-        Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
+        Velocity vel = componentManager.getSingleComponent<Velocity>(i);
         if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
             continue;
         if ((masks[i].value() & physicDis) == physicDis && checkDisappearance(entityManager, componentManager, i, pos, vel))
@@ -215,14 +214,14 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                 pos.x = 0;
             continue;
         }
-        if (pos.x > _window->getSize().x || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+        if (pos.x > _window->getSize().x + 100 || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
             entityManager.removeMask(i);
             componentManager.removeAllComponents(i);
             continue;
         }
+        pos.x += vel.x;
+        pos.y += vel.y;
         if ((masks[i].value() & physicPat) != physicPat) {
-            pos.x += vel.x;
-            pos.y += vel.y;
             if (this->collisionEnemy(i, componentManager, entityManager, pos))
                 continue;
             if (this->collisionBonus(i, componentManager, entityManager, pos))
@@ -232,10 +231,16 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
         }
         if (masks[i].has_value() && (masks[i].value() & physicControl) == physicControl) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
-            Size &size = componentManager.getSingleComponent<Size>(i);
+            Size size = componentManager.getSingleComponent<Size>(i);
             pos.x < 0 ? pos.x = 0 : pos.x;
             pos.y < 0 ? pos.y = 0 : pos.y;
             pos.x > _window->getSize().x - size.x ? pos.x = _window->getSize().x - size.x : pos.x;
+            pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
+        }
+        if (masks[i].has_value() && (masks[i].value() & physicPat) == physicPat) {
+            Position &pos = componentManager.getSingleComponent<Position>(i);
+            Size size = componentManager.getSingleComponent<Size>(i);
+            pos.y < 0 ? pos.y = 0 : pos.y;
             pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
         }
     }
