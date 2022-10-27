@@ -4,6 +4,7 @@ using namespace eng;
 
 Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
     : _ioContext(ioContext),
+      _timer(ioContext),
       _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
       _udpSocketOut(ioContext),
       _tcpSocket(ioContext),
@@ -13,6 +14,7 @@ Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
 
 Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
     : _ioContext(ioContext),
+      _timer(ioContext),
       _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp),
       _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
       _udpSocketOut(ioContext),
@@ -24,6 +26,14 @@ Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context
 Connection::~Connection()
 {
     this->closeConnection();
+}
+
+void Connection::handleTimeout(const boost::system::error_code &error)
+{
+    std::cerr << "[!] handleTimeout: " << error.message() << std::endl;
+    // if (error) {
+        // return;
+    // }
 }
 
 void Connection::handleMsgTcp(const boost::system::error_code &error, size_t size)
@@ -73,6 +83,9 @@ void Connection::initConnection()
 {
     if (!this->checkConnection())
         return;
+
+    this->_timer.expires_from_now(boost::posix_time::seconds(1));
+    this->_timer.async_wait(boost::bind(&Connection::handleTimeout, this, boost::asio::placeholders::error));
 
     this->_tcpTmpBuffer.fill(0);
     this->_tcpSocket.async_receive(

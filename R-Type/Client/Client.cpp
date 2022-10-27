@@ -97,6 +97,8 @@ void eng::Client::mainLoop()
         }
         if (!this->_network.isConnected())
             graphic.getWindow()->close();
+        this->_network.tcpMsg({'C', ' ', 'T', 'C', 'P'});
+        this->_network.udpMsg({'C', ' ', 'U', 'D', 'P'});
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();

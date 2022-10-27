@@ -126,6 +126,8 @@ void eng::Server::mainLoop()
                 break;
             }
         }
+        this->_network.tcpMsgAll({'S', ' ', 'T', 'C', 'P'});
+        this->_network.udpMsgAll({'S', ' ', 'U', 'D', 'P'});
         this->_network.updateConnection();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();

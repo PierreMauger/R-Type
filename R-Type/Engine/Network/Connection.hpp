@@ -8,6 +8,7 @@ namespace eng
     class Connection : public boost::enable_shared_from_this<Connection>
     {
         private:
+            void handleTimeout(const boost::system::error_code &error);
             void handleMsgTcp(const boost::system::error_code &error, size_t size);
             void handleMsgUdp(const boost::system::error_code &error, size_t size);
             void open();
@@ -15,6 +16,7 @@ namespace eng
             bool checkConnection();
 
             boost::asio::io_context &_ioContext;
+            boost::asio::deadline_timer _timer;
             _B_ASIO_UDP::endpoint _udpEndpoint;
             _B_ASIO_TCP::endpoint _tcpEndpoint;
             _B_ASIO_UDP::endpoint _tmpEndpoint;

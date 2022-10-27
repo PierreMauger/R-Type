@@ -4,6 +4,7 @@ using namespace eng;
 
 ServerNetwork::ServerNetwork(uint16_t portTcp) :
     _ioContext(),
+    _timer(_ioContext),
     _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
     this->initServerNetwork();
@@ -14,8 +15,37 @@ ServerNetwork::~ServerNetwork()
     this->stop();
 }
 
+void ServerNetwork::handleTimeout(const boost::system::error_code &error)
+{
+    std::cerr << "[!] handleTimeout: " << error.message() << std::endl;
+    // if (error) {
+        // return;
+    // }
+}
+
+void ServerNetwork::handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection)
+{
+    if (!error) {
+        newConnection->setTcpEndpoint(newConnection->getTcpSocket().remote_endpoint());
+
+        uint16_t portUdp = newConnection->getUdpSocketIn().local_endpoint().port();
+        newConnection->getTcpSocket().write_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
+        newConnection->getTcpSocket().read_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
+        newConnection->setUdpEndpoint(newConnection->getTcpEndpoint().address().to_string(), portUdp);
+
+        newConnection->run();
+        this->_listConnections.push_back(newConnection);
+    } else {
+        std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
+    }
+    this->initServerNetwork();
+}
+
 void ServerNetwork::initServerNetwork()
 {
+    this->_timer.expires_from_now(boost::posix_time::microseconds(1));
+    this->_timer.async_wait(boost::bind(&ServerNetwork::handleTimeout, this, boost::asio::placeholders::error));
+
     boost::shared_ptr<Connection> newConnection = boost::make_shared<Connection>(this->_ioContext, this->_dataIn);
     this->_acceptor.async_accept(newConnection->getTcpSocket(),
         boost::bind(&ServerNetwork::handleNewTcp,
@@ -46,24 +76,6 @@ void ServerNetwork::stop()
         this->_ioContext.stop();
     if (this->_threadContext.joinable())
         this->_threadContext.join();
-}
-
-void ServerNetwork::handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection)
-{
-    if (!error) {
-        newConnection->setTcpEndpoint(newConnection->getTcpSocket().remote_endpoint());
-
-        uint16_t portUdp = newConnection->getUdpSocketIn().local_endpoint().port();
-        newConnection->getTcpSocket().write_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
-        newConnection->getTcpSocket().read_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
-        newConnection->setUdpEndpoint(newConnection->getTcpEndpoint().address().to_string(), portUdp);
-
-        newConnection->run();
-        this->_listConnections.push_back(newConnection);
-    } else {
-        std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
-    }
-    this->initServerNetwork();
 }
 
 void ServerNetwork::tcpMsgCli(_B_ASIO_TCP::endpoint endpoint, _STORAGE_DATA data)

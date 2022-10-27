@@ -8,10 +8,12 @@ namespace eng
     class ServerNetwork
     {
         private:
+            void handleTimeout(const boost::system::error_code &error);
             void handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection);
             void initServerNetwork();
 
             boost::asio::io_context _ioContext;
+            boost::asio::deadline_timer _timer;
             _B_ASIO_TCP::acceptor _acceptor;
             std::vector<boost::shared_ptr<Connection>> _listConnections;
             _QUEUE_TYPE _dataIn;
