@@ -23,11 +23,6 @@ Loader &Engine::getLoader()
     return this->_loader;
 }
 
-Network &Engine::getNetwork()
-{
-    return this->_network;
-}
-
 Input &Engine::getInput()
 {
     return this->_input;
@@ -40,10 +35,10 @@ void Engine::updateSize(auto &masks, std::size_t i, ComponentManager &componentM
     if ((masks[i].value() & checkSize) == checkSize) {
         Size &size = componentManager.getSingleComponent<Size>(i);
         SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
-        size.x = (size.x / lastSize.x) * this->_graphic.getEvent()->size.width;
-        size.y = (size.y / lastSize.y) * this->_graphic.getEvent()->size.height;
-        spriteAt.scale.x = (spriteAt.scale.x / lastSize.x) * this->_graphic.getEvent()->size.width;
-        spriteAt.scale.y = (spriteAt.scale.y / lastSize.y) * this->_graphic.getEvent()->size.height;
+        size.x = size.x / lastSize.x * this->_graphic.getEvent()->size.width;
+        size.y = size.y / lastSize.y * this->_graphic.getEvent()->size.height;
+        spriteAt.scale.x = spriteAt.scale.x / lastSize.x * this->_graphic.getEvent()->size.width;
+        spriteAt.scale.y = spriteAt.scale.y / lastSize.y * this->_graphic.getEvent()->size.height;
     }
 }
 
@@ -54,11 +49,11 @@ void Engine::updateSpeed(auto &masks, std::size_t i, ComponentManager &component
     if ((masks[i].value() & checkSpeed) == checkSpeed) {
         Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
         if (vel.baseSpeedX != 0) {
-            vel.baseSpeedX = (vel.baseSpeedX / lastSize.x) * this->_graphic.getEvent()->size.width;
-            vel.baseSpeedY = (vel.baseSpeedY / lastSize.y) * this->_graphic.getEvent()->size.height;
+            vel.baseSpeedX = vel.baseSpeedX / lastSize.x * this->_graphic.getEvent()->size.width;
+            vel.baseSpeedY = vel.baseSpeedY / lastSize.y * this->_graphic.getEvent()->size.height;
         } else {
-            vel.x = (vel.x / lastSize.x) * this->_graphic.getEvent()->size.width;
-            vel.y = (vel.y / lastSize.y) * this->_graphic.getEvent()->size.height;
+            vel.x = vel.x / lastSize.x * this->_graphic.getEvent()->size.width;
+            vel.y = vel.y / lastSize.y * this->_graphic.getEvent()->size.height;
         }
     }
 }
@@ -69,8 +64,8 @@ void Engine::updatePos(auto &masks, std::size_t i, ComponentManager &componentMa
 
     if ((masks[i].value() & checkPos) == checkPos) {
         Position &pos = componentManager.getSingleComponent<Position>(i);
-        pos.x = (pos.x / lastSize.x) * this->_graphic.getEvent()->size.width;
-        pos.y = (pos.y / lastSize.y) * this->_graphic.getEvent()->size.height;
+        pos.x = pos.x / lastSize.x * this->_graphic.getEvent()->size.width;
+        pos.y = pos.y / lastSize.y * this->_graphic.getEvent()->size.height;
     }
 }
 
@@ -80,8 +75,23 @@ void Engine::updateParallax(auto &masks, std::size_t i, ComponentManager &compon
 
     if ((masks[i].value() & checkParSize) == checkParSize) {
         SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
-        spriteAt.scale.x = (spriteAt.scale.x / lastSize.x) * this->_graphic.getEvent()->size.width;
-        spriteAt.scale.y = (spriteAt.scale.y / lastSize.y) * this->_graphic.getEvent()->size.height;
+        spriteAt.scale.x = spriteAt.scale.x / lastSize.x * this->_graphic.getEvent()->size.width;
+        spriteAt.scale.y = spriteAt.scale.y / lastSize.y * this->_graphic.getEvent()->size.height;
+    }
+}
+
+void Engine::updateAppDis(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize)
+{
+    std::size_t checkApp = (eng::InfoComp::APP);
+    std::size_t checkdis = (eng::InfoComp::DIS);
+
+    if ((masks[i].value() & checkApp) == checkApp) {
+        Appearance &app = componentManager.getSingleComponent<Appearance>(i);
+        app.end = app.end / lastSize.y * this->_graphic.getEvent()->size.height;
+    }
+    if ((masks[i].value() & checkdis) == checkdis) {
+        Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
+        dis.end = dis.end / lastSize.y * this->_graphic.getEvent()->size.height;
     }
 }
 
@@ -101,8 +111,8 @@ void Engine::updateSizeWindow()
             continue;
         if ((masks[i].value() & checkText) == checkText) {
             Text &text = componentManager.getSingleComponent<Text>(i);
-            text.pos.x = static_cast<float>(window->getSize().x - 100);
-            continue;
+            text.pos.x = text.pos.x / lastSize.x * this->_graphic.getEvent()->size.width;
+            text.pos.y = text.pos.y / lastSize.y * this->_graphic.getEvent()->size.height;
         }
         if ((masks[i].value() & checkCooldownBar) == checkCooldownBar) {
             Position &cb = componentManager.getSingleComponent<Position>(i);
@@ -113,5 +123,6 @@ void Engine::updateSizeWindow()
         this->updateSpeed(masks, i, componentManager, lastSize);
         this->updateParallax(masks, i, componentManager, lastSize);
         this->updateSize(masks, i, componentManager, lastSize);
+        this->updateAppDis(masks, i, componentManager, lastSize);
     }
 }

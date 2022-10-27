@@ -31,13 +31,13 @@ namespace eng
     };
 }
 
-typedef struct {
+typedef struct Position {
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
 } Position;
 
-typedef struct {
+typedef struct Velocity {
         float x = 0.0f;
         float y = 0.0f;
         float z = 0.0f;
@@ -45,7 +45,7 @@ typedef struct {
         float baseSpeedY = 0.0f;
 } Velocity;
 
-typedef struct {
+typedef struct Size {
         float x = 0.0f;
         float y = 0.0f;
 } Size;
@@ -56,11 +56,12 @@ enum Priority {
     LOW
 };
 
-typedef struct {
+typedef struct SpriteID {
         std::size_t id = 0;
-        enum Priority priority = Priority::HIGH;
+        Priority priority = Priority::HIGH;
         std::size_t curFrame = 0;
         std::size_t nbFrame = 0;
+        bool autoLoop = false;
         bool sign = false;
         float lastTime = 0.0f;
         float delay = 0.0f;
@@ -68,58 +69,56 @@ typedef struct {
         std::size_t offsetY = 0;
 } SpriteID;
 
-typedef struct {
+typedef struct Controllable {
         bool con = false;
         std::size_t kill = 0;
         std::size_t death = 0;
 } Controllable;
 
-typedef struct {
+typedef struct Parallax {
         bool par = true;
 } Parallax;
 
-typedef struct {
+typedef struct Projectile {
         bool proj = true;
         std::size_t damage = 1;
         float size = 1.0f;
 } Projectile;
 
-typedef struct {
+typedef struct Life {
         std::size_t life = 1;
 } Life;
 
-typedef struct {
+typedef struct Enemy {
         bool enemy = false;
-        float lastShoot = 0.0f;
-        float shootDelay = 2.0f;
 } Enemy;
 
-typedef struct {
+typedef struct Appearance {
         bool app = false;
         float end = 0.0f;
 } Appearance;
 
-typedef struct {
+typedef struct Disappearance {
         bool dis = false;
         float end = 0.0f;
 } Disappearance;
 
-typedef struct {
+typedef struct CooldownShoot {
         float lastShoot = 0.0f;
         float shootDelay = 2.0f;
         float size = 1.0f;
 } CooldownShoot;
 
-typedef struct {
+typedef struct CooldownBar {
         bool bar = false;
 } CooldownBar;
 
-typedef struct {
+typedef struct LifeBar {
         bool bar = false;
         std::size_t lifeMax = 1;
 } LifeBar;
 
-typedef struct {
+typedef struct Parent {
         std::size_t id = 0;
 } Parent;
 
@@ -132,33 +131,33 @@ enum TypePatern {
 };
 
 typedef struct {
-        TypePatern type = LINE;
+        TypePatern type = TypePatern::LINE;
         float angle = 0.0f;
 } Patern;
 
-typedef struct {
+typedef struct SyncID {
         std::size_t id = 0;
 } SyncID;
 
-typedef struct {
+typedef struct DropBonus {
         std::size_t id = 0;
 } DropBonus;
 
-typedef struct {
+typedef struct Text {
         std::string str = "";
         bool hasValue = true;
         std::size_t value = 0;
         sf::Vector2f pos = {0.0f, 0.0f};
 } Text;
 
-typedef struct {
+typedef struct SoundID {
         std::size_t id = 0;
         bool play = false;
         bool loop = false;
         float pitch = 1.0f;
 } SoundID;
 
-typedef struct {
+typedef struct SpriteAttribut {
         float rotation = 0;
         sf::FloatRect rect = sf::FloatRect();
         sf::Color color = sf::Color::White;
@@ -166,9 +165,9 @@ typedef struct {
 } SpriteAttribut;
 
 enum ButtonType {
-        QUIT = 0,
-        PLAY,
-        BACK,
+    QUIT = 0,
+    PLAY,
+    BACK,
 };
 
 typedef struct {

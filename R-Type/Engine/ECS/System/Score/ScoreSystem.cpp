@@ -4,7 +4,6 @@ using namespace eng;
 
 ScoreSystem::ScoreSystem()
 {
-
 }
 
 bool ScoreSystem::findVessel(ComponentManager &componentManager, EntityManager &entityManager, Controllable &controllable)
