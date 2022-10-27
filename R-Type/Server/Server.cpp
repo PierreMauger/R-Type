@@ -58,13 +58,9 @@ void eng::Server::initComponents()
 
 void eng::Server::initEntities()
 {
-    eng::ParallaxPreload parallaxPreload;
-    eng::ScoreTextPreload scoreTextPreload;
-    eng::MenuPreload menuTextPreload;
-
-    parallaxPreload.preload(this->_engine);
-    scoreTextPreload.preload(this->_engine);
-    menuTextPreload.preload(this->_engine);
+    ParallaxPreload::preload(this->_engine);
+    ScoreTextPreload::preload(this->_engine);
+    MenuPreload::preload(this->_engine);
 }
 
 void eng::Server::manageEvent()
@@ -96,14 +92,12 @@ void eng::Server::manageEvent()
 void eng::Server::manageEnemy()
 {
     eng::Graphic &graphic = this->_engine.getGraphic();
-    eng::EnemyPreload enemyPreload;
-    eng::BossPreload bossPreload;
 
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        bossPreload.preload(this->_engine);
+        BossPreload::preload(this->_engine);
         this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
     } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        enemyPreload.preload(this->_engine);
+        EnemyPreload::preload(this->_engine);
         this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
     }
 }
@@ -119,7 +113,7 @@ void eng::Server::mainLoop()
     eng::ECS &ecs = this->_engine.getECS();
     eng::VesselPreload vesselPreload;
 
-    vesselPreload.preload(this->_engine);
+    VesselPreload::preload(this->_engine);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();

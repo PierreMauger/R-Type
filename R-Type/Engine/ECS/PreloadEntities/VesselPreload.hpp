@@ -11,7 +11,7 @@ namespace eng
     class VesselPreload : public EntityPreload
     {
         public:
-            void preload(Engine &engine) override;
+            static void preload(Engine &engine);
             static void preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize,
                                      std::shared_ptr<sf::Vector2f> screenSize);
     };

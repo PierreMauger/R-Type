@@ -11,7 +11,7 @@ namespace eng
     class MenuPreload : public EntityPreload
     {
         public:
-            void preload(Engine &engine) override;
+            static void preload(Engine &engine);
     };
 }
 

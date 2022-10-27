@@ -12,9 +12,11 @@ namespace eng
         public:
             virtual ~EntityPreload() = default;
 
-            virtual void preload(Engine &engine) = 0;
+            static void preload([[maybe_unused]] Engine &engine)
+            {
+            }
 
-            float createRandom(float min, float max)
+            static float createRandom(float min, float max)
             {
                 std::random_device rd;
                 std::mt19937 gen(rd());
