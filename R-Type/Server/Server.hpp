@@ -1,6 +1,7 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#include "Client.hpp"
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
@@ -9,8 +10,8 @@
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
+#include "Engine/Network/Room.hpp"
 #include "Includes.hpp"
-#include "Room.hpp"
 #include "ServerNetwork.hpp"
 
 namespace eng
@@ -21,7 +22,9 @@ namespace eng
             Engine _engine;
             ServerNetwork _network;
 
+            std::vecotr<Client> _client;
             std::vector<Room> _rooms;
+
             sf::Time _elapsedTime = sf::seconds(0);
             sf::Time _deltaTime = sf::seconds(6);
             sf::Time _bossTime = sf::seconds(30);
