@@ -34,6 +34,8 @@ namespace eng
              * @param engine A reference to the engine.
             */
             void preload(Engine &engine) override;
+            static void preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize,
+                                     std::shared_ptr<sf::Vector2f> screenSize);
     };
 }
 

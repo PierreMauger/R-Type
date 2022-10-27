@@ -1,10 +1,13 @@
 #include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
+
 using namespace eng;
 
-PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
+PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
 {
     this->_window = window;
+    this->_screenSize = screenSize;
 }
 
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
@@ -31,8 +34,8 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
 
 bool PhysicSystem::checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2)
 {
-    this->_rect1 = sf::Rect(pos.x, pos.y, sz.x - 10, sz.y - 10);
-    this->_rect2 = sf::Rect(pos2.x, pos2.y, sz2.x - 10, sz2.y - 10);
+    this->_rect1 = sf::Rect(pos.x, pos.y, sz.x, sz.y);
+    this->_rect2 = sf::Rect(pos2.x, pos2.y, sz2.x, sz2.y);
 
     return (this->_rect1.intersects(this->_rect2));
 }
@@ -40,11 +43,39 @@ bool PhysicSystem::checkColision(Position &pos, Position &pos2, Size &sz, Size &
 bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel)
 {
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
+    SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (app.app) {
-        pos.y -= -vel.baseSpeed;
+        pos.y -= -vel.baseSpeedY;
+        if (sprite.color.a != 50)
+            sprite.color = sf::Color(255, 255, 255, 50);
         if (pos.y >= app.end) {
             vel.y = 0;
             app.app = false;
+            sprite.color = sf::Color::White;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel)
+{
+    auto &mask = entityManager.getMasks();
+    Disappearance &dis = componentManager.getSingleComponent<Disappearance>(i);
+    SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
+
+    if (dis.dis) {
+        pos.y -= -vel.baseSpeedY * 3;
+        sprite.rotation += 40;
+        if (pos.y >= dis.end) {
+            vel.y = 0;
+            dis.dis = false;
+            if (mask[i].has_value() && (mask[i].value() & InfoComp::CONTROLLABLE) == InfoComp::CONTROLLABLE) {
+                Controllable &con = componentManager.getSingleComponent<Controllable>(i);
+                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death + 1, this->_window->getSize(), this->_screenSize);
+            }
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
         }
         return true;
     }
@@ -61,19 +92,19 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
         return false;
     Size &size = componentManager.getSingleComponent<Size>(i);
     for (std::size_t j = 0; j < masks.size(); j++) {
-        if (masks[j].has_value() && ((masks[j].value() & physicDrop) == physicDrop)) {
-            Size &size2 = componentManager.getSingleComponent<Size>(j);
-            Position &pos2 = componentManager.getSingleComponent<Position>(j);
-            DropBonus &drop = componentManager.getSingleComponent<DropBonus>(j);
-            if (this->checkColision(pos, pos2, size, size2)) {
-                componentManager.removeAllComponents(j);
-                entityManager.removeMask(j);
-                if (drop.id == 0)
-                    componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2;
-                if (drop.id == 1)
-                    componentManager.getSingleComponent<CooldownShoot>(i).size += 1;
-                return true;
-            }
+        if (!masks[j].has_value() || ((masks[j].value() & physicDrop) != physicDrop))
+            continue;
+        Size &size2 = componentManager.getSingleComponent<Size>(j);
+        Position &pos2 = componentManager.getSingleComponent<Position>(j);
+        DropBonus &drop = componentManager.getSingleComponent<DropBonus>(j);
+        if (this->checkColision(pos, pos2, size, size2)) {
+            componentManager.removeAllComponents(j);
+            entityManager.removeMask(j);
+            if (drop.id == 0)
+                componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 > 0.1 ? componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 : 0;
+            if (drop.id == 1)
+                componentManager.getSingleComponent<CooldownShoot>(i).size < 3 ? componentManager.getSingleComponent<CooldownShoot>(i).size += 1 : 0;
+            return true;
         }
     }
     return false;
@@ -84,16 +115,20 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
     auto &masks = entityManager.getMasks();
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
     std::size_t physicCol = (InfoComp::POS | InfoComp::ENEMY | InfoComp::SIZE);
+    std::size_t physicDis = (InfoComp::DIS);
 
     if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
         for (std::size_t j = 0; j < masks.size(); j++) {
-            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol) {
-                if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
-                                        componentManager.getSingleComponent<Size>(j))) {
+            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol &&
+                this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
+                                    componentManager.getSingleComponent<Size>(j))) {
+                if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
+                    componentManager.getSingleComponent<Disappearance>(i).dis = true;
+                else {
                     componentManager.removeAllComponents(i);
                     entityManager.removeMask(i);
-                    return true;
                 }
+                return true;
             }
         }
     }
@@ -105,6 +140,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
     auto &masks = entityManager.getMasks();
     std::size_t physicProj = (InfoComp::PROJECTILE | InfoComp::PARENT | InfoComp::POS);
     std::size_t physicApp = (InfoComp::APP);
+    std::size_t physicDis = (InfoComp::DIS);
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
     std::size_t physicEne = (InfoComp::ENEMY);
     std::size_t physicDrop = (InfoComp::DROP);
@@ -119,6 +155,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
         for (std::size_t j = 0; j < masks.size(); j++) {
             if (masks[j].has_value() && ((masks[j].value() & physicCon) == physicCon || (masks[j].value() & physicEne) == physicEne) && par.id != j) {
                 if (((masks[j].value() & physicApp) == physicApp && componentManager.getSingleComponent<Appearance>(j).app) ||
+                    ((masks[j].value() & physicDis) == physicDis && componentManager.getSingleComponent<Disappearance>(j).dis) ||
                     ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
                 if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
@@ -131,12 +168,20 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                         if ((masks[j].value() & physicDrop) == physicDrop)
                             this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
                         hp.life = 0;
-                        componentManager.removeAllComponents(j);
-                        entityManager.removeMask(j);
+                        if (masks[j].has_value() && (masks[j].value() & physicDis) == physicDis)
+                            componentManager.getSingleComponent<Disappearance>(j).dis = true;
+                        else {
+                            componentManager.removeAllComponents(j);
+                            entityManager.removeMask(j);
+                        }
                     } else
                         hp.life -= proj.damage;
-                    componentManager.removeAllComponents(i);
-                    entityManager.removeMask(i);
+                    if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
+                        componentManager.getSingleComponent<Disappearance>(i).dis = true;
+                    else {
+                        componentManager.removeAllComponents(i);
+                        entityManager.removeMask(i);
+                    }
                     return true;
                 }
             }
@@ -153,6 +198,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t physicPar = (InfoComp::VEL | InfoComp::POS | InfoComp::PARALLAX);
     std::size_t physicPat = (InfoComp::PATERN);
     std::size_t physicAppear = (InfoComp::APP);
+    std::size_t physicDis = (InfoComp::DIS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value() || (masks[i].value() & physicSpeed) != physicSpeed)
@@ -160,6 +206,8 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
         Position &pos = componentManager.getSingleComponent<Position>(i);
         Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
         if ((masks[i].value() & physicAppear) == physicAppear && checkAppareance(componentManager, i, pos, vel))
+            continue;
+        if ((masks[i].value() & physicDis) == physicDis && checkDisappearance(entityManager, componentManager, i, pos, vel))
             continue;
         if ((masks[i].value() & physicPar) == physicPar) {
             pos.x += vel.x;

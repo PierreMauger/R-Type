@@ -9,7 +9,7 @@
 #define COMPONENTMANAGER_HPP
 
 /// @cond
-#include "Engine/ECS/Component/Component.hpp"
+#include "Engine/ECS/Component/SparseArray.hpp"
 #include "Engine/ECS/Component/ComponentTypes.hpp"
 #include "Includes.hpp"
 /// @endcond
@@ -27,7 +27,7 @@ namespace eng
     class ComponentManager
     {
         private:
-            std::map<std::type_index, Component> _componentArray;
+            std::map<std::type_index, SparseArray> _componentArray;
             std::map<std::size_t, std::type_index> _orderedMap;
 
         public:
@@ -44,28 +44,27 @@ namespace eng
 
             /**
              * @brief Get the components array.
-             * @fn std::map<std::type_index, Component> &getComponentArray()
+             * @fn std::map<std::type_index, SparseArray> &getComponentArray()
              * @return The components array.
             */
-            std::map<std::type_index, Component> &getComponentArray();
+            std::map<std::type_index, SparseArray> &getComponentArray();
 
             /**
              * @brief Get a component from the component array.
-             * @fn Component &getComponent(std::type_index type)
+             * @fn SparseArray &getComponent(std::type_index type)
              * @param type type of the component to get.
              * @throw Throws an error if the type is not found.
-             * @return The component.
+             * @return A reference to the spare array representing the component.
             */
-            Component &getComponent(std::type_index type);
+            SparseArray &getComponent(std::type_index type);
             /**
              * @brief Get a component from the component array.
-             * @fn Component &getComponent(std::size_t index)
+             * @fn SparseArray &getComponent(std::size_t index)
              * @param index Id of the component to get.
              * @throw Throws an error if the id is out of range.
-             * @return The component.
+             * @return A reference to the spare array representing the component.
             */
-            Component &getComponent(std::size_t index);
-
+            SparseArray &getComponent(std::size_t index);
             /**
              * @brief Get a component's type from the component array.
              * @fn std::type_index getComponentType(std::size_t index)
@@ -88,7 +87,7 @@ namespace eng
             */
             template <typename T> void bindComponent()
             {
-                this->_componentArray[std::type_index(typeid(T))] = Component();
+                this->_componentArray[std::type_index(typeid(T))] = SparseArray();
                 this->_orderedMap.try_emplace(this->_orderedMap.size(), std::type_index(typeid(T)));
             }
 

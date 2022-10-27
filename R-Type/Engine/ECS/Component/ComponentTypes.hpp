@@ -12,45 +12,45 @@
 #include "Includes.hpp"
 /// @endcond
 
-
 /**
  * @enum InfoComp
  * @brief Masks of the components.
 */
-enum InfoComp {
-    POS = 0b1,
-    VEL = 0b10,
-    SIZE = 0b100,
-    SPRITEID = 0b1000,
-    CONTROLLABLE = 0b10000,
-    PARALLAX = 0b100000,
-    PROJECTILE = 0b1000000,
-    LIFE = 0b10000000,
-    ENEMY = 0b100000000,
-    APP = 0b1000000000,
-    COOLDOWNSHOOT = 0b10000000000,
-    COOLDOWNBAR = 0b100000000000,
-    LIFEBAR = 0b1000000000000,
-    PARENT = 0b10000000000000,
-    PATERN = 0b100000000000000,
-    SYNCID = 0b1000000000000000,
-    DROP = 0b10000000000000000,
-    TEXT = 0b100000000000000000,
-    SOUNDID = 0b1000000000000000000,
-};
+namespace eng
+{
+    enum InfoComp {
+        POS = 1 << 0,
+        VEL = 1 << 1,
+        SIZE = 1 << 2,
+        SPRITEID = 1 << 3,
+        CONTROLLABLE = 1 << 4,
+        PARALLAX = 1 << 5,
+        PROJECTILE = 1 << 6,
+        LIFE = 1 << 7,
+        ENEMY = 1 << 8,
+        APP = 1 << 9,
+        DIS = 1 << 10,
+        COOLDOWNSHOOT = 1 << 11,
+        COOLDOWNBAR = 1 << 12,
+        LIFEBAR = 1 << 13,
+        PARENT = 1 << 14,
+        PATERN = 1 << 15,
+        SYNCID = 1 << 16,
+        DROP = 1 << 17,
+        TEXT = 1 << 18,
+        SOUNDID = 1 << 19,
+        SPRITEAT = 1 << 20,
+    };
+}
 
 /**
  * @struct Position
  * @brief The position component.
 */
 typedef struct Position {
-        float x;
-        float y;
-        float z;
-
-        Position(float x = 0.0f, float y = 0.0f, float z = 0.0f) : x(x), y(y), z(z)
-        {
-        }
+        float x = 0.0f;
+        float y = 0.0f;
+        float z = 0.0f;
 } Position;
 
 /**
@@ -58,14 +58,11 @@ typedef struct Position {
  * @brief The velocity component.
 */
 typedef struct Velocity {
-        float x;
-        float y;
-        float z;
-        float baseSpeed;
-
-        Velocity(float x = 0.0f, float y = 0.0f, float z = 0.0f, float baseSpeed = 0.0) : x(x), y(y), z(z), baseSpeed(baseSpeed)
-        {
-        }
+        float x = 0.0f;
+        float y = 0.0f;
+        float z = 0.0f;
+        float baseSpeedX = 0.0f;
+        float baseSpeedY = 0.0f;
 } Velocity;
 
 /**
@@ -73,12 +70,8 @@ typedef struct Velocity {
  * @brief The size component.
 */
 typedef struct Size {
-        float x;
-        float y;
-
-        Size(float x = 0.0f, float y = 0.0f) : x(x), y(y)
-        {
-        }
+        float x = 0.0f;
+        float y = 0.0f;
 } Size;
 
 /**
@@ -96,19 +89,16 @@ enum Priority {
  * @brief The spriteID component.
 */
 typedef struct SpriteID {
-        std::size_t id;
-        enum Priority priority;
-        std::size_t curFrame;
-        std::size_t nbFrame;
-        bool signe;
-        std::size_t offsetX;
-        std::size_t offsetY;
-
-        SpriteID(std::size_t i = 0, Priority prio = Priority::HIGH, std::size_t curFrame = 0, std::size_t nbFrame = 0, bool signe = false, std::size_t offsetX = 0,
-                 std::size_t offsetY = 0)
-            : id(i), priority(prio), curFrame(curFrame), nbFrame(nbFrame), signe(signe), offsetX(offsetX), offsetY(offsetY)
-        {
-        }
+        std::size_t id = 0;
+        enum Priority priority = Priority::HIGH;
+        std::size_t curFrame = 0;
+        std::size_t nbFrame = 0;
+        bool autoLoop = false;
+        bool sign = false;
+        float lastTime = 0.0f;
+        float delay = 0.0f;
+        std::size_t offsetX = 0;
+        std::size_t offsetY = 0;
 } SpriteID;
 
 /**
@@ -116,12 +106,9 @@ typedef struct SpriteID {
  * @brief The controllable component.
 */
 typedef struct Controllable {
-        bool con;
-        std::size_t kill;
-
-        Controllable(bool con = true, std::size_t kill = 0) : con(con), kill(kill)
-        {
-        }
+        bool con = false;
+        std::size_t kill = 0;
+        std::size_t death = 0;
 } Controllable;
 
 /**
@@ -129,11 +116,7 @@ typedef struct Controllable {
  * @brief The parallax component.
 */
 typedef struct Parallax {
-        bool par;
-
-        Parallax(bool par = true) : par(par)
-        {
-        }
+        bool par = true;
 } Parallax;
 
 /**
@@ -141,13 +124,9 @@ typedef struct Parallax {
  * @brief The projectile component.
 */
 typedef struct Projectile {
-        bool proj;
-        std::size_t damage;
-        float size;
-
-        Projectile(bool proj = true, std::size_t damage = 1, float size = 1) : proj(proj), damage(damage), size(size)
-        {
-        }
+        bool proj = true;
+        std::size_t damage = 1;
+        float size = 1.0f;
 } Projectile;
 
 /**
@@ -155,11 +134,7 @@ typedef struct Projectile {
  * @brief The life component.
 */
 typedef struct Life {
-        std::size_t life;
-
-        Life(std::size_t life = 1) : life(life)
-        {
-        }
+        std::size_t life = 1;
 } Life;
 
 /**
@@ -167,13 +142,9 @@ typedef struct Life {
  * @brief The enemy component.
 */
 typedef struct Enemy {
-        bool enemy;
-        float lastShoot;
-        float shootDelay;
-
-        Enemy(bool enemy = false, float lastShoot = 0.0f, float shootDelay = 2.0f) : enemy(enemy), lastShoot(lastShoot), shootDelay(shootDelay)
-        {
-        }
+        bool enemy = false;
+        float lastShoot = 0.0f;
+        float shootDelay = 2.0f;
 } Enemy;
 
 /**
@@ -181,26 +152,27 @@ typedef struct Enemy {
  * @brief The appearance component.
 */
 typedef struct Appearance {
-        bool app;
-        float end;
-
-        Appearance(bool app = false, float end = 0.0f) : app(app), end(end)
-        {
-        }
+        bool app = false;
+        float end = 0.0f;
 } Appearance;
+
+/**
+ * @struct Disappearance
+ * @brief The disappearance component.
+*/
+typedef struct Disappearance {
+        bool dis = false;
+        float end = 0.0f;
+} Disappearance;
 
 /**
  * @struct CooldownShoot
  * @brief The cooldownShoot component.
 */
 typedef struct CooldownShoot {
-        float lastShoot;
-        float shootDelay;
-        float size;
-
-        CooldownShoot(float lastShoot = 0.0f, float shootDelay = 2.0f, std::size_t size = 1) : lastShoot(lastShoot), shootDelay(shootDelay), size(size)
-        {
-        }
+        float lastShoot = 0.0f;
+        float shootDelay = 2.0f;
+        float size = 1.0f;
 } CooldownShoot;
 
 /**
@@ -208,11 +180,7 @@ typedef struct CooldownShoot {
  * @brief The cooldownBar component.
 */
 typedef struct CooldownBar {
-        bool bar;
-
-        CooldownBar(bool bar = false) : bar(bar)
-        {
-        }
+        bool bar = false;
 } CooldownBar;
 
 /**
@@ -220,12 +188,8 @@ typedef struct CooldownBar {
  * @brief The lifebar component.
 */
 typedef struct LifeBar {
-        bool bar;
-        std::size_t lifeMax;
-
-        LifeBar(bool bar = false, std::size_t lifeMax = 0) : bar(bar), lifeMax(lifeMax)
-        {
-        }
+        bool bar = false;
+        std::size_t lifeMax = 1;
 } LifeBar;
 
 /**
@@ -233,11 +197,7 @@ typedef struct LifeBar {
  * @brief The parent component.
 */
 typedef struct Parent {
-        std::size_t id;
-
-        Parent(std::size_t i = 0) : id(i)
-        {
-        }
+        std::size_t id = 0;
 } Parent;
 
 // Type dépendant du patern
@@ -253,29 +213,20 @@ enum TypePattern {
 };
 
 /**
- * @struct Patern
+ * @struct Pattern
  * @brief The patern component.
 */
-typedef struct Patern {
-        enum TypePattern type;
-        float angle;
-        sf::Vector2f center;
-
-        Patern(enum TypePattern type = TypePattern::LINE, float angle = 0.0f, sf::Vector2f center = sf::Vector2f(0.0f, 0.0f)) : type(type), angle(angle), center(center)
-        {
-        }
-} Patern;
+typedef struct Pattern {
+        enum TypePattern type = TypePattern::LINE;
+        float angle = 0.0f;
+} Pattern;
 
 /**
  * @struct SyncID
  * @brief The syncID component.
 */
 typedef struct SyncID {
-        std::size_t id;
-
-        SyncID(std::size_t i = 0) : id(i)
-        {
-        }
+        std::size_t id = 0;
 } SyncID;
 
 /**
@@ -283,31 +234,39 @@ typedef struct SyncID {
  * @brief The dropBonus component.
 */
 typedef struct DropBonus {
-        std::size_t id;
-
-        DropBonus(std::size_t id = 0) : id(id)
-        {
-        }
+        std::size_t id = 0;
 } DropBonus;
 
+/**
+ * @struct Text
+ * @brief The text component.
+*/
 typedef struct Text {
-        sf::Text text;
-        std::string str;
-
-        Text(sf::Text text = sf::Text(), std::string str = "") : text(text), str(str)
-        {
-        }
+        std::string str = "";
+        std::size_t value = 0;
+        sf::Vector2f pos = {0.0f, 0.0f};
 } Text;
 
+/**
+ * @struct SoundID
+ * @brief The soundID component.
+*/
 typedef struct SoundID {
-        std::size_t id;
-        bool play;
-        bool loop;
-        float pitch;
-
-        SoundID(std::size_t id = 0, bool play = false, bool loop = false, float pitch = 1) : id(id), play(play), loop(loop), pitch(pitch)
-        {
-        }
+        std::size_t id = 0;
+        bool play = false;
+        bool loop = false;
+        float pitch = 1.0f;
 } SoundID;
+
+/**
+ * @struct SpriteAttribut
+ * @brief The spriteAttribut component.
+*/
+typedef struct SpriteAttribut {
+        float rotation = 0;
+        sf::FloatRect rect = sf::FloatRect();
+        sf::Color color = sf::Color::White;
+        sf::Vector2f scale = {1.0f, 1.0f};
+} SpriteAttribut;
 
 #endif // COMPONENTTYPES_HPP

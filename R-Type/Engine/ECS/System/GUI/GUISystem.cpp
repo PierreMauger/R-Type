@@ -127,19 +127,37 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                         componentManager.addComponent<Appearance>(this->_selectedEntity);
                         break;
                     case 10:
-                        componentManager.addComponent<CooldownShoot>(this->_selectedEntity);
+                        componentManager.addComponent<Disappearance>(this->_selectedEntity);
                         break;
                     case 11:
-                        componentManager.addComponent<CooldownBar>(this->_selectedEntity);
+                        componentManager.addComponent<CooldownShoot>(this->_selectedEntity);
                         break;
                     case 12:
-                        componentManager.addComponent<LifeBar>(this->_selectedEntity);
+                        componentManager.addComponent<CooldownBar>(this->_selectedEntity);
                         break;
                     case 13:
-                        componentManager.addComponent<Parent>(this->_selectedEntity);
+                        componentManager.addComponent<LifeBar>(this->_selectedEntity);
                         break;
                     case 14:
-                        componentManager.addComponent<Patern>(this->_selectedEntity);
+                        componentManager.addComponent<Parent>(this->_selectedEntity);
+                        break;
+                    case 15:
+                        componentManager.addComponent<Pattern>(this->_selectedEntity);
+                        break;
+                    case 16:
+                        componentManager.addComponent<SyncID>(this->_selectedEntity);
+                        break;
+                    case 17:
+                        componentManager.addComponent<DropBonus>(this->_selectedEntity);
+                        break;
+                    case 18:
+                        componentManager.addComponent<Text>(this->_selectedEntity);
+                        break;
+                    case 19:
+                        componentManager.addComponent<SoundID>(this->_selectedEntity);
+                        break;
+                    case 20:
+                        componentManager.addComponent<SpriteAttribut>(this->_selectedEntity);
                         break;
                     default:
                         break;
@@ -215,33 +233,44 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         break;
     }
     case 10: {
+        break;
+    }
+    case 11: {
         CooldownShoot &cdShoot = componentManager.getSingleComponent<CooldownShoot>(this->_selectedEntity);
         ImGui::SliderFloat("Last shoot", &cdShoot.lastShoot, 0.0f, 10.0f);
         ImGui::SliderFloat("Shoot delay", &cdShoot.shootDelay, 0.0f, 10.0f);
         break;
     }
-    case 11: {
+    case 12: {
         CooldownBar &cdBar = componentManager.getSingleComponent<CooldownBar>(this->_selectedEntity);
         ImGui::Checkbox("CooldownBar", &cdBar.bar);
         break;
     }
-    case 12: {
+    case 13: {
         LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(this->_selectedEntity);
         ImGui::Checkbox("LifeBar", &lifeBar.bar);
         const ImU64 increment = 1;
         ImGui::InputScalar("Life Max", ImGuiDataType_U64, &lifeBar.lifeMax, &increment);
         break;
     }
-    case 13: {
+    case 14: {
         Parent &parent = componentManager.getSingleComponent<Parent>(this->_selectedEntity);
         const ImU64 increment = 1;
         ImGui::InputScalar("Model ID", ImGuiDataType_U64, &parent.id, &increment);
         break;
     }
-    case 14: {
-        Patern &patern = componentManager.getSingleComponent<Patern>(this->_selectedEntity);
+    case 15:
         break;
-    }
+    case 16:
+        break;
+    case 17:
+        break;
+    case 18:
+        break;
+    case 19:
+        break;
+    case 20:
+        break;
     default:
         break;
     }

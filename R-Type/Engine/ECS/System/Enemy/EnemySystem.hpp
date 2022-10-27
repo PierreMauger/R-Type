@@ -13,7 +13,7 @@
 /// @endcond
 
 #define RADIUS 50
-#define SPEED_OSC 6
+#define SPEED_OSC 5
 
 /**
  * @brief Engine namespace.
@@ -29,17 +29,21 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::Clock> _clock;
+            std::shared_ptr<sf::RenderWindow> _window;
+            std::shared_ptr<sf::Vector2f> _screenSize;
             void createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager);
 
         public:
             /**
              * @brief EnemySystem constructor.
-             * @fn EnemySystem(std::shared_ptr<sf::Clock> clock)
-             * @param clock The clock of the game (for enemy animations, patterns and such).
+             * @fn EnemySystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
+             * @param clock A shared pointer to the clock of the game (for enemy animations, patterns and such).
+             * @param window A shared pointer to the render window
+             * @param screenSize A shared pointer to the screen size
             */
-            EnemySystem(std::shared_ptr<sf::Clock> clock);
+            EnemySystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
             /**
-             * @brief EnemySystem constructor.
+             * @brief EnemySystem destructor.
              * @fn ~EnemySystem()
             */
             ~EnemySystem() = default;

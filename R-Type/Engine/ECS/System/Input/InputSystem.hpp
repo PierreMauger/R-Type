@@ -29,16 +29,20 @@ namespace eng
         private:
             std::shared_ptr<sf::Event> _event;
             std::shared_ptr<sf::Clock> _clock;
+            std::shared_ptr<sf::RenderWindow> _window;
+            std::shared_ptr<sf::Vector2f> _screenSize;
             void createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager, std::size_t damage);
 
         public:
             /**
              * @brief InputSystem constructor.
-             * @fn InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock)
-             * @param event The SFML event of the pressed key.
+             * @fn InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
+             * @param event A shared pointer to the SFML event of the pressed key.
              * @param clock A shared pointer to the clock of the game (for input delay and such).
+             * @param window A shared pointer to the render window
+             * @param screenSize A shared pointer to the screen size
             */
-            InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock);
+            InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
             /**
              * @brief InputSystem destructor.
              * @fn ~InputSystem

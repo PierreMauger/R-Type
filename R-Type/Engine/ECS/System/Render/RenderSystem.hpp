@@ -31,18 +31,23 @@ namespace eng
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<std::vector<sf::Sprite>> _sprites;
+            std::shared_ptr<sf::Vector2f> _screenSize;
+            sf::Text _text;
+            sf::Font _font;
             void displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
             void displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
 
         public:
             /**
              * @brief RenderSystem constructor.
-             * @fn RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader)
+             * @fn RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites, std::shared_ptr<sf::Vector2f>)
              * @param window A shared pointer to the SFML render window.
              * @param clock A shared pointer to the clock of the game (for render timings and such).
-             * @param loader A reference to the loader (with the images to render).
+             * @param sprites A shared pointer to the vector of sprites to render
+             * @param screenSize A shared pointer to the screen size
             */
-            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, Loader &loader);
+            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites,
+                         std::shared_ptr<sf::Vector2f> screenSize);
             /**
              * @brief RenderSystem destructor.
              * @fn ~RenderSystem

@@ -26,10 +26,12 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::RenderWindow> _window;
+            std::shared_ptr<sf::Vector2f> _screenSize;
             sf::Rect<float> _rect1;
             sf::Rect<float> _rect2;
             void createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager);
             bool checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
+            bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
             bool checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2);
             bool collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
@@ -38,10 +40,11 @@ namespace eng
         public:
             /**
              * @brief PhysicSystem constructor.
-             * @fn PhysicSystem(std::shared_ptr<sf::RenderWindow> window)
+             * @fn PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
              * @param window A shared pointer to the SFML render window.
+             * @param screenSize A shared pointer to the screen size
             */
-            PhysicSystem(std::shared_ptr<sf::RenderWindow> window);
+            PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
             /**
              * @brief PhysicSystem destructor.
              * @fn ~PhysicSystem

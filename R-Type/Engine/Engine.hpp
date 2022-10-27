@@ -13,7 +13,6 @@
 #include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Input/Input.hpp"
 #include "Engine/Loader/Loader.hpp"
-#include "Engine/Network/Network.hpp"
 /// @endcond
 
 /**
@@ -32,8 +31,12 @@ namespace eng
             Loader _loader;
             ECS _ecs;
             Graphic _graphic;
-            Network _network;
             Input _input;
+
+            void updateSize(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateSpeed(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updatePos(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateParallax(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
 
         public:
             /**
@@ -66,17 +69,12 @@ namespace eng
             */
             Loader &getLoader();
             /**
-             * @brief Get a reference to the engine's network.
-             * @fn Network &getNetwork()
-             * @return A reference to the Network
-            */
-            Network &getNetwork();
-            /**
              * @brief Get a reference to the engine's inputs.
              * @fn Input &getInput()
              * @return A reference to the Input
             */
             Input &getInput();
+            void updateSizeWindow();
     };
 }
 

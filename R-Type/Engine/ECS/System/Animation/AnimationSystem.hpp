@@ -29,8 +29,6 @@ namespace eng
             std::shared_ptr<sf::Event> _event;
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<std::vector<sf::Sprite>> _sprites;
-            std::map<std::size_t, float> _lastTime;
-            std::map<std::size_t, float> _delay;
 
         public:
             /**
