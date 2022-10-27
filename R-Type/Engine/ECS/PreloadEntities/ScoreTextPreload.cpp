@@ -9,12 +9,12 @@ void ScoreTextPreload::preload(Engine &engine)
     engine.getECS()
         .getComponentManager()
         .getComponent(typeid(Text))
-        .emplaceData(idScore, Text{"Score: ", 0, {static_cast<float>(engine.getGraphic().getWindow()->getSize().x - 100), 10}});
+        .emplaceData(idScore, Text{"Score: ", true, 0, {static_cast<float>(engine.getGraphic().getWindow()->getSize().x - 100), 10}});
 
     std::size_t idKill = engine.getECS().getEntityManager().addMask((InfoComp::TEXT), engine.getECS().getComponentManager());
 
     engine.getECS()
         .getComponentManager()
         .getComponent(typeid(Text))
-        .emplaceData(idKill, Text{"Death: ", 0, {static_cast<float>(engine.getGraphic().getWindow()->getSize().x - 100), 50}});
+        .emplaceData(idKill, Text{"Death: ", true, 0, {static_cast<float>(engine.getGraphic().getWindow()->getSize().x - 100), 50}});
 }

@@ -80,10 +80,12 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & renderText) == renderText) {
-            this->_text.setString(componentManager.getSingleComponent<Text>(i).str + std::to_string(componentManager.getSingleComponent<Text>(i).value));
+            if (componentManager.getSingleComponent<Text>(i).hasValue)
+                this->_text.setString(componentManager.getSingleComponent<Text>(i).str + std::to_string(componentManager.getSingleComponent<Text>(i).value));
+            else
+                this->_text.setString(componentManager.getSingleComponent<Text>(i).str);
             this->_text.setPosition(componentManager.getSingleComponent<Text>(i).pos);
             stockText.push_back(this->_text);
-            continue;
         }
         if (masks[i].has_value() && (masks[i].value() & renderButton) == renderButton) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
@@ -126,10 +128,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     }
     for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
         this->_window->draw(stockSpriteMedium[i]);
-    for (std::size_t i = 0; i < stockText.size(); i++)
-        this->_window->draw(stockText[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
     for (std::size_t i = 0; i < stockButton.size(); i++)
         this->_window->draw(stockButton[i]);
+    for (std::size_t i = 0; i < stockText.size(); i++)
+        this->_window->draw(stockText[i]);
 }

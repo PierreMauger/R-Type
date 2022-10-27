@@ -146,6 +146,7 @@ typedef struct {
 
 typedef struct {
         std::string str = "";
+        bool hasValue = true;
         std::size_t value = 0;
         sf::Vector2f pos = {0.0f, 0.0f};
 } Text;
