@@ -12,7 +12,8 @@ namespace eng
     {
         public:
             void preload(Engine &engine) override;
-            void preloadScore(Engine &engine, std::size_t kill, std::size_t death);
+            static void preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize,
+                                     std::shared_ptr<sf::Vector2f> screenSize);
     };
 }
 

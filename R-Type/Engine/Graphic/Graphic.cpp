@@ -4,18 +4,14 @@ using namespace eng;
 
 Graphic::Graphic()
 {
-
-    this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "R-Type");
+    this->_isFullscreen = true;
+    this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "R-Type", sf::Style::Fullscreen);
+    this->_screenSize = std::make_shared<sf::Vector2f>(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
+    this->_lastSize = sf::Vector2f(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
     this->_event = std::make_shared<sf::Event>();
     this->_clock = std::make_shared<sf::Clock>();
     this->_window->setFramerateLimit(60);
     this->_window->setKeyRepeatEnabled(true);
-    while (this->_window->pollEvent(*this->_event)) {
-        if (this->_event->type == sf::Event::Resized) {
-            this->_screenSize = std::make_shared<sf::Vector2f>(this->_event->size.width, this->_event->size.height);
-            this->_lastSize = sf::Vector2f(this->_event->size.width, this->_event->size.height);
-        }
-    }
 }
 
 std::shared_ptr<sf::RenderWindow> Graphic::getWindow()
@@ -46,4 +42,14 @@ void Graphic::setLastSize(sf::Vector2f lastSize)
 std::shared_ptr<sf::Vector2f> Graphic::getScreenSize()
 {
     return this->_screenSize;
+}
+
+bool Graphic::isFullscreen()
+{
+    return this->_isFullscreen;
+}
+
+void Graphic::setFullscreen(bool isFullscreen)
+{
+    this->_isFullscreen = isFullscreen;
 }

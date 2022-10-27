@@ -21,13 +21,16 @@
 #include <mutex>
 #include <optional>
 #include <queue>
-#include <set>
 #include <random>
+#include <set>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
+#ifdef _WIN32
+    #include <SDKDDKVer.h>
+#endif
 
 #endif // INCLUDES_HPP
