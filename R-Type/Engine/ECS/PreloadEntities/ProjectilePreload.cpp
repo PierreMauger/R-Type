@@ -29,7 +29,7 @@ void eng::ProjectilePreload::createShoot(EntityManager &entityManager, Component
             addEntity,
             SpriteAttribut{0, {0, 0, 56, 32}, sf::Color::White, {(sizeProj.size / screenSize->x * windowsSize.x) * sizeProjScreen.x, (sizeProj.size / screenSize->y * windowsSize.y) * sizeProjScreen.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x, (pos.y + (size.y / 2)) - (sizeFire.y * sizeProj.size / 2), pos.z});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{15 / screenSize->x * windowsSize.x * (enemy ? -1 : 1), 0, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{(screenSize->x / (1920 / 15)) / screenSize->x * windowsSize.x * (enemy ? -1 : 1), 0, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, damage, sizeProj.size});
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * sizeProj.size, sizeFire.y * sizeProj.size});
