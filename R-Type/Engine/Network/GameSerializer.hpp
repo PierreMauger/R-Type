@@ -20,28 +20,11 @@ namespace eng
     class GameSerializer : private Serializer
     {
         private:
-            template <typename T> void serializeComponent(std::vector<uint8_t> &packet, T *component)
-            {
-                for (uint8_t i = 0; i < sizeof(T); i++) {
-                    packet.push_back(((uint8_t *)component)[i]);
-                }
-            };
-
-            template <typename T> void deserializeComponent(std::vector<uint8_t> &packet, std::size_t &adv, T *component)
-            {
-                std::size_t i = 0;
-
-                for (; i < sizeof(T); i++) {
-                    ((uint8_t *)component)[i] = packet.at(adv + i);
-                }
-                adv += i;
-            };
-
             template <typename T> void updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
             {
                 T component = T();
 
-                deserializeComponent(packet, adv, &component);
+                deserializeData(packet, adv, &component);
                 componentManager.getSingleComponent<T>(id) = component;
             };
 

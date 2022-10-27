@@ -34,7 +34,7 @@ namespace eng
         COOLDOWNBAR = 1 << 12,
         LIFEBAR = 1 << 13,
         PARENT = 1 << 14,
-        PATERN = 1 << 15,
+        PATTERN = 1 << 15,
         SYNCID = 1 << 16,
         DROP = 1 << 17,
         TEXT = 1 << 18,
@@ -143,8 +143,6 @@ typedef struct Life {
 */
 typedef struct Enemy {
         bool enemy = false;
-        float lastShoot = 0.0f;
-        float shootDelay = 2.0f;
 } Enemy;
 
 /**

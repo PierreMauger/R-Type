@@ -37,6 +37,7 @@ namespace eng
             void updateSpeed(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
             void updatePos(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
             void updateParallax(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateAppDis(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
 
         public:
             /**

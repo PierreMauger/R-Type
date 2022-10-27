@@ -222,8 +222,6 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     case 8: {
         Enemy &enemy = componentManager.getSingleComponent<Enemy>(this->_selectedEntity);
         ImGui::Checkbox("Enemy", &enemy.enemy);
-        ImGui::SliderFloat("Last shoot##1", &enemy.lastShoot, 0.0f, 10.0f);
-        ImGui::SliderFloat("Shoot delay##1", &enemy.shootDelay, 0.0f, 10.0f);
         break;
     }
     case 9: {

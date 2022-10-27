@@ -12,7 +12,7 @@ AnimationSystem::AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_p
 void AnimationSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SIZE | InfoComp::SPRITEAT);
+    std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
     std::size_t appMask = (InfoComp::APP);
     std::size_t contMask = (InfoComp::CONTROLLABLE);
 
@@ -32,11 +32,14 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
             if (spriteID.nbFrame == 0 || ((masks[i].value() & appMask) == appMask && componentManager.getSingleComponent<Appearance>(i).app))
                 continue;
             if (this->_clock->getElapsedTime().asSeconds() >= spriteID.lastTime + spriteID.delay) {
-                if (spriteID.curFrame == 0)
+                if (spriteID.curFrame == 0 && !spriteID.autoLoop)
                     spriteID.sign = false;
-                if (spriteID.curFrame == spriteID.nbFrame)
+                if (spriteID.curFrame == spriteID.nbFrame && !spriteID.autoLoop)
                     spriteID.sign = true;
-                spriteID.sign == false ? spriteID.curFrame++ : spriteID.curFrame--;
+                if (!spriteID.autoLoop)
+                    spriteID.sign == false ? spriteID.curFrame++ : spriteID.curFrame--;
+                else
+                    spriteID.curFrame == spriteID.nbFrame ? spriteID.curFrame = 0 : spriteID.curFrame++;
                 spriteAT.rect.left = spriteID.offsetX * spriteID.curFrame;
                 spriteAT.rect.top = spriteID.offsetY * spriteID.curFrame;
                 spriteID.lastTime = this->_clock->getElapsedTime().asSeconds();
