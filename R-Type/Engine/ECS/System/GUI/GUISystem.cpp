@@ -237,6 +237,7 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         CooldownShoot &cdShoot = componentManager.getSingleComponent<CooldownShoot>(this->_selectedEntity);
         ImGui::SliderFloat("Last shoot", &cdShoot.lastShoot, 0.0f, 10.0f);
         ImGui::SliderFloat("Shoot delay", &cdShoot.shootDelay, 0.0f, 10.0f);
+        ImGui::SliderFloat("Size", &cdShoot.size, 0.0f, 10.0f);
         break;
     }
     case 12: {
