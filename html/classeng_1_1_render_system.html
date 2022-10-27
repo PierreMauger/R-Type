@@ -107,9 +107,9 @@ Collaboration diagram for eng::RenderSystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6bd82e9fde29b57dbfb1faf61ee2fc92"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_render_system.html#a6bd82e9fde29b57dbfb1faf61ee2fc92">RenderSystem</a> (std::shared_ptr&lt; sf::RenderWindow &gt; window, std::shared_ptr&lt; sf::Clock &gt; clock, <a class="el" href="classeng_1_1_loader.html">Loader</a> &amp;loader)</td></tr>
-<tr class="memdesc:a6bd82e9fde29b57dbfb1faf61ee2fc92"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_render_system.html" title="System of the render.">RenderSystem</a> constructor.  <a href="classeng_1_1_render_system.html#a6bd82e9fde29b57dbfb1faf61ee2fc92">More...</a><br /></td></tr>
-<tr class="separator:a6bd82e9fde29b57dbfb1faf61ee2fc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefcedc1d40864c9c49ef6b4de8bb8b48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_render_system.html#aefcedc1d40864c9c49ef6b4de8bb8b48">RenderSystem</a> (std::shared_ptr&lt; sf::RenderWindow &gt; window, std::shared_ptr&lt; sf::Clock &gt; clock, std::shared_ptr&lt; std::vector&lt; sf::Sprite &gt; &gt; sprites, std::shared_ptr&lt; sf::Vector2f &gt; screenSize)</td></tr>
+<tr class="memdesc:aefcedc1d40864c9c49ef6b4de8bb8b48"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_render_system.html" title="System of the render.">RenderSystem</a> constructor.  <a href="classeng_1_1_render_system.html#aefcedc1d40864c9c49ef6b4de8bb8b48">More...</a><br /></td></tr>
+<tr class="separator:aefcedc1d40864c9c49ef6b4de8bb8b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41d740f7b6de416592691bcb589ac463"><td class="memItemLeft" align="right" valign="top"><a id="a41d740f7b6de416592691bcb589ac463" name="a41d740f7b6de416592691bcb589ac463"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~RenderSystem</b> ()=default</td></tr>
 <tr class="memdesc:a41d740f7b6de416592691bcb589ac463"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_render_system.html" title="System of the render.">RenderSystem</a> destructor. <br /></td></tr>
@@ -129,8 +129,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ISystem</b> ()=de
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >System of the render. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6bd82e9fde29b57dbfb1faf61ee2fc92" name="a6bd82e9fde29b57dbfb1faf61ee2fc92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bd82e9fde29b57dbfb1faf61ee2fc92">&#9670;&#160;</a></span>RenderSystem()</h2>
+<a id="aefcedc1d40864c9c49ef6b4de8bb8b48" name="aefcedc1d40864c9c49ef6b4de8bb8b48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefcedc1d40864c9c49ef6b4de8bb8b48">&#9670;&#160;</a></span>RenderSystem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,8 +150,14 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ISystem</b> ()=de
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classeng_1_1_loader.html">Loader</a> &amp;&#160;</td>
-          <td class="paramname"><em>loader</em>&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; std::vector&lt; sf::Sprite &gt; &gt;&#160;</td>
+          <td class="paramname"><em>sprites</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::shared_ptr&lt; sf::Vector2f &gt;&#160;</td>
+          <td class="paramname"><em>screenSize</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -166,7 +172,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ISystem</b> ()=de
   <table class="params">
     <tr><td class="paramname">window</td><td>A shared pointer to the SFML render window. </td></tr>
     <tr><td class="paramname">clock</td><td>A shared pointer to the clock of the game (for render timings and such). </td></tr>
-    <tr><td class="paramname">loader</td><td>A reference to the loader (with the images to render). </td></tr>
+    <tr><td class="paramname">sprites</td><td>A shared pointer to the vector of sprites to render </td></tr>
+    <tr><td class="paramname">screenSize</td><td>A shared pointer to the screen size </td></tr>
   </table>
   </dd>
 </dl>

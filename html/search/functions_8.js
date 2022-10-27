@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['initclient_0',['initClient',['../classeng_1_1_network.html#ad47dc9a44a61a3b656f46cec47935ccf',1,'eng::Network']]],
-  ['initnewcomponent_1',['initNewComponent',['../classeng_1_1_component_manager.html#a0a6596724e3c63520c1b5405d76ceae7',1,'eng::ComponentManager']]],
-  ['initserver_2',['initServer',['../classeng_1_1_network.html#a69527469489ccf6ada5a3eb2fe875a46',1,'eng::Network']]],
-  ['isconnected_3',['isConnected',['../classeng_1_1_connection.html#acc977aabd7bf8d6482cbde47fc6c4ba5',1,'eng::Connection']]]
+  ['loader_0',['Loader',['../classeng_1_1_loader.html#a0e275fd69b174991f8e03433dc944695',1,'eng::Loader']]],
+  ['loadsounds_1',['loadSounds',['../classeng_1_1_loader.html#ac2469d7946ce50b6f33a658c0562d10a',1,'eng::Loader']]],
+  ['loadsprites_2',['loadSprites',['../classeng_1_1_loader.html#a7439279a697d4302b5c9e37621da5193',1,'eng::Loader']]]
 ];

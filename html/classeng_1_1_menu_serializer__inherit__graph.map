@@ -1,0 +1,4 @@
+<map id="eng::MenuSerializer" name="eng::MenuSerializer">
+<area shape="rect" id="node1" title=" " alt="" coords="5,79,143,104"/>
+<area shape="rect" id="node2" href="$classeng_1_1_serializer.html" title="The network serializer (formats packets to be sent through network)." alt="" coords="21,5,127,31"/>
+</map>

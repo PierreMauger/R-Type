@@ -93,19 +93,19 @@ $(function() {
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            std::shared_ptr&lt;sf::Event&gt; _event;</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            std::shared_ptr&lt;sf::Clock&gt; _clock;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            <span class="keywordtype">void</span> createShoot(std::size_t <span class="keywordtype">id</span>, ComponentManager &amp;componentManager, <a class="code hl_struct" href="struct_position.html">Position</a> pos, EntityManager &amp;entityManager, std::size_t damage);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            InputSystem(std::shared_ptr&lt;sf::Event&gt; event, std::shared_ptr&lt;sf::Clock&gt; clock);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            ~InputSystem() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordtype">void</span> update(ComponentManager &amp;componentManager, EntityManager &amp;entityManager);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    };</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>}</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif </span><span class="comment">// INPUTSYSTEM_HPP</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            std::shared_ptr&lt;sf::RenderWindow&gt; _window;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            std::shared_ptr&lt;sf::Vector2f&gt; _screenSize;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            InputSystem(std::shared_ptr&lt;sf::Event&gt; event, std::shared_ptr&lt;sf::Clock&gt; clock, std::shared_ptr&lt;sf::RenderWindow&gt; window, std::shared_ptr&lt;sf::Vector2f&gt; screenSize);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            ~InputSystem() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordtype">void</span> update(ComponentManager &amp;componentManager, EntityManager &amp;entityManager);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    };</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif </span><span class="comment">// INPUTSYSTEM_HPP</span></div>
 <div class="ttc" id="a_i_system_8hpp_html"><div class="ttname"><a href="_i_system_8hpp.html">ISystem.hpp</a></div><div class="ttdoc">Interface of the system.</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
-<div class="ttc" id="astruct_position_html"><div class="ttname"><a href="struct_position.html">Position</a></div><div class="ttdoc">The position component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:46</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

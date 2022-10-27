@@ -1,7 +1,7 @@
 var searchData=
 [
   ['client_0',['Client',['../classeng_1_1_client.html',1,'eng']]],
-  ['component_1',['Component',['../classeng_1_1_component.html',1,'eng']]],
+  ['clientnetwork_1',['ClientNetwork',['../classeng_1_1_client_network.html',1,'eng']]],
   ['componentmanager_2',['ComponentManager',['../classeng_1_1_component_manager.html',1,'eng']]],
   ['connection_3',['Connection',['../classeng_1_1_connection.html',1,'eng']]],
   ['controllable_4',['Controllable',['../struct_controllable.html',1,'']]],

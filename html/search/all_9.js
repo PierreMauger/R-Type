@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['life_0',['Life',['../struct_life.html',1,'']]],
-  ['lifebar_1',['LifeBar',['../struct_life_bar.html',1,'']]],
-  ['lifebar_2',['Lifebar',['../struct_lifebar.html',1,'']]],
-  ['loader_3',['Loader',['../classeng_1_1_loader.html',1,'eng::Loader'],['../classeng_1_1_loader.html#a0e275fd69b174991f8e03433dc944695',1,'eng::Loader::Loader()']]],
-  ['loader_2ehpp_4',['Loader.hpp',['../_loader_8hpp.html',1,'']]],
-  ['loadsounds_5',['loadSounds',['../classeng_1_1_loader.html#ac2469d7946ce50b6f33a658c0562d10a',1,'eng::Loader']]],
-  ['loadsprites_6',['loadSprites',['../classeng_1_1_loader.html#a7439279a697d4302b5c9e37621da5193',1,'eng::Loader']]]
+  ['main_0',['main',['../_client_2main_8cpp.html#a0c99d968a34e803d378692bde2e3f18f',1,'main.cpp']]],
+  ['main_2ecpp_1',['main.cpp',['../_client_2main_8cpp.html',1,'(Global Namespace)'],['../_server_2main_8cpp.html',1,'(Global Namespace)']]],
+  ['mainloop_2',['mainLoop',['../classeng_1_1_client.html#a150fa91716ff4230fdb993f656646c00',1,'eng::Client']]],
+  ['menuserializer_3',['MenuSerializer',['../classeng_1_1_menu_serializer.html',1,'eng']]]
 ];

@@ -1,29 +1,5 @@
 var searchData=
 [
-  ['scoresystem_0',['ScoreSystem',['../classeng_1_1_score_system.html',1,'eng']]],
-  ['serializer_1',['Serializer',['../classeng_1_1_serializer.html',1,'eng']]],
-  ['server_2',['Server',['../classeng_1_1_server.html',1,'eng']]],
-  ['size_3',['Size',['../struct_size.html',1,'']]],
-  ['soundid_4',['SoundID',['../struct_sound_i_d.html',1,'']]],
-  ['soundsystem_5',['SoundSystem',['../classeng_1_1_sound_system.html',1,'eng']]],
-  ['spriteid_6',['SpriteID',['../struct_sprite_i_d.html',1,'']]],
-  ['stb_5ftexteditstate_7',['STB_TexteditState',['../struct_s_t_b___textedit_state.html',1,'']]],
-  ['stbrp_5fcontext_8',['stbrp_context',['../structstbrp__context.html',1,'']]],
-  ['stbrp_5fnode_9',['stbrp_node',['../structstbrp__node.html',1,'']]],
-  ['stbrp_5frect_10',['stbrp_rect',['../structstbrp__rect.html',1,'']]],
-  ['stbtexteditrow_11',['StbTexteditRow',['../struct_stb_textedit_row.html',1,'']]],
-  ['stbtt_5f_5fbitmap_12',['stbtt__bitmap',['../structstbtt____bitmap.html',1,'']]],
-  ['stbtt_5f_5fbuf_13',['stbtt__buf',['../structstbtt____buf.html',1,'']]],
-  ['stbtt_5faligned_5fquad_14',['stbtt_aligned_quad',['../structstbtt__aligned__quad.html',1,'']]],
-  ['stbtt_5fbakedchar_15',['stbtt_bakedchar',['../structstbtt__bakedchar.html',1,'']]],
-  ['stbtt_5ffontinfo_16',['stbtt_fontinfo',['../structstbtt__fontinfo.html',1,'']]],
-  ['stbtt_5fkerningentry_17',['stbtt_kerningentry',['../structstbtt__kerningentry.html',1,'']]],
-  ['stbtt_5fpack_5fcontext_18',['stbtt_pack_context',['../structstbtt__pack__context.html',1,'']]],
-  ['stbtt_5fpack_5frange_19',['stbtt_pack_range',['../structstbtt__pack__range.html',1,'']]],
-  ['stbtt_5fpackedchar_20',['stbtt_packedchar',['../structstbtt__packedchar.html',1,'']]],
-  ['stbtt_5fvertex_21',['stbtt_vertex',['../structstbtt__vertex.html',1,'']]],
-  ['stbundorecord_22',['StbUndoRecord',['../struct_stb_undo_record.html',1,'']]],
-  ['stbundostate_23',['StbUndoState',['../struct_stb_undo_state.html',1,'']]],
-  ['syncid_24',['SyncID',['../struct_sync_i_d.html',1,'']]],
-  ['systemmanager_25',['SystemManager',['../classeng_1_1_system_manager.html',1,'eng']]]
+  ['rendersystem_0',['RenderSystem',['../classeng_1_1_render_system.html',1,'eng']]],
+  ['room_1',['Room',['../classeng_1_1_room.html',1,'eng']]]
 ];

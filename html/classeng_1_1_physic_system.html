@@ -107,9 +107,9 @@ Collaboration diagram for eng::PhysicSystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acee88c1ed9a08f21372ee4a13f3e38d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_physic_system.html#acee88c1ed9a08f21372ee4a13f3e38d4">PhysicSystem</a> (std::shared_ptr&lt; sf::RenderWindow &gt; window)</td></tr>
-<tr class="memdesc:acee88c1ed9a08f21372ee4a13f3e38d4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_physic_system.html" title="System of the physics.">PhysicSystem</a> constructor.  <a href="classeng_1_1_physic_system.html#acee88c1ed9a08f21372ee4a13f3e38d4">More...</a><br /></td></tr>
-<tr class="separator:acee88c1ed9a08f21372ee4a13f3e38d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e5163ca372123ff67bf29e0ff3f2061"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1_physic_system.html#a9e5163ca372123ff67bf29e0ff3f2061">PhysicSystem</a> (std::shared_ptr&lt; sf::RenderWindow &gt; window, std::shared_ptr&lt; sf::Vector2f &gt; screenSize)</td></tr>
+<tr class="memdesc:a9e5163ca372123ff67bf29e0ff3f2061"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_physic_system.html" title="System of the physics.">PhysicSystem</a> constructor.  <a href="classeng_1_1_physic_system.html#a9e5163ca372123ff67bf29e0ff3f2061">More...</a><br /></td></tr>
+<tr class="separator:a9e5163ca372123ff67bf29e0ff3f2061"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0d49d67f744a8a0a4dba06d023f8107"><td class="memItemLeft" align="right" valign="top"><a id="ae0d49d67f744a8a0a4dba06d023f8107" name="ae0d49d67f744a8a0a4dba06d023f8107"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~PhysicSystem</b> ()=default</td></tr>
 <tr class="memdesc:ae0d49d67f744a8a0a4dba06d023f8107"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1_physic_system.html" title="System of the physics.">PhysicSystem</a> destructor. <br /></td></tr>
@@ -129,8 +129,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ISystem</b> ()=de
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >System of the physics. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="acee88c1ed9a08f21372ee4a13f3e38d4" name="acee88c1ed9a08f21372ee4a13f3e38d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acee88c1ed9a08f21372ee4a13f3e38d4">&#9670;&#160;</a></span>PhysicSystem()</h2>
+<a id="a9e5163ca372123ff67bf29e0ff3f2061" name="a9e5163ca372123ff67bf29e0ff3f2061"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e5163ca372123ff67bf29e0ff3f2061">&#9670;&#160;</a></span>PhysicSystem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,8 +139,18 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ISystem</b> ()=de
           <td class="memname">eng::PhysicSystem::PhysicSystem </td>
           <td>(</td>
           <td class="paramtype">std::shared_ptr&lt; sf::RenderWindow &gt;&#160;</td>
-          <td class="paramname"><em>window</em></td><td>)</td>
+          <td class="paramname"><em>window</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::shared_ptr&lt; sf::Vector2f &gt;&#160;</td>
+          <td class="paramname"><em>screenSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -149,6 +159,7 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~ISystem</b> ()=de
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">window</td><td>A shared pointer to the SFML render window. </td></tr>
+    <tr><td class="paramname">screenSize</td><td>A shared pointer to the screen size </td></tr>
   </table>
   </dd>
 </dl>

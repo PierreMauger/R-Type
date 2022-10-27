@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['network_0',['Network',['../classeng_1_1_network.html',1,'eng']]]
+  ['menuserializer_0',['MenuSerializer',['../classeng_1_1_menu_serializer.html',1,'eng']]]
 ];
