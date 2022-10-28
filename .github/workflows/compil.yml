@@ -1,0 +1,32 @@
+name: Compilation
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'RT-41-Actions'
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  Linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: ./r-type.sh
+
+  Windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: ./r-type.bat
+
+  Mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: ./r-type.sh 
