@@ -1,13 +1,11 @@
 name: Generation of the documentation
 
 on:
-  push:
-    branches: [ "RT-19-Doc"]
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  documentation:
+  Documentation:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
