@@ -14,18 +14,20 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS);
+    sf::Vector2f sizeBonus{_screenSize->x / (1920 / 3), _screenSize->y / (1080 / 3)};
 
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
         Size &size = componentManager.getSingleComponent<Size>(id);
         Position &pos = componentManager.getSingleComponent<Position>(id);
-        std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE), componentManager);
+        std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE | InfoComp::SPRITEAT), componentManager);
         if (drop == 0)
             componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{8, Priority::MEDIUM});
         if (drop == 1)
             componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{7, Priority::MEDIUM});
+        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 18, 16}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
         componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
         componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
-        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18, 16});
+        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18 * sizeBonus.x, 16 * sizeBonus.y});
         addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
         componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{0, false, false});
     }
