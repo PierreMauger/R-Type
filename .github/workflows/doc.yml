@@ -20,9 +20,11 @@ jobs:
       run: |
         git config --global user.email "jean-baptiste.brocherie@epitech.eu"
         git config --global user.name "JB"
-        git add doc
-        git commit -m "(Github Action) Update documentation"
-        git push
+        if [ -n "$(git status --porcelain)" ]; then
+          git add doc
+          git commit -m "Update documentation"
+          git push
+        fi
 
     - name: Clean
       run: docker system prune -f --volumes
