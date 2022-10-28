@@ -1,6 +1,8 @@
 name: Generation of the documentation
 
 on:
+  push:
+    branches: [ "RT-19-Doc"]
   pull_request:
     branches: [ "main" ]
 
