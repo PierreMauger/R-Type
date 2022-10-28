@@ -16,7 +16,7 @@ jobs:
       run: docker build -t doc -f doc/doc.dockerfile .
 
     - name: Generate && upload
-      run: docker run --rm -v $(pwd):/tmp/rtype doc /bin/bash -c 'doxygen /tmp/rtype/doc/Doxyfile"
+      run: docker run --rm -v $(pwd):/tmp/rtype doc bash /tmp/rtype/doc/generate.sh
 
     - name: Commit
       run: |
