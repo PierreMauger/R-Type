@@ -13,7 +13,7 @@ jobs:
     - name: Build
       run: docker build -t doc -f doc/doc.dockerfile .
 
-    - name: Generate && upload
+    - name: Generate
       run: docker run --rm -v $(pwd):/tmp/rtype doc bash /tmp/rtype/doc/generate.sh
 
     - name: Commit
