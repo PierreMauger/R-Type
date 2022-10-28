@@ -1,8 +1,9 @@
 name: Generation of the documentation
 
 on:
-  pull_request:
-    branches: [ "main" ]
+  push:
+    branches:
+      - 'main'
 
 jobs:
   Documentation:
