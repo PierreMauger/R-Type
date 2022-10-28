@@ -6,7 +6,7 @@
   <img src="https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/virtual_console_wii_u_7/H2x1_WiiUVC_RType.jpg">
 </p>
 
-![Documentation](https://github.com/github/docs/actions/workflows/doc.yml/badge.svg)
+![Documentation](https://github.com/EpitechPromo2025/B-CPP-500-REN-5-1-rtype-pierre.hamel/actions/workflows/doc.yml/badge.svg)
 
 ## 📋 Table of Contents
 <details>
