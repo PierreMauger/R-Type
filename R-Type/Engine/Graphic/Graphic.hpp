@@ -40,7 +40,7 @@ namespace eng
             Graphic();
             /**
              * @brief Graphic destructor.
-             * @fn Graphic()
+             * @fn ~Graphic()
             */
             ~Graphic() = default;
             /**
@@ -61,11 +61,41 @@ namespace eng
              * @return A shared pointer to the clock.
             */
             std::shared_ptr<sf::Clock> getClock();
+            /**
+             * @brief Get the last window size.
+             * @fn sf::Vector2f &getLastSize()
+             * @return A reference to the last window size.
+            */
             sf::Vector2f &getLastSize();
+            /**
+             * @brief Get the screen size.
+             * @fn std::shared_ptr<sf::Vector2f> getScreenSize()
+             * @return A shared pointer to the screen size.
+            */
             std::shared_ptr<sf::Vector2f> getScreenSize();
+            /**
+             * @brief Check if the game is in full screen mode
+             * @fn bool isFullscreen()
+             * @return A boolean indicating if the game is in full screen mode
+            */
             bool isFullscreen();
+            /**
+             * @brief Set the screen size
+             * @fn void setScreenSize(sf::Vector2f screenSize)
+             * @param screenSize The new screen size
+            */
             void setScreenSize(sf::Vector2f screenSize);
+            /**
+             * @brief Set the last (current) window size
+             * @fn void setLastSize(sf::Vector2f lastSize)
+             * @param lastSize The new window size
+            */
             void setLastSize(sf::Vector2f lastSize);
+            /**
+             * @brief Set the game in full screen or not
+             * @fn void setFullscreen(bool isFullscreen)
+             * @param isFullScreen Boolean setting the game in full screen or not
+            */
             void setFullscreen(bool isFullscreen);
     };
 }
