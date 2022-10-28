@@ -1,0 +1,28 @@
+name: Generation of the documentation
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build
+      run: docker build -t doc -f doc/doc.Dockerfile .
+
+    - name: Generate && upload
+      run: docker run --rm -v $(pwd):/tmp/rtype doc /bin/bash -c 'doxygen /tmp/rtype/doc/Doxyfile"
+
+    - name: Commit
+      run: |
+        git config --global user.email "jean-baptiste.brocherie@epitech.eu"
+        git config --global user.name "JB"
+        git add doc
+        git commit -m "(Github Action) Update documentation"
+        git push
+
+    - name: Clean
+      run: docker system prune -f --volumes
