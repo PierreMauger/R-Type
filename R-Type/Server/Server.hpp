@@ -1,6 +1,14 @@
+/**
+ * @file Server.hpp
+ * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
+ * @brief The server.
+ * @copyright Epitech Rennes 2022
+*/
+
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+/// @cond
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
@@ -13,9 +21,18 @@
 #include "Includes.hpp"
 #include "Room.hpp"
 #include "ServerNetwork.hpp"
+/// @endcond
 
+/**
+ * @brief Engine namespace.
+ * @namespace eng
+*/
 namespace eng
 {
+    /**
+     * @brief The engine of the game containing the ECS, the graphics and the loader.
+     * @class Server
+    */
     class Server
     {
         private:
@@ -34,9 +51,22 @@ namespace eng
             void manageEnemy();
 
         public:
+            /**
+             * @brief Server constructor.
+             * @fn Server()
+             * @param portTcp The tcp port of the server
+            */
             Server(uint16_t portTcp);
+            /**
+             * @brief Server destructor.
+             * @fn ~Server()
+            */
             ~Server() = default;
 
+            /**
+             * @brief The main server loop
+             * @fn void mainLoop()
+            */
             void mainLoop();
     };
 }
