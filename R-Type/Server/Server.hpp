@@ -24,8 +24,8 @@ namespace eng
 
             std::vector<Room> _rooms;
             sf::Time _elapsedTime = sf::seconds(0);
-            sf::Time _deltaTime = sf::seconds(6);
-            sf::Time _bossTime = sf::seconds(30);
+            sf::Time _deltaTime = sf::seconds(5);
+            sf::Time _bossTime = sf::seconds(5);
 
             void initSystems();
             void initComponents();
