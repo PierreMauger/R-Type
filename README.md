@@ -8,7 +8,9 @@
 </p>
 
 <p align="center">
+
   [![Documentation](https://github.com/EpitechPromo2025/B-CPP-500-REN-5-1-rtype-pierre.hamel/actions/workflows/doc.yml/badge.svg)](https://github.com/EpitechPromo2025/B-CPP-500-REN-5-1-rtype-pierre.hamel/actions/workflows/doc.yml)
+
 </p>
 
 ## 📋 Table of Contents
