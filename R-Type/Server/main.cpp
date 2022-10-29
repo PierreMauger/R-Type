@@ -23,6 +23,5 @@ int main(int ac, char **av)
     eng::Server server(std::stoi(av[1]));
 
     server.mainLoop();
-
     return 0;
 }

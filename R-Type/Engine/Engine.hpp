@@ -75,6 +75,10 @@ namespace eng
              * @return A reference to the Input
             */
             Input &getInput();
+            /**
+             * @brief Update the size of the window
+             * @fn void updateSizeWindow()
+            */
             void updateSizeWindow();
     };
 }

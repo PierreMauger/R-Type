@@ -13,11 +13,15 @@
 /// @endcond
 
 /**
- * @enum InfoComp
- * @brief Masks of the components.
+ * @brief Engine namespace.
+ * @namespace eng
 */
 namespace eng
 {
+    /**
+     * @enum InfoComp
+     * @brief Masks of the components.
+    */
     enum InfoComp {
         POS = 1 << 0,
         VEL = 1 << 1,
@@ -196,6 +200,7 @@ typedef struct LifeBar {
 */
 typedef struct Parent {
         std::size_t id = 0;
+        bool follow = false;
 } Parent;
 
 // Type dépendant du patern

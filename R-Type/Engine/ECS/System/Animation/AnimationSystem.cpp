@@ -14,16 +14,17 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
     auto &masks = entityManager.getMasks();
     std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
     std::size_t appMask = (InfoComp::APP);
-    std::size_t contMask = (InfoComp::CONTROLLABLE);
+    std::size_t contMask = (InfoComp::CONTROLLABLE | InfoComp::VEL);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & spriteMask) == spriteMask) {
             SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(i);
             SpriteAttribut &spriteAT = componentManager.getSingleComponent<SpriteAttribut>(i);
             if (masks[i].has_value() && (masks[i].value() & contMask) == contMask) {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
+                if (vel.y < 0)
                     spriteAT.rect.left = spriteID.offsetX * 2;
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                else if (vel.y > 0)
                     spriteAT.rect.left = spriteID.offsetX;
                 else
                     spriteAT.rect.left = 0;

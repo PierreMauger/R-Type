@@ -114,6 +114,7 @@ void eng::Server::mainLoop()
     eng::Graphic &graphic = this->_engine.getGraphic();
     eng::ECS &ecs = this->_engine.getECS();
     eng::VesselPreload vesselPreload;
+    eng::DevourerPreload devourerPreload;
 
     vesselPreload.preload(this->_engine);
     while (graphic.getWindow()->isOpen()) {

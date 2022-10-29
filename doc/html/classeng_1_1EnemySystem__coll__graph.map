@@ -1,0 +1,4 @@
+<map id="eng::EnemySystem" name="eng::EnemySystem">
+<area shape="rect" id="node1" title="System of an enemy." alt="" coords="5,80,153,107"/>
+<area shape="rect" id="node2" href="$classeng_1_1ISystem.html" title="Interface of the system." alt="" coords="26,5,133,32"/>
+</map>
