@@ -52,6 +52,7 @@ void eng::Server::initComponents()
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
+    componentManager.bindComponent<GroupEntity>();
 }
 
 void eng::Server::initEntities()
@@ -117,6 +118,7 @@ void eng::Server::mainLoop()
     eng::DevourerPreload devourerPreload;
 
     vesselPreload.preload(this->_engine);
+    devourerPreload.preload(this->_engine);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();

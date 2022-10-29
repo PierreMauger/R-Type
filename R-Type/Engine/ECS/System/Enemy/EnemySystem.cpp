@@ -17,21 +17,22 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t appear = (InfoComp::APP);
     std::size_t enemyData = (InfoComp::POS | InfoComp::VEL | InfoComp::PATTERN);
     std::size_t cooldownEnemy = (InfoComp::COOLDOWNSHOOT);
-    std::size_t eneParent = (InfoComp::PARENT | InfoComp::POS);
+    std::size_t devourer = (InfoComp::GROUPEN | InfoComp::POS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value() || ((masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app))
             continue;
-        if ((masks[i].value() & eneParent) == eneParent && componentManager.getSingleComponent<Parent>(i).follow == true) {
-            Position &pos = componentManager.getSingleComponent<Position>(i);
-            Position &parentPos = componentManager.getSingleComponent<Position>(componentManager.getSingleComponent<Parent>(i).id);
-            pos.x = parentPos.x;
-            pos.y = parentPos.y;
-            continue;
-        }
         if ((masks[i].value() & enemyData) == enemyData) {
             Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
             Pattern &pat = componentManager.getSingleComponent<Pattern>(i);
+            if (pat.type == TypePattern::DEVOUREROSC) {
+                // TODO: U-turn when reaching the end of the screen
+                if (masks[i].has_value() && ((masks[i].value() & devourer) == devourer) && componentManager.getSingleComponent<GroupEntity>(i).entityId == 0) {
+                    componentManager.getSingleComponent<GroupEntity>(i).lastPos.y = componentManager.getSingleComponent<Position>(i).y;
+                    componentManager.getSingleComponent<Position>(i).y = (500 / this->_screenSize->x * _window->getSize().x) + std::sin(pat.angle) * RADIUS;
+                    pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 1.5;
+                }
+            }
             if (pat.type == TypePattern::CIRCLE) {
                 vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;
                 vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;

@@ -16,7 +16,7 @@ RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared
     this->_text.setFillColor(sf::Color::White);
 }
 
-void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
 
@@ -37,11 +37,13 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
-void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
@@ -61,8 +63,10 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
@@ -98,10 +102,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
                 spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(i).color);
                 spriteRef.setScale(componentManager.getSingleComponent<SpriteAttribut>(i).scale);
             }
-            if (masks[i].has_value() && (masks[i].value() & renderCooldown) == renderCooldown)
-                displayCooldownBar(componentManager, entityManager, spriteRef, i);
-            if (masks[i].has_value() && (masks[i].value() & renderLife) == renderLife)
-                displayLifeBar(componentManager, entityManager, spriteRef, i);
+            if (masks[i].has_value() && (masks[i].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, i))
+                continue;
+            if (masks[i].has_value() && (masks[i].value() & renderLife) == renderLife && displayLifeBar(componentManager, entityManager, spriteRef, i))
+                continue;
             if (spriteId.priority == Priority::HIGH)
                 stockSpriteHigh.push_back(spriteRef);
             if (spriteId.priority == Priority::MEDIUM)

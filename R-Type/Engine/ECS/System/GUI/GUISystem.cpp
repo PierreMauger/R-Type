@@ -159,6 +159,9 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                     case 20:
                         componentManager.addComponent<SpriteAttribut>(this->_selectedEntity);
                         break;
+                    case 21:
+                        componentManager.addComponent<GroupEntity>(this->_selectedEntity);
+                        break;
                     default:
                         break;
                     }
@@ -269,6 +272,8 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     case 19:
         break;
     case 20:
+        break;
+    case 21:
         break;
     default:
         break;

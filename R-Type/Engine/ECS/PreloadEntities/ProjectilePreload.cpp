@@ -21,9 +21,9 @@ void eng::ProjectilePreload::createShoot(EntityManager &entityManager, Component
         pos = componentManager.getSingleComponent<Position>(id);
     }
     if (!enemy)
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((damage == 2) ? 4 : 3), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((damage == 2) ? 4 : 3), Priority::LOW, 0, 2, false, false, 0, 0.2, 56, 0});
     else
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{9, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{9, Priority::LOW, 0, 2, false, false, 0, 0.2, 56, 0});
     componentManager.getComponent(typeid(SpriteAttribut))
         .emplaceData(
             addEntity,

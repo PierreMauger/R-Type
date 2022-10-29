@@ -1,6 +1,7 @@
 #include "Client.hpp"
 
-eng::Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
+eng::Client::Client(std::string ip, uint16_t portTcp)
+    : _network(ip, portTcp)
 {
     this->initSystems();
     this->initComponents();
@@ -52,6 +53,7 @@ void eng::Client::initComponents()
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
+    componentManager.bindComponent<GroupEntity>();
 }
 
 void eng::Client::initEntities()
