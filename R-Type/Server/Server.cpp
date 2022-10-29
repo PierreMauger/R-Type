@@ -53,6 +53,7 @@ void eng::Server::initComponents()
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
     componentManager.bindComponent<GroupEntity>();
+    componentManager.bindComponent<CooldownAction>();
 }
 
 void eng::Server::initEntities()
@@ -121,7 +122,7 @@ void eng::Server::mainLoop()
     devourerPreload.preload(this->_engine);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
-        this->manageEnemy();
+        // this->manageEnemy();
         for (size_t count = 0; count < refreshTick; count++) {
             if (!dataIn.empty()) {
                 std::cout << "Message: " << dataIn.pop_front().data() << std::endl;

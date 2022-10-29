@@ -46,6 +46,7 @@ namespace eng
         SOUNDID = 1 << 19,
         SPRITEAT = 1 << 20,
         GROUPEN = 1 << 21,
+        COOLDOWNACT = 1 << 22,
     };
 }
 
@@ -224,6 +225,7 @@ enum TypePattern {
 typedef struct Pattern {
         enum TypePattern type = TypePattern::LINE;
         float angle = 0.0f;
+        float center = 0.0f;
 } Pattern;
 
 /**
@@ -285,5 +287,11 @@ typedef struct GroupEntity {
         std::size_t nbEntity = 0;
         sf::Vector2f lastPos = {0.0f, 0.0f};
 } GroupEntity;
+
+typedef struct CooldownAction {
+        float lastAction = 0.0f;
+        float actionDelay = 2.0f;
+        std::any action = {};
+} CooldownAction;
 
 #endif // COMPONENTTYPES_HPP

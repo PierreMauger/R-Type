@@ -240,6 +240,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t physicDis = (InfoComp::DIS);
     std::size_t physicGroupPar = (InfoComp::GROUPEN | InfoComp::POS | InfoComp::PARENT);
     std::size_t physicGroup = (InfoComp::GROUPEN | InfoComp::POS);
+    CooldownAction cooldown = {0, 0, 0};
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value() || (masks[i].value() & physicSpeed) != physicSpeed)
@@ -261,12 +262,19 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             componentManager.removeAllComponents(i);
             continue;
         }
-        if ((masks[i].value() & physicGroupPar) == physicGroupPar) {
+        if ((masks[i].value() & physicGroup) == physicGroup) {
+            if ((masks[i].value() & InfoComp::COOLDOWNACT) == InfoComp::COOLDOWNACT)
+                cooldown = componentManager.getSingleComponent<CooldownAction>(i);
             componentManager.getSingleComponent<GroupEntity>(i).lastPos = {pos.x, pos.y};
+        }
+        if ((masks[i].value() & physicGroupPar) == physicGroupPar) {
             Parent &par = componentManager.getSingleComponent<Parent>(i);
             componentManager.getSingleComponent<Position>(i).y = componentManager.getSingleComponent<GroupEntity>(par.id).lastPos.y;
-        } else
-            pos.y += vel.y;
+            if (cooldown.action.has_value() && static_cast<float>(componentManager.getSingleComponent<GroupEntity>(i).entityId) == std::any_cast<float>(cooldown.action)) {
+                // componentManager.getSingleComponent<Position>(i).y += 20;
+            }
+        }
+        pos.y += vel.y;
         pos.x += vel.x;
         if ((masks[i].value() & physicPat) != physicPat) {
             if (this->collisionEnemy(i, componentManager, entityManager, pos))

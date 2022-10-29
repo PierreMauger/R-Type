@@ -48,7 +48,7 @@ namespace eng
              * @param max The max random value
              * @return The random float value
              */
-            float createRandom(float min, float max)
+            static float createRandom(float min, float max)
             {
                 return (std::rand() % static_cast<int>(max - min + min));
             }
