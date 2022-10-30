@@ -17,7 +17,7 @@ ServerNetwork::~ServerNetwork()
 
 void ServerNetwork::handleTimeout(const boost::system::error_code &error)
 {
-    std::cerr << "[!] handleTimeout: " << error.message() << std::endl;
+    std::cerr << "[!] handleTimeout Connection: " << error.message() << std::endl;
     // if (error) {
         // return;
     // }
@@ -43,8 +43,8 @@ void ServerNetwork::handleNewTcp(const boost::system::error_code &error, boost::
 
 void ServerNetwork::initServerNetwork()
 {
-    this->_timer.expires_from_now(boost::posix_time::microseconds(1));
-    this->_timer.async_wait(boost::bind(&ServerNetwork::handleTimeout, this, boost::asio::placeholders::error));
+    this->_timer.expires_from_now(boost::posix_time::milliseconds(100));
+    // this->_timer.async_wait(boost::bind(&ServerNetwork::handleTimeout, this, boost::asio::placeholders::error));
 
     boost::shared_ptr<Connection> newConnection = boost::make_shared<Connection>(this->_ioContext, this->_dataIn);
     this->_acceptor.async_accept(newConnection->getTcpSocket(),

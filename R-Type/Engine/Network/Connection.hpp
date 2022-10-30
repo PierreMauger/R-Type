@@ -8,7 +8,7 @@ namespace eng
     class Connection : public boost::enable_shared_from_this<Connection>
     {
         private:
-            void handleTimeout(const boost::system::error_code &error);
+            void handleTimeoutReceive(const boost::system::error_code &error);
             void handleMsgTcp(const boost::system::error_code &error, size_t size);
             void handleMsgUdp(const boost::system::error_code &error, size_t size);
             void open();

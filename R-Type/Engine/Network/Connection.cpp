@@ -28,17 +28,19 @@ Connection::~Connection()
     this->closeConnection();
 }
 
-void Connection::handleTimeout(const boost::system::error_code &error)
+void Connection::handleTimeoutReceive(const boost::system::error_code &error)
 {
-    std::cerr << "[!] handleTimeout: " << error.message() << std::endl;
-    // if (error) {
-        // return;
-    // }
+    if (!error) {
+        std::cerr << "[!] handleTimeoutReceive: " << error.message() << std::endl;
+        // if (this->_udpSocketIn.is_open())
+            // this->_udpSocketIn.cancel();
+        // pour pouvoir timeout, il faudrait open et close l'udp socket à chaque fois qu'on envoie un message
+    }
 }
 
 void Connection::handleMsgTcp(const boost::system::error_code &error, size_t size)
 {
-    if (!this->checkConnection())
+    if (!this->_tcpSocket.is_open())
         return;
     if (!error) {
         std::cout << "[~] New TCP message from " << this->_tcpEndpoint << std::endl;
@@ -57,7 +59,7 @@ void Connection::handleMsgTcp(const boost::system::error_code &error, size_t siz
 
 void Connection::handleMsgUdp(const boost::system::error_code &error, size_t size)
 {
-    if (!this->checkConnection())
+    if (!this->_udpSocketIn.is_open())
         return;
     if (!error) {
         std::cout << "[~] New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
@@ -84,8 +86,7 @@ void Connection::initConnection()
     if (!this->checkConnection())
         return;
 
-    this->_timer.expires_from_now(boost::posix_time::seconds(1));
-    this->_timer.async_wait(boost::bind(&Connection::handleTimeout, this, boost::asio::placeholders::error));
+    this->_timer.expires_from_now(boost::posix_time::milliseconds(100));
 
     this->_tcpTmpBuffer.fill(0);
     this->_tcpSocket.async_receive(
@@ -103,6 +104,8 @@ void Connection::initConnection()
                     this,
                     boost::asio::placeholders::error,
                     boost::asio::placeholders::bytes_transferred));
+
+    this->_timer.async_wait(boost::bind(&Connection::handleTimeoutReceive, this, boost::asio::placeholders::error));
 }
 
 bool Connection::checkConnection()
@@ -174,10 +177,12 @@ std::thread &Connection::getThreadConnection()
 
 void Connection::tcpMsg(_STORAGE_DATA data)
 {
-    this->_tcpSocket.send(boost::asio::buffer(data));
+    if (this->_tcpSocket.is_open())
+        this->_tcpSocket.send(boost::asio::buffer(data));
 }
 
 void Connection::udpMsg(_STORAGE_DATA data)
 {
-    this->_udpSocketOut.send_to(boost::asio::buffer(data), this->_udpEndpoint);
+    if (this->_udpSocketOut.is_open())
+        this->_udpSocketOut.send_to(boost::asio::buffer(data), this->_udpEndpoint);
 }
