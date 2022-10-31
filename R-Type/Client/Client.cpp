@@ -11,6 +11,7 @@ eng::Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
 void eng::Client::initSystems()
 {
     eng::SystemManager &systemManager = this->_engine.getECS().getSystemManager();
+    eng::EntityManager &entityManager = this->_engine.getECS().getEntityManager();
     eng::Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
@@ -25,6 +26,9 @@ void eng::Client::initSystems()
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
     systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
+
+    entityManager.addMaskCategory(InfoComp::TEXT);
+    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
 }
 
 void eng::Client::initComponents()

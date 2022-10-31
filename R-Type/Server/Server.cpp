@@ -13,6 +13,7 @@ eng::Server::Server(uint16_t portTcp)
 void eng::Server::initSystems()
 {
     eng::SystemManager &systemManager = this->_engine.getECS().getSystemManager();
+    eng::EntityManager &entityManager = this->_engine.getECS().getEntityManager();
     eng::Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
 
@@ -25,6 +26,13 @@ void eng::Server::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
+
+    entityManager.addMaskCategory(InfoComp::TEXT);
+    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
+    entityManager.addMaskCategory(InfoComp::SOUNDID);
+    entityManager.addMaskCategory(InfoComp::CONTROLLABLE);
+    entityManager.addMaskCategory(InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
+    entityManager.addMaskCategory(InfoComp::SPRITEID | InfoComp::SPRITEAT);
 }
 
 void eng::Server::initComponents()

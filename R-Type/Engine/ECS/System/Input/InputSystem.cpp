@@ -19,18 +19,18 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t app = (InfoComp::APP);
     std::size_t dis = (InfoComp::DIS);
 
-    for (std::size_t i = 0; i < masks.size(); i++) {
-        if (!masks[i].has_value() || (masks[i].value() & input) != input || ((masks[i].value() & app) == app && componentManager.getSingleComponent<Appearance>(i).app) ||
-            ((masks[i].value() & dis) == dis && componentManager.getSingleComponent<Disappearance>(i).dis))
+    for (auto id : entityManager.getMaskCategory(input)) {
+        if (((masks[id].value() & app) == app && componentManager.getSingleComponent<Appearance>(id).app) ||
+            ((masks[id].value() & dis) == dis && componentManager.getSingleComponent<Disappearance>(id).dis))
             continue;
-        Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
-        CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(i);
+        Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
+        CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(id);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, 2);
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 2);
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) {
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, 1);
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1);
         }
         sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = vel.baseSpeedX * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = vel.baseSpeedX : vel.x = 0);
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = vel.baseSpeedY * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = vel.baseSpeedY : vel.y = 0);

@@ -79,37 +79,35 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
 
-    for (std::size_t i = 0; i < masks.size(); i++) {
-        if (masks[i].has_value() && (masks[i].value() & renderText) == renderText) {
-            this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
-            this->_text.setString(componentManager.getSingleComponent<Text>(i).str + std::to_string(componentManager.getSingleComponent<Text>(i).value));
-            this->_text.setPosition(componentManager.getSingleComponent<Text>(i).pos);
-            stockText.push_back(this->_text);
-            continue;
-        }
-        if (masks[i].has_value() && (masks[i].value() & render) == render) {
-            Position &pos = componentManager.getSingleComponent<Position>(i);
-            SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(i);
-            sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
-            spriteRef.setPosition(pos.x, pos.y);
-            if (masks[i].has_value() && (masks[i].value() & renderAnim) == renderAnim) {
-                spriteRef.setTextureRect(static_cast<sf::IntRect>(componentManager.getSingleComponent<SpriteAttribut>(i).rect));
-                spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(i).rotation);
-                spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(i).color);
-                spriteRef.setScale(componentManager.getSingleComponent<SpriteAttribut>(i).scale);
-            }
-            if (masks[i].has_value() && (masks[i].value() & renderCooldown) == renderCooldown)
-                displayCooldownBar(componentManager, entityManager, spriteRef, i);
-            if (masks[i].has_value() && (masks[i].value() & renderLife) == renderLife)
-                displayLifeBar(componentManager, entityManager, spriteRef, i);
-            if (spriteId.priority == Priority::HIGH)
-                stockSpriteHigh.push_back(spriteRef);
-            if (spriteId.priority == Priority::MEDIUM)
-                stockSpriteMedium.push_back(spriteRef);
-            if (spriteId.priority == Priority::LOW)
-                stockSpriteLow.push_back(spriteRef);
-        }
+    for (auto id : entityManager.getMaskCategory(renderText)) {
+        this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
+        this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+        this->_text.setPosition(componentManager.getSingleComponent<Text>(id).pos);
+        stockText.push_back(this->_text);
     }
+    for (auto id : entityManager.getMaskCategory(render)) {
+        Position &pos = componentManager.getSingleComponent<Position>(id);
+        SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
+        sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
+        spriteRef.setPosition(pos.x, pos.y);
+        if (masks[id].has_value() && (masks[id].value() & renderAnim) == renderAnim) {
+            spriteRef.setTextureRect(static_cast<sf::IntRect>(componentManager.getSingleComponent<SpriteAttribut>(id).rect));
+            spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(id).rotation);
+            spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(id).color);
+            spriteRef.setScale(componentManager.getSingleComponent<SpriteAttribut>(id).scale);
+        }
+        if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown)
+            displayCooldownBar(componentManager, entityManager, spriteRef, id);
+        if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife)
+            displayLifeBar(componentManager, entityManager, spriteRef, id);
+        if (spriteId.priority == Priority::HIGH)
+            stockSpriteHigh.push_back(spriteRef);
+        if (spriteId.priority == Priority::MEDIUM)
+            stockSpriteMedium.push_back(spriteRef);
+        if (spriteId.priority == Priority::LOW)
+            stockSpriteLow.push_back(spriteRef);
+    }
+
     for (std::size_t i = 0; i < stockSpriteHigh.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & renderParallax) == renderParallax) {
             stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x + _window->getSize().x, stockSpriteHigh[i].getPosition().y);
