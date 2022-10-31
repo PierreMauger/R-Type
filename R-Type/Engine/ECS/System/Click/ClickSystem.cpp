@@ -27,7 +27,7 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     if (button.type == ButtonType::PLAY) {
                         componentManager.clear();
                         entityManager.clear();
-                        // Load game and connect to server
+                        ParallaxPreload::preload(componentManager, entityManager, this->_window, this->_screenSize);
                     } else if (button.type == ButtonType::QUIT) {
                         this->_window->close();
                     }

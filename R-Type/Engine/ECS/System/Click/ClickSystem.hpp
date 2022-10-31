@@ -2,6 +2,7 @@
 #define CLICKSYSTEM_HPP
 
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 
 namespace eng
 {

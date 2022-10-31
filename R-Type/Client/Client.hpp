@@ -3,6 +3,7 @@
 
 #include "ClientNetwork.hpp"
 #include "Engine.hpp"
+#include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CooldownBarPreload.hpp"

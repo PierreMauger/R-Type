@@ -57,10 +57,11 @@ void eng::Client::initComponents()
 
 void eng::Client::initEntities()
 {
+    MenuPreload::preload(this->_engine);
     ParallaxPreload::preload(this->_engine);
-    BackgroundMusicPreload::preload(this->_engine);
-    ScoreTextPreload::preload(this->_engine);
-    VesselPreload::preload(this->_engine);
+    // BackgroundMusicPreload::preload(this->_engine);
+    // ScoreTextPreload::preload(this->_engine);
+    // VesselPreload::preload(this->_engine);
 }
 
 void eng::Client::mainLoop()
