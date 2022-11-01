@@ -23,6 +23,11 @@ std::vector<sf::SoundBuffer> &Loader::getSounds()
     return this->_sounds;
 }
 
+std::vector<eng::Level> &Loader::getLevels()
+{
+    return this->_level;
+}
+
 void Loader::loadSprites(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
@@ -99,7 +104,6 @@ void Loader::loadLevel(std::vector<std::string> paths)
         }
         sorted.clear();
     }
-    exit(0);
 }
 
 sf::Texture &Loader::getTexture(std::size_t index)

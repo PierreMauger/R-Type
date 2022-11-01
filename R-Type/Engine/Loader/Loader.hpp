@@ -63,6 +63,8 @@ namespace eng
              */
             std::vector<sf::SoundBuffer> &getSounds();
 
+            std::vector<eng::Level> &getLevels();
+
             /**
              * @brief Load the sprites.
              * @fn void loadSprites(std::vector<std::string> path)

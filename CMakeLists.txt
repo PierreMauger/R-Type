@@ -112,6 +112,7 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/Input/
     ${ENGINE_ROOT}/Graphic/
     ${ENGINE_ROOT}/Network/
+    ${ENGINE_ROOT}/Loader/
     ${ENGINE_ROOT}/Level/
 )
 

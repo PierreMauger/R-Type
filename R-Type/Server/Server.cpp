@@ -91,22 +91,16 @@ void eng::Server::manageEvent()
     }
 }
 
-void eng::Server::manageEnemy()
+void eng::Server::manageEnemy(eng::Level &level)
 {
     eng::Graphic &graphic = this->_engine.getGraphic();
-    eng::EnemyPreload enemyPreload;
-    eng::BossPreload bossPreload;
 
-    if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        bossPreload.preload(this->_engine);
-        this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
-    } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        enemyPreload.preload(this->_engine);
-        this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
+    if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead())) {
+        level.parseLevel(this->_engine);
+        level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
 }
 
-// TODO make do separated function
 void eng::Server::mainLoop()
 {
     _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
@@ -116,13 +110,12 @@ void eng::Server::mainLoop()
     eng::Graphic &graphic = this->_engine.getGraphic();
     eng::ECS &ecs = this->_engine.getECS();
     eng::VesselPreload vesselPreload;
-    eng::DevourerPreload devourerPreload;
+    std::vector<eng::Level> &level = this->_engine.getLoader().getLevels();
 
     vesselPreload.preload(this->_engine);
-    devourerPreload.preload(this->_engine);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
-        // this->manageEnemy();
+        this->manageEnemy(level[0]);
         for (size_t count = 0; count < refreshTick; count++) {
             if (!dataIn.empty()) {
                 std::cout << "Message: " << dataIn.pop_front().data() << std::endl;
