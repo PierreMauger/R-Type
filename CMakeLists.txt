@@ -112,6 +112,7 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/Input/
     ${ENGINE_ROOT}/Graphic/
     ${ENGINE_ROOT}/Network/
+    ${ENGINE_ROOT}/Level/
 )
 
 #fetch source files
@@ -153,6 +154,9 @@ set(ENGINE_SRC
 
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
+
+    # Loader files
+    ${ENGINE_ROOT}/Level/Level.cpp
 
     # Input files
     ${ENGINE_ROOT}/Input/Input.cpp
