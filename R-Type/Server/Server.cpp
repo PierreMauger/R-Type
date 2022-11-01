@@ -104,12 +104,11 @@ void eng::Server::manageEnemy()
     }
 }
 
-// TODO make do separated function
 void eng::Server::mainLoop()
 {
     _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
     std::size_t refreshTick = 5;
-    std::map<std::string, boost::shared_ptr<eng::Connection>> players;
+    std::map<std::string, std::shared_ptr<eng::Connection>> players;
 
     eng::Graphic &graphic = this->_engine.getGraphic();
     eng::ECS &ecs = this->_engine.getECS();

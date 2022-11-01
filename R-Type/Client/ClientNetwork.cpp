@@ -2,11 +2,11 @@
 
 using namespace eng;
 
-ClientNetwork::ClientNetwork(std::string ip, uint16_t portTcp) :
-    _ioContext(),
-    _resolver(_ioContext)
+ClientNetwork::ClientNetwork(std::string ip, uint16_t portTcp)
+    : _ioContext(),
+      _resolver(_ioContext)
 {
-    this->_connection = boost::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataIn);
+    this->_connection = std::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataIn);
     this->initClientNetwork();
 }
 

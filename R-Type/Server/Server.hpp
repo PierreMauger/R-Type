@@ -9,6 +9,7 @@
 #define SERVER_HPP
 
 /// @cond
+#include "Client.hpp"
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
@@ -40,7 +41,7 @@ namespace eng
             Engine _engine;
             ServerNetwork _network;
 
-            std::vecotr<Client> _client;
+            std::vector<Client> _clients;
             std::vector<Room> _rooms;
 
             sf::Time _elapsedTime = sf::seconds(0);

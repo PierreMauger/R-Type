@@ -2,9 +2,9 @@
 
 using namespace eng;
 
-ServerNetwork::ServerNetwork(uint16_t portTcp) :
-    _ioContext(),
-    _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
+ServerNetwork::ServerNetwork(uint16_t portTcp)
+    : _ioContext(),
+      _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
     this->initServerNetwork();
 }
@@ -16,14 +16,12 @@ ServerNetwork::~ServerNetwork()
 
 void ServerNetwork::initServerNetwork()
 {
-    boost::shared_ptr<Connection> newConnection = boost::make_shared<Connection>(this->_ioContext, this->_dataIn);
+    std::shared_ptr<Connection> newConnection = std::make_shared<Connection>(this->_ioContext, this->_dataIn);
     this->_acceptor.async_accept(newConnection->getTcpSocket(),
-        boost::bind(&ServerNetwork::handleNewTcp,
-                    this,
-                    boost::asio::placeholders::error,
-                    newConnection
-                )
-    );
+                                 boost::bind(&ServerNetwork::handleNewTcp,
+                                             this,
+                                             boost::asio::placeholders::error,
+                                             newConnection));
 }
 
 void ServerNetwork::run()
@@ -48,7 +46,7 @@ void ServerNetwork::stop()
         this->_threadContext.join();
 }
 
-void ServerNetwork::handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection)
+void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::shared_ptr<Connection> newConnection)
 {
     if (!error) {
         newConnection->setTcpEndpoint(newConnection->getTcpSocket().remote_endpoint());
@@ -137,7 +135,7 @@ _QUEUE_TYPE &ServerNetwork::getQueueOut()
     return this->_dataOut;
 }
 
-std::vector<boost::shared_ptr<Connection>> &ServerNetwork::getConnections()
+std::vector<std::shared_ptr<Connection>> &ServerNetwork::getConnections()
 {
     return this->_listConnections;
 }

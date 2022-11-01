@@ -18,6 +18,20 @@ namespace eng
         public:
             Client(std::shared_ptr<Connection> connection);
             ~Client() = default;
+
+            std::size_t getVesselId() const;
+            void setVesselId(std::size_t vesselId);
+
+            bool isAlive() const;
+            void setAlive(bool isAlive);
+
+            std::size_t getRoomId() const;
+            void setRoomId(std::size_t roomId);
+
+            bool isReady() const;
+            void setReady(bool isReady);
+
+            std::shared_ptr<Connection> getConnection() const;
     };
 }
 
