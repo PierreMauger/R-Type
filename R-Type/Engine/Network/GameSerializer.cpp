@@ -1,10 +1,12 @@
 #include "Engine/Network/GameSerializer.hpp"
 
-eng::GameSerializer::GameSerializer()
+using namespace eng;
+
+GameSerializer::GameSerializer()
 {
 }
 
-std::size_t eng::GameSerializer::getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager)
+std::size_t GameSerializer::getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t id = 0;
     auto masks = entityManager.getMasks();
@@ -17,7 +19,7 @@ std::size_t eng::GameSerializer::getEntityID(SyncID syncID, EntityManager &entit
     throw std::runtime_error("[ERROR] SyncID not found");
 }
 
-void eng::GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager)
+void GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager)
 {
     for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
         if ((mask & (1 << i)) == 0) {
@@ -70,7 +72,7 @@ void eng::GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size
             this->serializeData<Parent>(packet, &componentManager.getSingleComponent<Parent>(id));
             break;
         case 15:
-            this->serializeData<Patern>(packet, &componentManager.getSingleComponent<Patern>(id));
+            this->serializeData<Pattern>(packet, &componentManager.getSingleComponent<Pattern>(id));
             break;
         case 16:
             this->serializeData<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(id));
@@ -96,7 +98,7 @@ void eng::GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size
     }
 }
 
-void eng::GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager)
+void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager)
 {
     for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
         if ((mask & (1 << i)) == 0) {
@@ -149,7 +151,7 @@ void eng::GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_
             this->updateEntity<Parent>(packet, id, adv, componentManager);
             break;
         case 15:
-            this->updateEntity<Patern>(packet, id, adv, componentManager);
+            this->updateEntity<Pattern>(packet, id, adv, componentManager);
             break;
         case 16:
             this->updateEntity<SyncID>(packet, id, adv, componentManager);
@@ -172,7 +174,7 @@ void eng::GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_
     }
 }
 
-_STORAGE_DATA eng::GameSerializer::serializeEntity(std::size_t id, CrudType type, EntityManager &entityManager, ComponentManager &componentManager)
+_STORAGE_DATA GameSerializer::serializeEntity(std::size_t id, CrudType type, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::vector<uint8_t> packet;
 
@@ -200,7 +202,7 @@ _STORAGE_DATA eng::GameSerializer::serializeEntity(std::size_t id, CrudType type
     return this->convertToData(packet);
 }
 
-void eng::GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
+void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
     CrudType type = CrudType::UNKNOWN;
@@ -232,7 +234,7 @@ void eng::GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityM
     }
 }
 
-_STORAGE_DATA eng::GameSerializer::serializeInput(sf::Keyboard::Key input)
+_STORAGE_DATA GameSerializer::serializeInput(sf::Keyboard::Key input)
 {
     std::vector<uint8_t> packet;
     GamePacketType type = GamePacketType::INPUT;
@@ -246,7 +248,7 @@ _STORAGE_DATA eng::GameSerializer::serializeInput(sf::Keyboard::Key input)
     return this->convertToData(packet);
 }
 
-void eng::GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+void GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                                            std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
@@ -259,7 +261,7 @@ void eng::GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::siz
     input.checkInput(id, keyPress, componentManager, entityManager, clock);
 }
 
-void eng::GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
+void GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
                                        std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = 0;

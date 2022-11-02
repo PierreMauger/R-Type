@@ -5,7 +5,7 @@ using namespace eng;
 Engine::Engine()
 {
     this->_loader.loadSounds({"R-Type/Assets/Sound"});
-    this->_loader.loadSprites({"R-Type/Assets/Sprites", "R-Type/Assets/Sprites/Parallax"});
+    this->_loader.loadSprites({"R-Type/Assets/Sprites", "R-Type/Assets/Sprites/Parallax", "R-Type/Assets/Sprites/zDevourerOfGods"});
 }
 
 ECS &Engine::getECS()
@@ -80,10 +80,10 @@ void Engine::updateParallax(auto &masks, std::size_t i, ComponentManager &compon
     }
 }
 
-void Engine::updateAppDis(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize)
+void Engine::updateAppDis(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)
 {
-    std::size_t checkApp = (eng::InfoComp::APP);
-    std::size_t checkdis = (eng::InfoComp::DIS);
+    std::size_t checkApp = (InfoComp::APP);
+    std::size_t checkdis = (InfoComp::DIS);
 
     if ((masks[i].value() & checkApp) == checkApp) {
         Appearance &app = componentManager.getSingleComponent<Appearance>(i);

@@ -13,7 +13,7 @@ namespace eng
             std::shared_ptr<sf::Vector2f> _screenSize;
 
         public:
-            ClickSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
+            ClickSystem(Graphic &graphic, EntityManager &entityManager);
             ~ClickSystem() = default;
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };

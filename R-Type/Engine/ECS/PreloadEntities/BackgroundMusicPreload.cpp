@@ -2,9 +2,9 @@
 
 using namespace eng;
 
-void BackgroundMusicPreload::preload(Engine &engine)
+void BackgroundMusicPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
-    std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::SOUNDID), engine.getECS().getComponentManager());
+    std::size_t id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
 
-    engine.getECS().getComponentManager().getComponent(typeid(SoundID)).emplaceData(id, SoundID{1, false, true});
+    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{1, false, true});
 }

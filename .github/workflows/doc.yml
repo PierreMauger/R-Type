@@ -1,0 +1,31 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  Documentation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build
+      run: docker build -t doc -f doc/doc.dockerfile .
+
+    - name: Generate
+      run: docker run --rm -v $(pwd):/tmp/rtype doc bash /tmp/rtype/doc/generate.sh
+
+    - name: Commit
+      run: |
+        git config --global user.email "jean-baptiste.brocherie@epitech.eu"
+        git config --global user.name "JB"
+        if [ -n "$(git status --porcelain)" ]; then
+          git add doc
+          git commit -m "Update documentation"
+          git push
+        fi
+
+    - name: Clean
+      run: docker system prune -f --volumes

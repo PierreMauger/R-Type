@@ -6,7 +6,7 @@ Serializer::Serializer()
 {
 }
 
-_STORAGE_DATA eng::Serializer::convertToData(std::vector<uint8_t> &packet)
+_STORAGE_DATA Serializer::convertToData(std::vector<uint8_t> &packet)
 {
     _STORAGE_DATA convert = {0};
 
@@ -16,7 +16,7 @@ _STORAGE_DATA eng::Serializer::convertToData(std::vector<uint8_t> &packet)
     return convert;
 }
 
-std::vector<uint8_t> eng::Serializer::convertToVector(_STORAGE_DATA &packet)
+std::vector<uint8_t> Serializer::convertToVector(_STORAGE_DATA &packet)
 {
     std::vector<uint8_t> convert;
 
@@ -26,7 +26,7 @@ std::vector<uint8_t> eng::Serializer::convertToVector(_STORAGE_DATA &packet)
     return convert;
 }
 
-void eng::Serializer::insertMagic(std::vector<uint8_t> &packet)
+void Serializer::insertMagic(std::vector<uint8_t> &packet)
 {
     for (auto elem : MAGIC) {
         packet.push_back(elem);

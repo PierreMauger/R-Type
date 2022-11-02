@@ -2,10 +2,10 @@
 
 using namespace eng;
 
-ClickSystem::ClickSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
+ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
 {
-    this->_window = window;
-    this->_screenSize = screenSize;
+    this->_window = graphic.getWindow();
+    this->_screenSize = graphic.getScreenSize();
 }
 
 void ClickSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
@@ -27,7 +27,7 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     if (button.type == ButtonType::PLAY) {
                         componentManager.clear();
                         entityManager.clear();
-                        ParallaxPreload::preload(componentManager, entityManager, this->_window, this->_screenSize);
+                        // ParallaxPreload::preload(componentManager, entityManager, this->_window, this->_screenSize);
                     } else if (button.type == ButtonType::QUIT) {
                         this->_window->close();
                     }
