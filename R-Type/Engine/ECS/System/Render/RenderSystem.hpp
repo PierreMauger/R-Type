@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief System of the render (graphics).
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef RENDERSYSTEM_HPP
 #define RENDERSYSTEM_HPP
@@ -19,13 +19,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief System of the render.
      * @class RenderSystem
-    */
+     */
     class RenderSystem : public virtual ISystem
     {
         private:
@@ -45,19 +45,19 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              * @param sprites A shared pointer to the vector of sprites to render
-            */
+             */
             RenderSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             /**
              * @brief RenderSystem destructor.
              * @fn ~RenderSystem
-            */
+             */
             ~RenderSystem() = default;
             /**
              * @brief Update the render system.
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the component manager.
              * @param entityManager A reference to the entity manager.
-            */
+             */
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }

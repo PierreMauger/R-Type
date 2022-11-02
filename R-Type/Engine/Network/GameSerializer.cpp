@@ -248,8 +248,7 @@ _STORAGE_DATA GameSerializer::serializeInput(sf::Keyboard::Key input)
     return this->convertToData(packet);
 }
 
-void GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
-                                           std::shared_ptr<sf::Clock> clock)
+void GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
     sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
@@ -261,8 +260,7 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t i
     input.checkInput(id, keyPress, componentManager, entityManager, clock);
 }
 
-void GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
-                                       std::shared_ptr<sf::Clock> clock)
+void GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock)
 {
     std::size_t adv = 0;
     std::vector<uint8_t> packetVector = this->convertToVector(packet);

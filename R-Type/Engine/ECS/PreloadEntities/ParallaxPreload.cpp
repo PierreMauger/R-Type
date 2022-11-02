@@ -4,8 +4,7 @@ using namespace eng;
 
 void ParallaxPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
-    std::size_t id = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT),
-                                           componentManager);
+    std::size_t id = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT), componentManager);
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};

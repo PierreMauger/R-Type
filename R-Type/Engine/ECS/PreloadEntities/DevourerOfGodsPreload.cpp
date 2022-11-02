@@ -7,9 +7,7 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
     std::size_t lastId = 0;
-    std::size_t id = entityManager.addMask(
-        (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SPRITEAT),
-        componentManager);
+    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SPRITEAT), componentManager);
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{16, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 375, 311}, sf::Color::White, {0.5f / screenSize->x * windowsSize.x, 0.5f / screenSize->y * windowsSize.y}});
@@ -23,9 +21,7 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     for (std::size_t i = 0; i < 10; i++) {
         lastId = id;
         Position &pos = componentManager.getSingleComponent<Position>(lastId);
-        id = entityManager.addMask(
-            (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::PARENT),
-            componentManager);
+        id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::PARENT), componentManager);
         componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{15, Priority::MEDIUM});
         componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 187, 282}, sf::Color::White, {0.5f / screenSize->x * windowsSize.x, 0.5f / screenSize->y * windowsSize.y}});
         componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 187, pos.y, 0});

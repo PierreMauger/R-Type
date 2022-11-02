@@ -9,8 +9,8 @@
 #define ENTITYPRELOAD_HPP
 
 /// @cond
-#include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Engine/ECS/Component/ComponentManager.hpp"
+#include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
 

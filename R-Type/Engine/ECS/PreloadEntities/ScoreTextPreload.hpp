@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief Preload the score text.
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef SCORETEXTPRELOAD_HPP
 #define SCORETEXTPRELOAD_HPP
@@ -15,13 +15,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief Preloads the score text.
      * @class ScoreTextPreload
-    */
+     */
     class ScoreTextPreload : public EntityPreload
     {
         public:
@@ -29,7 +29,7 @@ namespace eng
              * @brief Preloads the score text.
              * @fn static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
              * @param engine A reference to the engine.
-            */
+             */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
     };
 }

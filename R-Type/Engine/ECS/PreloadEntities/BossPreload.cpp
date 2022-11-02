@@ -8,9 +8,7 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
     float randY = createRandom(200 / screenSize->y * windowsSize.y, windowsSize.y - (100 / screenSize->y * windowsSize.y));
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
-    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE |
-                                            InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT),
-                                           componentManager);
+    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, false, 0, 0.2, 96, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});

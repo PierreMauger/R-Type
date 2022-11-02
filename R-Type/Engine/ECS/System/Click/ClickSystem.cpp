@@ -22,8 +22,7 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(*this->_window);
 
-                if (mousePos.x >= pos.x && mousePos.x <= pos.x + spriteAt.rect.width &&
-                    mousePos.y >= pos.y && mousePos.y <= pos.y + spriteAt.rect.height) {
+                if (mousePos.x >= pos.x && mousePos.x <= pos.x + spriteAt.rect.width && mousePos.y >= pos.y && mousePos.y <= pos.y + spriteAt.rect.height) {
                     if (button.type == ButtonType::PLAY) {
                         componentManager.clear();
                         entityManager.clear();
