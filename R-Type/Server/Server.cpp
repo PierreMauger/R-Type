@@ -17,14 +17,14 @@ void eng::Server::initSystems()
     eng::Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
 
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites, graphic.getScreenSize()));
+    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic));
+    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic));
+    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic, sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic, sprites));
 #ifndef NDEBUG
-    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
+    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
+    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
 
     entityManager.addMaskCategory(InfoComp::TEXT);
@@ -67,8 +67,8 @@ void eng::Server::initEntities()
     eng::ParallaxPreload parallaxPreload;
     eng::ScoreTextPreload scoreTextPreload;
 
-    parallaxPreload.preload(this->_engine);
-    scoreTextPreload.preload(this->_engine);
+    parallaxPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    scoreTextPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void eng::Server::manageEvent()
@@ -104,10 +104,10 @@ void eng::Server::manageEnemy()
     eng::BossPreload bossPreload;
 
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        bossPreload.preload(this->_engine);
+        bossPreload.preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
         this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
     } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        enemyPreload.preload(this->_engine);
+        enemyPreload.preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
         this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
     }
 }
@@ -124,7 +124,7 @@ void eng::Server::mainLoop()
     eng::VesselPreload vesselPreload;
     eng::DevourerPreload devourerPreload;
 
-    vesselPreload.preload(this->_engine);
+    vesselPreload.preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();

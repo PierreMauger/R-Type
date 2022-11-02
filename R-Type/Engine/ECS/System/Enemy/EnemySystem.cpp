@@ -1,14 +1,12 @@
 #include "Engine/ECS/System/Enemy/EnemySystem.hpp"
 
-#include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
-
 using namespace eng;
 
-EnemySystem::EnemySystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
+EnemySystem::EnemySystem(Graphic &graphic)
 {
-    this->_clock = clock;
-    this->_window = window;
-    this->_screenSize = screenSize;
+    this->_clock = graphic.getClock();
+    this->_window = graphic.getWindow();
+    this->_screenSize = graphic.getScreenSize();
 }
 
 void EnemySystem::update(ComponentManager &componentManager, EntityManager &entityManager)

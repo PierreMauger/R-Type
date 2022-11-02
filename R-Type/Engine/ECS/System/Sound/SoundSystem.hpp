@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Loader/Loader.hpp"
 /// @endcond
 
@@ -37,7 +38,7 @@ namespace eng
              * @param clock A shared pointer to the clock
              * @param soundBuffer A shared pointer to sound buffer
             */
-            SoundSystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer);
+            SoundSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer);
             /**
              * @brief SoundSystem destructor
              * @fn ~SoundSystem()

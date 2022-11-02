@@ -1,15 +1,13 @@
 #include "Engine/ECS/System/Input/InputSystem.hpp"
 
-#include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
-
 using namespace eng;
 
-InputSystem::InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
+InputSystem::InputSystem(Graphic &graphic)
 {
-    this->_event = event;
-    this->_clock = clock;
-    this->_window = window;
-    this->_screenSize = screenSize;
+    this->_event = graphic.getEvent();
+    this->_clock = graphic.getClock();
+    this->_window = graphic.getWindow();
+    this->_screenSize = graphic.getScreenSize();
 }
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)

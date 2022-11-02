@@ -9,6 +9,8 @@
 #define INPUTSYSTEM_HPP
 
 /// @cond
+#include "Engine/ECS/ECS.hpp"
+#include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
@@ -41,7 +43,7 @@ namespace eng
              * @param window A shared pointer to the render window
              * @param screenSize A shared pointer to the screen size
             */
-            InputSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
+            InputSystem(Graphic &graphic);
             /**
              * @brief InputSystem destructor.
              * @fn ~InputSystem

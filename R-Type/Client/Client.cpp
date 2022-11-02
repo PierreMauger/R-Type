@@ -16,16 +16,16 @@ void eng::Client::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites, graphic.getScreenSize()));
+    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic));
+    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic));
+    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic, sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic, sprites));
 #ifndef NDEBUG
-    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
+    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
+    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic));
     systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
-    systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
+    systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic, sounds));
 
     entityManager.addMaskCategory(InfoComp::TEXT);
     entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
@@ -65,10 +65,10 @@ void eng::Client::initEntities()
     eng::ScoreTextPreload scoreTextPreload;
     eng::VesselPreload vesselPreload;
 
-    parallaxPreload.preload(this->_engine);
-    backgroundMusicPreload.preload(this->_engine);
-    scoreTextPreload.preload(this->_engine);
-    vesselPreload.preload(this->_engine);
+    parallaxPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    backgroundMusicPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    scoreTextPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    vesselPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void eng::Client::mainLoop()

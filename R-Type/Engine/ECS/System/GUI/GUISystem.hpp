@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 #include "Includes.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
@@ -47,7 +48,7 @@ namespace eng
              * @fn GUISystem(std::shared_ptr<sf::RenderWindow> window)
              * @param window A shared pointer to the SFML render window.
             */
-            GUISystem(std::shared_ptr<sf::RenderWindow> window);
+            GUISystem(Graphic &graphic);
             /**
              * @brief GUISystem destructor.
              * @fn ~GUISystem

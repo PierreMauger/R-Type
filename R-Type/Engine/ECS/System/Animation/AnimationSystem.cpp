@@ -2,10 +2,10 @@
 
 using namespace eng;
 
-AnimationSystem::AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+AnimationSystem::AnimationSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::Sprite>> sprites)
 {
-    this->_event = event;
-    this->_clock = clock;
+    this->_event = graphic.getEvent();
+    this->_clock = graphic.getClock();
     this->_sprites = sprites;
 }
 

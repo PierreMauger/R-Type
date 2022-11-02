@@ -11,6 +11,7 @@
 /// @cond
 #include "Engine/ECS/System/GUI/GUISystem.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Loader/Loader.hpp"
 #include "Includes.hpp"
 /// @endcond
@@ -46,8 +47,7 @@ namespace eng
              * @param sprites A shared pointer to the vector of sprites to render
              * @param screenSize A shared pointer to the screen size
             */
-            RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites,
-                         std::shared_ptr<sf::Vector2f> screenSize);
+            RenderSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             /**
              * @brief RenderSystem destructor.
              * @fn ~RenderSystem

@@ -9,9 +9,6 @@
 #define VESSELPRELOAD_HPP
 
 /// @cond
-#include <Includes.hpp>
-
-#include "Engine/ECS/ECS.hpp"
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
 /// @endcond
 
@@ -33,7 +30,7 @@ namespace eng
              * @fn VesselPreload
              * @param engine A reference to the engine.
             */
-            void preload(Engine &engine) override;
+            void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) override;
             /**
              * @brief Preloads the vessel's (player's score)
              * @fn static void preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize)

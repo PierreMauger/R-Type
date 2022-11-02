@@ -21,6 +21,8 @@
 */
 namespace eng
 {
+    class ECS;
+
     /**
      * @brief The engine of the game containing the ECS, the graphics and the loader.
      * @class Engine

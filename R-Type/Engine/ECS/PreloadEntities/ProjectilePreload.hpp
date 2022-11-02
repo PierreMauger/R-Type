@@ -9,9 +9,6 @@
 #define PROJECTILEPRELOAD_HPP
 
 /// @cond
-#include <Includes.hpp>
-
-#include "Engine/ECS/ECS.hpp"
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
 /// @endcond
 
@@ -30,10 +27,10 @@ namespace eng
         public:
             /**
              * @brief Preloads the projectile.
-             * @fn void preload(Engine &engine) override
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) override
              * @param engine A reference to the engine.
             */
-            void preload(Engine &engine);
+            void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
             /**
              * @brief Creates a shot
              * @fn static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, std::size_t damage)

@@ -133,7 +133,6 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/PreloadEntities/ParallaxPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/VesselPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/BossPreload.cpp
-    ${ENGINE_ROOT}/ECS/PreloadEntities/CooldownBarPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/EnemyPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/BackgroundMusicPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ScoreTextPreload.cpp

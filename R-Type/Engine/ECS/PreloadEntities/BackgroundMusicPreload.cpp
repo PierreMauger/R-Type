@@ -1,8 +1,8 @@
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 
-void eng::BackgroundMusicPreload::preload(Engine &engine)
+void eng::BackgroundMusicPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
-    std::size_t id = engine.getECS().getEntityManager().addMask((InfoComp::SOUNDID), engine.getECS().getComponentManager());
+    std::size_t id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
 
-    engine.getECS().getComponentManager().getComponent(typeid(SoundID)).emplaceData(id, SoundID{1, false, true});
+    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{1, false, true});
 }

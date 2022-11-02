@@ -2,13 +2,12 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites,
-                           std::shared_ptr<sf::Vector2f> screenSize)
+RenderSystem::RenderSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::Sprite>> sprites)
 {
-    this->_clock = clock;
-    this->_window = window;
+    this->_clock = graphic.getClock();
+    this->_window = graphic.getWindow();
+    this->_screenSize = graphic.getScreenSize();
     this->_sprites = sprites;
-    this->_screenSize = screenSize;
     if (!this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf"))
         throw std::runtime_error("Error: Font not found");
     this->_text.setFont(this->_font);

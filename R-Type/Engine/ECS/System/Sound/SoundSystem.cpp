@@ -2,9 +2,9 @@
 
 using namespace eng;
 
-SoundSystem::SoundSystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
+SoundSystem::SoundSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
 {
-    this->_clock = clock;
+    this->_clock = graphic.getClock();
     this->_soundBuffer = soundBuffer;
 }
 

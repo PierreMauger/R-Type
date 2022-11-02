@@ -9,7 +9,9 @@
 #define ENEMYSYSTEM_HPP
 
 /// @cond
+#include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 /// @endcond
 
 #define RADIUS 50
@@ -40,7 +42,7 @@ namespace eng
              * @param window A shared pointer to the render window
              * @param screenSize A shared pointer to the screen size
             */
-            EnemySystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
+            EnemySystem(Graphic &graphic);
             /**
              * @brief EnemySystem destructor.
              * @fn ~EnemySystem()
