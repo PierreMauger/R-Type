@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
 
-void eng::ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize,
+using namespace eng;
+
+void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize,
                                          std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, std::size_t damage)
 {
     auto &masks = entityManager.getMasks();

@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 
-void eng::EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+using namespace eng;
+
+void EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();

@@ -1,10 +1,10 @@
 #include "Input.hpp"
 
-eng::Input::Input()
+Input::Input()
 {
 }
 
-void eng::Input::createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager, std::size_t damage)
+void Input::createShoot(std::size_t id, ComponentManager &componentManager, Position pos, EntityManager &entityManager, std::size_t damage)
 {
     auto &masks = entityManager.getMasks();
     std::size_t sizeMask = (InfoComp::SIZE | InfoComp::COOLDOWNSHOOT);
@@ -28,7 +28,7 @@ void eng::Input::createShoot(std::size_t id, ComponentManager &componentManager,
                        : componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, 1 - (sizeProj.size / 10)});
 }
 
-void eng::Input::checkInput(std::size_t id, sf::Keyboard::Key input, ComponentManager &componentManager, EntityManager &entityManager, std::shared_ptr<sf::Clock> clock)
+void Input::checkInput(std::size_t id, sf::Keyboard::Key input, ComponentManager &componentManager, EntityManager &entityManager, std::shared_ptr<sf::Clock> clock)
 {
     std::size_t inputMask = (InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
 

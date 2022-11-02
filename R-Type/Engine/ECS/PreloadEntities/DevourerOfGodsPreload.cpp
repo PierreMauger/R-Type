@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 
-void eng::DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+using namespace eng;
+
+void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();

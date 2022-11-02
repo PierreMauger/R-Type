@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 
-void eng::ParallaxPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+using namespace eng;
+
+void ParallaxPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t id = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT),
                                            componentManager);

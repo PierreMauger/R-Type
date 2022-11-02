@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 
-void eng::VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+using namespace eng;
+
+void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE |
                                             InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT),
@@ -29,7 +31,7 @@ void eng::VesselPreload::preload(Graphic &graphic, EntityManager &entityManager,
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
 }
 
-void eng::VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize,
+void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize,
                                       std::shared_ptr<sf::Vector2f> screenSize)
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT |

@@ -1,6 +1,8 @@
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 
-void eng::BackgroundMusicPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+using namespace eng;
+
+void BackgroundMusicPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
 
