@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-PhysicSystem::PhysicSystem(Graphic &graphic)
+PhysicSystem::PhysicSystem(Graphic &graphic, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();

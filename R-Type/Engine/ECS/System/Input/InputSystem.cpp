@@ -2,12 +2,14 @@
 
 using namespace eng;
 
-InputSystem::InputSystem(Graphic &graphic)
+InputSystem::InputSystem(Graphic &graphic, EntityManager &entityManager)
 {
     this->_event = graphic.getEvent();
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
+
+    entityManager.addMaskCategory(InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
 }
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)

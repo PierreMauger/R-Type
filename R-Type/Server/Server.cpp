@@ -17,22 +17,15 @@ void eng::Server::initSystems()
     eng::Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
 
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic));
-    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic, sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic, sprites));
+    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic, entityManager, sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
-    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic));
+    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic, entityManager));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic));
-    systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
-
-    entityManager.addMaskCategory(InfoComp::TEXT);
-    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
-    entityManager.addMaskCategory(InfoComp::SOUNDID);
-    entityManager.addMaskCategory(InfoComp::CONTROLLABLE);
-    entityManager.addMaskCategory(InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
-    entityManager.addMaskCategory(InfoComp::SPRITEID | InfoComp::SPRITEAT);
+    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<eng::ScoreSystem>(entityManager));
 }
 
 void eng::Server::initComponents()

@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-RenderSystem::RenderSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites)
 {
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
@@ -13,6 +13,9 @@ RenderSystem::RenderSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::Spr
     this->_text.setFont(this->_font);
     this->_text.setCharacterSize(20);
     this->_text.setFillColor(sf::Color::White);
+
+    entityManager.addMaskCategory(InfoComp::TEXT);
+    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
 }
 
 void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)

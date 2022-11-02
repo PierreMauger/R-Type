@@ -2,11 +2,13 @@
 
 using namespace eng;
 
-AnimationSystem::AnimationSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+AnimationSystem::AnimationSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites)
 {
     this->_event = graphic.getEvent();
     this->_clock = graphic.getClock();
     this->_sprites = sprites;
+
+    entityManager.addMaskCategory(InfoComp::SPRITEID | InfoComp::SPRITEAT);
 }
 
 void AnimationSystem::update(ComponentManager &componentManager, EntityManager &entityManager)

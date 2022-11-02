@@ -45,10 +45,11 @@ namespace eng
         public:
             /**
              * @brief GUISystem constructor.
-             * @fn GUISystem(std::shared_ptr<sf::RenderWindow> window)
-             * @param window A shared pointer to the SFML render window.
+             * @fn GUISystem(Graphic &graphic, EntityManager &entityManager)
+             * @param graphic A reference to the Graphic
+             * @param entityManager A reference to the EntityManager
             */
-            GUISystem(Graphic &graphic);
+            GUISystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief GUISystem destructor.
              * @fn ~GUISystem

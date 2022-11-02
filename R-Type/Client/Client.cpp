@@ -16,19 +16,16 @@ void eng::Client::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic));
-    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic, sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic, sprites));
+    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic, entityManager, sprites));
+    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
-    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic));
+    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic, entityManager));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic));
-    systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
-    systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic, sounds));
-
-    entityManager.addMaskCategory(InfoComp::TEXT);
-    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
+    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<eng::ScoreSystem>(entityManager));
+    systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic, entityManager, sounds));
 }
 
 void eng::Client::initComponents()

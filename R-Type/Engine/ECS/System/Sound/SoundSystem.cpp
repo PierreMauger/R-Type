@@ -2,10 +2,12 @@
 
 using namespace eng;
 
-SoundSystem::SoundSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
+SoundSystem::SoundSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
 {
     this->_clock = graphic.getClock();
     this->_soundBuffer = soundBuffer;
+
+    entityManager.addMaskCategory(InfoComp::SOUNDID);
 }
 
 void SoundSystem::update(ComponentManager &componentManager, EntityManager &entityManager)

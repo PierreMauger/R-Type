@@ -2,8 +2,10 @@
 
 using namespace eng;
 
-ScoreSystem::ScoreSystem()
+ScoreSystem::ScoreSystem(EntityManager &entityManager)
 {
+    entityManager.addMaskCategory(InfoComp::TEXT);
+    entityManager.addMaskCategory(InfoComp::CONTROLLABLE);
 }
 
 bool ScoreSystem::findVessel(ComponentManager &componentManager, EntityManager &entityManager, Controllable &controllable)

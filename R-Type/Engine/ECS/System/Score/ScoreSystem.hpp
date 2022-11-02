@@ -31,9 +31,10 @@ namespace eng
         public:
             /**
              * @brief ScoreSystem constructor
-             * @fn ScoreSystem()
+             * @fn ScoreSystem(Graphic &graphic, EntityManager &entityManager)
+             * @param entityManager A reference to the EntityManager
             */
-            ScoreSystem();
+            ScoreSystem(EntityManager &entityManager);
             /**
              * @brief ScoreSystem destructor
              * @fn ~ScoreSystem()

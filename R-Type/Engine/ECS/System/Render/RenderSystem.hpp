@@ -41,13 +41,12 @@ namespace eng
         public:
             /**
              * @brief RenderSystem constructor.
-             * @fn RenderSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites, std::shared_ptr<sf::Vector2f>)
-             * @param window A shared pointer to the SFML render window.
-             * @param clock A shared pointer to the clock of the game (for render timings and such).
+             * @fn RenderSystem(Graphic &graphic, EntityManager &entityManager)
+             * @param graphic A reference to the Graphic
+             * @param entityManager A reference to the EntityManager
              * @param sprites A shared pointer to the vector of sprites to render
-             * @param screenSize A shared pointer to the screen size
             */
-            RenderSystem(Graphic &graphic, std::shared_ptr<std::vector<sf::Sprite>> sprites);
+            RenderSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             /**
              * @brief RenderSystem destructor.
              * @fn ~RenderSystem

@@ -37,12 +37,11 @@ namespace eng
         public:
             /**
              * @brief EnemySystem constructor.
-             * @fn EnemySystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
-             * @param clock A shared pointer to the clock of the game (for enemy animations, patterns and such).
-             * @param window A shared pointer to the render window
-             * @param screenSize A shared pointer to the screen size
+             * @fn EnemySystem(Graphic &graphic, EntityManager &entityManager)
+             * @param graphic A reference to the Graphic
+             * @param entityManager A reference to the EntityManager
             */
-            EnemySystem(Graphic &graphic);
+            EnemySystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief EnemySystem destructor.
              * @fn ~EnemySystem()
