@@ -23,7 +23,7 @@ void Server::initSystems()
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
-    systemManager.addSystem(std::make_shared<GUISystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<GUISystem>(graphic));
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));

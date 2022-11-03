@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-GUISystem::GUISystem(Graphic &graphic, EntityManager &entityManager)
+GUISystem::GUISystem(Graphic &graphic)
 {
     this->_window = graphic.getWindow();
     if (!ImGui::SFML::Init(*this->_window))

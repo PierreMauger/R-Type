@@ -12,7 +12,6 @@ ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
 
 void ClickSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t button = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
 
     for (auto id : entityManager.getMaskCategory(button)) {

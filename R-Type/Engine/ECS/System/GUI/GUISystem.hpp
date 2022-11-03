@@ -45,11 +45,10 @@ namespace eng
         public:
             /**
              * @brief GUISystem constructor.
-             * @fn GUISystem(Graphic &graphic, EntityManager &entityManager)
+             * @fn GUISystem(Graphic &graphic)
              * @param graphic A reference to the Graphic
-             * @param entityManager A reference to the EntityManager
              */
-            GUISystem(Graphic &graphic, EntityManager &entityManager);
+            GUISystem(Graphic &graphic);
             /**
              * @brief GUISystem destructor.
              * @fn ~GUISystem
