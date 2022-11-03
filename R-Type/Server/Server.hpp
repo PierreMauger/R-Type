@@ -18,8 +18,8 @@
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/Network/Room.hpp"
 #include "Includes.hpp"
+#include "ServerMenuSerializer.hpp"
 #include "ServerNetwork.hpp"
-#include "Client.hpp"
 
 /// @endcond
 
@@ -39,7 +39,11 @@ namespace eng
             Engine _engine;
             ServerNetwork _network;
 
+            ServerMenuSerializer _menuSerializer;
+
             std::vector<Client> _clients;
+
+            std::size_t _roomCount = 0;
             std::vector<Room> _rooms;
 
             sf::Time _elapsedTime = sf::seconds(0);

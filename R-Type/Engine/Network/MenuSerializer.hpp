@@ -48,7 +48,6 @@ namespace eng
         LEAVE,
         READY,
         UNREADY,
-        START,
 
         UNKNOWN_ACTION
     };
@@ -68,9 +67,9 @@ namespace eng
      * @brief The menu serializer
      * @class MenuSerializer
      */
-    class MenuSerializer : private Serializer
+    class MenuSerializer : protected Serializer
     {
-        private:
+        protected:
             std::vector<Room>::iterator getRoom(std::vector<Room> rooms, std::size_t id);
 
             void editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers);
@@ -92,7 +91,7 @@ namespace eng
              * @fn handlePacket(_STORAGE_DATA packet)
              * @param packet The packet to handle.
              */
-            void handlePacket(_STORAGE_DATA packet);
+            void handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms);
 
             /**
              * @brief Serialize a room edit
@@ -133,7 +132,13 @@ namespace eng
              * @return The serialized packet
              */
             _STORAGE_DATA serializeEvent(MenuEvent event);
-            // void deserializeEvent(std::vector<uint8_t> packet);
+
+            /**
+             * @brief Serialize an event
+             * @fn void deserializeEvent()
+             * @param event Event to deserialize
+             */
+            void deserializeEvent();
     };
 }
 

@@ -116,8 +116,9 @@ void eng::Server::updateClients()
             if (client.getConnection() == connection)
                 check = true;
         }
-        if (!check)
+        if (!check) {
             this->_clients.push_back(Client(connection));
+        }
         check = false;
     }
     for (auto &client : this->_clients) {

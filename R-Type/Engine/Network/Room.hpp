@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -28,6 +29,7 @@ namespace eng
             std::size_t _id;
             std::size_t _maxPlayers;
             std::size_t _nbPlayers;
+            bool _started = false;
 
         public:
             /**
@@ -96,6 +98,13 @@ namespace eng
              * @return A boolean indicating if the room is full
              */
             bool isFull() const;
+
+            /**
+             * @brief Check if the room is started
+             * @fn bool isStarted()
+             * @return A boolean indicating if the room is started
+             */
+            bool isStarted() const;
     };
 }
 

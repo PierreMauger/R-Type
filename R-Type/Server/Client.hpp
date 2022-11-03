@@ -12,10 +12,10 @@ namespace eng
     class Client : public std::enable_shared_from_this<Client>
     {
         private:
-            int _vesselId;
-            bool _isAlive;
-            int _roomId;
-            bool _isReady;
+            int _vesselId = -1;
+            bool _isAlive = -1;
+            int _roomId = -1;
+            bool _isReady = false;
             std::shared_ptr<Connection> _connection;
 
         public:

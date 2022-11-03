@@ -117,5 +117,49 @@ void MenuSerializer::deserializeRoomAction(std::vector<uint8_t> packet, std::vec
 
     auto roomIt = getRoom(rooms, id);
 
-    // TODO: handle action
+    switch (action) {
+    case RoomAction::JOIN:
+        roomIt->addPlayer();
+        break;
+    case RoomAction::LEAVE:
+        roomIt->removePlayer();
+        break;
+    case RoomAction::READY:
+        break;
+    case RoomAction::UNREADY:
+        break;
+    default:
+        break;
+    }
+}
+
+void MenuSerializer::deserializeEvent()
+{
+}
+
+void MenuSerializer::handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms)
+{
+    std::size_t adv = 0;
+    std::vector<uint8_t> packetVector = this->convertToVector(packet);
+    MenuPacketType type;
+
+    if (!this->checkMagic(packetVector, adv)) {
+        throw std::runtime_error("[ERROR] Bad packet format");
+    }
+    adv += MAGIC_SIZE;
+    this->deserializeData<MenuPacketType>(packetVector, adv, &type);
+
+    switch (type) {
+    case MenuPacketType::ROOM_EDIT:
+        this->deserializeRoomEdit(packetVector, rooms);
+        break;
+    case MenuPacketType::ROOM_ACTION:
+        this->deserializeRoomAction(packetVector, rooms);
+        break;
+    case MenuPacketType::EVENT:
+        this->deserializeEvent();
+        break;
+    default:
+        throw std::runtime_error("[ERROR] Invalid packet type");
+    }
 }

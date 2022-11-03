@@ -50,3 +50,8 @@ bool Room::isFull() const
 {
     return _nbPlayers == _maxPlayers;
 }
+
+bool Room::isStarted() const
+{
+    return _started;
+}
