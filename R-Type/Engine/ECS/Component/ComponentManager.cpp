@@ -62,3 +62,9 @@ void ComponentManager::updateComponent(std::size_t id)
     for (auto &[type, component] : this->_componentArray)
         component.emplaceData(id, std::nullopt);
 }
+
+void ComponentManager::clear()
+{
+    for (auto &[type, component] : this->_componentArray)
+        component.clear();
+}

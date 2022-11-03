@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief Preload the Devourer Of Gods (terraria boss).
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef DEVOUREROFGODSPRELOAD_HPP
 #define DEVOUREROFGODSPRELOAD_HPP
@@ -15,22 +15,22 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief Preloads the Devourer Of Gods.
      * @class DevourerOfGodsPreload
-    */
+     */
     class DevourerPreload : public EntityPreload
     {
         public:
             /**
              * @brief Preloads the Devourer Of Gods.
-             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) override
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
              * @param engine A reference to the engine.
-            */
-            void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) override;
+             */
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
     };
 }
 

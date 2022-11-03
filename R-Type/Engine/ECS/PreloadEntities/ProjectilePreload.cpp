@@ -2,8 +2,7 @@
 
 using namespace eng;
 
-void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize,
-                                         std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, std::size_t damage)
+void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, std::size_t damage)
 {
     auto &masks = entityManager.getMasks();
     std::size_t sizeMask = (InfoComp::SIZE | InfoComp::COOLDOWNSHOOT | InfoComp::POS);
@@ -13,9 +12,7 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     Position pos = {0, 0};
     bool enemy = masks[id].has_value() && (masks[id].value() & InfoComp::ENEMY) == InfoComp::ENEMY ? true : false;
     sf::Vector2f sizeFire = sf::Vector2f(56 * sizeProjScreen.x / screenSize->x * windowsSize.x, 32 * sizeProjScreen.y / screenSize->y * windowsSize.y);
-    std::size_t addEntity = entityManager.addMask(
-        (InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE | InfoComp::SPRITEAT),
-        componentManager);
+    std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::PROJECTILE | InfoComp::SIZE | InfoComp::SPRITEAT), componentManager);
 
     if (masks[id].has_value() && (masks[id].value() & sizeMask) == sizeMask) {
         size = componentManager.getSingleComponent<Size>(id);
@@ -34,8 +31,7 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * sizeProj.size, sizeFire.y * sizeProj.size});
     if (!enemy) {
         addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-        float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2
-                                                                                  : (1 - (sizeProj.size / 10));
+        float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));
         componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, pitch});
     }
 }

@@ -9,9 +9,7 @@ void EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, Compo
     std::size_t rand = static_cast<std::size_t>(createRandom(0, 3));
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
     float randY = createRandom(0, windowsSize.y);
-    std::size_t id = entityManager.addMask(
-        (InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT),
-        componentManager);
+    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{2, Priority::MEDIUM, 0, 2, false, false, 0, 0.075, 63, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 63, 48}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});

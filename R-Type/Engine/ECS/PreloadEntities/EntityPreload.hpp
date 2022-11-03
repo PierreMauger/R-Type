@@ -9,8 +9,8 @@
 #define ENTITYPRELOAD_HPP
 
 /// @cond
-#include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Engine/ECS/Component/ComponentManager.hpp"
+#include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
 
@@ -38,7 +38,12 @@ namespace eng
              * @fn virtual void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) = 0
              * @param engine A reference to the engine.
              */
-            virtual void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) = 0;
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+            {
+                (void)graphic;
+                (void)entityManager;
+                (void)componentManager;
+            }
 
             /**
              * @brief Creates a random value between a min and max.
@@ -47,7 +52,7 @@ namespace eng
              * @param max The max random value
              * @return The random float value
              */
-            float createRandom(float min, float max)
+            static float createRandom(float min, float max)
             {
                 std::random_device rd;
                 std::mt19937 gen(rd());

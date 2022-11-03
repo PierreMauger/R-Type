@@ -3,27 +3,27 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief Functions definitions for the ComponentManager containing/handling the engine's components.
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef COMPONENTMANAGER_HPP
 #define COMPONENTMANAGER_HPP
 
 /// @cond
-#include "Engine/ECS/Component/SparseArray.hpp"
 #include "Engine/ECS/Component/ComponentTypes.hpp"
+#include "Engine/ECS/Component/SparseArray.hpp"
 #include "Includes.hpp"
 /// @endcond
 
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief The engine's ComponentManager.
      * @class ComponentManager
-    */
+     */
     class ComponentManager
     {
         private:
@@ -34,19 +34,19 @@ namespace eng
             /**
              * @brief ComponentManager constructor.
              * @fn ComponentManager()
-            */
+             */
             ComponentManager();
             /**
              * @brief ComponentManager destructor.
              * @fn ~ComponentManager()
-            */
+             */
             ~ComponentManager() = default;
 
             /**
              * @brief Get the components array.
              * @fn std::map<std::type_index, SparseArray> &getComponentArray()
              * @return The components array.
-            */
+             */
             std::map<std::type_index, SparseArray> &getComponentArray();
 
             /**
@@ -55,7 +55,7 @@ namespace eng
              * @param type type of the component to get.
              * @throw Throws an error if the type is not found.
              * @return A reference to the spare array representing the component.
-            */
+             */
             SparseArray &getComponent(std::type_index type);
             /**
              * @brief Get a component from the component array.
@@ -63,7 +63,7 @@ namespace eng
              * @param index Id of the component to get.
              * @throw Throws an error if the id is out of range.
              * @return A reference to the spare array representing the component.
-            */
+             */
             SparseArray &getComponent(std::size_t index);
             /**
              * @brief Get a component's type from the component array.
@@ -71,20 +71,20 @@ namespace eng
              * @param index Id of the component to get.
              * @throw Throws an error if the id is out of range.
              * @return The component's type.
-            */
+             */
             std::type_index getComponentType(std::size_t index);
             /**
              * @brief Init a new component.
              * @fn void initNewComponent(std::size_t id)
              * @param id Id of the component to add.
-            */
+             */
             void initNewComponent(std::size_t id);
 
             /**
              * @brief Bind a component.
              * @fn template <typename T> void bindComponent()
              * @param T Type of the component to bind.
-            */
+             */
             template <typename T> void bindComponent()
             {
                 this->_componentArray[std::type_index(typeid(T))] = SparseArray();
@@ -96,7 +96,7 @@ namespace eng
              * @fn template <typename T> void addComponent(std::size_t id)
              * @param T Type of the component to add.
              * @param id Id of the component to add.
-            */
+             */
             template <typename T> void addComponent(std::size_t id)
             {
                 this->_componentArray[std::type_index(typeid(T))].addData(id, T());
@@ -108,7 +108,7 @@ namespace eng
              * @param T Type of the component to get.
              * @param id Id of the component to get.
              * @return The component.
-            */
+             */
             template <typename T> T &getSingleComponent(std::size_t id)
             {
                 return std::any_cast<T &>(this->_componentArray[typeid(T)].getField(id).value());
@@ -118,7 +118,7 @@ namespace eng
              * @brief Add an entity.
              * @fn void addEntity(std::size_t id)
              * @param id Id of the entity to add.
-            */
+             */
             void addEntity(std::size_t id);
             /**
              * @brief Remove a single component.
@@ -126,20 +126,21 @@ namespace eng
              * @param id Id of the component to remove.
              * @param type Type of the component to remove.
              * @throw Throws an error if the type is not found.
-            */
+             */
             void removeSingleComponent(std::size_t id, std::type_index type);
             /**
              * @brief Remove all components.
              * @fn void removeAllComponents(std::size_t id)
              * @param id Id of the components to remove.
-            */
+             */
             void removeAllComponents(std::size_t id);
             /**
              * @brief Update a component.
              * @fn void updateComponent(std::size_t id)
              * @param id Id of the components to update.
-            */
+             */
             void updateComponent(std::size_t id);
+            void clear();
     };
 }
 

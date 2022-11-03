@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief The server.
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef SERVER_HPP
 #define SERVER_HPP
@@ -13,7 +13,7 @@
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
-#include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
+#include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Includes.hpp"
 #include "Room.hpp"
@@ -23,13 +23,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief The engine of the game containing the ECS, the graphics and the loader.
      * @class Server
-    */
+     */
     class Server
     {
         private:
@@ -52,18 +52,18 @@ namespace eng
              * @brief Server constructor.
              * @fn Server()
              * @param portTcp The tcp port of the server
-            */
+             */
             Server(uint16_t portTcp);
             /**
              * @brief Server destructor.
              * @fn ~Server()
-            */
+             */
             ~Server() = default;
 
             /**
              * @brief The main server loop
              * @fn void mainLoop()
-            */
+             */
             void mainLoop();
     };
 }

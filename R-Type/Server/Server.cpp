@@ -2,8 +2,7 @@
 
 using namespace eng;
 
-Server::Server(uint16_t portTcp)
-    : _network(portTcp)
+Server::Server(uint16_t portTcp) : _network(portTcp)
 {
     this->initSystems();
     this->initComponents();
@@ -28,6 +27,7 @@ void Server::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
 void Server::initComponents()
@@ -55,15 +55,14 @@ void Server::initComponents()
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
+    componentManager.bindComponent<Button>();
 }
 
 void Server::initEntities()
 {
-    ParallaxPreload parallaxPreload;
-    ScoreTextPreload scoreTextPreload;
-
-    parallaxPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    scoreTextPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Server::manageEvent()
@@ -94,15 +93,13 @@ void Server::manageEvent()
 
 void Server::manageEnemy()
 {
-    Graphic &graphic = this->_engine.getGraphic();
-    EnemyPreload enemyPreload;
-    BossPreload bossPreload;
+    eng::Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        bossPreload.preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        BossPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
         this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
     } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        enemyPreload.preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
         this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
     }
 }
@@ -116,10 +113,8 @@ void Server::mainLoop()
 
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    VesselPreload vesselPreload;
-    DevourerPreload devourerPreload;
 
-    vesselPreload.preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
+    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();

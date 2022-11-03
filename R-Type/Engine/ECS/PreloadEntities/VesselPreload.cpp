@@ -4,9 +4,7 @@ using namespace eng;
 
 void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
-    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE |
-                                            InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT),
-                                           componentManager);
+    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
@@ -31,17 +29,13 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
 }
 
-void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize,
-                                      std::shared_ptr<sf::Vector2f> screenSize)
+void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize)
 {
-    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT |
-                                            InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT),
-                                           componentManager);
+    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, false, false, 0, 0, 64, 0});
-    componentManager.getComponent(typeid(SpriteAttribut))
-        .emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, 28 / screenSize->y * windowsSize.y * -1, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, screenSize->x / (1920 / 10) / screenSize->x * windowsSize.x, screenSize->y / (1080 / 10) / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100 / screenSize->y * windowsSize.y});

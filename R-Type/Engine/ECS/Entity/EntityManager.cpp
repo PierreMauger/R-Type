@@ -63,3 +63,8 @@ void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
             value.push_back(id);
     }
 }
+
+void EntityManager::clear()
+{
+    this->_masks.clear();
+}

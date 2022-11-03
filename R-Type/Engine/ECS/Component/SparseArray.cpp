@@ -20,11 +20,11 @@ void SparseArray::emplaceData(std::size_t id, std::any data)
     this->_data[id] = data;
 }
 
-std::optional<std::any> &SparseArray::getField(std::size_t id)
+void SparseArray::destroyData(std::size_t id)
 {
     if (id > this->_data.size())
         throw std::runtime_error("Incorrect ID");
-    return this->_data[id];
+    this->_data[id].reset();
 }
 
 std::size_t SparseArray::getSize()
@@ -32,9 +32,14 @@ std::size_t SparseArray::getSize()
     return this->_data.size();
 }
 
-void SparseArray::destroyData(std::size_t id)
+std::optional<std::any> &SparseArray::getField(std::size_t id)
 {
     if (id > this->_data.size())
         throw std::runtime_error("Incorrect ID");
-    this->_data[id].reset();
+    return this->_data[id];
+}
+
+void SparseArray::clear()
+{
+    this->_data.clear();
 }

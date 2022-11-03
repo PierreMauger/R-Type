@@ -55,19 +55,13 @@ void Client::initComponents()
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
+    componentManager.bindComponent<Button>();
 }
 
 void Client::initEntities()
 {
-    ParallaxPreload parallaxPreload;
-    BackgroundMusicPreload backgroundMusicPreload;
-    ScoreTextPreload scoreTextPreload;
-    VesselPreload vesselPreload;
-
-    parallaxPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    backgroundMusicPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    scoreTextPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    vesselPreload.preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Client::mainLoop()

@@ -1,12 +1,12 @@
 /**
- * @file ParallaxPreload.hpp
+ * @file MenuPreload.hpp
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
- * @brief Preload the parallax.
+ * @brief Preload the menu.
  * @copyright Epitech Rennes 2022
  */
 
-#ifndef PARALLAXPRELOAD_HPP
-#define PARALLAXPRELOAD_HPP
+#ifndef MENUPRELOAD_HPP
+#define MENUPRELOAD_HPP
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
@@ -19,14 +19,14 @@
 namespace eng
 {
     /**
-     * @brief Preloads the parallax.
-     * @class ParallaxPreload
+     * @brief Preloads the menu.
+     * @class MenuPreload
      */
-    class ParallaxPreload : public EntityPreload
+    class MenuPreload : public EntityPreload
     {
         public:
             /**
-             * @brief Preloads the parallax.
+             * @brief Preloads the menu.
              * @fn static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
              * @param engine A reference to the engine.
              */
@@ -34,4 +34,4 @@ namespace eng
     };
 }
 
-#endif // PARALLAXPRELOAD_HPP
+#endif // MENUPRELOAD_HPP

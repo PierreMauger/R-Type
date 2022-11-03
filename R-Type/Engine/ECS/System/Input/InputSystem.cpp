@@ -20,8 +20,7 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t dis = (InfoComp::DIS);
 
     for (auto id : entityManager.getMaskCategory(input)) {
-        if (((masks[id].value() & app) == app && componentManager.getSingleComponent<Appearance>(id).app) ||
-            ((masks[id].value() & dis) == dis && componentManager.getSingleComponent<Disappearance>(id).dis))
+        if (((masks[id].value() & app) == app && componentManager.getSingleComponent<Appearance>(id).app) || ((masks[id].value() & dis) == dis && componentManager.getSingleComponent<Disappearance>(id).dis))
             continue;
         Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
         CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(id);

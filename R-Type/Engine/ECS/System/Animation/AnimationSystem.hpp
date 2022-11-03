@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief The Animation system
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef ANIMATIONSYSTEM_HPP
 #define ANIMATIONSYSTEM_HPP
@@ -17,13 +17,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief The Animation system
      * @class AnimationSystem
-    */
+     */
     class AnimationSystem : public virtual ISystem
     {
         private:
@@ -37,19 +37,19 @@ namespace eng
              * @fn AnimationSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites)
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
-            */
+             */
             AnimationSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             /**
              * @brief AnimationSystem destructor
              * @fn ~AnimationSystem()
-            */
+             */
             ~AnimationSystem() = default;
             /**
              * @brief Update the AnimationSystem
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the ComponentManager
              * @param entityManager A reference to the EntityManager
-            */
+             */
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }

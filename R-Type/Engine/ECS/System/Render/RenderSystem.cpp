@@ -80,10 +80,16 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
+    std::vector<sf::Sprite> stockButton;
 
     for (auto id : entityManager.getMaskCategory(renderText)) {
         this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
-        this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+        if (componentManager.getSingleComponent<Text>(id).hasValue)
+            this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+        else {
+            this->_text.setString(componentManager.getSingleComponent<Text>(id).str);
+            this->_text.setOrigin(this->_text.getLocalBounds().width / 2, this->_text.getLocalBounds().height / 2);
+        }
         this->_text.setPosition(componentManager.getSingleComponent<Text>(id).pos);
         stockText.push_back(this->_text);
     }
@@ -120,8 +126,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     }
     for (std::size_t i = 0; i < stockSpriteMedium.size(); i++)
         this->_window->draw(stockSpriteMedium[i]);
-    for (std::size_t i = 0; i < stockText.size(); i++)
-        this->_window->draw(stockText[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
+    for (std::size_t i = 0; i < stockButton.size(); i++)
+        this->_window->draw(stockButton[i]);
+    for (std::size_t i = 0; i < stockText.size(); i++)
+        this->_window->draw(stockText[i]);
 }

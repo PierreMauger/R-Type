@@ -1,21 +1,18 @@
 /**
- * @file EnemySystem.hpp
+ * @file ClickSystem.hpp
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
- * @brief System of an enemy.
+ * @brief System that handle mouse inputs.
  * @copyright Epitech Rennes 2022
  */
 
-#ifndef ENEMYSYSTEM_HPP
-#define ENEMYSYSTEM_HPP
+#ifndef CLICKSYSTEM_HPP
+#define CLICKSYSTEM_HPP
 
 /// @cond
-#include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
+#include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
-
-#define RADIUS 50
-#define SPEED_OSC 5
 
 /**
  * @brief Engine namespace.
@@ -24,31 +21,30 @@
 namespace eng
 {
     /**
-     * @brief System of an enemy.
-     * @class EnemySystem
+     * @brief System that handle mouse inputs.
+     * @class ClickSystem
      */
-    class EnemySystem : public virtual ISystem
+    class ClickSystem : public virtual ISystem
     {
         private:
-            std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
 
         public:
             /**
-             * @brief EnemySystem constructor.
-             * @fn EnemySystem(Graphic &graphic, EntityManager &entityManager)
+             * @brief ClickSystem constructor.
+             * @fn ClickSystem(Graphic &graphic, EntityManager &entityManager)
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            EnemySystem(Graphic &graphic, EntityManager &entityManager);
+            ClickSystem(Graphic &graphic, EntityManager &entityManager);
             /**
-             * @brief EnemySystem destructor.
-             * @fn ~EnemySystem()
+             * @brief ClickSystem destructor.
+             * @fn ~ClickSystem()
              */
-            ~EnemySystem() = default;
+            ~ClickSystem() = default;
             /**
-             * @brief Update the enemy system.
+             * @brief Update the click system.
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the component manager.
              * @param entityManager A reference to the entity manager.
@@ -57,4 +53,4 @@ namespace eng
     };
 }
 
-#endif // ENEMYSYSTEM_HPP
+#endif // CLICKSYSTEM_HPP
