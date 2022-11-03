@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Loader/Loader.hpp"
 /// @endcond
 
@@ -33,12 +34,11 @@ namespace eng
         public:
             /**
              * @brief AnimationSystem constructor
-             * @fn AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites)
-             * @param event A shared pointer to the event
-             * @param clock A shared pointer to the clock
-             * @param AnimationBuffer A shared pointer to Animation buffer
+             * @fn AnimationSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites)
+             * @param graphic A reference to the Graphic
+             * @param entityManager A reference to the EntityManager
             */
-            AnimationSystem(std::shared_ptr<sf::Event> event, std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::Sprite>> sprites);
+            AnimationSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             /**
              * @brief AnimationSystem destructor
              * @fn ~AnimationSystem()

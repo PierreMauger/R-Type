@@ -21,6 +21,8 @@
 */
 namespace eng
 {
+    class ECS;
+
     /**
      * @brief The engine of the game containing the ECS, the graphics and the loader.
      * @class Engine
@@ -33,11 +35,11 @@ namespace eng
             Graphic _graphic;
             Input _input;
 
-            void updateSize(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updateSpeed(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updatePos(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updateParallax(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updateAppDis(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateSize(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateSpeed(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updatePos(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateParallax(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateAppDis(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
 
         public:
             /**

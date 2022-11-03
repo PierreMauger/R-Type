@@ -26,6 +26,7 @@ namespace eng
     {
         private:
             std::vector<std::optional<std::size_t>> _masks;
+            std::map<std::size_t, std::vector<std::size_t>> _maskCategory;
 
         public:
             /**
@@ -45,6 +46,21 @@ namespace eng
              * @return The masks vector.
             */
             std::vector<std::optional<std::size_t>> &getMasks();
+
+            /**
+             * @brief Add a mask category.
+             * @fn void addMaskCategory(std::size_t category)
+             * @param category The components in binary
+             */
+            void addMaskCategory(std::size_t category);
+            /**
+             * @brief Get the all the entities id of a certain category
+             * @fn std::vector<std::size_t> &getMaskCategory(std::size_t category)
+             * @param category The components in binary
+             * @return std::vector<std::size_t>&
+             */
+            std::vector<std::size_t> &getMaskCategory(std::size_t category);
+
             /**
              * @brief Add a mask.
              * @fn std::size_t addMask(std::optional<std::size_t> mask, ComponentManager &componentManager)

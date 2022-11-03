@@ -1,13 +1,11 @@
 #include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 
-#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
-
 using namespace eng;
 
-PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
+PhysicSystem::PhysicSystem(Graphic &graphic, EntityManager &entityManager)
 {
-    this->_window = window;
-    this->_screenSize = screenSize;
+    this->_window = graphic.getWindow();
+    this->_screenSize = graphic.getScreenSize();
 }
 
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)

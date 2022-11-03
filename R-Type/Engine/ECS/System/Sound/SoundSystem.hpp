@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/System/ISystem.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Loader/Loader.hpp"
 /// @endcond
 
@@ -33,11 +34,11 @@ namespace eng
         public:
             /**
              * @brief SoundSystem constructor
-             * @fn SoundSystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
-             * @param clock A shared pointer to the clock
-             * @param soundBuffer A shared pointer to sound buffer
+             * @fn SoundSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
+             * @param graphic A reference to the Graphic
+             * @param entityManager A reference to the EntityManager
             */
-            SoundSystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer);
+            SoundSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer);
             /**
              * @brief SoundSystem destructor
              * @fn ~SoundSystem()
