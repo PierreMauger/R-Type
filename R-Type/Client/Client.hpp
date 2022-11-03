@@ -15,7 +15,9 @@
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
+#include "Engine/Network/MenuSerializer.hpp"
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -33,6 +35,8 @@ namespace eng
         private:
             Engine _engine;
             ClientNetwork _network;
+
+            MenuSerializer _menuSerializer;
 
             void initSystems();
             void initComponents();
