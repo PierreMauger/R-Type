@@ -109,19 +109,21 @@ void eng::Server::updateClients()
     bool check = false;
     std::vector<std::shared_ptr<Connection>> &connections = this->_network.getConnections();
 
-    if (this->_clients.size() != connections.size()) {
-        for (auto &connection : connections) {
-            for (auto &client : this->_clients) {
-                if (client.getConnection() == connection)
-                    check = true;
-            }
-            if (!check)
-                this->_clients.push_back(Client(connection));
-            check = false;
-        }
+    if (this->_clients.size() == connections.size())
+        return;
+    for (auto &connection : connections) {
         for (auto &client : this->_clients) {
-            if (client.getConnection() == nullptr)
-                this->_clients.erase(std::remove(this->_clients.begin(), this->_clients.end(), client), this->_clients.end());
+            if (client.getConnection() == connection)
+                check = true;
+        }
+        if (!check)
+            this->_clients.push_back(Client(connection));
+        check = false;
+    }
+    for (auto &client : this->_clients) {
+        if (!client.getConnection()->isConnected()) {
+            client.destroyClient(this->_rooms, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+            this->_clients.erase(std::remove(this->_clients.begin(), this->_clients.end(), client), this->_clients.end());
         }
     }
 }
