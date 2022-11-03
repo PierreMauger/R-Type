@@ -76,7 +76,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
     std::size_t renderText = (InfoComp::TEXT);
-    std::size_t renderButton = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::BUTTON | InfoComp::SIZE);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
