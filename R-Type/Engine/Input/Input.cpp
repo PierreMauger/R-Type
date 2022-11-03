@@ -1,5 +1,7 @@
 #include "Input.hpp"
 
+using namespace eng;
+
 Input::Input()
 {
 }
