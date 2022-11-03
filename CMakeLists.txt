@@ -238,6 +238,7 @@ set(SERVER_INC
 #fetch source files
 set(SERVER_SRC
     ${SERVER_ROOT}/main.cpp
+    ${SERVER_ROOT}/Client.cpp
     ${SERVER_ROOT}/Server.cpp
     ${SERVER_ROOT}/ServerNetwork.cpp
 )

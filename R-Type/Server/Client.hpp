@@ -6,7 +6,7 @@
 
 namespace eng
 {
-    class Client
+    class Client : public std::enable_shared_from_this<Client>
     {
         private:
             std::size_t _vesselId;

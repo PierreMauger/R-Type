@@ -22,6 +22,7 @@
 #include "Engine/Network/Room.hpp"
 #include "Includes.hpp"
 #include "ServerNetwork.hpp"
+#include "Client.hpp"
 
 /// @endcond
 
@@ -53,6 +54,7 @@ namespace eng
             void initEntities();
             void manageEvent();
             void manageEnemy();
+            void updateClients();
 
         public:
             /**
