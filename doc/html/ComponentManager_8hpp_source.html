@@ -76,8 +76,8 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef COMPONENTMANAGER_HPP</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define COMPONENTMANAGER_HPP</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SparseArray_8hpp.html">Engine/ECS/Component/SparseArray.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ComponentTypes_8hpp.html">Engine/ECS/Component/ComponentTypes.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ComponentTypes_8hpp.html">Engine/ECS/Component/ComponentTypes.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="SparseArray_8hpp.html">Engine/ECS/Component/SparseArray.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
@@ -119,10 +119,11 @@ $(function() {
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ComponentManager.html#ab189e949a39d4e24a12fcc34b8f027f8">removeSingleComponent</a>(std::size_t <span class="keywordtype">id</span>, std::type_index type);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ComponentManager.html#a50e418a97be38d60f2e5e984cabfdcc4">removeAllComponents</a>(std::size_t <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ComponentManager.html#afacad67ddcef477accb55914e35645c1">updateComponent</a>(std::size_t <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    };</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;}</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTMANAGER_HPP</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            <span class="keywordtype">void</span> clear();</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    };</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;}</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTMANAGER_HPP</span></div>
 <div class="ttc" id="aComponentTypes_8hpp_html"><div class="ttname"><a href="ComponentTypes_8hpp.html">ComponentTypes.hpp</a></div><div class="ttdoc">Ressources header containing the components' masks with their structs definitions.</div></div>
 <div class="ttc" id="aIncludes_8hpp_html"><div class="ttname"><a href="Includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
 <div class="ttc" id="aSparseArray_8hpp_html"><div class="ttname"><a href="SparseArray_8hpp.html">SparseArray.hpp</a></div><div class="ttdoc">Functions definitions for a sparse array in the ComponentManager.</div></div>

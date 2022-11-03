@@ -101,9 +101,9 @@ Collaboration diagram for eng::GUISystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0b012a2dc4bebc0451803b179c349060"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GUISystem.html#a0b012a2dc4bebc0451803b179c349060">GUISystem</a> (std::shared_ptr&lt; sf::RenderWindow &gt; window)</td></tr>
-<tr class="memdesc:a0b012a2dc4bebc0451803b179c349060"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1GUISystem.html" title="System of the GUI.">GUISystem</a> constructor.  <a href="classeng_1_1GUISystem.html#a0b012a2dc4bebc0451803b179c349060">More...</a><br /></td></tr>
-<tr class="separator:a0b012a2dc4bebc0451803b179c349060"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae40a906511a5dca34c873a4530b7e23e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GUISystem.html#ae40a906511a5dca34c873a4530b7e23e">GUISystem</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager)</td></tr>
+<tr class="memdesc:ae40a906511a5dca34c873a4530b7e23e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1GUISystem.html" title="System of the GUI.">GUISystem</a> constructor.  <a href="classeng_1_1GUISystem.html#ae40a906511a5dca34c873a4530b7e23e">More...</a><br /></td></tr>
+<tr class="separator:ae40a906511a5dca34c873a4530b7e23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48f36abc3b13fb0822784fae61b11b13"><td class="memItemLeft" align="right" valign="top"><a id="a48f36abc3b13fb0822784fae61b11b13"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GUISystem.html#a48f36abc3b13fb0822784fae61b11b13">~GUISystem</a> ()</td></tr>
 <tr class="memdesc:a48f36abc3b13fb0822784fae61b11b13"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1GUISystem.html" title="System of the GUI.">GUISystem</a> destructor. <br /></td></tr>
@@ -120,8 +120,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>System of the GUI. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0b012a2dc4bebc0451803b179c349060"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b012a2dc4bebc0451803b179c349060">&#9670;&nbsp;</a></span>GUISystem()</h2>
+<a id="ae40a906511a5dca34c873a4530b7e23e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae40a906511a5dca34c873a4530b7e23e">&#9670;&nbsp;</a></span>GUISystem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,9 +129,19 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">eng::GUISystem::GUISystem </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; sf::RenderWindow &gt;&#160;</td>
-          <td class="paramname"><em>window</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;&#160;</td>
+          <td class="paramname"><em>graphic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>entityManager</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -139,7 +149,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p><a class="el" href="classeng_1_1GUISystem.html" title="System of the GUI.">GUISystem</a> constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">window</td><td>A shared pointer to the SFML render window. </td></tr>
+    <tr><td class="paramname">graphic</td><td>A reference to the <a class="el" href="classeng_1_1Graphic.html" title="The Engine graphics (SFML).">Graphic</a> </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a> </td></tr>
   </table>
   </dd>
 </dl>

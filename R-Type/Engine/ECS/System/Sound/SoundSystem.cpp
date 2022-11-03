@@ -2,31 +2,30 @@
 
 using namespace eng;
 
-SoundSystem::SoundSystem(std::shared_ptr<sf::Clock> clock, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
+SoundSystem::SoundSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
 {
-    this->_clock = clock;
+    this->_clock = graphic.getClock();
     this->_soundBuffer = soundBuffer;
+
+    entityManager.addMaskCategory(InfoComp::SOUNDID);
 }
 
 void SoundSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t soundMask = (InfoComp::SOUNDID);
 
-    for (std::size_t i = 0; i < masks.size(); i++) {
-        if (masks[i].has_value() && ((masks[i].value() & soundMask) == soundMask)) {
-            SoundID &soundId = componentManager.getSingleComponent<SoundID>(i);
-            if (soundId.play && this->_sounds[i].getStatus() != sf::Sound::Status::Playing) {
-                componentManager.removeAllComponents(i);
-                entityManager.removeMask(i);
-            }
-            if (!soundId.play) {
-                this->_sounds[i].setBuffer(this->_soundBuffer->at(soundId.id));
-                this->_sounds[i].play();
-                this->_sounds[i].setLoop(soundId.loop);
-                this->_sounds[i].setPitch(soundId.pitch);
-                soundId.play = true;
-            }
+    for (auto id : entityManager.getMaskCategory(soundMask)) {
+        SoundID &soundId = componentManager.getSingleComponent<SoundID>(id);
+        if (soundId.play && this->_sounds[id].getStatus() != sf::Sound::Status::Playing) {
+            componentManager.removeAllComponents(id);
+            entityManager.removeMask(id);
+        }
+        if (!soundId.play) {
+            this->_sounds[id].setBuffer(this->_soundBuffer->at(soundId.id));
+            this->_sounds[id].play();
+            this->_sounds[id].setLoop(soundId.loop);
+            this->_sounds[id].setPitch(soundId.pitch);
+            soundId.play = true;
         }
     }
 }

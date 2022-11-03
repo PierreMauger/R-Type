@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief The score system
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef SCORESYSTEM_HPP
 #define SCORESYSTEM_HPP
@@ -16,13 +16,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief The score system
      * @class ScoreSystem
-    */
+     */
     class ScoreSystem : public virtual ISystem
     {
         private:
@@ -31,20 +31,21 @@ namespace eng
         public:
             /**
              * @brief ScoreSystem constructor
-             * @fn ScoreSystem()
-            */
-            ScoreSystem();
+             * @fn ScoreSystem(Graphic &graphic, EntityManager &entityManager)
+             * @param entityManager A reference to the EntityManager
+             */
+            ScoreSystem(EntityManager &entityManager);
             /**
              * @brief ScoreSystem destructor
              * @fn ~ScoreSystem()
-            */
+             */
             ~ScoreSystem() = default;
             /**
              * @brief Update the ScoreSystem
              * @fn void update(ComponentManager &componentManager, EntityManager &entityManager)
              * @param componentManager A reference to the ComponentManager
              * @param entityManager A reference to the EntityManager
-            */
+             */
             void update(ComponentManager &componentManager, EntityManager &entityManager);
     };
 }

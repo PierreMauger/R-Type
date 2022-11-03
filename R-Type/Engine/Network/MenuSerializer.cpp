@@ -1,10 +1,12 @@
 #include "Engine/Network/MenuSerializer.hpp"
 
-eng::MenuSerializer::MenuSerializer()
+using namespace eng;
+
+MenuSerializer::MenuSerializer()
 {
 }
 
-std::vector<eng::Room>::iterator eng::MenuSerializer::getRoom(std::vector<Room> rooms, std::size_t id)
+std::vector<Room>::iterator MenuSerializer::getRoom(std::vector<Room> rooms, std::size_t id)
 {
     for (auto it = rooms.begin(); it != rooms.end(); ++it) {
         if (it->getId() == id) {
@@ -15,7 +17,7 @@ std::vector<eng::Room>::iterator eng::MenuSerializer::getRoom(std::vector<Room> 
     throw std::runtime_error("[ERROR] Room not found");
 }
 
-void eng::MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers)
+void MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers)
 {
     if (crudType == CrudType::CREATE) {
         rooms.push_back(Room(id, maxPlayers, nbPlayers));
@@ -36,7 +38,7 @@ void eng::MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, 
     throw std::runtime_error("[ERROR] Invalid CRUD type");
 }
 
-_STORAGE_DATA eng::MenuSerializer::serializeRoomEdit(CrudType editType, Room &room)
+_STORAGE_DATA MenuSerializer::serializeRoomEdit(CrudType editType, Room &room)
 {
     std::vector<uint8_t> packet;
 
@@ -61,7 +63,7 @@ _STORAGE_DATA eng::MenuSerializer::serializeRoomEdit(CrudType editType, Room &ro
     return this->convertToData(packet);
 }
 
-void eng::MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms)
+void MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(MenuPacketType);
     std::size_t id;
@@ -81,7 +83,7 @@ void eng::MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::
     this->editRoom(crudType, rooms, id, maxPlayers, nbPlayers);
 }
 
-_STORAGE_DATA eng::MenuSerializer::serializeRoomAction(std::size_t id, RoomAction action)
+_STORAGE_DATA MenuSerializer::serializeRoomAction(std::size_t id, RoomAction action)
 {
     std::vector<uint8_t> packet;
 
@@ -100,7 +102,7 @@ _STORAGE_DATA eng::MenuSerializer::serializeRoomAction(std::size_t id, RoomActio
     return this->convertToData(packet);
 }
 
-void eng::MenuSerializer::deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms)
+void MenuSerializer::deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(MenuPacketType);
     std::size_t id;
