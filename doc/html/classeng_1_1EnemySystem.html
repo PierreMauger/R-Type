@@ -101,9 +101,9 @@ Collaboration diagram for eng::EnemySystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4a2f6ad3cb0f69effe7910cfa102cb0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1EnemySystem.html#a4a2f6ad3cb0f69effe7910cfa102cb0d">EnemySystem</a> (std::shared_ptr&lt; sf::Clock &gt; clock, std::shared_ptr&lt; sf::RenderWindow &gt; window, std::shared_ptr&lt; sf::Vector2f &gt; screenSize)</td></tr>
-<tr class="memdesc:a4a2f6ad3cb0f69effe7910cfa102cb0d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1EnemySystem.html" title="System of an enemy.">EnemySystem</a> constructor.  <a href="classeng_1_1EnemySystem.html#a4a2f6ad3cb0f69effe7910cfa102cb0d">More...</a><br /></td></tr>
-<tr class="separator:a4a2f6ad3cb0f69effe7910cfa102cb0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5168e400f97d9bf2d75eaddefd5aeb80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1EnemySystem.html#a5168e400f97d9bf2d75eaddefd5aeb80">EnemySystem</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager)</td></tr>
+<tr class="memdesc:a5168e400f97d9bf2d75eaddefd5aeb80"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1EnemySystem.html" title="System of an enemy.">EnemySystem</a> constructor.  <a href="classeng_1_1EnemySystem.html#a5168e400f97d9bf2d75eaddefd5aeb80">More...</a><br /></td></tr>
+<tr class="separator:a5168e400f97d9bf2d75eaddefd5aeb80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5289105e05cac6e854808f8433f1c7f7"><td class="memItemLeft" align="right" valign="top"><a id="a5289105e05cac6e854808f8433f1c7f7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1EnemySystem.html#a5289105e05cac6e854808f8433f1c7f7">~EnemySystem</a> ()=default</td></tr>
 <tr class="memdesc:a5289105e05cac6e854808f8433f1c7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1EnemySystem.html" title="System of an enemy.">EnemySystem</a> destructor. <br /></td></tr>
@@ -120,8 +120,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>System of an enemy. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4a2f6ad3cb0f69effe7910cfa102cb0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a2f6ad3cb0f69effe7910cfa102cb0d">&#9670;&nbsp;</a></span>EnemySystem()</h2>
+<a id="a5168e400f97d9bf2d75eaddefd5aeb80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5168e400f97d9bf2d75eaddefd5aeb80">&#9670;&nbsp;</a></span>EnemySystem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,20 +129,14 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">eng::EnemySystem::EnemySystem </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Clock &gt;&#160;</td>
-          <td class="paramname"><em>clock</em>, </td>
+          <td class="paramtype"><a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;&#160;</td>
+          <td class="paramname"><em>graphic</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; sf::RenderWindow &gt;&#160;</td>
-          <td class="paramname"><em>window</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Vector2f &gt;&#160;</td>
-          <td class="paramname"><em>screenSize</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>entityManager</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -155,9 +149,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p><a class="el" href="classeng_1_1EnemySystem.html" title="System of an enemy.">EnemySystem</a> constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">clock</td><td>A shared pointer to the clock of the game (for enemy animations, patterns and such). </td></tr>
-    <tr><td class="paramname">window</td><td>A shared pointer to the render window </td></tr>
-    <tr><td class="paramname">screenSize</td><td>A shared pointer to the screen size </td></tr>
+    <tr><td class="paramname">graphic</td><td>A reference to the <a class="el" href="classeng_1_1Graphic.html" title="The Engine graphics (SFML).">Graphic</a> </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a> </td></tr>
   </table>
   </dd>
 </dl>

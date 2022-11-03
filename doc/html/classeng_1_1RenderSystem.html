@@ -101,9 +101,9 @@ Collaboration diagram for eng::RenderSystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae87c8ab0962b211658f9ccd2daeb14a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1RenderSystem.html#ae87c8ab0962b211658f9ccd2daeb14a8">RenderSystem</a> (std::shared_ptr&lt; sf::RenderWindow &gt; window, std::shared_ptr&lt; sf::Clock &gt; clock, std::shared_ptr&lt; std::vector&lt; sf::Sprite &gt;&gt; sprites, std::shared_ptr&lt; sf::Vector2f &gt; screenSize)</td></tr>
-<tr class="memdesc:ae87c8ab0962b211658f9ccd2daeb14a8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1RenderSystem.html" title="System of the render.">RenderSystem</a> constructor.  <a href="classeng_1_1RenderSystem.html#ae87c8ab0962b211658f9ccd2daeb14a8">More...</a><br /></td></tr>
-<tr class="separator:ae87c8ab0962b211658f9ccd2daeb14a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fb3b28799e55c5932db529ecf6ac31e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1RenderSystem.html#a0fb3b28799e55c5932db529ecf6ac31e">RenderSystem</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, std::shared_ptr&lt; std::vector&lt; sf::Sprite &gt;&gt; sprites)</td></tr>
+<tr class="memdesc:a0fb3b28799e55c5932db529ecf6ac31e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1RenderSystem.html" title="System of the render.">RenderSystem</a> constructor.  <a href="classeng_1_1RenderSystem.html#a0fb3b28799e55c5932db529ecf6ac31e">More...</a><br /></td></tr>
+<tr class="separator:a0fb3b28799e55c5932db529ecf6ac31e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41d740f7b6de416592691bcb589ac463"><td class="memItemLeft" align="right" valign="top"><a id="a41d740f7b6de416592691bcb589ac463"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1RenderSystem.html#a41d740f7b6de416592691bcb589ac463">~RenderSystem</a> ()=default</td></tr>
 <tr class="memdesc:a41d740f7b6de416592691bcb589ac463"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1RenderSystem.html" title="System of the render.">RenderSystem</a> destructor. <br /></td></tr>
@@ -120,8 +120,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>System of the render. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae87c8ab0962b211658f9ccd2daeb14a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae87c8ab0962b211658f9ccd2daeb14a8">&#9670;&nbsp;</a></span>RenderSystem()</h2>
+<a id="a0fb3b28799e55c5932db529ecf6ac31e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fb3b28799e55c5932db529ecf6ac31e">&#9670;&nbsp;</a></span>RenderSystem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,26 +129,20 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">eng::RenderSystem::RenderSystem </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; sf::RenderWindow &gt;&#160;</td>
-          <td class="paramname"><em>window</em>, </td>
+          <td class="paramtype"><a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;&#160;</td>
+          <td class="paramname"><em>graphic</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Clock &gt;&#160;</td>
-          <td class="paramname"><em>clock</em>, </td>
+          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>entityManager</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::shared_ptr&lt; std::vector&lt; sf::Sprite &gt;&gt;&#160;</td>
-          <td class="paramname"><em>sprites</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Vector2f &gt;&#160;</td>
-          <td class="paramname"><em>screenSize</em>&#160;</td>
+          <td class="paramname"><em>sprites</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -161,10 +155,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p><a class="el" href="classeng_1_1RenderSystem.html" title="System of the render.">RenderSystem</a> constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">window</td><td>A shared pointer to the SFML render window. </td></tr>
-    <tr><td class="paramname">clock</td><td>A shared pointer to the clock of the game (for render timings and such). </td></tr>
+    <tr><td class="paramname">graphic</td><td>A reference to the <a class="el" href="classeng_1_1Graphic.html" title="The Engine graphics (SFML).">Graphic</a> </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a> </td></tr>
     <tr><td class="paramname">sprites</td><td>A shared pointer to the vector of sprites to render </td></tr>
-    <tr><td class="paramname">screenSize</td><td>A shared pointer to the screen size </td></tr>
   </table>
   </dd>
 </dl>

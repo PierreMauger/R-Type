@@ -1,50 +1,52 @@
 #include "Room.hpp"
 
-eng::Room::Room(std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers) : _id(id), _maxPlayers(maxPlayers), _nbPlayers(nbPlayers)
+using namespace eng;
+
+Room::Room(std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers) : _id(id), _maxPlayers(maxPlayers), _nbPlayers(nbPlayers)
 {
 }
 
-std::size_t eng::Room::getId() const
+std::size_t Room::getId() const
 {
     return _id;
 }
 
-std::size_t eng::Room::getMaxPlayers() const
+std::size_t Room::getMaxPlayers() const
 {
     return _maxPlayers;
 }
 
-std::size_t eng::Room::getNbPlayers() const
+std::size_t Room::getNbPlayers() const
 {
     return _nbPlayers;
 }
 
-void eng::Room::setId(std::size_t id)
+void Room::setId(std::size_t id)
 {
     _id = id;
 }
 
-void eng::Room::setMaxPlayers(std::size_t maxPlayers)
+void Room::setMaxPlayers(std::size_t maxPlayers)
 {
     _maxPlayers = maxPlayers;
 }
 
-void eng::Room::setNbPlayers(std::size_t nbPlayers)
+void Room::setNbPlayers(std::size_t nbPlayers)
 {
     _nbPlayers = nbPlayers;
 }
 
-void eng::Room::addPlayer()
+void Room::addPlayer()
 {
     _nbPlayers++;
 }
 
-void eng::Room::removePlayer()
+void Room::removePlayer()
 {
     _nbPlayers--;
 }
 
-bool eng::Room::isFull() const
+bool Room::isFull() const
 {
     return _nbPlayers == _maxPlayers;
 }

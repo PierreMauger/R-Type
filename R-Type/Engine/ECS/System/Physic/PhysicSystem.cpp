@@ -1,13 +1,11 @@
 #include "Engine/ECS/System/Physic/PhysicSystem.hpp"
 
-#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
-
 using namespace eng;
 
-PhysicSystem::PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
+PhysicSystem::PhysicSystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
-    this->_window = window;
-    this->_screenSize = screenSize;
+    this->_window = graphic.getWindow();
+    this->_screenSize = graphic.getScreenSize();
 }
 
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
@@ -120,9 +118,7 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
 
     if (masks[i].has_value() && (masks[i].value() & physicCon) == physicCon) {
         for (std::size_t j = 0; j < masks.size(); j++) {
-            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol &&
-                this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
-                                    componentManager.getSingleComponent<Size>(j))) {
+            if (masks[j].has_value() && (masks[j].value() & physicCol) == physicCol && this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
                 if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
                     componentManager.getSingleComponent<Disappearance>(i).dis = true;
                 else {
@@ -155,12 +151,10 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
         }
         for (std::size_t j = 0; j < masks.size(); j++) {
             if (masks[j].has_value() && ((masks[j].value() & physicCon) == physicCon || (masks[j].value() & physicEne) == physicEne) && par.id != j) {
-                if (((masks[j].value() & physicApp) == physicApp && componentManager.getSingleComponent<Appearance>(j).app) ||
-                    ((masks[j].value() & physicDis) == physicDis && componentManager.getSingleComponent<Disappearance>(j).dis) ||
+                if (((masks[j].value() & physicApp) == physicApp && componentManager.getSingleComponent<Appearance>(j).app) || ((masks[j].value() & physicDis) == physicDis && componentManager.getSingleComponent<Disappearance>(j).dis) ||
                     ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
-                if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i),
-                                        componentManager.getSingleComponent<Size>(j))) {
+                if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
                     Life &hp = componentManager.getSingleComponent<Life>(j);
                     Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
                     if ((masks[par.id].value() & physicCon) == physicCon)
