@@ -101,9 +101,9 @@ Collaboration diagram for eng::AnimationSystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a172faccee1b118b8b8c8aed243a73944"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1AnimationSystem.html#a172faccee1b118b8b8c8aed243a73944">AnimationSystem</a> (std::shared_ptr&lt; sf::Event &gt; event, std::shared_ptr&lt; sf::Clock &gt; clock, std::shared_ptr&lt; std::vector&lt; sf::Sprite &gt;&gt; sprites)</td></tr>
-<tr class="memdesc:a172faccee1b118b8b8c8aed243a73944"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1AnimationSystem.html" title="The Animation system.">AnimationSystem</a> constructor.  <a href="classeng_1_1AnimationSystem.html#a172faccee1b118b8b8c8aed243a73944">More...</a><br /></td></tr>
-<tr class="separator:a172faccee1b118b8b8c8aed243a73944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab18a8e78eaf502c3a06180f031706dfd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1AnimationSystem.html#ab18a8e78eaf502c3a06180f031706dfd">AnimationSystem</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, std::shared_ptr&lt; std::vector&lt; sf::Sprite &gt;&gt; sprites)</td></tr>
+<tr class="memdesc:ab18a8e78eaf502c3a06180f031706dfd"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1AnimationSystem.html" title="The Animation system.">AnimationSystem</a> constructor.  <a href="classeng_1_1AnimationSystem.html#ab18a8e78eaf502c3a06180f031706dfd">More...</a><br /></td></tr>
+<tr class="separator:ab18a8e78eaf502c3a06180f031706dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2346fe72619ab6f80280e928f703b931"><td class="memItemLeft" align="right" valign="top"><a id="a2346fe72619ab6f80280e928f703b931"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1AnimationSystem.html#a2346fe72619ab6f80280e928f703b931">~AnimationSystem</a> ()=default</td></tr>
 <tr class="memdesc:a2346fe72619ab6f80280e928f703b931"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1AnimationSystem.html" title="The Animation system.">AnimationSystem</a> destructor. <br /></td></tr>
@@ -120,8 +120,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Animation system. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a172faccee1b118b8b8c8aed243a73944"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a172faccee1b118b8b8c8aed243a73944">&#9670;&nbsp;</a></span>AnimationSystem()</h2>
+<a id="ab18a8e78eaf502c3a06180f031706dfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab18a8e78eaf502c3a06180f031706dfd">&#9670;&nbsp;</a></span>AnimationSystem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,14 +129,14 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">eng::AnimationSystem::AnimationSystem </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Event &gt;&#160;</td>
-          <td class="paramname"><em>event</em>, </td>
+          <td class="paramtype"><a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;&#160;</td>
+          <td class="paramname"><em>graphic</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Clock &gt;&#160;</td>
-          <td class="paramname"><em>clock</em>, </td>
+          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>entityManager</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -155,9 +155,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p><a class="el" href="classeng_1_1AnimationSystem.html" title="The Animation system.">AnimationSystem</a> constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">event</td><td>A shared pointer to the event </td></tr>
-    <tr><td class="paramname">clock</td><td>A shared pointer to the clock </td></tr>
-    <tr><td class="paramname">AnimationBuffer</td><td>A shared pointer to Animation buffer </td></tr>
+    <tr><td class="paramname">graphic</td><td>A reference to the <a class="el" href="classeng_1_1Graphic.html" title="The Engine graphics (SFML).">Graphic</a> </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a> </td></tr>
   </table>
   </dd>
 </dl>
