@@ -7,15 +7,15 @@ ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
 
-    entityManager.addMaskCategory(InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
+    entityManager.addMaskCategory(this->_buttonTag);
 }
 
 void ClickSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    std::size_t button = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
+    bool changed = false;
 
-    for (auto id : entityManager.getMaskCategory(button)) {
-        Button button = componentManager.getSingleComponent<Button>(id);
+    for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
+        Button &button = componentManager.getSingleComponent<Button>(id);
         Position pos = componentManager.getSingleComponent<Position>(id);
         SpriteAttribut spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
 
@@ -26,10 +26,21 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                 if (button.type == ButtonType::PLAY) {
                     componentManager.clear();
                     entityManager.clear();
-                    // ParallaxPreload::preload(componentManager, entityManager, this->_window, this->_screenSize);
+                    ParallaxPreload::preload(this->_window, this->_screenSize, entityManager, componentManager);
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();
+                } else if (button.type == ButtonType::TEXTZONE) {
+                    button.selected = true;
+                    changed = true;
                 }
+            }
+        }
+    }
+    if (changed) {
+        for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
+            Button &button = componentManager.getSingleComponent<Button>(id);
+            if (button.type == ButtonType::TEXTZONE) {
+                button.selected = false;
             }
         }
     }

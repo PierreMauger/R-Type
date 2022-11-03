@@ -35,6 +35,10 @@ namespace eng
             std::shared_ptr<sf::Vector2f> _screenSize;
             sf::Text _text;
             sf::Font _font;
+
+            std::size_t _renderTag = (InfoComp::POS | InfoComp::SPRITEID);
+            std::size_t _textTag = (InfoComp::TEXT);
+
             void displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
             void displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
 

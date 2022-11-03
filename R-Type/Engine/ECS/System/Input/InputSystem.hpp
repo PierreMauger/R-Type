@@ -34,6 +34,9 @@ namespace eng
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
 
+            std::size_t _controlTag = (InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
+            std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
+
         public:
             /**
              * @brief InputSystem constructor.

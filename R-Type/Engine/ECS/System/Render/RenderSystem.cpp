@@ -14,8 +14,8 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
     this->_text.setCharacterSize(20);
     this->_text.setFillColor(sf::Color::White);
 
-    entityManager.addMaskCategory(InfoComp::TEXT);
-    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
+    entityManager.addMaskCategory(this->_renderTag);
+    entityManager.addMaskCategory(this->_textTag);
 }
 
 void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
@@ -70,19 +70,17 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t render = (InfoComp::POS | InfoComp::SPRITEID);
     std::size_t renderAnim = (InfoComp::SPRITEAT);
     std::size_t renderCooldown = (InfoComp::PARENT | InfoComp::COOLDOWNBAR);
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
-    std::size_t renderText = (InfoComp::TEXT);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
     std::vector<sf::Sprite> stockButton;
 
-    for (auto id : entityManager.getMaskCategory(renderText)) {
+    for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
         if (componentManager.getSingleComponent<Text>(id).hasValue)
             this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
@@ -93,7 +91,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         this->_text.setPosition(componentManager.getSingleComponent<Text>(id).pos);
         stockText.push_back(this->_text);
     }
-    for (auto id : entityManager.getMaskCategory(render)) {
+    for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
         sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);

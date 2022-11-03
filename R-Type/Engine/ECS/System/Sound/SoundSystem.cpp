@@ -7,14 +7,12 @@ SoundSystem::SoundSystem(Graphic &graphic, EntityManager &entityManager, std::sh
     this->_clock = graphic.getClock();
     this->_soundBuffer = soundBuffer;
 
-    entityManager.addMaskCategory(InfoComp::SOUNDID);
+    entityManager.addMaskCategory(this->_soundTag);
 }
 
 void SoundSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    std::size_t soundMask = (InfoComp::SOUNDID);
-
-    for (auto id : entityManager.getMaskCategory(soundMask)) {
+    for (auto id : entityManager.getMaskCategory(this->_soundTag)) {
         SoundID &soundId = componentManager.getSingleComponent<SoundID>(id);
         if (soundId.play && this->_sounds[id].getStatus() != sf::Sound::Status::Playing) {
             componentManager.removeAllComponents(id);

@@ -274,14 +274,24 @@ typedef struct SpriteAttribut {
         sf::Vector2f scale = {1.0f, 1.0f};
 } SpriteAttribut;
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 enum ButtonType {
     QUIT = 0,
     PLAY,
+    TEXTZONE,
     BACK,
 };
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 typedef struct Button {
         ButtonType type = QUIT;
+        bool selected = false;
 } Button;
 
 #endif // COMPONENTTYPES_HPP
