@@ -46,7 +46,7 @@ Level::Level(std::vector<std::string> lines)
     }
 }
 
-void Level::parseLevel(Engine &engine)
+void Level::parseLevel()
 {
     if (this->_level[this->_index] == '|') {
         this->_index++;
@@ -58,13 +58,13 @@ void Level::parseLevel(Engine &engine)
         this->_index += match[0].length();
         switch (match[1].str()[0]) {
         case 'E':
-            EnemyPreload::preload(engine, std::stoi(match[2]), std::stoi(match[3]));
+            std::cout << std::stoi(match[2]) << " " << std::stoi(match[3]) << std::endl;
             break;
         case 'B':
-            BossPreload::preload(engine, std::stoi(match[2]), std::stoi(match[3]));
+            std::cout << std::stoi(match[2]) << " " << std::stoi(match[3]) << std::endl;
             break;
         case 'D':
-            DevourerPreload::preload(engine, std::stoi(match[2]), std::stoi(match[3]));
+            std::cout << std::stoi(match[2]) << " " << std::stoi(match[3]) << std::endl;
             break;
         default:
             break;

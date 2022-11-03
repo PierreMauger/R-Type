@@ -2,9 +2,9 @@
 
 using namespace eng;
 
-GUISystem::GUISystem(std::shared_ptr<sf::RenderWindow> window)
+GUISystem::GUISystem(Graphic &graphic)
 {
-    this->_window = window;
+    this->_window = graphic.getWindow();
     if (!ImGui::SFML::Init(*this->_window))
         std::cout << "ImGui counldn't init" << std::endl;
 }
@@ -165,6 +165,9 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                     case 22:
                         componentManager.addComponent<CooldownAction>(this->_selectedEntity);
                         break;
+                    case 23:
+                        componentManager.addComponent<Button>(this->_selectedEntity);
+                        break;
                     default:
                         break;
                     }
@@ -280,6 +283,12 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         break;
     case 22:
         break;
+    case 23: {
+        Button &button = componentManager.getSingleComponent<Button>(this->_selectedEntity);
+        const ImU64 increment = 1;
+        ImGui::InputScalar("Sprite ID##button", ImGuiDataType_U64, &button.type, &increment);
+        break;
+    }
     default:
         break;
     }

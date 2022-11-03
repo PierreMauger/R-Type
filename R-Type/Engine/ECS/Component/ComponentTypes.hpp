@@ -47,6 +47,7 @@ namespace eng
         SPRITEAT = 1 << 20,
         GROUPEN = 1 << 21,
         COOLDOWNACT = 1 << 22,
+        BUTTON = 1 << 23,
     };
 }
 
@@ -97,7 +98,7 @@ enum Priority {
  */
 typedef struct SpriteID {
         std::size_t id = 0;
-        enum Priority priority = Priority::MEDIUM;
+        Priority priority = Priority::MEDIUM;
         std::size_t curFrame = 0;
         std::size_t nbFrame = 0;
         bool autoLoop = false;
@@ -250,6 +251,7 @@ typedef struct DropBonus {
  */
 typedef struct Text {
         std::string str = "";
+        bool hasValue = true;
         std::size_t value = 0;
         sf::Vector2f pos = {0.0f, 0.0f};
 } Text;
@@ -293,5 +295,15 @@ typedef struct CooldownAction {
         float actionDelay = 2.0f;
         std::any action = {};
 } CooldownAction;
+
+enum ButtonType {
+    QUIT = 0,
+    PLAY,
+    BACK,
+};
+
+typedef struct Button {
+        ButtonType type = QUIT;
+} Button;
 
 #endif // COMPONENTTYPES_HPP

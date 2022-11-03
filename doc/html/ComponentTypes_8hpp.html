@@ -147,6 +147,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSpriteAttribut.html">SpriteAttribut</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The spriteAttribut component.  <a href="structSpriteAttribut.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structButton.html">Button</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -219,6 +221,9 @@ typedef struct <a class="el" href="structSoundID.html">SoundID</a>&#160;</td><td
 <tr class="memitem:a0abd80847cff6e383a69faab44c8450a"><td class="memItemLeft" align="right" valign="top"><a id="a0abd80847cff6e383a69faab44c8450a"></a>
 typedef struct <a class="el" href="structSpriteAttribut.html">SpriteAttribut</a>&#160;</td><td class="memItemRight" valign="bottom"><b>SpriteAttribut</b></td></tr>
 <tr class="separator:a0abd80847cff6e383a69faab44c8450a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabbec029df4131b530b45fc227cfddcc"><td class="memItemLeft" align="right" valign="top"><a id="aabbec029df4131b530b45fc227cfddcc"></a>
+typedef struct <a class="el" href="structButton.html">Button</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Button</b></td></tr>
+<tr class="separator:aabbec029df4131b530b45fc227cfddcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -249,6 +254,7 @@ Enumerations</h2></td></tr>
 , <b>SOUNDID</b> = 1 &lt;&lt; 19
 , <br />
 &#160;&#160;<b>SPRITEAT</b> = 1 &lt;&lt; 20
+, <b>BUTTON</b> = 1 &lt;&lt; 21
 <br />
  }</td></tr>
 <tr class="memdesc:ae58dbf00a8a6d1168e886cb3aabd5e8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Masks of the components. <br /></td></tr>
@@ -266,6 +272,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:aaf5b95d5b986f93429ceb6a7765c9965"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of pattern that an enemy has. <br /></td></tr>
 <tr class="separator:aaf5b95d5b986f93429ceb6a7765c9965"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2d5c50fae96a83cc4f5974af78e6943"><td class="memItemLeft" align="right" valign="top"><a id="ae2d5c50fae96a83cc4f5974af78e6943"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ButtonType</b> { <b>QUIT</b> = 0
+, <b>PLAY</b>
+, <b>BACK</b>
+ }</td></tr>
+<tr class="separator:ae2d5c50fae96a83cc4f5974af78e6943"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Ressources header containing the components' masks with their structs definitions. </p>

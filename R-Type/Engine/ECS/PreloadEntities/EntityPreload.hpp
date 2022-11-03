@@ -9,10 +9,9 @@
 #define ENTITYPRELOAD_HPP
 
 /// @cond
-#include <Includes.hpp>
-
-#include "Engine/Engine.hpp"
-
+#include "Engine/ECS/Component/ComponentManager.hpp"
+#include "Engine/ECS/Entity/EntityManager.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 /// @endcond
 
 /**
@@ -36,10 +35,15 @@ namespace eng
 
             /**
              * @brief Preloads an entity.
-             * @fn virtual void preload(Engine &engine) = 0
+             * @fn virtual void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) = 0
              * @param engine A reference to the engine.
              */
-            virtual void preload(Engine &engine) = 0;
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+            {
+                (void)graphic;
+                (void)entityManager;
+                (void)componentManager;
+            }
 
             /**
              * @brief Creates a random value between a min and max.

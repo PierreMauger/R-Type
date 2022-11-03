@@ -38,7 +38,7 @@ namespace eng
              * @fn ~Level()
              */
             ~Level() = default;
-            void parseLevel(Engine &engine);
+            void parseLevel();
             float getSpeedRead();
             float getDelayRead();
             void setDelayRead(float delayRead);

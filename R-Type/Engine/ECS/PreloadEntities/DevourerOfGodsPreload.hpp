@@ -9,9 +9,6 @@
 #define DEVOUREROFGODSPRELOAD_HPP
 
 /// @cond
-#include <Includes.hpp>
-
-#include "Engine/ECS/ECS.hpp"
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
 
 /// @endcond
@@ -31,11 +28,10 @@ namespace eng
         public:
             /**
              * @brief Preloads the Devourer Of Gods.
-             * @fn void preload(Engine &engine) override
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
              * @param engine A reference to the engine.
              */
-            void preload(Engine &engine) override;
-            static void preload(Engine &engine, float x, float y);
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
     };
 }
 
