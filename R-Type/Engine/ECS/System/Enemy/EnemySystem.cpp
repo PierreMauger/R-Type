@@ -43,6 +43,9 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
                 vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
                 pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 3;
             }
+            if (pat.type == TypePattern::EIGHT) {
+                
+            }
             if ((masks[i].value() & cooldownEnemy) == cooldownEnemy) {
                 CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
                 if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {

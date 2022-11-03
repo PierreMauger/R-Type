@@ -213,7 +213,8 @@ enum TypePattern {
     LINE = 0,
     OSCILLATION,
     BIGOSCILLATION,
-    CIRCLE
+    CIRCLE,
+    EIGHT
 };
 
 /**
