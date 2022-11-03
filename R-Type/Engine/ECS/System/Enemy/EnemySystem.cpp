@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-EnemySystem::EnemySystem(Graphic &graphic, EntityManager &entityManager)
+EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();

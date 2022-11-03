@@ -10,7 +10,6 @@
 
 /// @cond
 #include "Includes.hpp"
-
 /// @endcond
 
 /**
