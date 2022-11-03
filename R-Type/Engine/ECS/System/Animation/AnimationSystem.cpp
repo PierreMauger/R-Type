@@ -15,7 +15,7 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
     std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
     std::size_t appMask = (InfoComp::APP);
     std::size_t contMask = (InfoComp::CONTROLLABLE | InfoComp::VEL);
-    std::size_t groupMask = (InfoComp::GROUPEN | InfoComp::POS | InfoComp::VEL);
+    std::size_t groupMask = (InfoComp::GROUPEN | InfoComp::POS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (masks[i].has_value() && (masks[i].value() & spriteMask) == spriteMask) {
@@ -24,7 +24,7 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
             if (masks[i].has_value() && (masks[i].value() & groupMask) == groupMask) {
                 GroupEntity &group = componentManager.getSingleComponent<GroupEntity>(i);
                 Position &pos = componentManager.getSingleComponent<Position>(i);
-                spriteAT.rotation = -(group.lastPos.y - pos.y);
+                spriteAT.rotation = group.lastPos.y - pos.y;
             }
             if (masks[i].has_value() && (masks[i].value() & contMask) == contMask) {
                 Velocity &vel = componentManager.getSingleComponent<Velocity>(i);

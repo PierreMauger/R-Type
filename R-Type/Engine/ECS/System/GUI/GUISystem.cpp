@@ -162,9 +162,6 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                     case 21:
                         componentManager.addComponent<GroupEntity>(this->_selectedEntity);
                         break;
-                    case 22:
-                        componentManager.addComponent<CooldownAction>(this->_selectedEntity);
-                        break;
                     default:
                         break;
                     }
@@ -277,8 +274,6 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     case 20:
         break;
     case 21:
-        break;
-    case 22:
         break;
     default:
         break;

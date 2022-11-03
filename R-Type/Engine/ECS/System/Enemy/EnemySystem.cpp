@@ -17,6 +17,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t appear = (InfoComp::APP);
     std::size_t enemyData = (InfoComp::POS | InfoComp::VEL | InfoComp::PATTERN);
     std::size_t cooldownEnemy = (InfoComp::COOLDOWNSHOOT);
+    std::size_t devourer = (InfoComp::GROUPEN | InfoComp::POS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value() || ((masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app))
@@ -25,18 +26,12 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
             Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
             Pattern &pat = componentManager.getSingleComponent<Pattern>(i);
             if (pat.type == TypePattern::DEVOUREROSC) {
-                GroupEntity &group = componentManager.getSingleComponent<GroupEntity>(i);
-                if (group.entityId == 0 && _clock->getElapsedTime().asSeconds() > componentManager.getSingleComponent<CooldownAction>(i).lastAction) {
-                    if (!componentManager.getSingleComponent<CooldownAction>(i).action.has_value())
-                        componentManager.getSingleComponent<CooldownAction>(i).action = 1.f;
-                    componentManager.getSingleComponent<CooldownAction>(i).action = std::any_cast<float>(componentManager.getSingleComponent<CooldownAction>(i).action) + 1;
-                    if (std::any_cast<float>(componentManager.getSingleComponent<CooldownAction>(i).action) > group.nbEntity)
-                        componentManager.getSingleComponent<CooldownAction>(i).action = 1.f;
-                    componentManager.getSingleComponent<CooldownAction>(i).lastAction = this->_clock->getElapsedTime().asSeconds() + componentManager.getSingleComponent<CooldownAction>(i).actionDelay;
+                // TODO: U-turn when reaching the end of the screen
+                if (masks[i].has_value() && ((masks[i].value() & devourer) == devourer) && componentManager.getSingleComponent<GroupEntity>(i).entityId == 0) {
+                    componentManager.getSingleComponent<GroupEntity>(i).lastPos.y = componentManager.getSingleComponent<Position>(i).y;
+                    componentManager.getSingleComponent<Position>(i).y = (500 / this->_screenSize->x * _window->getSize().x) + std::sin(pat.angle) * RADIUS;
+                    pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 1.5;
                 }
-                vel.x = (std::cos(pat.angle) * SPEED_OSC * 3) / this->_screenSize->x * _window->getSize().x;
-                vel.y = (std::sin(pat.angle) * SPEED_OSC * 3) / this->_screenSize->y * _window->getSize().y;
-                pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
             }
             if (pat.type == TypePattern::CIRCLE) {
                 vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;

@@ -54,7 +54,6 @@ void eng::Client::initComponents()
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
     componentManager.bindComponent<GroupEntity>();
-    componentManager.bindComponent<CooldownAction>();
 }
 
 void eng::Client::initEntities()
