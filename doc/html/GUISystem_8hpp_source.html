@@ -77,44 +77,47 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define GUISYSTEM_HPP</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ISystem_8hpp.html">Engine/ECS/System/ISystem.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;imgui-SFML.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;imgui.h&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define FORMAT_NAME(name) name + std::to_string(std::stoi(name)).length()</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classeng_1_1GUISystem.html">   30</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1GUISystem.html">GUISystem</a> : <span class="keyword">public</span> <span class="keyword">virtual</span> <a class="code" href="classeng_1_1ISystem.html">ISystem</a></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            std::shared_ptr&lt;sf::RenderWindow&gt; _window;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            sf::Clock _clock;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordtype">bool</span> _showEntityManager = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordtype">bool</span> _showEntityDetails = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            std::size_t _selectedEntity = 0;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordtype">void</span> drawEntityManager(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keywordtype">void</span> drawEntityDetails(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordtype">void</span> drawEntityComponent(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t type);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            std::string formatBool(std::size_t value, std::size_t size);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <a class="code" href="classeng_1_1GUISystem.html#a0b012a2dc4bebc0451803b179c349060">GUISystem</a>(std::shared_ptr&lt;sf::RenderWindow&gt; window);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <a class="code" href="classeng_1_1GUISystem.html#a48f36abc3b13fb0822784fae61b11b13">~GUISystem</a>();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1GUISystem.html#ac9f116523a1a8917b2fb614a7acde3de">update</a>(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    };</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// GUISYSTEM_HPP</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Graphic_8hpp.html">Engine/Graphic/Graphic.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;imgui-SFML.h&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;imgui.h&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define FORMAT_NAME(name) name + std::to_string(std::stoi(name)).length()</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classeng_1_1GUISystem.html">   31</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1GUISystem.html">GUISystem</a> : <span class="keyword">public</span> <span class="keyword">virtual</span> <a class="code" href="classeng_1_1ISystem.html">ISystem</a></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            std::shared_ptr&lt;sf::RenderWindow&gt; _window;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            sf::Clock _clock;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordtype">bool</span> _showEntityManager = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordtype">bool</span> _showEntityDetails = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            std::size_t _selectedEntity = 0;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keywordtype">void</span> drawEntityManager(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordtype">void</span> drawEntityDetails(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordtype">void</span> drawEntityComponent(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t type);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            std::string formatBool(std::size_t value, std::size_t size);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <a class="code" href="classeng_1_1GUISystem.html#ae40a906511a5dca34c873a4530b7e23e">GUISystem</a>(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <a class="code" href="classeng_1_1GUISystem.html#a48f36abc3b13fb0822784fae61b11b13">~GUISystem</a>();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1GUISystem.html#ac9f116523a1a8917b2fb614a7acde3de">update</a>(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    };</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// GUISYSTEM_HPP</span></div>
+<div class="ttc" id="aGraphic_8hpp_html"><div class="ttname"><a href="Graphic_8hpp.html">Graphic.hpp</a></div><div class="ttdoc">The Engine graphics (SFML).</div></div>
 <div class="ttc" id="aISystem_8hpp_html"><div class="ttname"><a href="ISystem_8hpp.html">ISystem.hpp</a></div><div class="ttdoc">Interface of the system.</div></div>
 <div class="ttc" id="aIncludes_8hpp_html"><div class="ttname"><a href="Includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
 <div class="ttc" id="aclasseng_1_1ComponentManager_html"><div class="ttname"><a href="classeng_1_1ComponentManager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html"><div class="ttname"><a href="classeng_1_1EntityManager.html">eng::EntityManager</a></div><div class="ttdoc">The engine's EntityManager.</div><div class="ttdef"><b>Definition:</b> EntityManager.hpp:26</div></div>
-<div class="ttc" id="aclasseng_1_1GUISystem_html"><div class="ttname"><a href="classeng_1_1GUISystem.html">eng::GUISystem</a></div><div class="ttdoc">System of the GUI.</div><div class="ttdef"><b>Definition:</b> GUISystem.hpp:31</div></div>
-<div class="ttc" id="aclasseng_1_1GUISystem_html_a0b012a2dc4bebc0451803b179c349060"><div class="ttname"><a href="classeng_1_1GUISystem.html#a0b012a2dc4bebc0451803b179c349060">eng::GUISystem::GUISystem</a></div><div class="ttdeci">GUISystem(std::shared_ptr&lt; sf::RenderWindow &gt; window)</div><div class="ttdoc">GUISystem constructor.</div><div class="ttdef"><b>Definition:</b> GUISystem.cpp:5</div></div>
+<div class="ttc" id="aclasseng_1_1GUISystem_html"><div class="ttname"><a href="classeng_1_1GUISystem.html">eng::GUISystem</a></div><div class="ttdoc">System of the GUI.</div><div class="ttdef"><b>Definition:</b> GUISystem.hpp:32</div></div>
 <div class="ttc" id="aclasseng_1_1GUISystem_html_a48f36abc3b13fb0822784fae61b11b13"><div class="ttname"><a href="classeng_1_1GUISystem.html#a48f36abc3b13fb0822784fae61b11b13">eng::GUISystem::~GUISystem</a></div><div class="ttdeci">~GUISystem()</div><div class="ttdoc">GUISystem destructor.</div><div class="ttdef"><b>Definition:</b> GUISystem.cpp:12</div></div>
 <div class="ttc" id="aclasseng_1_1GUISystem_html_ac9f116523a1a8917b2fb614a7acde3de"><div class="ttname"><a href="classeng_1_1GUISystem.html#ac9f116523a1a8917b2fb614a7acde3de">eng::GUISystem::update</a></div><div class="ttdeci">void update(ComponentManager &amp;componentManager, EntityManager &amp;entityManager)</div><div class="ttdoc">Update the GUI system.</div><div class="ttdef"><b>Definition:</b> GUISystem.cpp:17</div></div>
+<div class="ttc" id="aclasseng_1_1GUISystem_html_ae40a906511a5dca34c873a4530b7e23e"><div class="ttname"><a href="classeng_1_1GUISystem.html#ae40a906511a5dca34c873a4530b7e23e">eng::GUISystem::GUISystem</a></div><div class="ttdeci">GUISystem(Graphic &amp;graphic, EntityManager &amp;entityManager)</div><div class="ttdoc">GUISystem constructor.</div><div class="ttdef"><b>Definition:</b> GUISystem.cpp:5</div></div>
+<div class="ttc" id="aclasseng_1_1Graphic_html"><div class="ttname"><a href="classeng_1_1Graphic.html">eng::Graphic</a></div><div class="ttdoc">The Engine graphics (SFML).</div><div class="ttdef"><b>Definition:</b> Graphic.hpp:26</div></div>
 <div class="ttc" id="aclasseng_1_1ISystem_html"><div class="ttname"><a href="classeng_1_1ISystem.html">eng::ISystem</a></div><div class="ttdoc">Interface of the system.</div><div class="ttdef"><b>Definition:</b> ISystem.hpp:28</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->

@@ -6,6 +6,5 @@ var searchData=
   ['connection_428',['Connection',['../classeng_1_1Connection.html',1,'eng']]],
   ['controllable_429',['Controllable',['../structControllable.html',1,'']]],
   ['cooldownbar_430',['CooldownBar',['../structCooldownBar.html',1,'']]],
-  ['cooldownbarpreload_431',['CooldownBarPreload',['../classeng_1_1CooldownBarPreload.html',1,'eng']]],
-  ['cooldownshoot_432',['CooldownShoot',['../structCooldownShoot.html',1,'']]]
+  ['cooldownshoot_431',['CooldownShoot',['../structCooldownShoot.html',1,'']]]
 ];
