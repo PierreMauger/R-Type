@@ -101,9 +101,9 @@ Collaboration diagram for eng::SoundSystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a30c120f08da80e969f029687d95188b6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1SoundSystem.html#a30c120f08da80e969f029687d95188b6">SoundSystem</a> (std::shared_ptr&lt; sf::Clock &gt; clock, std::shared_ptr&lt; std::vector&lt; sf::SoundBuffer &gt;&gt; soundBuffer)</td></tr>
-<tr class="memdesc:a30c120f08da80e969f029687d95188b6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1SoundSystem.html" title="The Sound system.">SoundSystem</a> constructor.  <a href="classeng_1_1SoundSystem.html#a30c120f08da80e969f029687d95188b6">More...</a><br /></td></tr>
-<tr class="separator:a30c120f08da80e969f029687d95188b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf23a4a5eda99193b6d6c98d92f672a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1SoundSystem.html#acf23a4a5eda99193b6d6c98d92f672a2">SoundSystem</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, std::shared_ptr&lt; std::vector&lt; sf::SoundBuffer &gt;&gt; soundBuffer)</td></tr>
+<tr class="memdesc:acf23a4a5eda99193b6d6c98d92f672a2"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1SoundSystem.html" title="The Sound system.">SoundSystem</a> constructor.  <a href="classeng_1_1SoundSystem.html#acf23a4a5eda99193b6d6c98d92f672a2">More...</a><br /></td></tr>
+<tr class="separator:acf23a4a5eda99193b6d6c98d92f672a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab113bbce1e2d4314b3738e60c6f78394"><td class="memItemLeft" align="right" valign="top"><a id="ab113bbce1e2d4314b3738e60c6f78394"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1SoundSystem.html#ab113bbce1e2d4314b3738e60c6f78394">~SoundSystem</a> ()=default</td></tr>
 <tr class="memdesc:ab113bbce1e2d4314b3738e60c6f78394"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1SoundSystem.html" title="The Sound system.">SoundSystem</a> destructor. <br /></td></tr>
@@ -120,8 +120,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The Sound system. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a30c120f08da80e969f029687d95188b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30c120f08da80e969f029687d95188b6">&#9670;&nbsp;</a></span>SoundSystem()</h2>
+<a id="acf23a4a5eda99193b6d6c98d92f672a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf23a4a5eda99193b6d6c98d92f672a2">&#9670;&nbsp;</a></span>SoundSystem()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,8 +129,14 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
         <tr>
           <td class="memname">eng::SoundSystem::SoundSystem </td>
           <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Clock &gt;&#160;</td>
-          <td class="paramname"><em>clock</em>, </td>
+          <td class="paramtype"><a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;&#160;</td>
+          <td class="paramname"><em>graphic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>entityManager</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -149,8 +155,8 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <p><a class="el" href="classeng_1_1SoundSystem.html" title="The Sound system.">SoundSystem</a> constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">clock</td><td>A shared pointer to the clock </td></tr>
-    <tr><td class="paramname">soundBuffer</td><td>A shared pointer to sound buffer </td></tr>
+    <tr><td class="paramname">graphic</td><td>A reference to the <a class="el" href="classeng_1_1Graphic.html" title="The Engine graphics (SFML).">Graphic</a> </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a> </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,7 +1,8 @@
 #include "Server.hpp"
 
-eng::Server::Server(uint16_t portTcp)
-    : _network(portTcp)
+using namespace eng;
+
+Server::Server(uint16_t portTcp) : _network(portTcp)
 {
     this->initSystems();
     this->initComponents();
@@ -10,26 +11,28 @@ eng::Server::Server(uint16_t portTcp)
 }
 
 // TODO see if graph is usefull on serv
-void eng::Server::initSystems()
+void Server::initSystems()
 {
-    eng::SystemManager &systemManager = this->_engine.getECS().getSystemManager();
-    eng::Graphic &graphic = this->_engine.getGraphic();
+    SystemManager &systemManager = this->_engine.getECS().getSystemManager();
+    EntityManager &entityManager = this->_engine.getECS().getEntityManager();
+    Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
 
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites, graphic.getScreenSize()));
+    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
+    systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
-    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
+    systemManager.addSystem(std::make_shared<GUISystem>(graphic));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
+    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
-void eng::Server::initComponents()
+void Server::initComponents()
 {
-    eng::ComponentManager &componentManager = this->_engine.getECS().getComponentManager();
+    ComponentManager &componentManager = this->_engine.getECS().getComponentManager();
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
@@ -53,20 +56,19 @@ void eng::Server::initComponents()
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
     componentManager.bindComponent<GroupEntity>();
+    componentManager.bindComponent<Button>();
 }
 
-void eng::Server::initEntities()
+void Server::initEntities()
 {
-    eng::ParallaxPreload parallaxPreload;
-    eng::ScoreTextPreload scoreTextPreload;
-
-    parallaxPreload.preload(this->_engine);
-    scoreTextPreload.preload(this->_engine);
+    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
-void eng::Server::manageEvent()
+void Server::manageEvent()
 {
-    eng::Graphic &graphic = this->_engine.getGraphic();
+    Graphic &graphic = this->_engine.getGraphic();
 
     while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
 #ifndef NDEBUG
@@ -90,35 +92,31 @@ void eng::Server::manageEvent()
     }
 }
 
-void eng::Server::manageEnemy()
+void Server::manageEnemy()
 {
     eng::Graphic &graphic = this->_engine.getGraphic();
-    eng::EnemyPreload enemyPreload;
-    eng::BossPreload bossPreload;
 
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        bossPreload.preload(this->_engine);
+        BossPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
         this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
     } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        enemyPreload.preload(this->_engine);
+        EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
         this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
     }
 }
 
 // TODO make do separated function
-void eng::Server::mainLoop()
+void Server::mainLoop()
 {
     _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
     std::size_t refreshTick = 5;
-    std::map<std::string, boost::shared_ptr<eng::Connection>> players;
+    std::map<std::string, boost::shared_ptr<Connection>> players;
 
-    eng::Graphic &graphic = this->_engine.getGraphic();
-    eng::ECS &ecs = this->_engine.getECS();
-    eng::VesselPreload vesselPreload;
-    eng::DevourerPreload devourerPreload;
+    Graphic &graphic = this->_engine.getGraphic();
+    ECS &ecs = this->_engine.getECS();
 
-    vesselPreload.preload(this->_engine);
-    devourerPreload.preload(this->_engine);
+    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
+    DevourerPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();

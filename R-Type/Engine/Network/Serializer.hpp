@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief The network serializer (formats packets to be sent through network).
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
@@ -19,13 +19,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief The type of operation to perform
      * @enum CrudType
-    */
+     */
     enum CrudType {
         CREATE,
         DESTROY,
@@ -33,10 +33,11 @@ namespace eng
 
         UNKNOWN
     };
+
     /**
      * @brief The network serializer (formats packets to be sent through network).
      * @class Serializer
-    */
+     */
     class Serializer
     {
         protected:
@@ -67,12 +68,12 @@ namespace eng
             /**
              * @brief Serializer constructor.
              * @fn Serializer()
-            */
+             */
             Serializer();
             /**
              * @brief Serializer destructor.
              * @fn ~Serializer()
-            */
+             */
             ~Serializer() = default;
     };
 }

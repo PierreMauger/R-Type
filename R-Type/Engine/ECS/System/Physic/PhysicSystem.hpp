@@ -9,8 +9,9 @@
 #define PHYSICSYSTEM_HPP
 
 /// @cond
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
-
+#include "Engine/Graphic/Graphic.hpp"
 /// @endcond
 
 /**
@@ -43,11 +44,11 @@ namespace eng
         public:
             /**
              * @brief PhysicSystem constructor.
-             * @fn PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize)
-             * @param window A shared pointer to the SFML render window.
-             * @param screenSize A shared pointer to the screen size
+             * @fn PhysicSystem(Graphic &graphic, EntityManager &entityManager)
+             * @param graphic A reference to the Graphic
+             * @param entityManager A reference to the EntityManager
              */
-            PhysicSystem(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize);
+            PhysicSystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief PhysicSystem destructor.
              * @fn ~PhysicSystem

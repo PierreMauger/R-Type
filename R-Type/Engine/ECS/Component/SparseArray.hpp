@@ -76,6 +76,7 @@ namespace eng
              * @return The data at id in the sparse array.
              */
             std::optional<std::any> &getField(std::size_t id);
+            void clear();
     };
 }
 

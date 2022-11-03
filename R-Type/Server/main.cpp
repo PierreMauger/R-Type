@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief Main server file.
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 /// @cond
 #include "Server.hpp"
@@ -12,7 +12,7 @@
 /**
  * @brief Main function ran first when the r-type_server exectuable is launched.
  * @fn int main(int ac, char **av)
-*/
+ */
 int main(int ac, char **av)
 {
     if (ac != 2) {

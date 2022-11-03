@@ -3,7 +3,7 @@
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
  * @brief The game serializer
  * @copyright Epitech Rennes 2022
-*/
+ */
 
 #ifndef GAMESERIALIZER_HPP
 #define GAMESERIALIZER_HPP
@@ -20,13 +20,13 @@
 /**
  * @brief Engine namespace.
  * @namespace eng
-*/
+ */
 namespace eng
 {
     /**
      * @brief The game packet type enum
      * @enum GamePacketType
-    */
+     */
     enum GamePacketType {
         ENTITY,
         INPUT,
@@ -37,7 +37,7 @@ namespace eng
     /**
      * @brief The game serializer
      * @enum GameSerializer
-    */
+     */
     class GameSerializer : private Serializer
     {
         private:
@@ -58,12 +58,12 @@ namespace eng
             /**
              * @brief GameSerializer constructor.
              * @fn GameSerializer()
-            */
+             */
             GameSerializer();
             /**
              * @brief GameSerializer destructor.
              * @fn ~GameSerializer()
-            */
+             */
             ~GameSerializer() = default;
 
             /**
@@ -75,9 +75,8 @@ namespace eng
              * @param componentManager A reference to the ComponentManager
              * @param input A reference to the Input
              * @param clock A shared pointer to the clock
-            */
-            void handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
-                              std::shared_ptr<sf::Clock> clock);
+             */
+            void handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock);
 
             /**
              * @brief Serialize an entity
@@ -87,7 +86,7 @@ namespace eng
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
              * @return The serialized packet
-            */
+             */
             _STORAGE_DATA serializeEntity(std::size_t id, CrudType type, EntityManager &entityManager, ComponentManager &componentManager);
             /**
              * @brief Deserialize an entity
@@ -95,7 +94,7 @@ namespace eng
              * @param packet The serialized packet
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
-            */
+             */
             void deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
 
             /**
@@ -103,7 +102,7 @@ namespace eng
              * @fn _STORAGE_DATA serializeInput(sf::Keyboard::Key input)
              * @param input The input to serialize.
              * @return The serialized packet
-            */
+             */
             _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
             /**
              * @brief Deserialize an input
@@ -114,9 +113,8 @@ namespace eng
              * @param componentManager A reference to the ComponentManager
              * @param input A reference to the input to get
              * @param clock A shared pointer to the game clock
-            */
-            void deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input,
-                                  std::shared_ptr<sf::Clock> clock);
+             */
+            void deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock);
     };
 }
 

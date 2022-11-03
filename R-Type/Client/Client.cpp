@@ -1,7 +1,8 @@
 #include "Client.hpp"
 
-eng::Client::Client(std::string ip, uint16_t portTcp)
-    : _network(ip, portTcp)
+using namespace eng;
+
+Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
 {
     this->initSystems();
     this->initComponents();
@@ -9,28 +10,29 @@ eng::Client::Client(std::string ip, uint16_t portTcp)
     this->_network.run();
 }
 
-void eng::Client::initSystems()
+void Client::initSystems()
 {
-    eng::SystemManager &systemManager = this->_engine.getECS().getSystemManager();
-    eng::Graphic &graphic = this->_engine.getGraphic();
+    SystemManager &systemManager = this->_engine.getECS().getSystemManager();
+    EntityManager &entityManager = this->_engine.getECS().getEntityManager();
+    Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<eng::InputSystem>(graphic.getEvent(), graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::PhysicSystem>(graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::AnimationSystem>(graphic.getEvent(), graphic.getClock(), sprites));
-    systemManager.addSystem(std::make_shared<eng::RenderSystem>(graphic.getWindow(), graphic.getClock(), sprites, graphic.getScreenSize()));
+    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
+    systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
-    systemManager.addSystem(std::make_shared<eng::GUISystem>(graphic.getWindow()));
+    systemManager.addSystem(std::make_shared<GUISystem>(graphic));
 #endif
-    systemManager.addSystem(std::make_shared<eng::EnemySystem>(graphic.getClock(), graphic.getWindow(), graphic.getScreenSize()));
-    systemManager.addSystem(std::make_shared<eng::ScoreSystem>());
-    systemManager.addSystem(std::make_shared<eng::SoundSystem>(graphic.getClock(), sounds));
+    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
+    systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
 }
 
-void eng::Client::initComponents()
+void Client::initComponents()
 {
-    eng::ComponentManager &componentManager = this->_engine.getECS().getComponentManager();
+    ComponentManager &componentManager = this->_engine.getECS().getComponentManager();
 
     componentManager.bindComponent<Position>();
     componentManager.bindComponent<Velocity>();
@@ -54,29 +56,23 @@ void eng::Client::initComponents()
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
     componentManager.bindComponent<GroupEntity>();
+    componentManager.bindComponent<Button>();
 }
 
-void eng::Client::initEntities()
+void Client::initEntities()
 {
-    eng::ParallaxPreload parallaxPreload;
-    eng::BackgroundMusicPreload backgroundMusicPreload;
-    eng::ScoreTextPreload scoreTextPreload;
-    eng::VesselPreload vesselPreload;
-
-    parallaxPreload.preload(this->_engine);
-    backgroundMusicPreload.preload(this->_engine);
-    scoreTextPreload.preload(this->_engine);
-    vesselPreload.preload(this->_engine);
+    MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
-void eng::Client::mainLoop()
+void Client::mainLoop()
 {
     _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
     std::size_t refreshTick = 5;
 
-    eng::Graphic &graphic = this->_engine.getGraphic();
-    eng::ECS &ecs = this->_engine.getECS();
-    eng::VesselPreload vesselPreload;
+    Graphic &graphic = this->_engine.getGraphic();
+    ECS &ecs = this->_engine.getECS();
+    VesselPreload vesselPreload;
 
     while (graphic.getWindow()->isOpen()) {
         while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {

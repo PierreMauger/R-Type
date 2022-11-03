@@ -29,9 +29,9 @@ Input &Engine::getInput()
     return this->_input;
 }
 
-void Engine::updateSize(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize)
+void Engine::updateSize(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)
 {
-    std::size_t checkSize = (eng::InfoComp::SIZE | eng::InfoComp::SPRITEAT);
+    std::size_t checkSize = (InfoComp::SIZE | InfoComp::SPRITEAT);
 
     if ((masks[i].value() & checkSize) == checkSize) {
         Size &size = componentManager.getSingleComponent<Size>(i);
@@ -43,9 +43,9 @@ void Engine::updateSize(auto &masks, std::size_t i, eng::ComponentManager &compo
     }
 }
 
-void Engine::updateSpeed(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize)
+void Engine::updateSpeed(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)
 {
-    std::size_t checkSpeed = (eng::InfoComp::VEL);
+    std::size_t checkSpeed = (InfoComp::VEL);
 
     if ((masks[i].value() & checkSpeed) == checkSpeed) {
         Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
@@ -59,9 +59,9 @@ void Engine::updateSpeed(auto &masks, std::size_t i, eng::ComponentManager &comp
     }
 }
 
-void Engine::updatePos(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize)
+void Engine::updatePos(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)
 {
-    std::size_t checkPos = (eng::InfoComp::POS);
+    std::size_t checkPos = (InfoComp::POS);
 
     if ((masks[i].value() & checkPos) == checkPos) {
         Position &pos = componentManager.getSingleComponent<Position>(i);
@@ -70,9 +70,9 @@ void Engine::updatePos(auto &masks, std::size_t i, eng::ComponentManager &compon
     }
 }
 
-void Engine::updateParallax(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize)
+void Engine::updateParallax(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)
 {
-    std::size_t checkParSize = (eng::InfoComp::SPRITEAT | eng::InfoComp::PARALLAX);
+    std::size_t checkParSize = (InfoComp::SPRITEAT | InfoComp::PARALLAX);
 
     if ((masks[i].value() & checkParSize) == checkParSize) {
         SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
@@ -81,10 +81,10 @@ void Engine::updateParallax(auto &masks, std::size_t i, eng::ComponentManager &c
     }
 }
 
-void Engine::updateAppDis(auto &masks, std::size_t i, eng::ComponentManager &componentManager, sf::Vector2f lastSize)
+void Engine::updateAppDis(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)
 {
-    std::size_t checkApp = (eng::InfoComp::APP);
-    std::size_t checkdis = (eng::InfoComp::DIS);
+    std::size_t checkApp = (InfoComp::APP);
+    std::size_t checkdis = (InfoComp::DIS);
 
     if ((masks[i].value() & checkApp) == checkApp) {
         Appearance &app = componentManager.getSingleComponent<Appearance>(i);
@@ -99,11 +99,11 @@ void Engine::updateAppDis(auto &masks, std::size_t i, eng::ComponentManager &com
 void Engine::updateSizeWindow()
 {
     std::shared_ptr<sf::RenderWindow> window = this->_graphic.getWindow();
-    eng::EntityManager &entityManager = this->_ecs.getEntityManager();
-    eng::ComponentManager &componentManager = this->_ecs.getComponentManager();
+    EntityManager &entityManager = this->_ecs.getEntityManager();
+    ComponentManager &componentManager = this->_ecs.getComponentManager();
     auto &masks = entityManager.getMasks();
-    std::size_t checkText = (eng::InfoComp::TEXT);
-    std::size_t checkCooldownBar = (eng::InfoComp::COOLDOWNBAR | eng::InfoComp::POS);
+    std::size_t checkText = (InfoComp::TEXT);
+    std::size_t checkCooldownBar = (InfoComp::COOLDOWNBAR | InfoComp::POS);
     sf::Vector2f lastSize = this->_graphic.getLastSize();
 
     window->setView(sf::View(sf::FloatRect(0, 0, this->_graphic.getEvent()->size.width, this->_graphic.getEvent()->size.height)));
@@ -114,7 +114,6 @@ void Engine::updateSizeWindow()
             Text &text = componentManager.getSingleComponent<Text>(i);
             text.pos.x = text.pos.x / lastSize.x * this->_graphic.getEvent()->size.width;
             text.pos.y = text.pos.y / lastSize.y * this->_graphic.getEvent()->size.height;
-            continue;
         }
         if ((masks[i].value() & checkCooldownBar) == checkCooldownBar) {
             Position &cb = componentManager.getSingleComponent<Position>(i);
