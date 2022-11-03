@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -280,7 +281,7 @@ enum ButtonType {
     BACK,
 };
 
-typedef struct {
+typedef struct Button {
         ButtonType type = QUIT;
 } Button;
 
