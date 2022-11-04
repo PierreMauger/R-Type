@@ -139,7 +139,8 @@ typedef struct Projectile {
  * @brief The life component.
  */
 typedef struct Life {
-        std::size_t life = 1;
+        std::size_t defaultLife = 1;
+        std::size_t life = defaultLife;
 } Life;
 
 /**
@@ -214,7 +215,20 @@ enum TypePattern {
     OSCILLATION,
     BIGOSCILLATION,
     CIRCLE,
-    EIGHT
+    CTHULHU
+};
+
+/**
+ * @enum TypeStatus
+ * @brief The type of status that an enemy has.
+ */
+enum TypeStatus {
+    IDLE = 0,
+    MOVE,
+    SEARCH,
+    ATTACK,
+    SHOOT,
+    TRANSFORM
 };
 
 /**
@@ -223,7 +237,9 @@ enum TypePattern {
  */
 typedef struct Pattern {
         enum TypePattern type = TypePattern::LINE;
+        enum TypeStatus status = TypeStatus::IDLE;
         float angle = 0.0f;
+        float lastTime = 0.0f;
 } Pattern;
 
 /**
