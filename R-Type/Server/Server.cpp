@@ -93,12 +93,10 @@ void Server::manageEvent()
     }
 }
 
-void eng::Server::manageEnemy(eng::Level &level)
+void eng::Server::manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs)
 {
-    eng::Graphic &graphic = this->_engine.getGraphic();
-
-    if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead())) {
-        level.parseLevel();
+    if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
+        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager());
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
 }
@@ -117,7 +115,7 @@ void eng::Server::mainLoop()
     VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
-        this->manageEnemy(level[0]);
+        this->manageEnemy(level[0], graphic, ecs);
         for (size_t count = 0; count < refreshTick; count++) {
             if (!dataIn.empty()) {
                 std::cout << "Message: " << dataIn.pop_front().data() << std::endl;

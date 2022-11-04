@@ -44,6 +44,11 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (app.app) {
+        if (app.x_app != 0.0f && pos.x > app.x_app) {
+            pos.x -= vel.x;
+            return true;
+        } else
+            vel.x = 0;
         pos.y -= -vel.baseSpeedY;
         if (sprite.color.a != 50)
             sprite.color = sf::Color(255, 255, 255, 50);
@@ -251,7 +256,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                 pos.x = 0;
             continue;
         }
-        if ((masks[i].value() & InfoComp::GROUPEN) != InfoComp::GROUPEN && ((pos.x > _window->getSize().x + 100 && (masks[i].value() & InfoComp::PROJECTILE) == InfoComp::PROJECTILE) || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100)) {
+        if (((masks[i].value() & InfoComp::PROJECTILE) == InfoComp::PROJECTILE && pos.x > _window->getSize().x + 100) || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
             entityManager.removeMask(i);
             componentManager.removeAllComponents(i);
             continue;

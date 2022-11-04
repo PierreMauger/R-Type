@@ -47,7 +47,7 @@ namespace eng
             void initComponents();
             void initEntities();
             void manageEvent();
-            void manageEnemy(eng::Level &level);
+            void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
 
         public:
             /**

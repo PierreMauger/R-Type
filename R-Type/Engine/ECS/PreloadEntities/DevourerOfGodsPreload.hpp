@@ -32,6 +32,7 @@ namespace eng
              * @param engine A reference to the engine.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2f pos);
     };
 }
 

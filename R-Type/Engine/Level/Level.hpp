@@ -26,6 +26,7 @@ namespace eng
             float _speedRead;
             float _delayRead;
             float _charPerScreen;
+            float _sizeChar;
 
         public:
             /**
@@ -38,7 +39,7 @@ namespace eng
              * @fn ~Level()
              */
             ~Level() = default;
-            void parseLevel();
+            void parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
             float getSpeedRead();
             float getDelayRead();
             void setDelayRead(float delayRead);

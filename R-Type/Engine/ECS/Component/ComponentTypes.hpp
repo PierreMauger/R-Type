@@ -160,6 +160,7 @@ typedef struct Enemy {
 typedef struct Appearance {
         bool app = false;
         float end = 0.0f;
+        float x_app = 0.0f;
 } Appearance;
 
 /**
