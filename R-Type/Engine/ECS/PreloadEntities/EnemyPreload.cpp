@@ -15,7 +15,7 @@ void EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, Compo
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 63, 48}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x + 80 / screenSize->x * windowsSize.x), randY, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{(screenSize->x / (1920 / 3)) / screenSize->x * windowsSize.x * -1, 0, 0});
-    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern(rand), TypeStatus(MOVE), 0});
+    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern(rand), TypeStatus(MOVE), TypePhase(PHASE01), 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{63 * size.x / screenSize->x * windowsSize.x, 48 * size.y / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{2});

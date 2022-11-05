@@ -232,14 +232,27 @@ enum TypeStatus {
 };
 
 /**
+ * @enum TypePhase
+ * @brief The type of phase that an enemy has.
+ */
+enum TypePhase {
+    PHASE01 = 0,
+    PHASE02,
+    PHASE03
+};
+
+/**
  * @struct Pattern
  * @brief The patern component.
  */
 typedef struct Pattern {
         enum TypePattern type = TypePattern::LINE;
         enum TypeStatus status = TypeStatus::IDLE;
+        enum TypePhase phase = TypePhase::PHASE01;
         float angle = 0.0f;
-        float lastTime = 0.0f;
+        float statusTime = 0.0f;
+        size_t focusEntity = 0;
+        Position lastPosFocus = {0.0f, 0.0f, 0.0f};
 } Pattern;
 
 /**

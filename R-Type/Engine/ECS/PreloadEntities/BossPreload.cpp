@@ -15,7 +15,7 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, randY});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x - (300 / screenSize->x * windowsSize.x)), -96 / screenSize->y * windowsSize.y, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, size.x / screenSize->y * windowsSize.y, 0, size.y / screenSize->x * windowsSize.x, size.x / screenSize->y * windowsSize.y});
-    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CTHULHU, TypeStatus(SEARCH), 0});
+    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CTHULHU, TypeStatus(SEARCH), TypePhase(PHASE01), 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{96 * size.x / screenSize->x * windowsSize.x, 96 * size.y / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});

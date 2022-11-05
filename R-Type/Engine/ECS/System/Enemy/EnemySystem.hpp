@@ -34,6 +34,7 @@ namespace eng
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
 
+            bool setRandIdPlayer(Pattern &pat, EntityManager &entityManager);
             void cthulhuPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager);
 
         public:

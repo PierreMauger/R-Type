@@ -9,6 +9,24 @@ EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entit
     this->_screenSize = graphic.getScreenSize();
 }
 
+bool EnemySystem::setRandIdPlayer(Pattern &pat, EntityManager &entityManager)
+{
+    auto &masks = entityManager.getMasks();
+    std::vector<size_t> idPlayers;
+    std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
+    std::size_t contMask = (InfoComp::CONTROLLABLE | InfoComp::VEL);
+
+    if (entityManager.getMaskCategory(spriteMask).size() == 0)
+        return false;
+    for (auto &id : entityManager.getMaskCategory(spriteMask))
+        if (masks[id].has_value() && (masks[id].value() & contMask) == contMask)
+            idPlayers.push_back(id);
+    if (idPlayers.size() == 0)
+        return false;
+    pat.focusEntity = idPlayers[rand() % idPlayers.size()];
+    return true;
+}
+
 void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager)
 {
     Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
@@ -16,31 +34,93 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     Position &pos = componentManager.getSingleComponent<Position>(id);
     Life &life = componentManager.getSingleComponent<Life>(id);
     CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(id);
-    float delaySearch = 3;
-    // float delayTransform = 4;
-    float delayShoot = 5;
+    SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(id);
+    SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(id);
+    Position posPlayer = {0, 0, 0};
 
-    if (pat.lastTime == 0)
-        pat.lastTime = this->_clock->getElapsedTime().asSeconds();
-    if (pat.status == TypeStatus::SEARCH) {
-        if (this->_clock->getElapsedTime().asSeconds() - pat.lastTime >= delaySearch) {
-            pat.status = TypeStatus::SHOOT;
-            pat.lastTime = this->_clock->getElapsedTime().asSeconds();
-        }
-        vel.x = 0;
-        vel.y = 0;
-    } else if (pat.status == TypeStatus::SHOOT) {
-        if (this->_clock->getElapsedTime().asSeconds() - pat.lastTime >= delayShoot) {
-            pat.status = TypeStatus::SEARCH;
-            pat.lastTime = this->_clock->getElapsedTime().asSeconds();
-        }
-        vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;
-        vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
-        pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
-        if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1);
-            clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
-        }
+    float delayIdle = 1.5;
+    float delayTransform = 4;
+    float delayShoot = 5;
+    float delayAttack = 1.5;
+    bool checkPlayer = true;
+
+    // Set the elapsed time at the beginning of the game
+    if (pat.statusTime == 0)
+        pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+
+    // Phase 2 Event
+    if (life.life <= life.defaultLife / 2 && pat.phase == PHASE01) {
+        pat.status = TypeStatus::TRANSFORM;
+        pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+        pat.phase = PHASE02;
+    }
+
+    // Pattern Status Part
+    switch (pat.status) {
+        case TypeStatus::SEARCH :
+            pat.status = TypeStatus::IDLE;
+            if (!this->setRandIdPlayer(pat, entityManager)) {
+                pat.status = TypeStatus::SEARCH;
+                checkPlayer = false;
+            }
+            vel.x = 0;
+            vel.y = 0;
+            break;
+
+        case TypeStatus::IDLE :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayIdle) {
+                pat.status = TypeStatus::SHOOT;
+                if (pat.phase == PHASE02) {
+                    pat.status = TypeStatus::ATTACK;
+                    if (checkPlayer)
+                        pat.lastPosFocus = componentManager.getSingleComponent<Position>(pat.focusEntity);
+                }
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            }
+            vel.x = 0;
+            vel.y = 0;
+            break;
+
+        case TypeStatus::SHOOT :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayShoot) {
+                pat.status = TypeStatus::SEARCH;
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            }
+            vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;
+            vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
+            pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
+            if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1);
+                clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
+            }
+            break;
+
+        case TypeStatus::ATTACK :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayAttack) {
+                pat.status = TypeStatus::SEARCH;
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            }
+            vel.x = (pat.lastPosFocus.x - pos.x) / 20;
+            vel.y = (pat.lastPosFocus.y - pos.y) / 20;
+            break;
+
+        case TypeStatus::TRANSFORM :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayTransform) {
+                pat.status = TypeStatus::SEARCH;
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+                spriteID = SpriteID{20, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
+            }
+            checkPlayer = false;
+            spriteAttribut.rotation += (this->_clock->getElapsedTime().asSeconds() - pat.statusTime) * 10;
+            vel.x = 0;
+            vel.y = 0;
+            break;
+    }
+
+    // Rotation Part
+    if (checkPlayer) {
+        posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+        spriteAttribut.rotation = (atan2(posPlayer.y - pos.y, posPlayer.x - pos.x) * 180 / M_PI) - 90;
     }
 }
 
