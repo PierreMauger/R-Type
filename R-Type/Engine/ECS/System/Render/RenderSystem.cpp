@@ -99,6 +99,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
         spriteRef.setPosition(pos.x, pos.y);
         if (masks[id].has_value() && (masks[id].value() & renderAnim) == renderAnim) {
+            spriteRef.setOrigin(spriteRef.getLocalBounds().width / 2, spriteRef.getLocalBounds().height / 2);
             spriteRef.setTextureRect(static_cast<sf::IntRect>(componentManager.getSingleComponent<SpriteAttribut>(id).rect));
             spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(id).rotation);
             spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(id).color);

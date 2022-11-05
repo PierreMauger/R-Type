@@ -37,11 +37,13 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(id);
     SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(id);
     Position posPlayer = {0, 0, 0};
+    auto &masks = entityManager.getMasks();
 
-    float delayIdle = 1.5;
-    float delayTransform = 4;
+    float delayIdle = 1;
+    float delayTransform = 3;
     float delayShoot = 5;
     float delayAttack = 1.5;
+    float delayMove = 2;
     bool checkPlayer = true;
 
     // Set the elapsed time at the beginning of the game
@@ -53,6 +55,12 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
         pat.status = TypeStatus::TRANSFORM;
         pat.statusTime = this->_clock->getElapsedTime().asSeconds();
         pat.phase = PHASE02;
+    }
+
+    // Reset player id if the player is dead
+    if (!masks[pat.focusEntity].has_value()) {
+        setRandIdPlayer(pat, entityManager);
+        return;
     }
 
     // Pattern Status Part
@@ -79,6 +87,18 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             }
             vel.x = 0;
             vel.y = 0;
+            break;
+
+        case TypeStatus::MOVE :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
+                pat.status = TypeStatus::SHOOT;
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            }
+            if (checkPlayer) {
+                posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+                vel.x = (posPlayer.x - pos.x) / 100;
+                vel.y = (posPlayer.y - pos.y) / 100;
+            }
             break;
 
         case TypeStatus::SHOOT :
@@ -109,11 +129,17 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.status = TypeStatus::SEARCH;
                 pat.statusTime = this->_clock->getElapsedTime().asSeconds();
                 spriteID = SpriteID{20, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
+                spriteAttribut.rect = {0, 0, 110, 146};
             }
             checkPlayer = false;
             spriteAttribut.rotation += (this->_clock->getElapsedTime().asSeconds() - pat.statusTime) * 10;
             vel.x = 0;
             vel.y = 0;
+            break;
+
+        default :
+            pat.status = TypeStatus::SEARCH;
+            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             break;
     }
 
