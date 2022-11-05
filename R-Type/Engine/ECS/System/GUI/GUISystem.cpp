@@ -162,6 +162,9 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                     case 21:
                         componentManager.addComponent<Button>(this->_selectedEntity);
                         break;
+                    case 22:
+                        componentManager.addComponent<Scene>(this->_selectedEntity);
+                        break;
                     default:
                         break;
                     }
@@ -277,6 +280,11 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         Button &button = componentManager.getSingleComponent<Button>(this->_selectedEntity);
         const ImU64 increment = 1;
         ImGui::InputScalar("Sprite ID##button", ImGuiDataType_U64, &button.type, &increment);
+        break;
+    }
+    case 22: {
+        Scene &scene = componentManager.getSingleComponent<Scene>(this->_selectedEntity);
+        ImGui::InputInt("Scene ID", &scene.id, 1);
         break;
     }
     default:

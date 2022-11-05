@@ -315,4 +315,8 @@ typedef struct Button {
         ButtonType type = QUIT;
 } Button;
 
+typedef struct Scene {
+        int id = 0;
+} Scene;
+
 #endif // COMPONENTTYPES_HPP
