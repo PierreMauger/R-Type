@@ -13,7 +13,7 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 375, 311}, sf::Color::White, {0.5f / screenSize->x * windowsSize.x, 0.5f / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x + 80), static_cast<float>(windowsSize.y) / 2, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{2 / screenSize->x * windowsSize.x * -1, 0, 0});
-    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::BIGOSCILLATION, 0});
+    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::BIGOSCILLATION, TypeStatus(IDLE), TypePhase(PHASE01), 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{(375 * 0.5f) / screenSize->x * windowsSize.x, (331 * 0.5f) / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});

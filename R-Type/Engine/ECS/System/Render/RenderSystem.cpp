@@ -96,13 +96,17 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     for (auto id : entityManager.getMaskCategory(render)) {
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
+
         sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
         spriteRef.setPosition(pos.x, pos.y);
         if (masks[id].has_value() && (masks[id].value() & renderAnim) == renderAnim) {
-            spriteRef.setTextureRect(static_cast<sf::IntRect>(componentManager.getSingleComponent<SpriteAttribut>(id).rect));
-            spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(id).rotation);
-            spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(id).color);
-            spriteRef.setScale(componentManager.getSingleComponent<SpriteAttribut>(id).scale);
+            SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
+            spriteRef.setTextureRect(static_cast<sf::IntRect>(spriteAt.rect));
+            spriteRef.setRotation(spriteAt.rotation);
+            spriteRef.setColor(spriteAt.color);
+            spriteRef.setScale(spriteAt.scale);
+            spriteRef.setOrigin(spriteAt.offset);
+            spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
         }
         if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown)
             displayCooldownBar(componentManager, entityManager, spriteRef, id);

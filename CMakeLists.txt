@@ -139,6 +139,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/PreloadEntities/BackgroundMusicPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ScoreTextPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/DevourerOfGodsPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/CthulhuPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ProjectilePreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
