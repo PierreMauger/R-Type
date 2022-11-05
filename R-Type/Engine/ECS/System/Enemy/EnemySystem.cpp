@@ -89,6 +89,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             }
             vel.x = 0;
             vel.y = 0;
+            pat.status = IDLE;
             break;
 
         case TypeStatus::MOVE :

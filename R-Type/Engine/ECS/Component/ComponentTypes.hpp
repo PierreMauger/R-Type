@@ -302,6 +302,7 @@ typedef struct SpriteAttribut {
         sf::FloatRect rect = sf::FloatRect();
         sf::Color color = sf::Color::White;
         sf::Vector2f scale = {1.0f, 1.0f};
+        sf::Vector2f offset = {0.0f, 0.0f};
 } SpriteAttribut;
 
 enum ButtonType {
