@@ -24,7 +24,7 @@ namespace eng
      * @brief The menu serializer
      * @class ServerMenuSerializer
      */
-    class ServerMenuSerializer : private MenuSerializer
+    class ServerMenuSerializer : public MenuSerializer
     {
         public:
             /**

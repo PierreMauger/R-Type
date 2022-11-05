@@ -70,3 +70,8 @@ _QUEUE_TYPE &ClientNetwork::getQueueInUdp()
 {
     return this->_dataInUdp;
 }
+
+void ClientNetwork::updateConnection()
+{
+    this->_connection->updateDataOut();
+}

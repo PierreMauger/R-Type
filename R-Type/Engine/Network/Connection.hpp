@@ -41,6 +41,8 @@ namespace eng
             _B_ASIO_TCP::socket _tcpSocket;
             _QUEUE_TYPE &_dataInUdp;
             _QUEUE_TYPE &_dataInTcp;
+            std::vector<_STORAGE_DATA> _dataOutUdp;
+            std::vector<_STORAGE_DATA> _dataOutTcp;
             std::thread _threadConnection;
             _STORAGE_DATA _tcpTmpBuffer;
             _STORAGE_DATA _udpTmpBuffer;
@@ -145,11 +147,18 @@ namespace eng
              */
             void tcpMsg(_STORAGE_DATA data);
             /**
-             * @brief Send an ucp message.
+             * @brief Send an udp message.
              * @fn void udpMsg(_STORAGE_DATA data)
              * @param data The data to send through udp connection.
              */
             void udpMsg(_STORAGE_DATA data);
+
+            /**
+             * @brief Update the output data.
+             * @fn void updateDataOut()
+             */
+            void updateDataOut();
+
     };
 } // namespace eng
 

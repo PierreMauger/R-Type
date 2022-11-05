@@ -18,7 +18,7 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    // systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
@@ -27,7 +27,7 @@ void Client::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
-    systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
+    // systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
 }
 
 void Client::initComponents()
@@ -64,6 +64,35 @@ void Client::initEntities()
     ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
+void Client::syncUdpNetwork()
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInUdp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    packet = dataIn.pop_front();
+    this->_gameSerializer.handlePacket(packet, 0, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+}
+
+void Client::syncTcpNetwork()
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInTcp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    packet = dataIn.pop_front();
+    this->_menuSerializer.handlePacket(packet, this->_rooms);
+}
+
+void Client::updateNetwork()
+{
+    this->syncUdpNetwork();
+    this->syncTcpNetwork();
+    this->_network.updateConnection();
+}
+
 void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
@@ -84,6 +113,7 @@ void Client::mainLoop()
         }
         if (!this->_network.isConnected())
             graphic.getWindow()->close();
+        this->updateNetwork();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();

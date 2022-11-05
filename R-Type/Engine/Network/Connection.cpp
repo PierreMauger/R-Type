@@ -163,10 +163,30 @@ std::thread &Connection::getThreadConnection()
 
 void Connection::tcpMsg(_STORAGE_DATA data)
 {
-    this->_tcpSocket.send(boost::asio::buffer(data));
+    if (!this->checkConnection())
+        return;
+    this->_dataOutTcp.push_back(data);
 }
 
 void Connection::udpMsg(_STORAGE_DATA data)
 {
-    this->_udpSocketOut.send_to(boost::asio::buffer(data), this->_udpEndpoint);
+    if (!this->checkConnection())
+        return;
+    this->_dataOutUdp.push_back(data);
+}
+
+void Connection::updateDataOut()
+{
+    if (!this->checkConnection())
+        return;
+
+    for (auto &data : this->_dataOutTcp) {
+        this->_tcpSocket.send(boost::asio::buffer(data));
+    }
+    this->_dataOutTcp.clear();
+
+    for (auto &data : this->_dataOutUdp) {
+        this->_udpSocketOut.send_to(boost::asio::buffer(data), this->_udpEndpoint);
+    }
+    this->_dataOutUdp.clear();
 }

@@ -90,6 +90,21 @@ namespace eng
             void udpMsgAll(_STORAGE_DATA data);
 
             /**
+             * @brief Message the every client in the room with tcp.
+             * @fn void tcpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients)
+             * @param data The data to send.
+             * @param roomId The room id.
+             */
+            void tcpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients);
+            /**
+             * @brief Message the every client in the room with udp.
+             * @fn void udpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients)
+             * @param data The data to send.
+             * @param roomId The room id.
+             */
+            void udpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients);
+
+            /**
              * @brief Close the connection to a client.
              * @fn void closeConnection(_B_ASIO_TCP::endpoint endpoint)
              * @param endpoint The endpoint of the client to close the connection to.

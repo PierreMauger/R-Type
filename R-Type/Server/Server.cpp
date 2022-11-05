@@ -93,7 +93,7 @@ void Server::manageEvent()
 
 void Server::manageEnemy()
 {
-    eng::Graphic &graphic = this->_engine.getGraphic();
+    Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
         BossPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
@@ -104,7 +104,19 @@ void Server::manageEnemy()
     }
 }
 
-void eng::Server::updateClients()
+void Server::updateRooms()
+{
+    for (auto &room : this->_rooms) {
+        if (room.isFull() && !room.isStarted()) {
+            room.start();
+            auto packet = this->_menuSerializer.serializeEvent(MenuEvent::GAME_START);
+            this->_network.tcpMsgRoom(packet, room.getId(), this->_clients);
+        }
+    }
+    // TODO
+}
+
+void Server::updateClients()
 {
     bool check = false;
     std::vector<std::shared_ptr<Connection>> &connections = this->_network.getConnections();
@@ -129,7 +141,13 @@ void eng::Server::updateClients()
     }
 }
 
-void eng::Server::mainLoop()
+void Server::updateNetwork()
+{
+    this->updateClients();
+    this->_network.updateConnection();
+}
+
+void Server::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
@@ -138,8 +156,7 @@ void eng::Server::mainLoop()
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();
-        this->_network.updateConnection();
-        this->updateClients();
+        this->updateNetwork();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();

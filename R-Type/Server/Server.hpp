@@ -43,9 +43,10 @@ namespace eng
             ServerMenuSerializer _menuSerializer;
             ServerGameSerializer _gameSerializer;
 
+            std::size_t _syncId = 0;
             std::vector<Client> _clients;
 
-            std::size_t _roomCount = 0;
+            std::size_t _roomId = 0;
             std::vector<Room> _rooms;
 
             sf::Time _elapsedTime = sf::seconds(0);
@@ -57,7 +58,9 @@ namespace eng
             void initEntities();
             void manageEvent();
             void manageEnemy();
+            void updateRooms();
             void updateClients();
+            void updateNetwork();
 
         public:
             /**

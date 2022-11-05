@@ -15,6 +15,7 @@
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
+#include "Engine/Network/GameSerializer.hpp"
 #include "Engine/Network/MenuSerializer.hpp"
 #include "Includes.hpp"
 
@@ -37,10 +38,16 @@ namespace eng
             ClientNetwork _network;
 
             MenuSerializer _menuSerializer;
+            GameSerializer _gameSerializer;
+
+            std::vector<Room> _rooms;
 
             void initSystems();
             void initComponents();
             void initEntities();
+            void syncUdpNetwork();
+            void syncTcpNetwork();
+            void updateNetwork();
 
         public:
             /**

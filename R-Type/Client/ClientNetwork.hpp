@@ -92,6 +92,12 @@ namespace eng
              * @return A reference to the udp input queue
              */
             _QUEUE_TYPE &getQueueInUdp();
+
+            /**
+             * @brief Update the client network
+             * @fn void update()
+             */
+            void updateConnection();
     };
 } // namespace eng
 

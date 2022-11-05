@@ -96,6 +96,24 @@ void ServerNetwork::udpMsgAll(_STORAGE_DATA data)
     }
 }
 
+void ServerNetwork::tcpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients)
+{
+    for (auto &client : clients) {
+        if (client.getRoomId() == roomId) {
+            client.getConnection()->tcpMsg(data);
+        }
+    }
+}
+
+void ServerNetwork::udpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients)
+{
+    for (auto &client : clients) {
+        if (client.getRoomId() == roomId) {
+            client.getConnection()->udpMsg(data);
+        }
+    }
+}
+
 void ServerNetwork::closeConnection(_B_ASIO_TCP::endpoint endpoint)
 {
     for (auto &connection : this->_listConnections) {
@@ -116,6 +134,7 @@ void ServerNetwork::updateConnection()
                 connection->getThreadConnection().join();
             this->_listConnections.erase(std::remove(this->_listConnections.begin(), this->_listConnections.end(), connection), this->_listConnections.end());
         }
+        connection->updateDataOut();
     }
 }
 

@@ -24,7 +24,7 @@ namespace eng
      * @brief The game serializer
      * @enum ServerGameSerializer
      */
-    class ServerGameSerializer : private GameSerializer
+    class ServerGameSerializer : public GameSerializer
     {
         public:
             /**
