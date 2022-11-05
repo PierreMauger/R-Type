@@ -5,8 +5,8 @@
  * @copyright Epitech Rennes 2022
  */
 
-#ifndef GAMESERIALIZER_HPP
-#define GAMESERIALIZER_HPP
+#ifndef MENUSERIALIZER_HPP
+#define MENUSERIALIZER_HPP
 
 /// @cond
 #include "Engine/ECS/Component/ComponentManager.hpp"
@@ -142,4 +142,4 @@ namespace eng
     };
 }
 
-#endif // GAMESERIALIZER_HPP
+#endif // MENUSERIALIZER_HPP

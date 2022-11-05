@@ -18,6 +18,7 @@
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/Network/Room.hpp"
 #include "Includes.hpp"
+#include "ServerGameSerializer.hpp"
 #include "ServerMenuSerializer.hpp"
 #include "ServerNetwork.hpp"
 
@@ -40,6 +41,7 @@ namespace eng
             ServerNetwork _network;
 
             ServerMenuSerializer _menuSerializer;
+            ServerGameSerializer _gameSerializer;
 
             std::vector<Client> _clients;
 

@@ -5,8 +5,8 @@
  * @copyright Epitech Rennes 2022
  */
 
-#ifndef SERVERGAMESERIALIZER_HPP
-#define SERVERGAMESERIALIZER_HPP
+#ifndef SERVERMENUSERIALIZER_HPP
+#define SERVERMENUSERIALIZER_HPP
 
 /// @cond
 #include "Client.hpp"
@@ -70,4 +70,4 @@ namespace eng
     };
 }
 
-#endif // SERVERGAMESERIALIZER_HPP
+#endif // SERVERMENUSERIALIZER_HPP

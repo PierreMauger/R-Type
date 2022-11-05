@@ -243,6 +243,7 @@ set(SERVER_SRC
     ${SERVER_ROOT}/Server.cpp
     ${SERVER_ROOT}/ServerNetwork.cpp
     ${SERVER_ROOT}/ServerMenuSerializer.cpp
+    ${SERVER_ROOT}/ServerGameSerializer.cpp
 )
 
 #set include paths

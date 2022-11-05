@@ -23,11 +23,6 @@ Loader &Engine::getLoader()
     return this->_loader;
 }
 
-Input &Engine::getInput()
-{
-    return this->_input;
-}
-
 void Engine::updateSize(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)
 {
     std::size_t checkSize = (InfoComp::SIZE | InfoComp::SPRITEAT);
