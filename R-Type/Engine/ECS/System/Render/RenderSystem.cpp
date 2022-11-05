@@ -81,15 +81,16 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Sprite> stockButton;
 
     for (auto id : entityManager.getMaskCategory(this->_textTag)) {
-        this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
+        sf::Text &textRef = this->_text;
+        textRef.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
         if (componentManager.getSingleComponent<Text>(id).hasValue)
-            this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+            textRef.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
         else {
-            this->_text.setString(componentManager.getSingleComponent<Text>(id).str);
-            this->_text.setOrigin(this->_text.getLocalBounds().width / 2, this->_text.getLocalBounds().height / 2);
+            textRef.setString(componentManager.getSingleComponent<Text>(id).str);
+            textRef.setOrigin(textRef.getLocalBounds().width / 2, textRef.getLocalBounds().height / 2);
         }
-        this->_text.setPosition(componentManager.getSingleComponent<Text>(id).pos);
-        stockText.push_back(this->_text);
+        textRef.setPosition(componentManager.getSingleComponent<Text>(id).pos);
+        stockText.push_back(textRef);
     }
     for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
         Position &pos = componentManager.getSingleComponent<Position>(id);

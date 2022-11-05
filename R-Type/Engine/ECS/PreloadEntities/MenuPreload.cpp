@@ -13,7 +13,7 @@ void MenuPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 265, 116}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 2 - 265 / 2), static_cast<float>(windowsSize.y / 3 - 116 / 2), 0});
     componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::QUIT});
-    componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"Quit", false, 0, {static_cast<float>(windowsSize.x / 2), static_cast<float>(windowsSize.y / 2)}});
+    componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"Quit", false, 0, {static_cast<float>(windowsSize.x / 2), static_cast<float>(windowsSize.y / 3)}});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265, 116});
 
     id = entityManager.addMask(mask, componentManager);

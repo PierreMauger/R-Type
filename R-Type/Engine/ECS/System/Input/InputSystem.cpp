@@ -42,15 +42,21 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
         if (button.type != ButtonType::TEXTZONE || !button.selected)
             continue;
 
-        for (int i = 0; i < 9; i++)
-            if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Num0) + i)))
-                text.str += std::to_string(i);
+        if (text.str.size() < 15) {
+            for (int i = 0; i < 9; i++) {
+                if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Num0) + i)) && _event->type == sf::Event::KeyPressed) {
+                    text.str += std::to_string(i);
+                    if ((text.str.size() + 1) % 4 == 0 && text.str.size() < 15)
+                        text.str += ".";
+                }
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace))
+            text.str = text.str.substr(0, text.str.size() - 1);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
             componentManager.clear();
             entityManager.clear();
             ParallaxPreload::preload(this->_window, this->_screenSize, entityManager, componentManager);
         }
     }
-
-
 }

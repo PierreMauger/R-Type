@@ -12,7 +12,7 @@ ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
 
 void ClickSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    bool changed = false;
+    unsigned long int changed = -1;
 
     for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
         Button &button = componentManager.getSingleComponent<Button>(id);
@@ -31,16 +31,16 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     this->_window->close();
                 } else if (button.type == ButtonType::TEXTZONE) {
                     button.selected = true;
-                    changed = true;
+                    changed = id;
                 }
             }
-        }
-    }
-    if (changed) {
-        for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
-            Button &button = componentManager.getSingleComponent<Button>(id);
-            if (button.type == ButtonType::TEXTZONE) {
-                button.selected = false;
+            if (changed) {
+                for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
+                    Button &button = componentManager.getSingleComponent<Button>(id);
+                    if (button.type == ButtonType::TEXTZONE && id != changed) {
+                        button.selected = false;
+                    }
+                }
             }
         }
     }
