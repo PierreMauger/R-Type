@@ -1,7 +1,7 @@
 /**
- * @file DevourerOfGodsPreload.hpp
+ * @file CthulhuPreload.hpp
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
- * @brief Preload the Devourer Of Gods (terraria boss).
+ * @brief Preload the Eye of Cthulhu (terraria boss).
  * @copyright Epitech Rennes 2022
  */
 

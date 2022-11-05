@@ -65,6 +65,16 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
         return;
     }
 
+    // limit cthulhu movement to the screen
+    if (pos.x < 0)
+        pos.x = 0;
+    if (pos.x > _window->getSize().x - spriteAttribut.rect.width)
+        pos.x = _window->getSize().x - spriteAttribut.rect.width;
+    if (pos.y < 0)
+        pos.y = 0;
+    if (pos.y > _window->getSize().y - spriteAttribut.rect.height)
+        pos.y = _window->getSize().y - spriteAttribut.rect.height;
+
     // Pattern Status Part
     switch (pat.status) {
         case TypeStatus::SEARCH :
@@ -89,7 +99,6 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             }
             vel.x = 0;
             vel.y = 0;
-            pat.status = IDLE;
             break;
 
         case TypeStatus::MOVE :
@@ -110,9 +119,6 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.status = TypeStatus::SEARCH;
                 pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             }
-            // vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;
-            // vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
-            // pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
             if (checkPlayer) {
                 posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
                 vel.x = ((posPlayer.x - pos.x) / 100) + (std::cos(pat.angle) * SPEED_OSC);
