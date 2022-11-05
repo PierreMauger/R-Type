@@ -109,7 +109,6 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/Component/
     ${ENGINE_ROOT}/ECS/System/
     ${ENGINE_ROOT}/ECS/PreloadEntities/
-    ${ENGINE_ROOT}/Input/
     ${ENGINE_ROOT}/Graphic/
     ${ENGINE_ROOT}/Network/
 )
@@ -154,9 +153,6 @@ set(ENGINE_SRC
 
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
-
-    # Input files
-    ${ENGINE_ROOT}/Input/Input.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
