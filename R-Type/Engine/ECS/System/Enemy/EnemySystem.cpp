@@ -44,6 +44,8 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     float delayShoot = 5;
     float delayAttack = 1.5;
     float delayMove = 2;
+
+    // check if player is dead & used to stop rotation for transform rotation
     bool checkPlayer = true;
 
     // Set the elapsed time at the beginning of the game
@@ -77,7 +79,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
 
         case TypeStatus::IDLE :
             if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayIdle) {
-                pat.status = TypeStatus::SHOOT;
+                pat.status = TypeStatus::MOVE;
                 if (pat.phase == PHASE02) {
                     pat.status = TypeStatus::ATTACK;
                     if (checkPlayer)
@@ -93,11 +95,12 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
                 pat.status = TypeStatus::SHOOT;
                 pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+                pat.angle = std::atan2(posPlayer.y - pos.y, posPlayer.x - pos.x);
             }
             if (checkPlayer) {
                 posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
-                vel.x = (posPlayer.x - pos.x) / 100;
-                vel.y = (posPlayer.y - pos.y) / 100;
+                vel.x = ((posPlayer.x - 20) - pos.x) / 80;
+                vel.y = ((posPlayer.y - 20) - pos.y) / 80;
             }
             break;
 
@@ -106,9 +109,14 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.status = TypeStatus::SEARCH;
                 pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             }
-            vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;
-            vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
-            pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
+            // vel.x = (std::cos(pat.angle) * SPEED_OSC) / this->_screenSize->x * _window->getSize().x;
+            // vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
+            // pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 2;
+            if (checkPlayer) {
+                posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+                vel.x = ((posPlayer.x - pos.x) / 100) + (std::cos(pat.angle) * SPEED_OSC);
+                vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
+            }
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
                 ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1);
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
