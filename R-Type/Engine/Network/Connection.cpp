@@ -2,22 +2,24 @@
 
 using namespace eng;
 
-Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
+Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataInTcp, _QUEUE_TYPE &dataInUdp)
     : _ioContext(ioContext),
       _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
       _udpSocketOut(ioContext),
       _tcpSocket(ioContext),
-      _dataIn(dataIn)
+      _dataInTcp(dataInTcp),
+      _dataInUdp(dataInUdp)
 {
 }
 
-Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
+Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataInTcp, _QUEUE_TYPE &dataInUdp)
     : _ioContext(ioContext),
       _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp),
       _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
       _udpSocketOut(ioContext),
       _tcpSocket(ioContext),
-      _dataIn(dataIn)
+      _dataInTcp(dataInTcp),
+      _dataInUdp(dataInUdp)
 {
 }
 
@@ -34,7 +36,7 @@ void Connection::handleMsgTcp(const boost::system::error_code &error, size_t siz
         std::cout << "[~] New TCP message from " << this->_tcpEndpoint << std::endl;
         if (size != _NET_BUFFER_SIZE)
             std::cout << "[?] TCP message size : " << size << std::endl;
-        this->_dataIn.push_back(this->_tcpTmpBuffer);
+        this->_dataInTcp.push_back(this->_tcpTmpBuffer);
     } else if (error == boost::asio::error::eof) {
         this->closeConnection();
         std::cout << "[-] Connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << " closed" << std::endl;
@@ -53,7 +55,7 @@ void Connection::handleMsgUdp(const boost::system::error_code &error, size_t siz
         std::cout << "[~] New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
         if (size != _NET_BUFFER_SIZE)
             std::cout << "[?] UDP message size : " << size << std::endl;
-        this->_dataIn.push_back(this->_udpTmpBuffer);
+        this->_dataInUdp.push_back(this->_udpTmpBuffer);
     } else {
         std::cerr << "[!] handleMsgUdp Error: " << error.message() << std::endl;
     }

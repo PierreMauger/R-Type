@@ -31,8 +31,9 @@ namespace eng
 
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::resolver _resolver;
+            _QUEUE_TYPE _dataInTcp;
+            _QUEUE_TYPE _dataInUdp;
             std::shared_ptr<Connection> _connection;
-            _QUEUE_TYPE _dataIn;
             std::thread _threadContext;
 
         public:
@@ -81,16 +82,16 @@ namespace eng
 
             /**
              * @brief Get the input queue
-             * @fn _QUEUE_TYPE &getQueueIn()
-             * @return A reference to the input queue
+             * @fn _QUEUE_TYPE &getQueueInTcp()
+             * @return A reference to the tcp input queue
              */
-            _QUEUE_TYPE &getQueueIn();
+            _QUEUE_TYPE &getQueueInTcp();
             /**
-             * @brief Get the output queue
-             * @fn _QUEUE_TYPE &getQueueOut()
-             * @return A reference to the output queue
+             * @brief Get the input queue
+             * @fn _QUEUE_TYPE &getQueueInUdp()
+             * @return A reference to the udp input queue
              */
-            _QUEUE_TYPE &getQueueOut();
+            _QUEUE_TYPE &getQueueInUdp();
     };
 } // namespace eng
 

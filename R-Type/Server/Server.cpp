@@ -131,10 +131,6 @@ void eng::Server::updateClients()
 
 void eng::Server::mainLoop()
 {
-    _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
-    std::size_t refreshTick = 5;
-    std::map<std::string, boost::shared_ptr<Connection>> players;
-
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
 
@@ -142,13 +138,6 @@ void eng::Server::mainLoop()
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();
-        for (size_t count = 0; count < refreshTick; count++) {
-            if (!dataIn.empty()) {
-                std::cout << "Message: " << dataIn.pop_front().data() << std::endl;
-            } else {
-                break;
-            }
-        }
         this->_network.updateConnection();
         this->updateClients();
         graphic.getWindow()->clear(sf::Color::Black);

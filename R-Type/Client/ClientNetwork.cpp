@@ -2,11 +2,9 @@
 
 using namespace eng;
 
-ClientNetwork::ClientNetwork(std::string ip, uint16_t portTcp)
-    : _ioContext(),
-      _resolver(_ioContext)
+ClientNetwork::ClientNetwork(std::string ip, uint16_t portTcp) : _ioContext(), _resolver(_ioContext)
 {
-    this->_connection = std::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataIn);
+    this->_connection = std::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataInTcp, this->_dataInUdp);
     this->initClientNetwork();
 }
 
@@ -33,9 +31,7 @@ void ClientNetwork::initClientNetwork()
 
 void ClientNetwork::run()
 {
-    this->_threadContext = std::thread([this]() {
-        this->_ioContext.run();
-    });
+    this->_threadContext = std::thread([this]() { this->_ioContext.run(); });
 }
 
 void ClientNetwork::stop()
@@ -65,7 +61,12 @@ void ClientNetwork::udpMsg(_STORAGE_DATA data)
     this->_connection->udpMsg(data);
 }
 
-_QUEUE_TYPE &ClientNetwork::getQueueIn()
+_QUEUE_TYPE &ClientNetwork::getQueueInTcp()
 {
-    return this->_dataIn;
+    return this->_dataInTcp;
+}
+
+_QUEUE_TYPE &ClientNetwork::getQueueInUdp()
+{
+    return this->_dataInUdp;
 }

@@ -2,9 +2,7 @@
 
 using namespace eng;
 
-ServerNetwork::ServerNetwork(uint16_t portTcp)
-    : _ioContext(),
-      _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
+ServerNetwork::ServerNetwork(uint16_t portTcp) : _ioContext(), _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
     this->initServerNetwork();
 }
@@ -16,12 +14,8 @@ ServerNetwork::~ServerNetwork()
 
 void ServerNetwork::initServerNetwork()
 {
-    std::shared_ptr<Connection> newConnection = std::make_shared<Connection>(this->_ioContext, this->_dataIn);
-    this->_acceptor.async_accept(newConnection->getTcpSocket(),
-                                 boost::bind(&ServerNetwork::handleNewTcp,
-                                             this,
-                                             boost::asio::placeholders::error,
-                                             newConnection));
+    std::shared_ptr<Connection> newConnection = std::make_shared<Connection>(this->_ioContext, this->_dataInTcp, this->_dataInUdp);
+    this->_acceptor.async_accept(newConnection->getTcpSocket(), boost::bind(&ServerNetwork::handleNewTcp, this, boost::asio::placeholders::error, newConnection));
 }
 
 void ServerNetwork::run()
@@ -125,17 +119,17 @@ void ServerNetwork::updateConnection()
     }
 }
 
-_QUEUE_TYPE &ServerNetwork::getQueueIn()
-{
-    return this->_dataIn;
-}
-
-_QUEUE_TYPE &ServerNetwork::getQueueOut()
-{
-    return this->_dataOut;
-}
-
 std::vector<std::shared_ptr<Connection>> &ServerNetwork::getConnections()
 {
     return this->_listConnections;
+}
+
+_QUEUE_TYPE &ServerNetwork::getQueueInTcp()
+{
+    return this->_dataInTcp;
+}
+
+_QUEUE_TYPE &ServerNetwork::getQueueInUdp()
+{
+    return this->_dataInUdp;
 }

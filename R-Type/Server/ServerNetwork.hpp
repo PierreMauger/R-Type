@@ -32,9 +32,9 @@ namespace eng
 
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::acceptor _acceptor;
+            _QUEUE_TYPE _dataInTcp;
+            _QUEUE_TYPE _dataInUdp;
             std::vector<std::shared_ptr<Connection>> _listConnections;
-            _QUEUE_TYPE _dataIn;
-            _QUEUE_TYPE _dataOut;
             std::thread _threadContext;
 
         public:
@@ -102,23 +102,24 @@ namespace eng
             void updateConnection();
 
             /**
-             * @brief Get the input queue
-             * @fn _QUEUE_TYPE &getQueueIn()
-             * @return A reference to the input queue
-             */
-            _QUEUE_TYPE &getQueueIn();
-            /**
-             * @brief Get the output queue
-             * @fn _QUEUE_TYPE &getQueueOut()
-             * @return A reference to the output queue
-             */
-            _QUEUE_TYPE &getQueueOut();
-            /**
              * @brief Get the connections
              * @fn std::vector<std::shared_ptr<Connection>> &getConnections()
              * @return A reference to a vector of shared pointers of connections
              */
             std::vector<std::shared_ptr<Connection>> &getConnections();
+
+            /**
+             * @brief Get the input queue
+             * @fn _QUEUE_TYPE &getQueueInTcp()
+             * @return A reference to the tcp input queue
+             */
+            _QUEUE_TYPE &getQueueInTcp();
+            /**
+             * @brief Get the input queue
+             * @fn _QUEUE_TYPE &getQueueInUdp()
+             * @return A reference to the udp input queue
+             */
+            _QUEUE_TYPE &getQueueInUdp();
     };
 } // namespace eng
 

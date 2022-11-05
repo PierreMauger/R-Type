@@ -66,9 +66,6 @@ void Client::initEntities()
 
 void Client::mainLoop()
 {
-    _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
-    std::size_t refreshTick = 5;
-
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
     VesselPreload vesselPreload;
@@ -83,13 +80,6 @@ void Client::mainLoop()
             if (graphic.getEvent()->type == sf::Event::Resized) {
                 this->_engine.updateSizeWindow();
                 graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
-            }
-        }
-        for (size_t count = 0; count < refreshTick; count++) {
-            if (!dataIn.empty()) {
-                std::cout << "Message: " << dataIn.pop_front().data() << std::endl;
-            } else {
-                break;
             }
         }
         if (!this->_network.isConnected())
