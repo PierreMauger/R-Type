@@ -68,13 +68,12 @@ namespace eng
 
             /**
              * @brief Handle a game packet.
-             * @fn handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager)
+             * @fn handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager)
              * @param packet The packet to handle.
-             * @param id The id of the packet.
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
              */
-            void handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager);
+            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager);
 
             /**
              * @brief Serialize an entity

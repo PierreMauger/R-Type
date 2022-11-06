@@ -2,24 +2,13 @@
 
 using namespace eng;
 
-Connection::Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataInTcp, _QUEUE_TYPE &dataInUdp)
-    : _ioContext(ioContext),
-      _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
-      _udpSocketOut(ioContext),
-      _tcpSocket(ioContext),
-      _dataInTcp(dataInTcp),
-      _dataInUdp(dataInUdp)
+Connection::Connection(boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp)
+    : _ioContext(ioContext), _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)), _udpSocketOut(ioContext), _tcpSocket(ioContext), _dataInTcp(dataInTcp), _dataInUdp(dataInUdp)
 {
 }
 
-Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataInTcp, _QUEUE_TYPE &dataInUdp)
-    : _ioContext(ioContext),
-      _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp),
-      _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)),
-      _udpSocketOut(ioContext),
-      _tcpSocket(ioContext),
-      _dataInTcp(dataInTcp),
-      _dataInUdp(dataInUdp)
+Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp)
+    : _ioContext(ioContext), _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp), _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)), _udpSocketOut(ioContext), _tcpSocket(ioContext), _dataInTcp(dataInTcp), _dataInUdp(dataInUdp)
 {
 }
 
@@ -36,7 +25,7 @@ void Connection::handleMsgTcp(const boost::system::error_code &error, size_t siz
         std::cout << "[~] New TCP message from " << this->_tcpEndpoint << std::endl;
         if (size != _NET_BUFFER_SIZE)
             std::cout << "[?] TCP message size : " << size << std::endl;
-        this->_dataInTcp.push_back(this->_tcpTmpBuffer);
+        this->_dataInTcp->push_back(this->_tcpTmpBuffer);
     } else if (error == boost::asio::error::eof) {
         this->closeConnection();
         std::cout << "[-] Connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << " closed" << std::endl;
@@ -55,7 +44,7 @@ void Connection::handleMsgUdp(const boost::system::error_code &error, size_t siz
         std::cout << "[~] New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
         if (size != _NET_BUFFER_SIZE)
             std::cout << "[?] UDP message size : " << size << std::endl;
-        this->_dataInUdp.push_back(this->_udpTmpBuffer);
+        this->_dataInUdp->push_back(this->_udpTmpBuffer);
     } else {
         std::cerr << "[!] handleMsgUdp Error: " << error.message() << std::endl;
     }
@@ -77,21 +66,10 @@ void Connection::initConnection()
         return;
 
     this->_tcpTmpBuffer.fill(0);
-    this->_tcpSocket.async_receive(
-        boost::asio::buffer(this->_tcpTmpBuffer),
-        boost::bind(&Connection::handleMsgTcp,
-                    this,
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred));
+    this->_tcpSocket.async_receive(boost::asio::buffer(this->_tcpTmpBuffer), boost::bind(&Connection::handleMsgTcp, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 
     this->_udpTmpBuffer.fill(0);
-    this->_udpSocketIn.async_receive_from(
-        boost::asio::buffer(this->_udpTmpBuffer),
-        this->_tmpEndpoint,
-        boost::bind(&Connection::handleMsgUdp,
-                    this,
-                    boost::asio::placeholders::error,
-                    boost::asio::placeholders::bytes_transferred));
+    this->_udpSocketIn.async_receive_from(boost::asio::buffer(this->_udpTmpBuffer), this->_tmpEndpoint, boost::bind(&Connection::handleMsgUdp, this, boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 }
 
 bool Connection::checkConnection()
@@ -101,9 +79,7 @@ bool Connection::checkConnection()
 
 void Connection::run()
 {
-    this->_threadConnection = std::thread([this]() {
-        this->open();
-    });
+    this->_threadConnection = std::thread([this]() { this->open(); });
 }
 
 _B_ASIO_TCP::socket &Connection::getTcpSocket()

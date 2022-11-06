@@ -14,6 +14,9 @@ ServerNetwork::~ServerNetwork()
 
 void ServerNetwork::initServerNetwork()
 {
+    this->_dataInTcp = std::make_shared<_QUEUE_TYPE>();
+    this->_dataInUdp = std::make_shared<_QUEUE_TYPE>();
+
     std::shared_ptr<Connection> newConnection = std::make_shared<Connection>(this->_ioContext, this->_dataInTcp, this->_dataInUdp);
     this->_acceptor.async_accept(newConnection->getTcpSocket(), boost::bind(&ServerNetwork::handleNewTcp, this, boost::asio::placeholders::error, newConnection));
 }
@@ -145,10 +148,10 @@ std::vector<std::shared_ptr<Connection>> &ServerNetwork::getConnections()
 
 _QUEUE_TYPE &ServerNetwork::getQueueInTcp()
 {
-    return this->_dataInTcp;
+    return *this->_dataInTcp;
 }
 
 _QUEUE_TYPE &ServerNetwork::getQueueInUdp()
 {
-    return this->_dataInUdp;
+    return *this->_dataInUdp;
 }

@@ -32,8 +32,8 @@ namespace eng
 
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::acceptor _acceptor;
-            _QUEUE_TYPE _dataInTcp;
-            _QUEUE_TYPE _dataInUdp;
+            std::shared_ptr<_QUEUE_TYPE> _dataInTcp;
+            std::shared_ptr<_QUEUE_TYPE> _dataInUdp;
             std::vector<std::shared_ptr<Connection>> _listConnections;
             std::thread _threadContext;
 

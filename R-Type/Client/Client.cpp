@@ -72,7 +72,7 @@ void Client::syncUdpNetwork()
     if (dataIn.empty())
         return;
     packet = dataIn.pop_front();
-    this->_gameSerializer.handlePacket(packet, 0, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Client::syncTcpNetwork()

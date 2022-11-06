@@ -4,6 +4,9 @@ using namespace eng;
 
 ClientNetwork::ClientNetwork(std::string ip, uint16_t portTcp) : _ioContext(), _resolver(_ioContext)
 {
+    this->_dataInTcp = std::make_shared<_QUEUE_TYPE>();
+    this->_dataInUdp = std::make_shared<_QUEUE_TYPE>();
+
     this->_connection = std::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataInTcp, this->_dataInUdp);
     this->initClientNetwork();
 }
@@ -63,12 +66,12 @@ void ClientNetwork::udpMsg(_STORAGE_DATA data)
 
 _QUEUE_TYPE &ClientNetwork::getQueueInTcp()
 {
-    return this->_dataInTcp;
+    return *this->_dataInTcp;
 }
 
 _QUEUE_TYPE &ClientNetwork::getQueueInUdp()
 {
-    return this->_dataInUdp;
+    return *this->_dataInUdp;
 }
 
 void ClientNetwork::updateConnection()
