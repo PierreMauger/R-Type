@@ -252,6 +252,7 @@ typedef struct Pattern {
         float angle = 0.0f;
         float statusTime = 0.0f;
         size_t focusEntity = 0;
+        size_t phaseCount = 0;
         Position lastPosFocus = {0.0f, 0.0f, 0.0f};
 } Pattern;
 
