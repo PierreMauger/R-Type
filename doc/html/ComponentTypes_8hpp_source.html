@@ -230,50 +230,51 @@ $(function() {
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        <span class="keywordtype">float</span> angle = 0.0f;</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <span class="keywordtype">float</span> statusTime = 0.0f;</div>
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordtype">size_t</span> focusEntity = 0;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <a class="code" href="structPosition.html">Position</a> lastPosFocus = {0.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;} <a class="code" href="structPattern.html">Pattern</a>;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
-<div class="line"><a name="l00262"></a><span class="lineno"><a class="line" href="structSyncID.html">  262</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSyncID.html">SyncID</a> {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;} <a class="code" href="structSyncID.html">SyncID</a>;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
-<div class="line"><a name="l00270"></a><span class="lineno"><a class="line" href="structDropBonus.html">  270</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structDropBonus.html">DropBonus</a> {</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;} <a class="code" href="structDropBonus.html">DropBonus</a>;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
-<div class="line"><a name="l00278"></a><span class="lineno"><a class="line" href="structText.html">  278</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structText.html">Text</a> {</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;        std::string str = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        <span class="keywordtype">bool</span> hasValue = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        std::size_t value = 0;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        sf::Vector2f pos = {0.0f, 0.0f};</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;} <a class="code" href="structText.html">Text</a>;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160; </div>
-<div class="line"><a name="l00289"></a><span class="lineno"><a class="line" href="structSoundID.html">  289</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSoundID.html">SoundID</a> {</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <span class="keywordtype">bool</span> play = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keywordtype">bool</span> loop = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordtype">float</span> pitch = 1.0f;</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;} <a class="code" href="structSoundID.html">SoundID</a>;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
-<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="structSpriteAttribut.html">  300</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSpriteAttribut.html">SpriteAttribut</a> {</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        <span class="keywordtype">float</span> rotation = 0;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        sf::FloatRect rect = sf::FloatRect();</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        sf::Color color = sf::Color::White;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        sf::Vector2f scale = {1.0f, 1.0f};</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        sf::Vector2f offset = {0.0f, 0.0f};</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;} <a class="code" href="structSpriteAttribut.html">SpriteAttribut</a>;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;<span class="keyword">enum</span> ButtonType {</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;    QUIT = 0,</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    PLAY,</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    BACK,</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;};</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00314"></a><span class="lineno"><a class="line" href="structButton.html">  314</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structButton.html">Button</a> {</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        ButtonType type = QUIT;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;} <a class="code" href="structButton.html">Button</a>;</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160; </div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="keywordtype">size_t</span> phaseCount = 0;</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <a class="code" href="structPosition.html">Position</a> lastPosFocus = {0.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;} <a class="code" href="structPattern.html">Pattern</a>;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno"><a class="line" href="structSyncID.html">  263</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSyncID.html">SyncID</a> {</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;} <a class="code" href="structSyncID.html">SyncID</a>;</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="structDropBonus.html">  271</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structDropBonus.html">DropBonus</a> {</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;} <a class="code" href="structDropBonus.html">DropBonus</a>;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
+<div class="line"><a name="l00279"></a><span class="lineno"><a class="line" href="structText.html">  279</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structText.html">Text</a> {</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;        std::string str = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        <span class="keywordtype">bool</span> hasValue = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        std::size_t value = 0;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        sf::Vector2f pos = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;} <a class="code" href="structText.html">Text</a>;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="structSoundID.html">  290</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSoundID.html">SoundID</a> {</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keywordtype">bool</span> play = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordtype">bool</span> loop = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keywordtype">float</span> pitch = 1.0f;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;} <a class="code" href="structSoundID.html">SoundID</a>;</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno"><a class="line" href="structSpriteAttribut.html">  301</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSpriteAttribut.html">SpriteAttribut</a> {</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="keywordtype">float</span> rotation = 0;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        sf::FloatRect rect = sf::FloatRect();</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        sf::Color color = sf::Color::White;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        sf::Vector2f scale = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        sf::Vector2f offset = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;} <a class="code" href="structSpriteAttribut.html">SpriteAttribut</a>;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;<span class="keyword">enum</span> ButtonType {</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;    QUIT = 0,</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    PLAY,</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    BACK,</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;};</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="structButton.html">  315</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structButton.html">Button</a> {</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        ButtonType type = QUIT;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;} <a class="code" href="structButton.html">Button</a>;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
 <div class="ttc" id="aComponentTypes_8hpp_html_a152e0c36b337a97595cf8e9d5dc937cb"><div class="ttname"><a href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a></div><div class="ttdeci">TypePhase</div><div class="ttdoc">The type of phase that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:238</div></div>
 <div class="ttc" id="aComponentTypes_8hpp_html_a315655b1bb5848c063491adffde62b15"><div class="ttname"><a href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a></div><div class="ttdeci">Priority</div><div class="ttdoc">Priority of the sprites to be displayed (background before foreground etc..).</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:86</div></div>
 <div class="ttc" id="aComponentTypes_8hpp_html_a58ec645a8af2e639f20c750ca31a504e"><div class="ttname"><a href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a></div><div class="ttdeci">TypeStatus</div><div class="ttdoc">The type of status that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:225</div></div>
@@ -282,12 +283,12 @@ $(function() {
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 <div class="ttc" id="anamespaceeng_html_ae58dbf00a8a6d1168e886cb3aabd5e8c"><div class="ttname"><a href="namespaceeng.html#ae58dbf00a8a6d1168e886cb3aabd5e8c">eng::InfoComp</a></div><div class="ttdeci">InfoComp</div><div class="ttdoc">Masks of the components.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:25</div></div>
 <div class="ttc" id="astructAppearance_html"><div class="ttname"><a href="structAppearance.html">Appearance</a></div><div class="ttdoc">The appearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:158</div></div>
-<div class="ttc" id="astructButton_html"><div class="ttname"><a href="structButton.html">Button</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:314</div></div>
+<div class="ttc" id="astructButton_html"><div class="ttname"><a href="structButton.html">Button</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:315</div></div>
 <div class="ttc" id="astructControllable_html"><div class="ttname"><a href="structControllable.html">Controllable</a></div><div class="ttdoc">The controllable component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:113</div></div>
 <div class="ttc" id="astructCooldownBar_html"><div class="ttname"><a href="structCooldownBar.html">CooldownBar</a></div><div class="ttdoc">The cooldownBar component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:186</div></div>
 <div class="ttc" id="astructCooldownShoot_html"><div class="ttname"><a href="structCooldownShoot.html">CooldownShoot</a></div><div class="ttdoc">The cooldownShoot component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:176</div></div>
 <div class="ttc" id="astructDisappearance_html"><div class="ttname"><a href="structDisappearance.html">Disappearance</a></div><div class="ttdoc">The disappearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:167</div></div>
-<div class="ttc" id="astructDropBonus_html"><div class="ttname"><a href="structDropBonus.html">DropBonus</a></div><div class="ttdoc">The dropBonus component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:270</div></div>
+<div class="ttc" id="astructDropBonus_html"><div class="ttname"><a href="structDropBonus.html">DropBonus</a></div><div class="ttdoc">The dropBonus component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:271</div></div>
 <div class="ttc" id="astructEnemy_html"><div class="ttname"><a href="structEnemy.html">Enemy</a></div><div class="ttdoc">The enemy component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:150</div></div>
 <div class="ttc" id="astructLifeBar_html"><div class="ttname"><a href="structLifeBar.html">LifeBar</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:194</div></div>
 <div class="ttc" id="astructLife_html"><div class="ttname"><a href="structLife.html">Life</a></div><div class="ttdoc">The life component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:141</div></div>
@@ -297,11 +298,11 @@ $(function() {
 <div class="ttc" id="astructPosition_html"><div class="ttname"><a href="structPosition.html">Position</a></div><div class="ttdoc">The position component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:55</div></div>
 <div class="ttc" id="astructProjectile_html"><div class="ttname"><a href="structProjectile.html">Projectile</a></div><div class="ttdoc">The projectile component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:131</div></div>
 <div class="ttc" id="astructSize_html"><div class="ttname"><a href="structSize.html">Size</a></div><div class="ttdoc">The size component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:77</div></div>
-<div class="ttc" id="astructSoundID_html"><div class="ttname"><a href="structSoundID.html">SoundID</a></div><div class="ttdoc">The soundID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:289</div></div>
-<div class="ttc" id="astructSpriteAttribut_html"><div class="ttname"><a href="structSpriteAttribut.html">SpriteAttribut</a></div><div class="ttdoc">The spriteAttribut component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:300</div></div>
+<div class="ttc" id="astructSoundID_html"><div class="ttname"><a href="structSoundID.html">SoundID</a></div><div class="ttdoc">The soundID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:290</div></div>
+<div class="ttc" id="astructSpriteAttribut_html"><div class="ttname"><a href="structSpriteAttribut.html">SpriteAttribut</a></div><div class="ttdoc">The spriteAttribut component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:301</div></div>
 <div class="ttc" id="astructSpriteID_html"><div class="ttname"><a href="structSpriteID.html">SpriteID</a></div><div class="ttdoc">The spriteID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:96</div></div>
-<div class="ttc" id="astructSyncID_html"><div class="ttname"><a href="structSyncID.html">SyncID</a></div><div class="ttdoc">The syncID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:262</div></div>
-<div class="ttc" id="astructText_html"><div class="ttname"><a href="structText.html">Text</a></div><div class="ttdoc">The text component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:278</div></div>
+<div class="ttc" id="astructSyncID_html"><div class="ttname"><a href="structSyncID.html">SyncID</a></div><div class="ttdoc">The syncID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:263</div></div>
+<div class="ttc" id="astructText_html"><div class="ttname"><a href="structText.html">Text</a></div><div class="ttdoc">The text component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:279</div></div>
 <div class="ttc" id="astructVelocity_html"><div class="ttname"><a href="structVelocity.html">Velocity</a></div><div class="ttdoc">The velocity component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:65</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
