@@ -65,3 +65,8 @@ void Room::stop()
 {
     _started = false;
 }
+
+bool Room::operator==(const Room &room) const
+{
+    return _id == room._id;
+}

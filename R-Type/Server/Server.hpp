@@ -60,6 +60,7 @@ namespace eng
             void manageEnemy();
             void updateRooms();
             void updateClients();
+            void updateEntities();
             void updateNetwork();
 
         public:

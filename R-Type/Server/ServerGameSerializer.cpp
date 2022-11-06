@@ -38,4 +38,6 @@ void ServerGameSerializer::deserializeInput(std::vector<uint8_t> packet, std::si
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
+
+    // TODO
 }

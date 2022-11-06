@@ -96,7 +96,7 @@ void ServerNetwork::udpMsgAll(_STORAGE_DATA data)
     }
 }
 
-void ServerNetwork::tcpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients)
+void ServerNetwork::tcpMsgRoom(_STORAGE_DATA data, int roomId, std::vector<Client> &clients)
 {
     for (auto &client : clients) {
         if (client.getRoomId() == roomId) {
@@ -105,7 +105,7 @@ void ServerNetwork::tcpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vect
     }
 }
 
-void ServerNetwork::udpMsgRoom(_STORAGE_DATA data, std::size_t roomId, std::vector<Client> &clients)
+void ServerNetwork::udpMsgRoom(_STORAGE_DATA data, int roomId, std::vector<Client> &clients)
 {
     for (auto &client : clients) {
         if (client.getRoomId() == roomId) {

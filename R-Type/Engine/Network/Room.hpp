@@ -116,6 +116,14 @@ namespace eng
              * @fn void stop()
              */
             void stop();
+
+            /**
+             * @brief Check if the room is equal to another room
+             * @fn bool operator==(const Room &room) const
+             * @param room The room to compare
+             * @return A boolean indicating if the room is equal to another room
+             */
+            bool operator==(const Room &room) const;
     };
 }
 

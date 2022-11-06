@@ -112,8 +112,10 @@ void Server::updateRooms()
             auto packet = this->_menuSerializer.serializeEvent(MenuEvent::GAME_START);
             this->_network.tcpMsgRoom(packet, room.getId(), this->_clients);
         }
+        if (room.getNbPlayers() == 0) {
+            this->_rooms.erase(std::remove(this->_rooms.begin(), this->_rooms.end(), room), this->_rooms.end());
+        }
     }
-    // TODO
 }
 
 void Server::updateClients()
@@ -141,9 +143,26 @@ void Server::updateClients()
     }
 }
 
+void Server::updateEntities()
+{
+    EntityManager &entityManager = this->_engine.getECS().getEntityManager();
+    ComponentManager &componentManager = this->_engine.getECS().getComponentManager();
+    auto &masks = entityManager.getMasks();
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (!masks[i].has_value())
+            continue;
+        if ((masks[i].value() & InfoComp::SYNCID) == InfoComp::SYNCID) {
+            _STORAGE_DATA packet = this->_gameSerializer.serializeEntity(i, CrudType::UPDATE, entityManager, componentManager);
+            this->_network.udpMsgAll(packet);
+        }
+    }
+}
+
 void Server::updateNetwork()
 {
     this->updateClients();
+    this->updateEntities();
     this->_network.updateConnection();
 }
 
@@ -156,9 +175,10 @@ void Server::mainLoop()
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();
-        this->updateNetwork();
+        this->updateRooms();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
+        this->updateNetwork();
     }
 }

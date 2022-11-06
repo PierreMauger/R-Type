@@ -6,7 +6,7 @@ MenuSerializer::MenuSerializer()
 {
 }
 
-std::vector<Room>::iterator MenuSerializer::getRoom(std::vector<Room> rooms, std::size_t id)
+std::vector<Room>::iterator MenuSerializer::getRoom(std::vector<Room> rooms, int id)
 {
     for (auto it = rooms.begin(); it != rooms.end(); ++it) {
         if (it->getId() == id) {
@@ -17,7 +17,7 @@ std::vector<Room>::iterator MenuSerializer::getRoom(std::vector<Room> rooms, std
     throw std::runtime_error("[ERROR] Room not found");
 }
 
-void MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers)
+void MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers)
 {
     if (crudType == CrudType::CREATE) {
         rooms.push_back(Room(id, maxPlayers, nbPlayers));
@@ -50,7 +50,7 @@ _STORAGE_DATA MenuSerializer::serializeRoomEdit(CrudType editType, Room &room)
     this->serializeData(packet, &editType);
 
     // body
-    std::size_t id = room.getId();
+    int id = room.getId();
     std::size_t maxPlayers = room.getMaxPlayers();
     std::size_t nbPlayers = room.getNbPlayers();
 
@@ -66,7 +66,7 @@ _STORAGE_DATA MenuSerializer::serializeRoomEdit(CrudType editType, Room &room)
 void MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(MenuPacketType);
-    std::size_t id;
+    int id;
     std::size_t maxPlayers;
     std::size_t nbPlayers;
     CrudType crudType;
@@ -131,6 +131,22 @@ void MenuSerializer::deserializeRoomAction(std::vector<uint8_t> packet, std::vec
     default:
         break;
     }
+}
+
+_STORAGE_DATA MenuSerializer::serializeEvent(MenuEvent event)
+{
+    std::vector<uint8_t> packet;
+
+    insertMagic(packet);
+
+    // header
+    MenuPacketType menuPacketType = MenuPacketType::EVENT;
+    this->serializeData(packet, &menuPacketType);
+    this->serializeData(packet, &event);
+
+    insertMagic(packet);
+
+    return this->convertToData(packet);
 }
 
 void MenuSerializer::deserializeEvent()

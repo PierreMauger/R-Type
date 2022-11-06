@@ -69,9 +69,9 @@ namespace eng
     class MenuSerializer : protected Serializer
     {
         protected:
-            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, std::size_t id);
+            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, int id);
 
-            void editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers);
+            void editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers);
 
         public:
             /**
