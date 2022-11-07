@@ -72,6 +72,7 @@ void RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
     auto &masks = entityManager.getMasks();
     std::size_t shieldParent = (InfoComp::POS | InfoComp::SHIELD | InfoComp::PARENT);
     std::size_t shieldChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
+    float scal = 0.3;
 
     if (masks[i].has_value() && (masks[i].value() & shieldParent) == shieldParent) {
         std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
@@ -83,7 +84,7 @@ void RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
                     Size &size = componentManager.getSingleComponent<Size>(idPar);
                     // spriteRef.setScale(shield.life * size.x / shield.defaultLife, shield.life * size.y / shield.defaultLife);
                     spriteRef.setPosition(pos.x, pos.y);
-                    spriteRef.setScale(0.3, 0.3);
+                    spriteRef.setScale(scal, scal);
                     spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
                 } else {
                     componentManager.removeAllComponents(i);
