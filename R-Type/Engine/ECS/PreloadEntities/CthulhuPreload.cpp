@@ -40,7 +40,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{19, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 110, 162}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {110 / 2, 110 / 2 + 52}});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, pos.y / screenSize->y * windowsSize.y, (pos.x - graphic.getScreenSize()->x) / screenSize->x * windowsSize.x});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x / screenSize->x * windowsSize.x - 220, pos.y / screenSize->y * windowsSize.y - 324, 0});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x / screenSize->x * windowsSize.x, -324 / screenSize->y * windowsSize.y, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{(screenSize->x / (screenSize->x / 3)), size.x / screenSize->y * windowsSize.y, 0, size.y / screenSize->x * windowsSize.x, size.x / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CTHULHU, TypeStatus(SEARCH), TypePhase(PHASE01), 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
