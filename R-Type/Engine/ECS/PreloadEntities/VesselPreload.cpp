@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, SyncID syncId)
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
@@ -19,7 +19,7 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{64 * size.x / screenSize->x * windowsSize.x, 28 * size.y / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{0});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, syncId);
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
 

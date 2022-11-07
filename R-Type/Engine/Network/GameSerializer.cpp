@@ -214,7 +214,7 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
     this->deserializeData<SyncID>(packet, adv, &syncID);
     this->deserializeData<std::size_t>(packet, adv, &mask);
 
-    if (type == CrudType::DESTROY) { // TODO if destroyed dosnt check magic
+    if (type == CrudType::DESTROY) { // TODO if destroyed doesnt check magic
         id = this->getEntityID(syncID, entityManager, componentManager);
         entityManager.removeMask(id);
         componentManager.removeAllComponents(id);
