@@ -20,9 +20,9 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
         pos = componentManager.getSingleComponent<Position>(id);
     }
     if (!enemy)
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((damage == 2) ? 4 : 3), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((damage == 2) ? 4 : 3), Priority::LOW, 0, 2, false, false, 0, 0.2, 56, 0});
     else
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{9, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{9, Priority::LOW, 0, 2, false, false, 0, 0.2, 56, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 56, 32}, sf::Color::White, {(sizeProj.size / screenSize->x * windowsSize.x) * sizeProjScreen.x, (sizeProj.size / screenSize->y * windowsSize.y) * sizeProjScreen.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x, (pos.y + (size.y / 2)) - (sizeFire.y * sizeProj.size / 2), pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{(screenSize->x / (1920 / 15)) / screenSize->x * windowsSize.x * (enemy ? -1 : 1), 0, 0});

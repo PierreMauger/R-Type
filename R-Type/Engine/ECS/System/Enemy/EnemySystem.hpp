@@ -14,7 +14,7 @@
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
 
-#define RADIUS 50
+#define RADIUS 225
 #define SPEED_OSC 5
 
 /**

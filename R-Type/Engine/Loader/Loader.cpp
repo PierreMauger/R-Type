@@ -23,6 +23,11 @@ std::vector<sf::SoundBuffer> &Loader::getSounds()
     return this->_sounds;
 }
 
+std::vector<eng::Level> &Loader::getLevels()
+{
+    return this->_level;
+}
+
 void Loader::loadSprites(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
@@ -63,6 +68,35 @@ void Loader::loadSounds(std::vector<std::string> paths)
 
                 if (sound.loadFromFile(file_name.string())) {
                     this->_sounds.push_back(sound);
+                }
+            }
+        } catch (std::runtime_error &error) {
+            std::cerr << error.what() << std::endl;
+        }
+        sorted.clear();
+    }
+}
+
+void Loader::loadLevel(std::vector<std::string> paths)
+{
+    std::set<std::filesystem::path> sorted;
+
+    for (auto &path : paths) {
+        try {
+            for (auto &file_name : std::filesystem::directory_iterator(path))
+                sorted.insert(file_name.path());
+
+            for (auto &file_name : sorted) {
+                std::ifstream file(file_name.string());
+                std::string line;
+                std::vector<std::string> lines;
+                std::vector<std::string> totalLine;
+
+                if (file.is_open()) {
+                    while (getline(file, line))
+                        totalLine.push_back(line);
+                    file.close();
+                    this->_level.push_back(Level(totalLine));
                 }
             }
         } catch (std::runtime_error &error) {

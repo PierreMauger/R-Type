@@ -93,22 +93,15 @@ void Server::manageEvent()
     }
 }
 
-void Server::manageEnemy()
+void eng::Server::manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs)
 {
-    eng::Graphic &graphic = this->_engine.getGraphic();
-
-    if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        CthulhuPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 200);
-    } 
-    // else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        // EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        // this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
-    // }
+    if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
+        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager());
+        level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
+    }
 }
 
-// TODO make do separated function
-void Server::mainLoop()
+void eng::Server::mainLoop()
 {
     _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
     std::size_t refreshTick = 5;
@@ -116,11 +109,13 @@ void Server::mainLoop()
 
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
+    VesselPreload vesselPreload;
+    std::vector<eng::Level> &level = this->_engine.getLoader().getLevels();
 
     VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
-        this->manageEnemy();
+        this->manageEnemy(level[0], graphic, ecs);
         for (size_t count = 0; count < refreshTick; count++) {
             if (!dataIn.empty()) {
                 std::cout << "Message: " << dataIn.pop_front().data() << std::endl;

@@ -23,7 +23,7 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::HIGH});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::LOW});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(graphic.getWindow()->getSize().y) - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
@@ -48,7 +48,7 @@ void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager 
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::HIGH});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::LOW});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(windowsSize.y) - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});

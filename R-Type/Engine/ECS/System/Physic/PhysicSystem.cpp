@@ -44,6 +44,11 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
     if (app.app) {
+        if (app.x_app != 0.0f && pos.x > app.x_app) {
+            pos.x -= vel.x;
+            return true;
+        } else
+            vel.x = 0;
         pos.y -= -vel.baseSpeedY;
         if (sprite.color.a != 50)
             sprite.color = sf::Color(255, 255, 255, 50);
@@ -132,15 +137,46 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
     return false;
 }
 
+void PhysicSystem::checkFireballDamage(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager)
+{
+    auto &masks = entityManager.getMasks();
+    std::size_t physicDis = (InfoComp::DIS);
+    std::size_t physicCon = (InfoComp::CONTROLLABLE);
+    std::size_t physicDrop = (InfoComp::DROP);
+    Life &hp = componentManager.getSingleComponent<Life>(j);
+    Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
+    Parent &par = componentManager.getSingleComponent<Parent>(i);
+
+    if ((masks[par.id].value() & physicCon) == physicCon)
+        componentManager.getSingleComponent<Controllable>(par.id).kill++;
+    if (proj.damage >= hp.life) {
+        if ((masks[j].value() & physicDrop) == physicDrop)
+            this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
+        hp.life = 0;
+        if (masks[j].has_value() && (masks[j].value() & physicDis) == physicDis)
+            componentManager.getSingleComponent<Disappearance>(j).dis = true;
+        else {
+            componentManager.removeAllComponents(j);
+            entityManager.removeMask(j);
+        }
+    } else
+        hp.life -= proj.damage;
+    if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
+        componentManager.getSingleComponent<Disappearance>(i).dis = true;
+    else {
+        componentManager.removeAllComponents(i);
+        entityManager.removeMask(i);
+    }
+}
+
 bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicProj = (InfoComp::PROJECTILE | InfoComp::PARENT | InfoComp::POS);
     std::size_t physicApp = (InfoComp::APP);
+    std::size_t physicEne = (InfoComp::ENEMY);
     std::size_t physicDis = (InfoComp::DIS);
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
-    std::size_t physicEne = (InfoComp::ENEMY);
-    std::size_t physicDrop = (InfoComp::DROP);
 
     if (masks[i].has_value() && (masks[i].value() & physicProj) == physicProj) {
         Parent &par = componentManager.getSingleComponent<Parent>(i);
@@ -155,28 +191,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                     ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
                 if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
-                    Life &hp = componentManager.getSingleComponent<Life>(j);
-                    Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
-                    if ((masks[par.id].value() & physicCon) == physicCon)
-                        componentManager.getSingleComponent<Controllable>(par.id).kill++;
-                    if (proj.damage >= hp.life) {
-                        if ((masks[j].value() & physicDrop) == physicDrop)
-                            this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
-                        hp.life = 0;
-                        if (masks[j].has_value() && (masks[j].value() & physicDis) == physicDis)
-                            componentManager.getSingleComponent<Disappearance>(j).dis = true;
-                        else {
-                            componentManager.removeAllComponents(j);
-                            entityManager.removeMask(j);
-                        }
-                    } else
-                        hp.life -= proj.damage;
-                    if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
-                        componentManager.getSingleComponent<Disappearance>(i).dis = true;
-                    else {
-                        componentManager.removeAllComponents(i);
-                        entityManager.removeMask(i);
-                    }
+                    checkFireballDamage(i, j, componentManager, entityManager);
                     return true;
                 }
             }
@@ -210,13 +225,13 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
                 pos.x = 0;
             continue;
         }
-        if (pos.x > _window->getSize().x + 100 || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
+        if (((masks[i].value() & InfoComp::PROJECTILE) == InfoComp::PROJECTILE && pos.x > _window->getSize().x + 100) || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
             entityManager.removeMask(i);
             componentManager.removeAllComponents(i);
             continue;
         }
-        pos.x += vel.x;
         pos.y += vel.y;
+        pos.x += vel.x;
         if ((masks[i].value() & physicPat) != physicPat) {
             if (this->collisionEnemy(i, componentManager, entityManager, pos))
                 continue;

@@ -4,6 +4,8 @@ using namespace eng;
 
 Engine::Engine()
 {
+    // this->_loader.loadSounds({"R-Type/Assets/Sound"});
+    this->_loader.loadLevel({"R-Type/Assets/Levels"});
     this->_loader.loadSounds({"R-Type/Assets/Sound"});
     this->_loader.loadSprites({"R-Type/Assets/Sprites", "R-Type/Assets/Sprites/Parallax", "R-Type/Assets/Sprites/zDevourerOfGods", "R-Type/Assets/Sprites/CthulhuEye"});
 }

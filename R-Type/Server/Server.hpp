@@ -16,9 +16,12 @@
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
+#include "Engine/Level/Level.hpp"
 #include "Includes.hpp"
 #include "Room.hpp"
 #include "ServerNetwork.hpp"
+
 /// @endcond
 
 /**
@@ -36,7 +39,6 @@ namespace eng
         private:
             Engine _engine;
             ServerNetwork _network;
-
             std::vector<Room> _rooms;
             sf::Time _elapsedTime = sf::seconds(0);
             sf::Time _deltaTime = sf::seconds(5);
@@ -46,7 +48,7 @@ namespace eng
             void initComponents();
             void initEntities();
             void manageEvent();
-            void manageEnemy();
+            void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
 
         public:
             /**

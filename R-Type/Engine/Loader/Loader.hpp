@@ -10,6 +10,8 @@
 
 /// @cond
 #include "Includes.hpp"
+#include "Level.hpp"
+
 /// @endcond
 
 /**
@@ -28,6 +30,7 @@ namespace eng
             std::vector<sf::Texture> _textures;
             std::vector<sf::Sprite> _sprites;
             std::vector<sf::SoundBuffer> _sounds;
+            std::vector<eng::Level> _level;
 
         public:
             /**
@@ -60,6 +63,8 @@ namespace eng
              */
             std::vector<sf::SoundBuffer> &getSounds();
 
+            std::vector<eng::Level> &getLevels();
+
             /**
              * @brief Load the sprites.
              * @fn void loadSprites(std::vector<std::string> path)
@@ -72,6 +77,12 @@ namespace eng
              * @param path The relative pathes to search the sounds (.ogg) in.texture
              */
             void loadSounds(std::vector<std::string> path);
+            /**
+             * @brief Load the loadLevel.
+             * @fn void loadloadLevel(std::vector<std::string> path)
+             * @param path The relative pathes to search the loadLevel (.txt) in.
+             */
+            void loadLevel(std::vector<std::string> path);
 
             /**
              * @brief Get a reference to a textures' vector texture.

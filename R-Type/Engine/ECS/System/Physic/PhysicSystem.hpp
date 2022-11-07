@@ -12,6 +12,7 @@
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Graphic/Graphic.hpp"
+
 /// @endcond
 
 /**
@@ -38,6 +39,7 @@ namespace eng
             bool collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
+            void checkFireballDamage(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager);
 
         public:
             /**

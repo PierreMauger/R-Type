@@ -168,6 +168,9 @@ void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id,
         case 20:
             this->updateEntity<SpriteAttribut>(packet, id, adv, componentManager);
             break;
+        case 21:
+            this->updateEntity<Button>(packet, id, adv, componentManager);
+            break;
         default:
             break;
         }
