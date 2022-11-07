@@ -5,7 +5,7 @@ using namespace eng;
 Level::Level(std::vector<std::string> lines)
 {
     this->_index = 0;
-    this->_speedRead = 1;
+    this->_speedRead = (1920 / 3 / 60) + 0.5;
     this->_delayRead = 0;
     this->_charPerScreen = 1;
     this->_sizeChar = 0;
@@ -15,8 +15,6 @@ Level::Level(std::vector<std::string> lines)
         if (std::regex_search(lines[0], match, std::regex(".*charPerScreen:([0-9]+(\\.[0-9]+)?)"))) {
             this->_charPerScreen = std::stoi(match[1]);
             this->_sizeChar = 1920 / std::stoi(match[1]);
-            this->_speedRead = this->_charPerScreen * 3;
-            std::cout << this->_speedRead << std::endl;
         } else
             throw std::runtime_error("Level: charPerScreen not found in level file.");
         lines.erase(lines.begin());
@@ -50,14 +48,12 @@ Level::Level(std::vector<std::string> lines)
         mult + 1 == this->_charPerScreen ? mult = 0 : mult++;
         this->_level += "|";
     }
-    this->_level[this->_level.size() - 1] = '\0';
     std::cout << this->_level << std::endl;
 }
 
 void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
 {
     float compt = 0;
-    std::string levelStr;
     std::smatch match;
 
     if (this->_index >= this->_level.size()) {
@@ -68,13 +64,12 @@ void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, Component
         this->_index++;
         return;
     }
-    while (compt != this->_charPerScreen) {
+    for (std::string levelStr = (this->_level.substr(this->_index)); compt != this->_charPerScreen && !levelStr.empty(); levelStr = (this->_level.substr(this->_index))) {
         if (this->_level[this->_index] == '|') {
             this->_index++;
             compt++;
             continue;
         }
-        levelStr = (this->_level.substr(this->_index));
         if (std::regex_search(levelStr, match, std::regex("([A-Z])\\(([0-9]+):([0-9]+)\\)"))) {
             this->_index += match[0].length();
             switch (match[1].str()[0]) {

@@ -37,11 +37,10 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     sf::Vector2f size{screenSize->x / (screenSize->x / 2), screenSize->y / (screenSize->y / 2)};
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::MEDIUM, 0, 4, false, false, 0, 0.2, 96, 0});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{5, Priority::LOW, 0, 4, false, false, 0, 0.2, 96, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, position.y / screenSize->y * windowsSize.y, (position.x - graphic.getScreenSize()->x) / screenSize->x * windowsSize.x});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{position.x / screenSize->x * windowsSize.x, -192 / screenSize->y * windowsSize.y, 0});
-    std::cout << "Boss : App = " << (position.x - graphic.getScreenSize()->x) / screenSize->x * windowsSize.x << " pos = " << position.x / screenSize->x * windowsSize.x << " " << position.y / screenSize->y * windowsSize.y << std::endl;
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{(screenSize->x / (screenSize->x / 3)), size.x / screenSize->y * windowsSize.y, 0, size.y / screenSize->x * windowsSize.x, size.x / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CIRCLE, 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
