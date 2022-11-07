@@ -46,6 +46,7 @@ namespace eng
         SOUNDID = 1 << 19,
         SPRITEAT = 1 << 20,
         BUTTON = 1 << 21,
+        CHILD = 1 << 22,
     };
 }
 
@@ -318,5 +319,9 @@ enum ButtonType {
 typedef struct Button {
         ButtonType type = QUIT;
 } Button;
+
+typedef struct Child {
+        std::size_t id = 0;
+} Child;
 
 #endif // COMPONENTTYPES_HPP
