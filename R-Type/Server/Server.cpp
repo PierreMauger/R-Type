@@ -96,10 +96,10 @@ void Server::manageEnemy()
     Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        BossPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        BossPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId++);
         this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
     } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId++);
         this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
     }
 }
@@ -161,6 +161,12 @@ void Server::updateEntities()
 
 void Server::updateNetwork()
 {
+    Graphic &graphic = this->_engine.getGraphic();
+
+    if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
+        return;
+    }
+    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->updateClients();
     this->updateEntities();
     this->_network.updateConnection();

@@ -52,6 +52,7 @@ namespace eng
             sf::Time _elapsedTime = sf::seconds(0);
             sf::Time _deltaTime = sf::seconds(5);
             sf::Time _bossTime = sf::seconds(5);
+            sf::Time _networkTime = sf::milliseconds(50);
 
             void initSystems();
             void initComponents();

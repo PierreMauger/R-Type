@@ -46,6 +46,11 @@ namespace eng
                 T component = T();
 
                 deserializeData(packet, adv, &component);
+
+                // if (!componentManager.getComponent(typeid(T)).getField(id).has_value()) {
+                // }
+                componentManager.addComponent<T>(id);
+
                 componentManager.getSingleComponent<T>(id) = component;
             };
 

@@ -214,22 +214,23 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
     this->deserializeData<SyncID>(packet, adv, &syncID);
     this->deserializeData<std::size_t>(packet, adv, &mask);
 
-    if (!this->checkMagic(packet, adv)) {
-        throw std::runtime_error("[ERROR] Bad packet format");
-    }
-
     id = this->getEntityID(syncID, entityManager, componentManager);
 
     if (id == entityManager.getMasks().size()) {
         id = entityManager.addMask(mask, componentManager);
+        componentManager.addComponent<SyncID>(id);
         componentManager.getSingleComponent<SyncID>(id) = syncID;
     }
     if (type == CrudType::DESTROY) {
         componentManager.removeAllComponents(id);
+        entityManager.removeMask(id);
     } else if (type == CrudType::UPDATE) {
         this->getComponents(packet, id, mask, adv, componentManager);
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
+    }
+    if (!this->checkMagic(packet, adv)) {
+        throw std::runtime_error("[ERROR] Bad packet format");
     }
 }
 
