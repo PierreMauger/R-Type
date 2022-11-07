@@ -16,7 +16,7 @@ std::size_t GameSerializer::getEntityID(SyncID syncID, EntityManager &entityMana
             return id;
         }
     }
-    throw std::runtime_error("[ERROR] SyncID not found");
+    return id;
 }
 
 void GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager)
@@ -214,23 +214,22 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
     this->deserializeData<SyncID>(packet, adv, &syncID);
     this->deserializeData<std::size_t>(packet, adv, &mask);
 
-    if (type == CrudType::DESTROY) { // TODO if destroyed doesnt check magic
-        id = this->getEntityID(syncID, entityManager, componentManager);
-        entityManager.removeMask(id);
-        componentManager.removeAllComponents(id);
-        return;
-    }
-    if (type == CrudType::CREATE) {
-        id = entityManager.addMask(mask, componentManager);
-        componentManager.getSingleComponent<SyncID>(id) = syncID;
-    } else if (type == CrudType::UPDATE) {
-        id = this->getEntityID(syncID, entityManager, componentManager);
-    } else {
-        throw std::runtime_error("[ERROR] Unknown entity type");
-    }
-    this->getComponents(packet, id, mask, adv, componentManager);
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
+    }
+
+    id = this->getEntityID(syncID, entityManager, componentManager);
+
+    if (id == entityManager.getMasks().size()) {
+        id = entityManager.addMask(mask, componentManager);
+        componentManager.getSingleComponent<SyncID>(id) = syncID;
+    }
+    if (type == CrudType::DESTROY) {
+        componentManager.removeAllComponents(id);
+    } else if (type == CrudType::UPDATE) {
+        this->getComponents(packet, id, mask, adv, componentManager);
+    } else {
+        throw std::runtime_error("[ERROR] Unknown entity type");
     }
 }
 

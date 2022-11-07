@@ -8,31 +8,30 @@ MenuSerializer::MenuSerializer()
 
 std::vector<Room>::iterator MenuSerializer::getRoom(std::vector<Room> rooms, int id)
 {
-    for (auto it = rooms.begin(); it != rooms.end(); ++it) {
+    std::vector<eng::Room>::iterator it;
+
+    for (it = rooms.begin(); it != rooms.end(); ++it) {
         if (it->getId() == id) {
-            rooms.erase(it);
             return it;
         }
     }
-    throw std::runtime_error("[ERROR] Room not found");
+    return it;
 }
 
 void MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers)
 {
-    if (crudType == CrudType::CREATE) {
-        rooms.push_back(Room(id, maxPlayers, nbPlayers));
-        return;
-    }
-
     auto roomIt = getRoom(rooms, id);
 
-    if (crudType == CrudType::DESTROY) {
-        rooms.erase(roomIt);
-        return;
+    if (roomIt == rooms.end()) {
+        rooms.push_back(Room(id, maxPlayers, nbPlayers));
     }
     if (crudType == CrudType::UPDATE) {
         roomIt->setNbPlayers(nbPlayers);
         roomIt->setMaxPlayers(maxPlayers);
+        return;
+    }
+    if (crudType == CrudType::DESTROY) {
+        rooms.erase(roomIt);
         return;
     }
     throw std::runtime_error("[ERROR] Invalid CRUD type");
@@ -116,6 +115,10 @@ void MenuSerializer::deserializeRoomAction(std::vector<uint8_t> packet, std::vec
     }
 
     auto roomIt = getRoom(rooms, id);
+
+    if (roomIt == rooms.end()) {
+        throw std::runtime_error("[ERROR] Room not found");
+    }
 
     switch (action) {
     case RoomAction::JOIN:

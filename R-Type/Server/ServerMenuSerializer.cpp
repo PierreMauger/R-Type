@@ -90,14 +90,11 @@ void ServerMenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std:
         throw std::runtime_error("[ERROR] Bad packet format");
     }
 
-    for (auto &room : rooms) {
-        if (room.getId() == id) {
-            this->editRoom(crudType, rooms, id, maxPlayers, nbPlayers);
-            return;
-        }
+    auto roomIt = getRoom(rooms, id);
+
+    if (roomIt == rooms.end()) {
+        id = roomCount++;
     }
-    id = roomCount;
-    roomCount++;
     this->editRoom(crudType, rooms, id, maxPlayers, nbPlayers);
 }
 
