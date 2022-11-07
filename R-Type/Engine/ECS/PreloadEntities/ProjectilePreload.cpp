@@ -32,6 +32,6 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     if (!enemy) {
         addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
         float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));
-        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{2, false, false, pitch});
+        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{4, false, false, pitch});
     }
 }

@@ -76,15 +76,42 @@ $(function() {
  <a href="structPattern.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ComponentTypes_8hpp_source.html">ComponentTypes.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for Pattern:</div>
+<div class="dyncontent">
+<div class="center"><img src="structPattern__coll__graph.png" border="0" usemap="#aPattern_coll__map" alt="Collaboration graph"/></div>
+<map name="aPattern_coll__map" id="aPattern_coll__map">
+<area shape="rect" title="The patern component." alt="" coords="9,95,77,121"/>
+<area shape="rect" href="structPosition.html" title="The position component." alt="" coords="5,5,80,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7166b760ecd6308d4f7413ee2c1d5acb"><td class="memItemLeft" align="right" valign="top"><a id="a7166b760ecd6308d4f7413ee2c1d5acb"></a>
 enum <a class="el" href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a>&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> = TypePattern::LINE</td></tr>
 <tr class="separator:a7166b760ecd6308d4f7413ee2c1d5acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418eda13b4c40fdf59af1848b915196f"><td class="memItemLeft" align="right" valign="top"><a id="a418eda13b4c40fdf59af1848b915196f"></a>
+enum <a class="el" href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a>&#160;</td><td class="memItemRight" valign="bottom"><b>status</b> = TypeStatus::IDLE</td></tr>
+<tr class="separator:a418eda13b4c40fdf59af1848b915196f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af42a31f7cc6a3ad02d02b768e2438363"><td class="memItemLeft" align="right" valign="top"><a id="af42a31f7cc6a3ad02d02b768e2438363"></a>
+enum <a class="el" href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a>&#160;</td><td class="memItemRight" valign="bottom"><b>phase</b> = TypePhase::PHASE01</td></tr>
+<tr class="separator:af42a31f7cc6a3ad02d02b768e2438363"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acea16eb71b2f413f2d6ba92e05657eaf"><td class="memItemLeft" align="right" valign="top"><a id="acea16eb71b2f413f2d6ba92e05657eaf"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>angle</b> = 0.0f</td></tr>
 <tr class="separator:acea16eb71b2f413f2d6ba92e05657eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58393b07ec7fdbff586dc37b38cc7c5c"><td class="memItemLeft" align="right" valign="top"><a id="a58393b07ec7fdbff586dc37b38cc7c5c"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>statusTime</b> = 0.0f</td></tr>
+<tr class="separator:a58393b07ec7fdbff586dc37b38cc7c5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a95edc8313547923bd81a7f8adcd245"><td class="memItemLeft" align="right" valign="top"><a id="a3a95edc8313547923bd81a7f8adcd245"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>focusEntity</b> = 0</td></tr>
+<tr class="separator:a3a95edc8313547923bd81a7f8adcd245"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942496c527662d1396e4f0766522ea35"><td class="memItemLeft" align="right" valign="top"><a id="a942496c527662d1396e4f0766522ea35"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>phaseCount</b> = 0</td></tr>
+<tr class="separator:a942496c527662d1396e4f0766522ea35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73eb00054091aa829ca35da6b0c5e0e5"><td class="memItemLeft" align="right" valign="top"><a id="a73eb00054091aa829ca35da6b0c5e0e5"></a>
+<a class="el" href="structPosition.html">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><b>lastPosFocus</b> = {0.0f, 0.0f, 0.0f}</td></tr>
+<tr class="separator:a73eb00054091aa829ca35da6b0c5e0e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The patern component. </p>

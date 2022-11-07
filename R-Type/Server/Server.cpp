@@ -17,6 +17,7 @@ void Server::initSystems()
     EntityManager &entityManager = this->_engine.getECS().getEntityManager();
     Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
+    std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
     systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
@@ -27,6 +28,7 @@ void Server::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
+    systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 

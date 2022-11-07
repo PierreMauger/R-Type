@@ -11,6 +11,7 @@
 /// @cond
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
+#include "Engine/ECS/PreloadEntities/CthulhuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"

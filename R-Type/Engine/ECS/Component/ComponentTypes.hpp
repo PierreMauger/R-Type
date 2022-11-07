@@ -142,7 +142,8 @@ typedef struct Projectile {
  * @brief The life component.
  */
 typedef struct Life {
-        std::size_t life = 1;
+        std::size_t defaultLife = 1;
+        std::size_t life = defaultLife;
 } Life;
 
 /**
@@ -205,6 +206,7 @@ typedef struct LifeBar {
  */
 typedef struct Parent {
         std::size_t id = 0;
+        bool follow = false;
 } Parent;
 
 // Type dépendant du patern
@@ -217,7 +219,31 @@ enum TypePattern {
     OSCILLATION,
     BIGOSCILLATION,
     CIRCLE,
-    DEVOUREROSC
+    DEVOUREROSC,
+    CTHULHU
+};
+
+/**
+ * @enum TypeStatus
+ * @brief The type of status that an enemy has.
+ */
+enum TypeStatus {
+    IDLE = 0,
+    MOVE,
+    SEARCH,
+    ATTACK,
+    SHOOT,
+    TRANSFORM
+};
+
+/**
+ * @enum TypePhase
+ * @brief The type of phase that an enemy has.
+ */
+enum TypePhase {
+    PHASE01 = 0,
+    PHASE02,
+    PHASE03
 };
 
 /**
@@ -226,8 +252,13 @@ enum TypePattern {
  */
 typedef struct Pattern {
         enum TypePattern type = TypePattern::LINE;
+        enum TypeStatus status = TypeStatus::IDLE;
+        enum TypePhase phase = TypePhase::PHASE01;
         float angle = 0.0f;
-        float center = 0.0f;
+        float statusTime = 0.0f;
+        size_t focusEntity = 0;
+        size_t phaseCount = 0;
+        Position lastPosFocus = {0.0f, 0.0f, 0.0f};
 } Pattern;
 
 /**
@@ -277,6 +308,7 @@ typedef struct SpriteAttribut {
         sf::FloatRect rect = sf::FloatRect();
         sf::Color color = sf::Color::White;
         sf::Vector2f scale = {1.0f, 1.0f};
+        sf::Vector2f offset = {0.0f, 0.0f};
 } SpriteAttribut;
 
 /**
