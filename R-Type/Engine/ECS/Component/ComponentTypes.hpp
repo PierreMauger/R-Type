@@ -45,9 +45,7 @@ namespace eng
         TEXT = 1 << 18,
         SOUNDID = 1 << 19,
         SPRITEAT = 1 << 20,
-        GROUPEN = 1 << 21,
-        COOLDOWNACT = 1 << 22,
-        BUTTON = 1 << 23,
+        BUTTON = 1 << 21,
     };
 }
 
@@ -310,24 +308,6 @@ typedef struct SpriteAttribut {
         sf::Vector2f scale = {1.0f, 1.0f};
         sf::Vector2f offset = {0.0f, 0.0f};
 } SpriteAttribut;
-
-/**
- * @struct GroupEntity
- * @brief GroupEntity component.
- */
-typedef struct GroupEntity {
-        std::size_t idGroup = 0;
-        int commonlife = 0;
-        std::size_t entityId = 0;
-        std::size_t nbEntity = 0;
-        sf::Vector2f lastPos = {0.0f, 0.0f};
-} GroupEntity;
-
-typedef struct CooldownAction {
-        float lastAction = 0.0f;
-        float actionDelay = 2.0f;
-        std::any action = {};
-} CooldownAction;
 
 enum ButtonType {
     QUIT = 0,

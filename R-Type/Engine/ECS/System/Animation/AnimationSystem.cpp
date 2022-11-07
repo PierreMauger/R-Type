@@ -17,16 +17,10 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
     std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
     std::size_t appMask = (InfoComp::APP);
     std::size_t contMask = (InfoComp::CONTROLLABLE | InfoComp::VEL);
-    std::size_t groupMask = (InfoComp::GROUPEN | InfoComp::POS | InfoComp::VEL);
 
     for (auto id : entityManager.getMaskCategory(spriteMask)) {
         SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(id);
         SpriteAttribut &spriteAT = componentManager.getSingleComponent<SpriteAttribut>(id);
-        if (masks[id].has_value() && (masks[id].value() & groupMask) == groupMask) {
-            GroupEntity &group = componentManager.getSingleComponent<GroupEntity>(id);
-            Position &pos = componentManager.getSingleComponent<Position>(id);
-            spriteAT.rotation = -(group.lastPos.y - pos.y);
-        }
         if (masks[id].has_value() && (masks[id].value() & contMask) == contMask) {
             Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
             if (vel.y < 0)

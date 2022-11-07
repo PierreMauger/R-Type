@@ -40,7 +40,6 @@ namespace eng
             bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             void checkFireballDamage(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager);
-            bool checkGroupColision(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager);
 
         public:
             /**

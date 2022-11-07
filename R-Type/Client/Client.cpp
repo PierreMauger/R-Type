@@ -55,8 +55,6 @@ void Client::initComponents()
     componentManager.bindComponent<Text>();
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
-    componentManager.bindComponent<GroupEntity>();
-    componentManager.bindComponent<CooldownAction>();
     componentManager.bindComponent<Button>();
 }
 

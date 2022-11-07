@@ -169,32 +169,6 @@ void PhysicSystem::checkFireballDamage(std::size_t i, std::size_t j, ComponentMa
     }
 }
 
-bool PhysicSystem::checkGroupColision(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager)
-{
-    auto &masks = entityManager.getMasks();
-    bool ret = false;
-
-    if (masks[j].has_value() && (masks[j].value() & InfoComp::GROUPEN) == InfoComp::GROUPEN) {
-        std::size_t groupid = componentManager.getSingleComponent<GroupEntity>(j).idGroup;
-        for (std::size_t k = 0; k < masks.size(); k++) {
-            if (masks[k].has_value() && (masks[k].value() & InfoComp::GROUPEN) == InfoComp::GROUPEN) {
-                GroupEntity &groupEnt = componentManager.getSingleComponent<GroupEntity>(k);
-                if (groupEnt.idGroup == groupid && masks[i].has_value() && (masks[i].value() & InfoComp::PROJECTILE) == InfoComp::PROJECTILE) {
-                    groupEnt.commonlife -= componentManager.getSingleComponent<Projectile>(i).damage;
-                    if (groupEnt.commonlife <= 0) {
-                        componentManager.removeAllComponents(k);
-                        entityManager.removeMask(k);
-                    }
-                }
-            }
-        }
-        componentManager.removeAllComponents(i);
-        entityManager.removeMask(i);
-        ret = true;
-    }
-    return ret;
-}
-
 bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
 {
     auto &masks = entityManager.getMasks();
@@ -217,8 +191,6 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                     ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
                 if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
-                    if (checkGroupColision(i, j, componentManager, entityManager))
-                        return true;
                     checkFireballDamage(i, j, componentManager, entityManager);
                     return true;
                 }
@@ -237,9 +209,6 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t physicPat = (InfoComp::PATTERN);
     std::size_t physicAppear = (InfoComp::APP);
     std::size_t physicDis = (InfoComp::DIS);
-    std::size_t physicGroupPar = (InfoComp::GROUPEN | InfoComp::POS | InfoComp::PARENT);
-    std::size_t physicGroup = (InfoComp::GROUPEN | InfoComp::POS);
-    CooldownAction cooldown = {0, 0, 0};
 
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value() || (masks[i].value() & physicSpeed) != physicSpeed)
@@ -261,18 +230,6 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             componentManager.removeAllComponents(i);
             continue;
         }
-        if ((masks[i].value() & physicGroup) == physicGroup) {
-            if ((masks[i].value() & InfoComp::COOLDOWNACT) == InfoComp::COOLDOWNACT)
-                cooldown = componentManager.getSingleComponent<CooldownAction>(i);
-            componentManager.getSingleComponent<GroupEntity>(i).lastPos = {pos.x, pos.y};
-        }
-        if ((masks[i].value() & physicGroupPar) == physicGroupPar) {
-            Parent &par = componentManager.getSingleComponent<Parent>(i);
-            componentManager.getSingleComponent<Position>(i).y = componentManager.getSingleComponent<GroupEntity>(par.id).lastPos.y;
-            if (cooldown.action.has_value() && static_cast<float>(componentManager.getSingleComponent<GroupEntity>(i).entityId) == std::any_cast<float>(cooldown.action)) {
-                // componentManager.getSingleComponent<Position>(i).y += 20;
-            }
-        }
         pos.y += vel.y;
         pos.x += vel.x;
         if ((masks[i].value() & physicPat) != physicPat) {
@@ -291,7 +248,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             pos.x > _window->getSize().x - size.x ? pos.x = _window->getSize().x - size.x : pos.x;
             pos.y > _window->getSize().y - size.y ? pos.y = _window->getSize().y - size.y : pos.y;
         }
-        if (masks[i].has_value() && (masks[i].value() & physicPat) == physicPat && (masks[i].value() & physicGroup) != physicGroup) {
+        if (masks[i].has_value() && (masks[i].value() & physicPat) == physicPat) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
             Size size = componentManager.getSingleComponent<Size>(i);
             pos.y < 0 ? pos.y = 0 : pos.y;

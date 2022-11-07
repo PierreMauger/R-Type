@@ -57,7 +57,6 @@ Level::Level(std::vector<std::string> lines)
         mult + 1 == this->_charPerScreen ? mult = 0 : mult++;
         this->_level += "|";
     }
-    std::cout << this->_level << std::endl;
 }
 
 void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
@@ -66,7 +65,7 @@ void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, Component
     std::smatch match;
 
     if (this->_index >= this->_level.size()) {
-        std::cout << "Level: End of level." << std::endl;
+        // std::cout << "Level: End of level." << std::endl;
         return;
     }
     if (this->_index == this->_level.size() - 1) {

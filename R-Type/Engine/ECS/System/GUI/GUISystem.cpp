@@ -160,12 +160,6 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                         componentManager.addComponent<SpriteAttribut>(this->_selectedEntity);
                         break;
                     case 21:
-                        componentManager.addComponent<GroupEntity>(this->_selectedEntity);
-                        break;
-                    case 22:
-                        componentManager.addComponent<CooldownAction>(this->_selectedEntity);
-                        break;
-                    case 23:
                         componentManager.addComponent<Button>(this->_selectedEntity);
                         break;
                     default:
@@ -279,11 +273,7 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         break;
     case 20:
         break;
-    case 21:
-        break;
-    case 22:
-        break;
-    case 23: {
+    case 21: {
         Button &button = componentManager.getSingleComponent<Button>(this->_selectedEntity);
         const ImU64 increment = 1;
         ImGui::InputScalar("Sprite ID##button", ImGuiDataType_U64, &button.type, &increment);
