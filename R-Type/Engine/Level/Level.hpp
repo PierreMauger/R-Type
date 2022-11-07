@@ -28,6 +28,7 @@ namespace eng
             float _delayRead;
             float _charPerScreen;
             float _sizeChar;
+            void initializeLevelFormat(std::vector<std::string> &lines);
 
         public:
             /**

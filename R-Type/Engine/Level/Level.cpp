@@ -2,14 +2,11 @@
 
 using namespace eng;
 
-Level::Level(std::vector<std::string> lines)
+void Level::initializeLevelFormat(std::vector<std::string> &lines)
 {
-    this->_index = 0;
+    std::smatch match;
     this->_speedRead = (1920 / 3 / 60) + 0.5;
     this->_delayRead = 0;
-    this->_charPerScreen = 1;
-    this->_sizeChar = 0;
-    std::smatch match;
 
     if (std::regex_match(lines[0], std::regex("^#.*"))) {
         if (std::regex_search(lines[0], match, std::regex(".*charPerScreen:([0-9]+(\\.[0-9]+)?)"))) {
@@ -28,6 +25,15 @@ Level::Level(std::vector<std::string> lines)
         lines[i].erase(std::remove(lines[i].begin(), lines[i].end(), '-'), lines[i].end());
         i++;
     }
+}
+
+Level::Level(std::vector<std::string> lines)
+{
+    this->_index = 0;
+    this->_charPerScreen = 1;
+    this->_sizeChar = 0;
+
+    initializeLevelFormat(lines);
     for (std::size_t i = 0, mult = 0; i < lines[0].size(); i++) {
         for (std::size_t j = 0; j < lines.size(); j++) {
             switch (lines[j][i]) {
