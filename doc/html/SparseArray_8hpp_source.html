@@ -78,32 +78,33 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ComponentTypes_8hpp.html">Engine/ECS/Component/ComponentTypes.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classeng_1_1SparseArray.html">   26</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1SparseArray.html">SparseArray</a></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            std::vector&lt;std::optional&lt;std::any&gt;&gt; _data;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <a class="code" href="classeng_1_1SparseArray.html#a5e5d835505fba0ddcf600b8a78c8bd53">SparseArray</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classeng_1_1SparseArray.html#a70c425d43262f59b979bc989d4cb5019">   41</a></span>&#160;            <a class="code" href="classeng_1_1SparseArray.html#a70c425d43262f59b979bc989d4cb5019">~SparseArray</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1SparseArray.html#a4072ba4caf360415fc77e7ba35653ba5">addData</a>(std::size_t <span class="keywordtype">id</span>, std::any data);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1SparseArray.html#a35efaddf77edb9fbbaed1d4d145a7fac">emplaceData</a>(std::size_t <span class="keywordtype">id</span>, std::any data);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1SparseArray.html#a7273bfca7fd6b69dcd6037d84b35fea9">destroyData</a>(std::size_t <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            std::size_t <a class="code" href="classeng_1_1SparseArray.html#a3a64a0443f7e8149650126755a84aea1">getSize</a>();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            std::optional&lt;std::any&gt; &amp;<a class="code" href="classeng_1_1SparseArray.html#a3795d7912acb8ad85e279881baaa5f49">getField</a>(std::size_t <span class="keywordtype">id</span>);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordtype">void</span> clear();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    };</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// sparse array_HPP</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classeng_1_1SparseArray.html">   27</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1SparseArray.html">SparseArray</a></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            std::vector&lt;std::optional&lt;std::any&gt;&gt; _data;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <a class="code" href="classeng_1_1SparseArray.html#a5e5d835505fba0ddcf600b8a78c8bd53">SparseArray</a>();</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="classeng_1_1SparseArray.html#a70c425d43262f59b979bc989d4cb5019">   42</a></span>&#160;            <a class="code" href="classeng_1_1SparseArray.html#a70c425d43262f59b979bc989d4cb5019">~SparseArray</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1SparseArray.html#a4072ba4caf360415fc77e7ba35653ba5">addData</a>(std::size_t <span class="keywordtype">id</span>, std::any data);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1SparseArray.html#a35efaddf77edb9fbbaed1d4d145a7fac">emplaceData</a>(std::size_t <span class="keywordtype">id</span>, std::any data);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1SparseArray.html#a7273bfca7fd6b69dcd6037d84b35fea9">destroyData</a>(std::size_t <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            std::size_t <a class="code" href="classeng_1_1SparseArray.html#a3a64a0443f7e8149650126755a84aea1">getSize</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            std::optional&lt;std::any&gt; &amp;<a class="code" href="classeng_1_1SparseArray.html#a3795d7912acb8ad85e279881baaa5f49">getField</a>(std::size_t <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordtype">void</span> clear();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    };</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// sparse array_HPP</span></div>
 <div class="ttc" id="aComponentTypes_8hpp_html"><div class="ttname"><a href="ComponentTypes_8hpp.html">ComponentTypes.hpp</a></div><div class="ttdoc">Ressources header containing the components' masks with their structs definitions.</div></div>
 <div class="ttc" id="aIncludes_8hpp_html"><div class="ttname"><a href="Includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
-<div class="ttc" id="aclasseng_1_1SparseArray_html"><div class="ttname"><a href="classeng_1_1SparseArray.html">eng::SparseArray</a></div><div class="ttdoc">An engine's SparseArray.</div><div class="ttdef"><b>Definition:</b> SparseArray.hpp:27</div></div>
+<div class="ttc" id="aclasseng_1_1SparseArray_html"><div class="ttname"><a href="classeng_1_1SparseArray.html">eng::SparseArray</a></div><div class="ttdoc">An engine's SparseArray.</div><div class="ttdef"><b>Definition:</b> SparseArray.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1SparseArray_html_a35efaddf77edb9fbbaed1d4d145a7fac"><div class="ttname"><a href="classeng_1_1SparseArray.html#a35efaddf77edb9fbbaed1d4d145a7fac">eng::SparseArray::emplaceData</a></div><div class="ttdeci">void emplaceData(std::size_t id, std::any data)</div><div class="ttdoc">Emplace data in a sparse array.</div><div class="ttdef"><b>Definition:</b> SparseArray.cpp:16</div></div>
 <div class="ttc" id="aclasseng_1_1SparseArray_html_a3795d7912acb8ad85e279881baaa5f49"><div class="ttname"><a href="classeng_1_1SparseArray.html#a3795d7912acb8ad85e279881baaa5f49">eng::SparseArray::getField</a></div><div class="ttdeci">std::optional&lt; std::any &gt; &amp; getField(std::size_t id)</div><div class="ttdoc">Get data from a sparse array.</div><div class="ttdef"><b>Definition:</b> SparseArray.cpp:35</div></div>
 <div class="ttc" id="aclasseng_1_1SparseArray_html_a3a64a0443f7e8149650126755a84aea1"><div class="ttname"><a href="classeng_1_1SparseArray.html#a3a64a0443f7e8149650126755a84aea1">eng::SparseArray::getSize</a></div><div class="ttdeci">std::size_t getSize()</div><div class="ttdoc">Get the number of fields of data in the sparse array.</div><div class="ttdef"><b>Definition:</b> SparseArray.cpp:30</div></div>
