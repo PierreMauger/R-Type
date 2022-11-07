@@ -2,6 +2,7 @@
 #define LEVEL_HPP
 
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
+#include "Engine/ECS/PreloadEntities/CthulhuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Includes.hpp"

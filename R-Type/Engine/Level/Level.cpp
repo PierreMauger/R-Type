@@ -40,6 +40,9 @@ Level::Level(std::vector<std::string> lines)
             case 'D':
                 this->_level += "D(" + std::to_string(static_cast<int>(mult * this->_sizeChar)) + ":" + std::to_string(1080 / lines.size() * j) + ")";
                 break;
+            case 'C':
+                this->_level += "C(" + std::to_string(static_cast<int>(mult * this->_sizeChar)) + ":" + std::to_string(1080 / lines.size() * j) + ")";
+                break;
             default:
                 this->_level += "";
                 break;
@@ -81,6 +84,9 @@ void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, Component
                 break;
             case 'D':
                 DevourerPreload::preload(graphic, entityManager, componentManager, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+                break;
+            case 'C':
+                CthulhuPreload::preload(graphic, entityManager, componentManager, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
                 break;
             default:
                 break;
