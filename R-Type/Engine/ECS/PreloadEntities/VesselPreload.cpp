@@ -21,8 +21,13 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{0});
 
-    std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
+    std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD), componentManager);
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{21, Priority::MEDIUM});
+    componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
+    componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{id});
+    componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});
 
+    std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::HIGH});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(graphic.getWindow()->getSize().y) - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});

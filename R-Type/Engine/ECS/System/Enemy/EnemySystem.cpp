@@ -80,7 +80,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     if (pat.phase == TypePhase::PHASE02) {
         if (pat.phaseCount == 0) {
             pat.phase = TypePhase::PHASE03;
-            pat.phaseCount = 5;
+            pat.phaseCount = 6;
         }
         delayIdle = 0;
     } else if (pat.phase == TypePhase::PHASE03) {

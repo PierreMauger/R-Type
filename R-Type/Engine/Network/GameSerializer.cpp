@@ -92,6 +92,9 @@ void GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size_t ma
         case 21:
             this->serializeData<Button>(packet, &componentManager.getSingleComponent<Button>(id));
             break;
+        case 22:
+            this->serializeData<Shield>(packet, &componentManager.getSingleComponent<Shield>(id));
+            break;
         default:
             break;
         }
@@ -167,6 +170,9 @@ void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id,
             break;
         case 20:
             this->updateEntity<SpriteAttribut>(packet, id, adv, componentManager);
+            break;
+        case 21:
+            this->updateEntity<Shield>(packet, id, adv, componentManager);
             break;
         default:
             break;
