@@ -31,7 +31,7 @@ namespace eng
              * @fn VesselPreload
              * @param engine A reference to the engine.
              */
-            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, SyncID syncId = {0});
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t syncId);
             /**
              * @brief Preloads the vessel's (player's score)
              * @fn static void preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize)

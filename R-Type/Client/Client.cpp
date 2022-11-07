@@ -8,6 +8,8 @@ Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
     this->initComponents();
     this->initEntities();
     this->_network.run();
+
+    std::srand(10);
 }
 
 void Client::initSystems()
@@ -71,8 +73,11 @@ void Client::syncUdpNetwork()
 
     if (dataIn.empty())
         return;
-    packet = dataIn.pop_front();
-    this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        if (dataIn.empty())
+            break;
+    }
 }
 
 void Client::syncTcpNetwork()
@@ -82,12 +87,21 @@ void Client::syncTcpNetwork()
 
     if (dataIn.empty())
         return;
-    packet = dataIn.pop_front();
-    this->_menuSerializer.handlePacket(packet, this->_rooms);
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_menuSerializer.handlePacket(packet, this->_rooms);
+        if (dataIn.empty())
+            break;
+    }
 }
 
 void Client::updateNetwork()
 {
+    Graphic &graphic = this->_engine.getGraphic();
+
+    // if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
+    //     return;
+    // }
+    // this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->syncUdpNetwork();
     this->syncTcpNetwork();
     this->_network.updateConnection();

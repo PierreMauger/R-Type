@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-Server::Server(uint16_t portTcp) : _network(portTcp)
+Server::Server(uint16_t portTcp, time_t time) : _network(portTcp, time)
 {
     this->initSystems();
     this->initComponents();
@@ -177,7 +177,7 @@ void Server::mainLoop()
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
 
-    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
+    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId++);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy();

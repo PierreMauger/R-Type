@@ -42,6 +42,8 @@ namespace eng
 
             std::vector<Room> _rooms;
 
+            sf::Time _networkTime = sf::milliseconds(50);
+
             void initSystems();
             void initComponents();
             void initEntities();

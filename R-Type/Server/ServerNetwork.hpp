@@ -27,8 +27,8 @@ namespace eng
     class ServerNetwork
     {
         private:
-            void handleNewTcp(const boost::system::error_code &error, std::shared_ptr<Connection> newConnection);
-            void initServerNetwork();
+            void handleNewTcp(const boost::system::error_code &error, std::shared_ptr<Connection> newConnection, std::time_t time);
+            void initServerNetwork(std::time_t time);
 
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::acceptor _acceptor;
@@ -43,7 +43,7 @@ namespace eng
              * @fn ServerNetwork(uint16_t portTcp)
              * @param portTcp The tcp port
              */
-            ServerNetwork(uint16_t portTcp);
+            ServerNetwork(uint16_t portTcp, std::time_t time);
             /**
              * @brief ServerNetwork destructor
              * @fn ~ServerNetwork()

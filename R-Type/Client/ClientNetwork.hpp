@@ -36,6 +36,8 @@ namespace eng
             std::shared_ptr<Connection> _connection;
             std::thread _threadContext;
 
+            std::time_t _time;
+
         public:
             /**
              * @brief ClientNetwork constructor
@@ -98,6 +100,13 @@ namespace eng
              * @fn void update()
              */
             void updateConnection();
+
+            /**
+             * @brief Get the time
+             * @fn st::size_t getTime()
+             * @return The time
+             */
+            std::time_t getTime();
     };
 } // namespace eng
 

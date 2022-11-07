@@ -70,7 +70,7 @@ namespace eng
              * @fn Server()
              * @param portTcp The tcp port of the server
              */
-            Server(uint16_t portTcp);
+            Server(uint16_t portTcp, time_t time);
             /**
              * @brief Server destructor.
              * @fn ~Server()
