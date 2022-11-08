@@ -41,8 +41,8 @@ namespace eng
             _B_ASIO_TCP::socket _tcpSocket;
             std::vector<_STORAGE_DATA> _dataOutUdp;
             std::vector<_STORAGE_DATA> _dataOutTcp;
-            std::shared_ptr<_QUEUE_TYPE> _dataInUdp = nullptr;
-            std::shared_ptr<_QUEUE_TYPE> _dataInTcp = nullptr;
+            std::shared_ptr<_QUEUE_TYPE> _dataInUdp;
+            std::shared_ptr<_QUEUE_TYPE> _dataInTcp;
             std::thread _threadConnection;
             _STORAGE_DATA _tcpTmpBuffer;
             _STORAGE_DATA _udpTmpBuffer;

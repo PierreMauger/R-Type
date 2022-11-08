@@ -2,14 +2,17 @@
 
 using namespace eng;
 
-Connection::Connection(boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp)
-    : _ioContext(ioContext), _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)), _udpSocketOut(ioContext), _tcpSocket(ioContext), _dataInTcp(dataInTcp), _dataInUdp(dataInUdp)
+Connection::Connection(boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp) : _ioContext(ioContext), _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)), _udpSocketOut(ioContext), _tcpSocket(ioContext)
 {
+    this->_dataInTcp = dataInTcp;
+    this->_dataInUdp = dataInUdp;
 }
 
 Connection::Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp)
-    : _ioContext(ioContext), _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp), _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)), _udpSocketOut(ioContext), _tcpSocket(ioContext), _dataInTcp(dataInTcp), _dataInUdp(dataInUdp)
+    : _ioContext(ioContext), _tcpEndpoint(boost::asio::ip::address::from_string(ip), portTcp), _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)), _udpSocketOut(ioContext), _tcpSocket(ioContext)
 {
+    this->_dataInTcp = dataInTcp;
+    this->_dataInUdp = dataInUdp;
 }
 
 Connection::~Connection()
