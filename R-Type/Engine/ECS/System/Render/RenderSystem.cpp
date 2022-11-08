@@ -18,7 +18,7 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
     entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
 }
 
-void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
 
@@ -39,11 +39,13 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
-void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
@@ -63,11 +65,13 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
-void RenderSystem::displayShield(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
     std::size_t shieldParent = (InfoComp::POS | InfoComp::SHIELD | InfoComp::PARENT);
@@ -90,13 +94,16 @@ void RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
                 } else {
                     componentManager.removeAllComponents(i);
                     entityManager.removeMask(i);
+                    return true;
                 }
             }
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
@@ -141,12 +148,12 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setOrigin(spriteAt.offset);
             spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
         }
-        if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown)
-            displayCooldownBar(componentManager, entityManager, spriteRef, id);
-        if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife)
-            displayLifeBar(componentManager, entityManager, spriteRef, id);
-        if (masks[id].has_value() && (masks[id].value() & renderShield) == renderShield)
-            displayShield(componentManager, entityManager, spriteRef, id);
+        if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, id))
+            continue;
+        if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife && displayLifeBar(componentManager, entityManager, spriteRef, id))
+            continue;
+        if (masks[id].has_value() && (masks[id].value() & renderShield) == renderShield && displayShield(componentManager, entityManager, spriteRef, id))
+            continue;
         if (spriteId.priority == Priority::HIGH)
             stockSpriteHigh.push_back(spriteRef);
         if (spriteId.priority == Priority::MEDIUM)
