@@ -11,8 +11,8 @@
 /// @cond
 #include "Engine/ECS/ECS.hpp"
 #include "Engine/Graphic/Graphic.hpp"
-#include "Engine/Input/Input.hpp"
 #include "Engine/Loader/Loader.hpp"
+
 /// @endcond
 
 /**
@@ -33,7 +33,6 @@ namespace eng
             Loader _loader;
             ECS _ecs;
             Graphic _graphic;
-            Input _input;
 
             void updateSize(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
             void updateSpeed(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
@@ -71,12 +70,6 @@ namespace eng
              * @return A reference to the Loader
              */
             Loader &getLoader();
-            /**
-             * @brief Get a reference to the engine's inputs.
-             * @fn Input &getInput()
-             * @return A reference to the Input
-             */
-            Input &getInput();
             /**
              * @brief Update the size of the window
              * @fn void updateSizeWindow()

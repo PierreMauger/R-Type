@@ -8,6 +8,8 @@ Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
     this->initComponents();
     this->initEntities();
     this->_network.run();
+
+    std::srand(10);
 }
 
 void Client::initSystems()
@@ -18,8 +20,8 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
+    // systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, nullptr));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
@@ -65,11 +67,49 @@ void Client::initEntities()
     ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
+void Client::syncUdpNetwork()
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInUdp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        if (dataIn.empty())
+            break;
+    }
+}
+
+void Client::syncTcpNetwork()
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInTcp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_menuSerializer.handlePacket(packet, this->_rooms);
+        if (dataIn.empty())
+            break;
+    }
+}
+
+void Client::updateNetwork()
+{
+    Graphic &graphic = this->_engine.getGraphic();
+
+    if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
+        return;
+    }
+    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
+    this->syncUdpNetwork();
+    this->syncTcpNetwork();
+    this->_network.updateConnection();
+}
+
 void Client::mainLoop()
 {
-    _QUEUE_TYPE &dataIn = this->_network.getQueueIn();
-    std::size_t refreshTick = 5;
-
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
     VesselPreload vesselPreload;
@@ -86,15 +126,9 @@ void Client::mainLoop()
                 graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
             }
         }
-        for (size_t count = 0; count < refreshTick; count++) {
-            if (!dataIn.empty()) {
-                std::cout << "Message: " << dataIn.pop_front().data() << std::endl;
-            } else {
-                break;
-            }
-        }
         if (!this->_network.isConnected())
             graphic.getWindow()->close();
+        this->updateNetwork();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();

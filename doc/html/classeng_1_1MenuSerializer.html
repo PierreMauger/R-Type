@@ -70,6 +70,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classeng_1_1MenuSerializer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eng::MenuSerializer Class Reference</div>  </div>
@@ -85,8 +86,9 @@ Inheritance diagram for eng::MenuSerializer:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeng_1_1MenuSerializer__inherit__graph.png" border="0" usemap="#aeng_1_1MenuSerializer_inherit__map" alt="Inheritance graph"/></div>
 <map name="aeng_1_1MenuSerializer_inherit__map" id="aeng_1_1MenuSerializer_inherit__map">
-<area shape="rect" title="The menu serializer." alt="" coords="5,80,156,107"/>
-<area shape="rect" href="classeng_1_1Serializer.html" title="The network serializer (formats packets to be sent through network)." alt="" coords="23,5,138,32"/>
+<area shape="rect" title="The menu serializer." alt="" coords="27,80,177,107"/>
+<area shape="rect" href="classeng_1_1ServerMenuSerializer.html" title="The menu serializer." alt="" coords="5,155,199,181"/>
+<area shape="rect" href="classeng_1_1Serializer.html" title="The network serializer (formats packets to be sent through network)." alt="" coords="45,5,159,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
@@ -109,28 +111,94 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a6b7101c3014eac4c333afef42fe0ac0d">~MenuSerializer</a> ()=default</td></tr>
 <tr class="memdesc:a6b7101c3014eac4c333afef42fe0ac0d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1MenuSerializer.html" title="The menu serializer.">MenuSerializer</a> destructor. <br /></td></tr>
 <tr class="separator:a6b7101c3014eac4c333afef42fe0ac0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4116642e2d5c34d2273e649210ab7ef2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvoid.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a4116642e2d5c34d2273e649210ab7ef2">handlePacket</a> (_STORAGE_DATA packet)</td></tr>
-<tr class="memdesc:a4116642e2d5c34d2273e649210ab7ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a menu packet.  <a href="classeng_1_1MenuSerializer.html#a4116642e2d5c34d2273e649210ab7ef2">More...</a><br /></td></tr>
-<tr class="separator:a4116642e2d5c34d2273e649210ab7ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a060c977fe30c525ba87c09a5b105afb4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a060c977fe30c525ba87c09a5b105afb4">handlePacket</a> (_STORAGE_DATA packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms)</td></tr>
+<tr class="memdesc:a060c977fe30c525ba87c09a5b105afb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a menu packet.  <a href="classeng_1_1MenuSerializer.html#a060c977fe30c525ba87c09a5b105afb4">More...</a><br /></td></tr>
+<tr class="separator:a060c977fe30c525ba87c09a5b105afb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a1145be7b008fbe8a2345b93c6a31b2e4">serializeRoomEdit</a> (<a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> editType, <a class="el" href="classeng_1_1Room.html">Room</a> &amp;room)</td></tr>
 <tr class="memdesc:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize a room edit.  <a href="classeng_1_1MenuSerializer.html#a1145be7b008fbe8a2345b93c6a31b2e4">More...</a><br /></td></tr>
 <tr class="separator:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48d7a078f12fd6608e660f2f275ed225"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvoid.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a48d7a078f12fd6608e660f2f275ed225">deserializeRoomEdit</a> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms)</td></tr>
+<tr class="memitem:a48d7a078f12fd6608e660f2f275ed225"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a48d7a078f12fd6608e660f2f275ed225">deserializeRoomEdit</a> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms)</td></tr>
 <tr class="memdesc:a48d7a078f12fd6608e660f2f275ed225"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize a room edit.  <a href="classeng_1_1MenuSerializer.html#a48d7a078f12fd6608e660f2f275ed225">More...</a><br /></td></tr>
 <tr class="separator:a48d7a078f12fd6608e660f2f275ed225"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e86cbcf327f238e1fb50a3c2de6d2f6"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a8e86cbcf327f238e1fb50a3c2de6d2f6">serializeRoomAction</a> (std::size_t id, <a class="el" href="namespaceeng.html#aacb09346091a4338e64924a813c9ef78">RoomAction</a> action)</td></tr>
 <tr class="memdesc:a8e86cbcf327f238e1fb50a3c2de6d2f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize a room action.  <a href="classeng_1_1MenuSerializer.html#a8e86cbcf327f238e1fb50a3c2de6d2f6">More...</a><br /></td></tr>
 <tr class="separator:a8e86cbcf327f238e1fb50a3c2de6d2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07a1c6ceabfb0bdf73bae70b7d01fc70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvoid.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a07a1c6ceabfb0bdf73bae70b7d01fc70">deserializeRoomAction</a> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms)</td></tr>
+<tr class="memitem:a07a1c6ceabfb0bdf73bae70b7d01fc70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a07a1c6ceabfb0bdf73bae70b7d01fc70">deserializeRoomAction</a> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms)</td></tr>
 <tr class="memdesc:a07a1c6ceabfb0bdf73bae70b7d01fc70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize a room action.  <a href="classeng_1_1MenuSerializer.html#a07a1c6ceabfb0bdf73bae70b7d01fc70">More...</a><br /></td></tr>
 <tr class="separator:a07a1c6ceabfb0bdf73bae70b7d01fc70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae028cddb4cc83c7bf79c9a90668cdd1b"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#ae028cddb4cc83c7bf79c9a90668cdd1b">serializeEvent</a> (<a class="el" href="namespaceeng.html#a8b0eb6c4e2fcc687bb01f8de9979e25b">MenuEvent</a> event)</td></tr>
 <tr class="memdesc:ae028cddb4cc83c7bf79c9a90668cdd1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an event.  <a href="classeng_1_1MenuSerializer.html#ae028cddb4cc83c7bf79c9a90668cdd1b">More...</a><br /></td></tr>
 <tr class="separator:ae028cddb4cc83c7bf79c9a90668cdd1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc436e2115b6673b00294807a801eeca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#acc436e2115b6673b00294807a801eeca">deserializeEvent</a> ()</td></tr>
+<tr class="memdesc:acc436e2115b6673b00294807a801eeca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an event.  <a href="classeng_1_1MenuSerializer.html#acc436e2115b6673b00294807a801eeca">More...</a><br /></td></tr>
+<tr class="separator:acc436e2115b6673b00294807a801eeca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a68edb1b3e23732c2902a7fdfd1cbf73f"><td class="memItemLeft" align="right" valign="top"><a id="a68edb1b3e23732c2902a7fdfd1cbf73f"></a>
+std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt;::iterator&#160;</td><td class="memItemRight" valign="bottom"><b>getRoom</b> (std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; rooms, int id)</td></tr>
+<tr class="separator:a68edb1b3e23732c2902a7fdfd1cbf73f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81099994121a4e7f4cf7b756d7303093"><td class="memItemLeft" align="right" valign="top"><a id="a81099994121a4e7f4cf7b756d7303093"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>editRoom</b> (<a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> crudType, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers)</td></tr>
+<tr class="separator:a81099994121a4e7f4cf7b756d7303093"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classeng_1_1Serializer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classeng_1_1Serializer')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classeng_1_1Serializer.html">eng::Serializer</a></td></tr>
+<tr class="memitem:a20c5bd20c76fd4cda50411815d2d16ac inherit pro_methods_classeng_1_1Serializer"><td class="memTemplParams" colspan="2"><a id="a20c5bd20c76fd4cda50411815d2d16ac"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a20c5bd20c76fd4cda50411815d2d16ac inherit pro_methods_classeng_1_1Serializer"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>serializeData</b> (std::vector&lt; uint8_t &gt; &amp;packet, T *component)</td></tr>
+<tr class="separator:a20c5bd20c76fd4cda50411815d2d16ac inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa37a0350c534b544371c240c19e01dfd inherit pro_methods_classeng_1_1Serializer"><td class="memTemplParams" colspan="2"><a id="aa37a0350c534b544371c240c19e01dfd"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa37a0350c534b544371c240c19e01dfd inherit pro_methods_classeng_1_1Serializer"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>deserializeData</b> (std::vector&lt; uint8_t &gt; &amp;packet, std::size_t &amp;adv, T *component)</td></tr>
+<tr class="separator:aa37a0350c534b544371c240c19e01dfd inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ababec17f0ca858436adbdf6b5e8dd227 inherit pro_methods_classeng_1_1Serializer"><td class="memItemLeft" align="right" valign="top"><a id="ababec17f0ca858436adbdf6b5e8dd227"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>insertMagic</b> (std::vector&lt; uint8_t &gt; &amp;packet)</td></tr>
+<tr class="separator:ababec17f0ca858436adbdf6b5e8dd227 inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c6bf7bd00453fb5048feb7bb993977d inherit pro_methods_classeng_1_1Serializer"><td class="memItemLeft" align="right" valign="top"><a id="a8c6bf7bd00453fb5048feb7bb993977d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkMagic</b> (std::vector&lt; uint8_t &gt; &amp;packet, std::size_t adv)</td></tr>
+<tr class="separator:a8c6bf7bd00453fb5048feb7bb993977d inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a108971e7e71a3afea4dbf052500d87d4 inherit pro_methods_classeng_1_1Serializer"><td class="memItemLeft" align="right" valign="top"><a id="a108971e7e71a3afea4dbf052500d87d4"></a>
+_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><b>convertToData</b> (std::vector&lt; uint8_t &gt; &amp;packet)</td></tr>
+<tr class="separator:a108971e7e71a3afea4dbf052500d87d4 inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb9ebe5fe94f88267c4f94c4a48369f8 inherit pro_methods_classeng_1_1Serializer"><td class="memItemLeft" align="right" valign="top"><a id="acb9ebe5fe94f88267c4f94c4a48369f8"></a>
+std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>convertToVector</b> (_STORAGE_DATA &amp;packet)</td></tr>
+<tr class="separator:acb9ebe5fe94f88267c4f94c4a48369f8 inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c7361f70d2bee7a6c177e5bbdb11e8 inherit pro_methods_classeng_1_1Serializer"><td class="memItemLeft" align="right" valign="top"><a id="a61c7361f70d2bee7a6c177e5bbdb11e8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Serializer.html#a61c7361f70d2bee7a6c177e5bbdb11e8">Serializer</a> ()</td></tr>
+<tr class="memdesc:a61c7361f70d2bee7a6c177e5bbdb11e8 inherit pro_methods_classeng_1_1Serializer"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Serializer.html" title="The network serializer (formats packets to be sent through network).">Serializer</a> constructor. <br /></td></tr>
+<tr class="separator:a61c7361f70d2bee7a6c177e5bbdb11e8 inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24bee48b1aad59d93c4b2b099329e31b inherit pro_methods_classeng_1_1Serializer"><td class="memItemLeft" align="right" valign="top"><a id="a24bee48b1aad59d93c4b2b099329e31b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Serializer.html#a24bee48b1aad59d93c4b2b099329e31b">~Serializer</a> ()=default</td></tr>
+<tr class="memdesc:a24bee48b1aad59d93c4b2b099329e31b inherit pro_methods_classeng_1_1Serializer"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Serializer.html" title="The network serializer (formats packets to be sent through network).">Serializer</a> destructor. <br /></td></tr>
+<tr class="separator:a24bee48b1aad59d93c4b2b099329e31b inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The menu serializer. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="acc436e2115b6673b00294807a801eeca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc436e2115b6673b00294807a801eeca">&#9670;&nbsp;</a></span>deserializeEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::MenuSerializer::deserializeEvent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Serialize an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>Event to deserialize </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a07a1c6ceabfb0bdf73bae70b7d01fc70"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a07a1c6ceabfb0bdf73bae70b7d01fc70">&#9670;&nbsp;</a></span>deserializeRoomAction()</h2>
 
@@ -138,7 +206,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvoid.html">void</a> eng::MenuSerializer::deserializeRoomAction </td>
+          <td class="memname">void eng::MenuSerializer::deserializeRoomAction </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; uint8_t &gt;&#160;</td>
           <td class="paramname"><em>packet</em>, </td>
@@ -175,7 +243,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvoid.html">void</a> eng::MenuSerializer::deserializeRoomEdit </td>
+          <td class="memname">void eng::MenuSerializer::deserializeRoomEdit </td>
           <td>(</td>
           <td class="paramtype">std::vector&lt; uint8_t &gt;&#160;</td>
           <td class="paramname"><em>packet</em>, </td>
@@ -205,8 +273,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4116642e2d5c34d2273e649210ab7ef2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4116642e2d5c34d2273e649210ab7ef2">&#9670;&nbsp;</a></span>handlePacket()</h2>
+<a id="a060c977fe30c525ba87c09a5b105afb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a060c977fe30c525ba87c09a5b105afb4">&#9670;&nbsp;</a></span>handlePacket()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,8 +283,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">eng::MenuSerializer::handlePacket </td>
           <td>(</td>
           <td class="paramtype">_STORAGE_DATA&#160;</td>
-          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td class="paramname"><em>packet</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>rooms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

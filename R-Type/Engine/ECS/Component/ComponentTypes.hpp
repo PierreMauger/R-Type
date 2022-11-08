@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -96,7 +97,7 @@ enum Priority {
  */
 typedef struct SpriteID {
         std::size_t id = 0;
-        Priority priority = Priority::HIGH;
+        Priority priority = Priority::MEDIUM;
         std::size_t curFrame = 0;
         std::size_t nbFrame = 0;
         bool autoLoop = false;
@@ -168,6 +169,7 @@ typedef struct Enemy {
 typedef struct Appearance {
         bool app = false;
         float end = 0.0f;
+        float x_app = 0.0f;
 } Appearance;
 
 /**
@@ -225,6 +227,7 @@ enum TypePattern {
     OSCILLATION,
     BIGOSCILLATION,
     CIRCLE,
+    DEVOUREROSC,
     CTHULHU
 };
 

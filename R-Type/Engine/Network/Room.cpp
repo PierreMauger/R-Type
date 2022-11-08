@@ -2,11 +2,11 @@
 
 using namespace eng;
 
-Room::Room(std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers) : _id(id), _maxPlayers(maxPlayers), _nbPlayers(nbPlayers)
+Room::Room(int id, std::size_t maxPlayers, std::size_t nbPlayers) : _id(id), _maxPlayers(maxPlayers), _nbPlayers(nbPlayers)
 {
 }
 
-std::size_t Room::getId() const
+int Room::getId() const
 {
     return _id;
 }
@@ -49,4 +49,24 @@ void Room::removePlayer()
 bool Room::isFull() const
 {
     return _nbPlayers == _maxPlayers;
+}
+
+bool Room::isStarted() const
+{
+    return _started;
+}
+
+void Room::start()
+{
+    _started = true;
+}
+
+void Room::stop()
+{
+    _started = false;
+}
+
+bool Room::operator==(const Room &room) const
+{
+    return _id == room._id;
 }

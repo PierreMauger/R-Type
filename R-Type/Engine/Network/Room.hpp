@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -25,16 +26,17 @@ namespace eng
     class Room
     {
         private:
-            std::size_t _id;
+            int _id;
             std::size_t _maxPlayers;
             std::size_t _nbPlayers;
+            bool _started = false;
 
         public:
             /**
              * @brief Room constructor.
              * @fn RoomSerializer()
              */
-            Room(std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers = 0);
+            Room(int id, std::size_t maxPlayers, std::size_t nbPlayers = 0);
             /**
              * @brief Room destructor.
              * @fn ~RoomSerializer()
@@ -43,10 +45,10 @@ namespace eng
 
             /**
              * @brief Get the id of the room
-             * @fn std::size_t getId()
+             * @fn int getId()
              * @return The room id
              */
-            std::size_t getId() const;
+            int getId() const;
             /**
              * @brief Get the max number of players of the room
              * @fn std::size_t getMaxPlayers()
@@ -96,6 +98,32 @@ namespace eng
              * @return A boolean indicating if the room is full
              */
             bool isFull() const;
+
+            /**
+             * @brief Check if the room is started
+             * @fn bool isStarted()
+             * @return A boolean indicating if the room is started
+             */
+            bool isStarted() const;
+
+            /**
+             * @brief Start the room
+             * @fn void start()
+             */
+            void start();
+            /**
+             * @brief Stop the room
+             * @fn void stop()
+             */
+            void stop();
+
+            /**
+             * @brief Check if the room is equal to another room
+             * @fn bool operator==(const Room &room) const
+             * @param room The room to compare
+             * @return A boolean indicating if the room is equal to another room
+             */
+            bool operator==(const Room &room) const;
     };
 }
 
