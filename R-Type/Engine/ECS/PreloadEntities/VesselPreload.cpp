@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
@@ -19,17 +19,18 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{64 * size.x / screenSize->x * windowsSize.x, 28 * size.y / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{0});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
-    std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
+    std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR | InfoComp::SYNCID), componentManager);
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::LOW});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(graphic.getWindow()->getSize().y) - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
 }
 
-void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t kill, std::size_t death, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize)
+void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, std::size_t kill, std::size_t death, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize)
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
@@ -44,7 +45,7 @@ void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager 
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{64 * size.x / screenSize->x * windowsSize.x, 28 * size.y / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{0});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
 
@@ -52,4 +53,5 @@ void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager 
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(windowsSize.y) - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
 }

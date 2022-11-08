@@ -109,7 +109,6 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/Component/
     ${ENGINE_ROOT}/ECS/System/
     ${ENGINE_ROOT}/ECS/PreloadEntities/
-    ${ENGINE_ROOT}/Input/
     ${ENGINE_ROOT}/Graphic/
     ${ENGINE_ROOT}/Network/
     ${ENGINE_ROOT}/Loader/
@@ -160,9 +159,6 @@ set(ENGINE_SRC
 
     # Loader files
     ${ENGINE_ROOT}/Level/Level.cpp
-
-    # Input files
-    ${ENGINE_ROOT}/Input/Input.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
@@ -245,8 +241,11 @@ set(SERVER_INC
 #fetch source files
 set(SERVER_SRC
     ${SERVER_ROOT}/main.cpp
+    ${SERVER_ROOT}/Client.cpp
     ${SERVER_ROOT}/Server.cpp
     ${SERVER_ROOT}/ServerNetwork.cpp
+    ${SERVER_ROOT}/ServerMenuSerializer.cpp
+    ${SERVER_ROOT}/ServerGameSerializer.cpp
 )
 
 #set include paths

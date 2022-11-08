@@ -5,13 +5,12 @@
  * @copyright Epitech Rennes 2022
  */
 
-#ifndef GAMESERIALIZER_HPP
-#define GAMESERIALIZER_HPP
+#ifndef MENUSERIALIZER_HPP
+#define MENUSERIALIZER_HPP
 
 /// @cond
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
-#include "Engine/Input/Input.hpp"
 #include "Engine/Network/NetCommon.hpp"
 #include "Engine/Network/Room.hpp"
 #include "Engine/Network/Serializer.hpp"
@@ -48,7 +47,6 @@ namespace eng
         LEAVE,
         READY,
         UNREADY,
-        START,
 
         UNKNOWN_ACTION
     };
@@ -68,12 +66,12 @@ namespace eng
      * @brief The menu serializer
      * @class MenuSerializer
      */
-    class MenuSerializer : private Serializer
+    class MenuSerializer : protected Serializer
     {
-        private:
-            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, std::size_t id);
+        protected:
+            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, int id);
 
-            void editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers);
+            void editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers);
 
         public:
             /**
@@ -92,7 +90,7 @@ namespace eng
              * @fn handlePacket(_STORAGE_DATA packet)
              * @param packet The packet to handle.
              */
-            void handlePacket(_STORAGE_DATA packet);
+            void handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms);
 
             /**
              * @brief Serialize a room edit
@@ -133,8 +131,14 @@ namespace eng
              * @return The serialized packet
              */
             _STORAGE_DATA serializeEvent(MenuEvent event);
-            // void deserializeEvent(std::vector<uint8_t> packet);
+
+            /**
+             * @brief Serialize an event
+             * @fn void deserializeEvent()
+             * @param event Event to deserialize
+             */
+            void deserializeEvent();
     };
 }
 
-#endif // GAMESERIALIZER_HPP
+#endif // MENUSERIALIZER_HPP
