@@ -9,6 +9,7 @@
 #define MENUSERIALIZER_HPP
 
 /// @cond
+#include "Client.hpp"
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
 #include "Engine/Network/NetCommon.hpp"
@@ -90,7 +91,7 @@ namespace eng
              * @fn handlePacket(_STORAGE_DATA packet)
              * @param packet The packet to handle.
              */
-            void handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms);
+            void handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms, Client &client, std::size_t &roomCount);
 
             /**
              * @brief Serialize a room edit
@@ -106,7 +107,7 @@ namespace eng
              * @param packet The serialized packet
              * @param rooms A reference to the vector of rooms
              */
-            void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms);
+            void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms, std::size_t &roomCount);
 
             /**
              * @brief Serialize a room action
@@ -115,14 +116,14 @@ namespace eng
              * @param action A room action
              * @return The serialized packet
              */
-            _STORAGE_DATA serializeRoomAction(std::size_t id, RoomAction action);
+            // _STORAGE_DATA serializeRoomAction(std::size_t id, RoomAction action);
             /**
              * @brief Deserialize a room action
              * @fn void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms)
              * @param packet The serialized packet
              * @param rooms A reference to the vector of rooms
              */
-            void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms);
+            void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms, Client &client);
 
             /**
              * @brief Serialize an event
@@ -137,7 +138,7 @@ namespace eng
              * @fn void deserializeEvent()
              * @param event Event to deserialize
              */
-            void deserializeEvent();
+            // void deserializeEvent();
     };
 }
 

@@ -30,6 +30,7 @@ void ClientNetwork::initClientNetwork()
     this->_connection->setUdpEndpoint(this->_connection->getTcpEndpoint().address().to_string(), portUdp);
 
     this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_time, sizeof(this->_time)));
+    this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_id, sizeof(this->_id)));
 
     this->_connection->run();
 }
@@ -84,4 +85,9 @@ void ClientNetwork::updateConnection()
 time_t ClientNetwork::getTime()
 {
     return this->_time;
+}
+
+std::size_t ClientNetwork::getId()
+{
+    return this->_id;
 }

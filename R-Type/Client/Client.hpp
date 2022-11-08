@@ -15,9 +15,9 @@
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
-#include "Engine/Network/GameSerializer.hpp"
-#include "Engine/Network/MenuSerializer.hpp"
+#include "GameSerializer.hpp"
 #include "Includes.hpp"
+#include "MenuSerializer.hpp"
 
 /// @endcond
 
@@ -40,6 +40,9 @@ namespace eng
             MenuSerializer _menuSerializer;
             GameSerializer _gameSerializer;
 
+            std::size_t _id;
+
+            std::size_t _roomId = 0;
             std::vector<Room> _rooms;
 
             sf::Time _networkTime = sf::milliseconds(50);

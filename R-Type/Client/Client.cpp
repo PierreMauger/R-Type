@@ -9,7 +9,8 @@ Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
     this->initEntities();
     this->_network.run();
 
-    std::srand(10);
+    std::srand(this->_network.getTime());
+    this->_id = this->_network.getId();
 }
 
 void Client::initSystems()
@@ -88,7 +89,7 @@ void Client::syncTcpNetwork()
     if (dataIn.empty())
         return;
     for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        this->_menuSerializer.handlePacket(packet, this->_rooms);
+        this->_menuSerializer.handlePacket(packet, this->_rooms, this->_roomId);
         if (dataIn.empty())
             break;
     }

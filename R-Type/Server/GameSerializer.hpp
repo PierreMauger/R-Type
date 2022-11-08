@@ -9,11 +9,8 @@
 #define GAMESERIALIZER_HPP
 
 /// @cond
-#include "Engine/ECS/Component/ComponentManager.hpp"
-#include "Engine/ECS/Entity/EntityManager.hpp"
-#include "Engine/Network/NetCommon.hpp"
+#include "Client.hpp"
 #include "Engine/Network/Serializer.hpp"
-#include "Includes.hpp"
 
 /// @endcond
 
@@ -46,18 +43,12 @@ namespace eng
                 T component = T();
 
                 deserializeData(packet, adv, &component);
-
-                // if (!componentManager.getComponent(typeid(T)).getField(id).has_value()) {
-                // }
                 componentManager.addComponent<T>(id);
-
                 componentManager.getSingleComponent<T>(id) = component;
             };
 
-            std::size_t getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager);
-
             void pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager);
-            void getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager);
+            // void getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager);
 
         public:
             /**
@@ -73,12 +64,13 @@ namespace eng
 
             /**
              * @brief Handle a game packet.
-             * @fn handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager)
+             * @fn handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client)
              * @param packet The packet to handle.
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
+             * @param client A reference to the Client who send the packet
              */
-            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager);
+            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client);
 
             /**
              * @brief Serialize an entity
@@ -89,7 +81,7 @@ namespace eng
              * @param componentManager A reference to the ComponentManager
              * @return The serialized packet
              */
-            _STORAGE_DATA serializeEntity(std::size_t id, CrudType type, EntityManager &entityManager, ComponentManager &componentManager);
+            _STORAGE_DATA serializeEntity(std::size_t entityId, CrudType type, EntityManager &entityManager, ComponentManager &componentManager);
             /**
              * @brief Deserialize an entity
              * @fn void deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
@@ -97,7 +89,7 @@ namespace eng
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
              */
-            void deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
+            // void deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
 
             /**
              * @brief Serialize an input
@@ -105,13 +97,16 @@ namespace eng
              * @param input The input to serialize.
              * @return The serialized packet
              */
-            _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
+            // _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
             /**
              * @brief Deserialize an input
-             * @fn void deserializeInput()
+             * @fn void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
              * @param packet The serialized packet
+             * @param entityManager A reference to the EntityManager
+             * @param componentManager A reference to the ComponentManager
+             * @param client A reference to the Client who send the packet
              */
-            void deserializeInput(std::vector<uint8_t> packet);
+            void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client);
     };
 }
 

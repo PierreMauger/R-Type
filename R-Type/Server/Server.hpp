@@ -20,9 +20,9 @@
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Level/Level.hpp"
 #include "Engine/Network/Room.hpp"
+#include "GameSerializer.hpp"
 #include "Includes.hpp"
-#include "ServerGameSerializer.hpp"
-#include "ServerMenuSerializer.hpp"
+#include "MenuSerializer.hpp"
 #include "ServerNetwork.hpp"
 
 /// @endcond
@@ -43,10 +43,11 @@ namespace eng
             Engine _engine;
             ServerNetwork _network;
 
-            ServerMenuSerializer _menuSerializer;
-            ServerGameSerializer _gameSerializer;
+            MenuSerializer _menuSerializer;
+            GameSerializer _gameSerializer;
 
             std::size_t _syncId = 0;
+            std::size_t _clientId;
             std::vector<Client> _clients;
 
             std::size_t _roomId = 0;
@@ -62,6 +63,8 @@ namespace eng
             void initEntities();
             void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
             void manageEvent();
+            void syncUdpNetwork(Client &client);
+            void syncTcpNetwork(Client &client);
             void updateRooms();
             void updateClients();
             void updateEntities();
