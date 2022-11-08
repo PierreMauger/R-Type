@@ -46,6 +46,7 @@ namespace eng
         SOUNDID = 1 << 19,
         SPRITEAT = 1 << 20,
         BUTTON = 1 << 21,
+        SHIELD = 1 << 22,
     };
 }
 
@@ -143,6 +144,15 @@ typedef struct Life {
         std::size_t defaultLife = 1;
         std::size_t life = defaultLife;
 } Life;
+
+/**
+ * @struct Shield
+ * @brief The shield component.
+ */
+typedef struct Shield {
+        std::size_t defaultLife = 0;
+        std::size_t life = defaultLife;
+} Shield;
 
 /**
  * @struct Enemy

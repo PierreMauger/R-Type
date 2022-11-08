@@ -58,6 +58,7 @@ void Client::initComponents()
     componentManager.bindComponent<SoundID>();
     componentManager.bindComponent<SpriteAttribut>();
     componentManager.bindComponent<Button>();
+    componentManager.bindComponent<Shield>();
 }
 
 void Client::initEntities()

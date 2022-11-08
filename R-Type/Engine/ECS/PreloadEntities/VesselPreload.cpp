@@ -10,7 +10,7 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, false, false, 0, 0, 64, 0});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {64 / 2, 28 / 2}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, 28 / screenSize->y * windowsSize.y * -1, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, screenSize->x / (1920 / 10) / screenSize->x * windowsSize.x, screenSize->y / (1080 / 10) / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100 / screenSize->y * windowsSize.y});
@@ -21,8 +21,15 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
-    std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR | InfoComp::SYNCID), componentManager);
+    std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD | InfoComp::SYNCID), componentManager);
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{21, Priority::MEDIUM});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {700 / 2, 440 / 2}});
+    componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
+    componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{id});
+    componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(idShield, SyncID{syncId++});
 
+    std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR | InfoComp::SYNCID), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::LOW});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(graphic.getWindow()->getSize().y) - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
@@ -36,7 +43,7 @@ void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager 
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{6, Priority::MEDIUM, 0, 0, false, false, 0, 0, 64, 0});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {64 / 2, 28 / 2}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, 28 / screenSize->y * windowsSize.y * -1, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, screenSize->x / (1920 / 10) / screenSize->x * windowsSize.x, screenSize->y / (1080 / 10) / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100 / screenSize->y * windowsSize.y});
@@ -48,7 +55,6 @@ void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager 
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
-
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::LOW});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(windowsSize.y) - 20, 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
