@@ -18,7 +18,7 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
     entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
 }
 
-bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
 
@@ -39,13 +39,11 @@ bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
-            return true;
         }
     }
-    return false;
 }
 
-bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
@@ -65,10 +63,8 @@ bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
-            return true;
         }
     }
-    return false;
 }
 
 void RenderSystem::displayShield(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)

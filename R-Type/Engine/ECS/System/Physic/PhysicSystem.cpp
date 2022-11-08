@@ -138,6 +138,7 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                     componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
                     componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{i});
                     componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});
+                    componentManager.getComponent(typeid(SyncID)).emplaceData(idShield, SyncID{this->_syncId ? *(this->_syncId.get()) : 0});
                 }
             }
             return true;
