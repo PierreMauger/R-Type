@@ -19,9 +19,7 @@ void SoundSystem::update(ComponentManager &componentManager, EntityManager &enti
     for (auto id : entityManager.getMaskCategory(soundMask)) {
         if (!entityManager.getMasks()[id].has_value() || (entityManager.getMasks()[id].value() & soundMask) != soundMask)
             continue;
-        std::cout << "SoundSystem: " << id << std::endl;
         SoundID &soundId = componentManager.getSingleComponent<SoundID>(id);
-        std::cout << "Fin SoundSystem: " << id << std::endl;
         if (soundId.play && this->_sounds[id].getStatus() != sf::Sound::Status::Playing) {
             componentManager.removeAllComponents(id);
             entityManager.removeMask(id);
