@@ -98,10 +98,10 @@ void Client::updateNetwork()
 {
     Graphic &graphic = this->_engine.getGraphic();
 
-    // if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
-    //     return;
-    // }
-    // this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
+    if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
+        return;
+    }
+    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->syncUdpNetwork();
     this->syncTcpNetwork();
     this->_network.updateConnection();
