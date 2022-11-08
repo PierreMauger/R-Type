@@ -204,6 +204,7 @@ typedef struct LifeBar {
  */
 typedef struct Parent {
         std::size_t id = 0;
+        std::size_t id2 = 0;
         bool follow = false;
 } Parent;
 

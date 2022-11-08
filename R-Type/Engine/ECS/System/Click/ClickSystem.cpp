@@ -20,11 +20,11 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
         for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
             Button &button = componentManager.getSingleComponent<Button>(id);
             Position pos = componentManager.getSingleComponent<Position>(id);
-            SpriteAttribut spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
+            Size size = componentManager.getSingleComponent<Size>(id);
 
             sf::Vector2i mousePos = sf::Mouse::getPosition(*this->_window);
 
-            if (mousePos.x >= pos.x && mousePos.x <= pos.x + spriteAt.rect.width && mousePos.y >= pos.y && mousePos.y <= pos.y + spriteAt.rect.height) {
+            if (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x && mousePos.y >= pos.y && mousePos.y <= pos.y + size.y) {
                 if (button.type == ButtonType::PLAY) {
                     componentManager.clear();
                     entityManager.clear();
@@ -35,8 +35,9 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     button.selected = true;
                     changed = id;
                 } else if (button.type == ButtonType::CONNECT) {
-                    std::size_t idChild = componentManager.getSingleComponent<Parent>(id).id;
-                    std::string text = componentManager.getSingleComponent<Text>(idChild).str;
+                    Parent parent = componentManager.getSingleComponent<Parent>(id);
+                    std::string text = componentManager.getSingleComponent<Text>(parent.id).str;
+                    std::string text2 = componentManager.getSingleComponent<Text>(parent.id2).str;
                     this->_sceneId = std::make_shared<std::size_t>(*this->_sceneId + 1);
                     break;
                 }
