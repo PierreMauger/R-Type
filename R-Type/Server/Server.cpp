@@ -29,7 +29,7 @@ void Server::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
+    // systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
 void Server::initComponents()
@@ -78,14 +78,10 @@ void Server::manageEvent()
 #endif
         if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             graphic.getWindow()->close();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && !graphic.isFullscreen()) {
-            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
+            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen - graphic.isFullscreen());
             graphic.getWindow()->setFramerateLimit(60);
-            graphic.setFullscreen(true);
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && graphic.isFullscreen()) {
-            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Default);
-            graphic.getWindow()->setFramerateLimit(60);
-            graphic.setFullscreen(false);
+            graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
             this->_engine.updateSizeWindow();

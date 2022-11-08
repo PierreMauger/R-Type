@@ -14,8 +14,8 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
     this->_text.setCharacterSize(35);
     this->_text.setFillColor(sf::Color::White);
 
-    entityManager.addMaskCategory(InfoComp::TEXT);
-    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
+    entityManager.addMaskCategory(this->_renderTag);
+    entityManager.addMaskCategory(this->_textTag);
 }
 
 bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
@@ -109,12 +109,10 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t render = (InfoComp::POS | InfoComp::SPRITEID);
     std::size_t renderAnim = (InfoComp::SPRITEAT);
     std::size_t renderCooldown = (InfoComp::PARENT | InfoComp::COOLDOWNBAR);
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
-    std::size_t renderText = (InfoComp::TEXT);
     std::size_t renderShield = (InfoComp::PARENT | InfoComp::SHIELD);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
@@ -122,18 +120,19 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Text> stockText;
     std::vector<sf::Sprite> stockButton;
 
-    for (auto id : entityManager.getMaskCategory(renderText)) {
-        this->_text.setCharacterSize(35 / this->_screenSize->x * this->_window->getSize().x);
+    for (auto id : entityManager.getMaskCategory(this->_textTag)) {
+        sf::Text &textRef = this->_text;
+        textRef.setCharacterSize(35 / this->_screenSize->x * this->_window->getSize().x);
         if (componentManager.getSingleComponent<Text>(id).hasValue)
-            this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+            textRef.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
         else {
-            this->_text.setString(componentManager.getSingleComponent<Text>(id).str);
-            this->_text.setOrigin(this->_text.getLocalBounds().width / 2, this->_text.getLocalBounds().height / 2);
+            textRef.setString(componentManager.getSingleComponent<Text>(id).str);
+            textRef.setOrigin(textRef.getLocalBounds().width / 2, textRef.getLocalBounds().height / 2);
         }
-        this->_text.setPosition(componentManager.getSingleComponent<Text>(id).pos);
-        stockText.push_back(this->_text);
+        textRef.setPosition(componentManager.getSingleComponent<Text>(id).pos);
+        stockText.push_back(textRef);
     }
-    for (auto id : entityManager.getMaskCategory(render)) {
+    for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
 

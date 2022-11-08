@@ -31,6 +31,8 @@ namespace eng
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<std::vector<sf::Sprite>> _sprites;
 
+            std::size_t _spriteTag = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
+
         public:
             /**
              * @brief AnimationSystem constructor
