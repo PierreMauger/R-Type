@@ -112,10 +112,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setOrigin(spriteAt.offset);
             spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
         }
-        if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown)
-            displayCooldownBar(componentManager, entityManager, spriteRef, id);
-        if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife)
-            displayLifeBar(componentManager, entityManager, spriteRef, id);
+        if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, id))
+            continue;
+        if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife && displayLifeBar(componentManager, entityManager, spriteRef, id))
+            continue;
         if (spriteId.priority == Priority::HIGH)
             stockSpriteHigh.push_back(spriteRef);
         if (spriteId.priority == Priority::MEDIUM)

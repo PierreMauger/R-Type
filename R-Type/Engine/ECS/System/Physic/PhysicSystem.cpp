@@ -2,10 +2,11 @@
 
 using namespace eng;
 
-PhysicSystem::PhysicSystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
+PhysicSystem::PhysicSystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager, std::shared_ptr<std::size_t> syncId)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
+    this->_syncId = syncId;
 }
 
 void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager)
@@ -76,7 +77,7 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
             dis.dis = false;
             if (mask[i].has_value() && (mask[i].value() & InfoComp::CONTROLLABLE) == InfoComp::CONTROLLABLE) {
                 Controllable &con = componentManager.getSingleComponent<Controllable>(i);
-                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death + 1, this->_window->getSize(), this->_screenSize);
+                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death + 1, this->_syncId ? *(this->_syncId.get()) : 0, this->_window->getSize(), this->_screenSize);
             }
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);

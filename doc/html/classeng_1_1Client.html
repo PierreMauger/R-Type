@@ -79,7 +79,25 @@ $(function() {
 <p>The client handling functions.  
  <a href="classeng_1_1Client.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="Client_8hpp_source.html">Client.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="Client_2Client_8hpp_source.html">Client.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for eng::Client:</div>
+<div class="dyncontent">
+<div class="center"><img src="classeng_1_1Client__inherit__graph.png" border="0" usemap="#aeng_1_1Client_inherit__map" alt="Inheritance graph"/></div>
+<map name="aeng_1_1Client_inherit__map" id="aeng_1_1Client_inherit__map">
+<area shape="rect" title="The client handling functions." alt="" coords="39,95,131,121"/>
+<area shape="rect" title=" " alt="" coords="5,5,164,47"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+<div class="dynheader">
+Collaboration diagram for eng::Client:</div>
+<div class="dyncontent">
+<div class="center"><img src="classeng_1_1Client__coll__graph.png" border="0" usemap="#aeng_1_1Client_coll__map" alt="Collaboration graph"/></div>
+<map name="aeng_1_1Client_coll__map" id="aeng_1_1Client_coll__map">
+<area shape="rect" title="The client handling functions." alt="" coords="39,95,131,121"/>
+<area shape="rect" title=" " alt="" coords="5,5,164,47"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -91,9 +109,45 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a27f5235dbc118ce4ac5229b37122ce47"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Client.html" title="The client handling functions.">Client</a> destructor. <br /></td></tr>
 <tr class="separator:a27f5235dbc118ce4ac5229b37122ce47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a150fa91716ff4230fdb993f656646c00"><td class="memItemLeft" align="right" valign="top"><a id="a150fa91716ff4230fdb993f656646c00"></a>
-<a class="el" href="classvoid.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Client.html#a150fa91716ff4230fdb993f656646c00">mainLoop</a> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Client.html#a150fa91716ff4230fdb993f656646c00">mainLoop</a> ()</td></tr>
 <tr class="memdesc:a150fa91716ff4230fdb993f656646c00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main loop of the client. <br /></td></tr>
 <tr class="separator:a150fa91716ff4230fdb993f656646c00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6825c7b7313da94407f6cb18319e41d"><td class="memItemLeft" align="right" valign="top"><a id="ae6825c7b7313da94407f6cb18319e41d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Client</b> (std::shared_ptr&lt; <a class="el" href="classeng_1_1Connection.html">Connection</a> &gt; connection)</td></tr>
+<tr class="separator:ae6825c7b7313da94407f6cb18319e41d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80382b3e1aba8cea987a46c4cd922aa0"><td class="memItemLeft" align="right" valign="top"><a id="a80382b3e1aba8cea987a46c4cd922aa0"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getVesselId</b> () const</td></tr>
+<tr class="separator:a80382b3e1aba8cea987a46c4cd922aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab18a6e9ca76f881c48c1c150ed352e25"><td class="memItemLeft" align="right" valign="top"><a id="ab18a6e9ca76f881c48c1c150ed352e25"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVesselId</b> (int vesselId)</td></tr>
+<tr class="separator:ab18a6e9ca76f881c48c1c150ed352e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a748be9a5b39eacac83b3a718487240f7"><td class="memItemLeft" align="right" valign="top"><a id="a748be9a5b39eacac83b3a718487240f7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isAlive</b> () const</td></tr>
+<tr class="separator:a748be9a5b39eacac83b3a718487240f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa4401575e4e1a04fcd4c3faf8a20e1"><td class="memItemLeft" align="right" valign="top"><a id="aeaa4401575e4e1a04fcd4c3faf8a20e1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setAlive</b> (bool isAlive)</td></tr>
+<tr class="separator:aeaa4401575e4e1a04fcd4c3faf8a20e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7142697a82219eec1615e9cacc41c15"><td class="memItemLeft" align="right" valign="top"><a id="af7142697a82219eec1615e9cacc41c15"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>getRoomId</b> () const</td></tr>
+<tr class="separator:af7142697a82219eec1615e9cacc41c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a817650980ccf75cc6e5d8aac79608195"><td class="memItemLeft" align="right" valign="top"><a id="a817650980ccf75cc6e5d8aac79608195"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setRoomId</b> (int roomId)</td></tr>
+<tr class="separator:a817650980ccf75cc6e5d8aac79608195"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4369e39f70161dbb19135c78d413f985"><td class="memItemLeft" align="right" valign="top"><a id="a4369e39f70161dbb19135c78d413f985"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isReady</b> () const</td></tr>
+<tr class="separator:a4369e39f70161dbb19135c78d413f985"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4768d2a978f262baea1c545c716d962d"><td class="memItemLeft" align="right" valign="top"><a id="a4768d2a978f262baea1c545c716d962d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setReady</b> (bool isReady)</td></tr>
+<tr class="separator:a4768d2a978f262baea1c545c716d962d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc97905c6aa70d3da977602cda27c40"><td class="memItemLeft" align="right" valign="top"><a id="acbc97905c6aa70d3da977602cda27c40"></a>
+std::shared_ptr&lt; <a class="el" href="classeng_1_1Connection.html">Connection</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>getConnection</b> () const</td></tr>
+<tr class="separator:acbc97905c6aa70d3da977602cda27c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26353c017359c92ed719c0f3c0787bbb"><td class="memItemLeft" align="right" valign="top"><a id="a26353c017359c92ed719c0f3c0787bbb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>destroyClient</b> (std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
+<tr class="separator:a26353c017359c92ed719c0f3c0787bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a534bd9522a482679c1006247851ecc6d"><td class="memItemLeft" align="right" valign="top"><a id="a534bd9522a482679c1006247851ecc6d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client) const</td></tr>
+<tr class="separator:a534bd9522a482679c1006247851ecc6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The client handling functions. </p>
@@ -136,7 +190,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/tmp/rtype/R-Type/Client/<a class="el" href="Client_8hpp_source.html">Client.hpp</a></li>
+<li>/tmp/rtype/R-Type/Client/<a class="el" href="Client_2Client_8hpp_source.html">Client.hpp</a></li>
 <li>/tmp/rtype/R-Type/Client/Client.cpp</li>
 </ul>
 </div><!-- contents -->

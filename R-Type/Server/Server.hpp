@@ -9,6 +9,7 @@
 #define SERVER_HPP
 
 /// @cond
+#include "Client.hpp"
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CthulhuPreload.hpp"
@@ -18,8 +19,10 @@
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/Level/Level.hpp"
+#include "Engine/Network/Room.hpp"
 #include "Includes.hpp"
-#include "Room.hpp"
+#include "ServerGameSerializer.hpp"
+#include "ServerMenuSerializer.hpp"
 #include "ServerNetwork.hpp"
 
 /// @endcond
@@ -39,16 +42,30 @@ namespace eng
         private:
             Engine _engine;
             ServerNetwork _network;
+
+            ServerMenuSerializer _menuSerializer;
+            ServerGameSerializer _gameSerializer;
+
+            std::size_t _syncId = 0;
+            std::vector<Client> _clients;
+
+            std::size_t _roomId = 0;
             std::vector<Room> _rooms;
+
             sf::Time _elapsedTime = sf::seconds(0);
             sf::Time _deltaTime = sf::seconds(5);
             sf::Time _bossTime = sf::seconds(5);
+            sf::Time _networkTime = sf::milliseconds(50);
 
             void initSystems();
             void initComponents();
             void initEntities();
-            void manageEvent();
             void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
+            void manageEvent();
+            void updateRooms();
+            void updateClients();
+            void updateEntities();
+            void updateNetwork();
 
         public:
             /**
@@ -56,7 +73,7 @@ namespace eng
              * @fn Server()
              * @param portTcp The tcp port of the server
              */
-            Server(uint16_t portTcp);
+            Server(uint16_t portTcp, time_t time);
             /**
              * @brief Server destructor.
              * @fn ~Server()

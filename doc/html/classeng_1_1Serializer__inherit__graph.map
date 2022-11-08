@@ -1,5 +1,7 @@
 <map id="eng::Serializer" name="eng::Serializer">
-<area shape="rect" id="node1" title="The network serializer (formats packets to be sent through network)." alt="" coords="113,5,228,32"/>
-<area shape="rect" id="node2" href="$classeng_1_1GameSerializer.html" title=" " alt="" coords="5,80,160,107"/>
-<area shape="rect" id="node3" href="$classeng_1_1MenuSerializer.html" title="The menu serializer." alt="" coords="185,80,335,107"/>
+<area shape="rect" id="node1" title="The network serializer (formats packets to be sent through network)." alt="" coords="154,5,269,32"/>
+<area shape="rect" id="node2" href="$classeng_1_1GameSerializer.html" title=" " alt="" coords="46,80,201,107"/>
+<area shape="rect" id="node4" href="$classeng_1_1MenuSerializer.html" title="The menu serializer." alt="" coords="236,80,387,107"/>
+<area shape="rect" id="node3" href="$classeng_1_1ServerGameSerializer.html" title=" " alt="" coords="5,155,201,181"/>
+<area shape="rect" id="node5" href="$classeng_1_1ServerMenuSerializer.html" title="The menu serializer." alt="" coords="225,155,419,181"/>
 </map>

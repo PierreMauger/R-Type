@@ -11,10 +11,10 @@
 /// @cond
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
-#include "Engine/Input/Input.hpp"
 #include "Engine/Network/NetCommon.hpp"
 #include "Engine/Network/Serializer.hpp"
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -38,14 +38,19 @@ namespace eng
      * @brief The game serializer
      * @enum GameSerializer
      */
-    class GameSerializer : private Serializer
+    class GameSerializer : protected Serializer
     {
-        private:
+        protected:
             template <typename T> void updateEntity(std::vector<uint8_t> &packet, std::size_t id, std::size_t &adv, ComponentManager &componentManager)
             {
                 T component = T();
 
                 deserializeData(packet, adv, &component);
+
+                // if (!componentManager.getComponent(typeid(T)).getField(id).has_value()) {
+                // }
+                componentManager.addComponent<T>(id);
+
                 componentManager.getSingleComponent<T>(id) = component;
             };
 
@@ -68,15 +73,12 @@ namespace eng
 
             /**
              * @brief Handle a game packet.
-             * @fn handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock)
+             * @fn handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager)
              * @param packet The packet to handle.
-             * @param id The id of the packet.
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
-             * @param input A reference to the Input
-             * @param clock A shared pointer to the clock
              */
-            void handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock);
+            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager);
 
             /**
              * @brief Serialize an entity
@@ -106,15 +108,10 @@ namespace eng
             _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
             /**
              * @brief Deserialize an input
-             * @fn void deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock)
+             * @fn void deserializeInput()
              * @param packet The serialized packet
-             * @param id The id of the packet
-             * @param entityManager A reference to the EntityManager
-             * @param componentManager A reference to the ComponentManager
-             * @param input A reference to the input to get
-             * @param clock A shared pointer to the game clock
              */
-            void deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock);
+            void deserializeInput(std::vector<uint8_t> packet);
     };
 }
 

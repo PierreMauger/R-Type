@@ -27,7 +27,6 @@ namespace eng
      * @enum CrudType
      */
     enum CrudType {
-        CREATE,
         DESTROY,
         UPDATE,
 

@@ -162,9 +162,6 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                     case 21:
                         componentManager.addComponent<Button>(this->_selectedEntity);
                         break;
-                    case 22:
-                        componentManager.addComponent<Child>(this->_selectedEntity);
-                        break;
                     default:
                         break;
                     }

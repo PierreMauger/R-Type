@@ -8,6 +8,12 @@ Loader::Loader()
 {
 }
 
+Loader::~Loader()
+{
+    for (std::size_t i = 0; i < this->_saveTextures.size(); i++)
+        delete this->_saveTextures[i];
+}
+
 std::vector<sf::Texture> &Loader::getTextures()
 {
     return this->_textures;
@@ -41,6 +47,7 @@ void Loader::loadSprites(std::vector<std::string> paths)
                 sf::Texture *texture = new sf::Texture();
                 sf::Sprite sprite;
 
+                this->_saveTextures.push_back(texture);
                 if (texture->loadFromFile(file_name.string())) {
                     sprite.setTexture(*texture);
                     this->_textures.push_back(*texture);
