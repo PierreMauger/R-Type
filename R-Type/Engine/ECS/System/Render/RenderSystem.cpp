@@ -21,13 +21,12 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
 bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
-
     std::size_t cooldownBarParent = (InfoComp::COOLDOWNBAR | InfoComp::SPRITEID | InfoComp::PARENT);
     std::size_t cooldownBarChild = (InfoComp::COOLDOWNSHOOT);
     std::size_t size = 100 / this->_screenSize->x * this->_window->getSize().x;
 
     if (masks[i].has_value() && (masks[i].value() & cooldownBarParent) == cooldownBarParent) {
-        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        std::size_t idPar = componentManager.getSingleComponent<SyncID>(componentManager.getSingleComponent<Parent>(i).id).id;
         if (masks[idPar].has_value()) {
             if ((masks[idPar].value() & cooldownBarChild) == cooldownBarChild) {
                 CooldownShoot &cooldownShoot = componentManager.getSingleComponent<CooldownShoot>(idPar);
@@ -52,7 +51,7 @@ bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
     std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
 
     if (masks[i].has_value() && (masks[i].value() & lifeBarParent) == lifeBarParent) {
-        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        std::size_t idPar = componentManager.getSingleComponent<SyncID>(componentManager.getSingleComponent<Parent>(i).id).id;
         if (masks[idPar].has_value()) {
             if ((masks[idPar].value() & lifeBarChild) == lifeBarChild) {
                 LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(i);
@@ -79,7 +78,7 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
     float scal = 0.3;
 
     if (masks[i].has_value() && (masks[i].value() & shieldParent) == shieldParent) {
-        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        std::size_t idPar = componentManager.getSingleComponent<SyncID>(componentManager.getSingleComponent<Parent>(i).id).id;
         if (masks[idPar].has_value()) {
             if ((masks[idPar].value() & shieldChild) == shieldChild) {
                 Shield &shield = componentManager.getSingleComponent<Shield>(i);

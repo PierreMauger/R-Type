@@ -25,16 +25,16 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{21, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {700 / 2, 440 / 2}});
     componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
-    componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{id});
     componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idShield, SyncID{syncId++});
+    componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{componentManager.getSingleComponent<SyncID>(idShield).id});
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR | InfoComp::SYNCID), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::LOW});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(graphic.getWindow()->getSize().y) - 20, 0});
-    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
+    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(idBar).id});
 }
 
 void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, std::size_t kill, std::size_t death, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize)
@@ -57,7 +57,7 @@ void VesselPreload::preloadScore(EntityManager &entityManager, ComponentManager 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::COOLDOWNBAR), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::LOW});
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{10, static_cast<float>(windowsSize.y) - 20, 0});
-    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
+    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(idBar).id});
 }
