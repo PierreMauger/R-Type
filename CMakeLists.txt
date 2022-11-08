@@ -147,8 +147,6 @@ set(ENGINE_SRC
     # Network files
     ${ENGINE_ROOT}/Network/Connection.cpp
     ${ENGINE_ROOT}/Network/Serializer.cpp
-    ${ENGINE_ROOT}/Network/GameSerializer.cpp
-    ${ENGINE_ROOT}/Network/MenuSerializer.cpp
     ${ENGINE_ROOT}/Network/Room.cpp
 
     # Graphic files
@@ -201,6 +199,8 @@ set(CLIENT_SRC
     ${CLIENT_ROOT}/main.cpp
     ${CLIENT_ROOT}/Client.cpp
     ${CLIENT_ROOT}/ClientNetwork.cpp
+    ${CLIENT_ROOT}/MenuSerializer.cpp
+    ${CLIENT_ROOT}/GameSerializer.cpp
 )
 
 #set include paths
@@ -244,8 +244,8 @@ set(SERVER_SRC
     ${SERVER_ROOT}/Client.cpp
     ${SERVER_ROOT}/Server.cpp
     ${SERVER_ROOT}/ServerNetwork.cpp
-    ${SERVER_ROOT}/ServerMenuSerializer.cpp
-    ${SERVER_ROOT}/ServerGameSerializer.cpp
+    ${SERVER_ROOT}/MenuSerializer.cpp
+    ${SERVER_ROOT}/GameSerializer.cpp
 )
 
 #set include paths

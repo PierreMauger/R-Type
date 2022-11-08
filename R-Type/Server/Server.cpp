@@ -102,6 +102,34 @@ void Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
     }
 }
 
+void Server::syncUdpNetwork(Client &client)
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInUdp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), client);
+        if (dataIn.empty())
+            break;
+    }
+}
+
+void Server::syncTcpNetwork(Client &client)
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInTcp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_menuSerializer.handlePacket(packet, this->_rooms, client, this->_roomId);
+        if (dataIn.empty())
+            break;
+    }
+}
+
 void Server::updateRooms()
 {
     for (auto &room : this->_rooms) {
@@ -129,7 +157,7 @@ void Server::updateClients()
                 check = true;
         }
         if (!check) {
-            this->_clients.push_back(Client(connection));
+            this->_clients.push_back(Client(connection, this->_roomId++));
         }
         check = false;
     }
@@ -161,6 +189,8 @@ void Server::updateNetwork()
 {
     Graphic &graphic = this->_engine.getGraphic();
 
+    // this->syncTcpNetwork();
+    // this->syncUdpNetwork();
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
         return;
     }

@@ -22,7 +22,7 @@ int main(int ac, char **av)
     }
 
     // init random
-    time_t time = 10;
+    time_t time = std::time(nullptr);
     std::srand(time);
 
     eng::Server server(std::stoi(av[1]), time);

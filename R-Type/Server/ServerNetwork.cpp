@@ -57,6 +57,7 @@ void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::sh
         newConnection->getTcpSocket().write_some(boost::asio::buffer(&time, sizeof(time)));
 
         newConnection->run();
+
         this->_listConnections.push_back(newConnection);
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;

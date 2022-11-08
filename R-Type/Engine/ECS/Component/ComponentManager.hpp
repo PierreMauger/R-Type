@@ -12,6 +12,7 @@
 #include "Engine/ECS/Component/ComponentTypes.hpp"
 #include "Engine/ECS/Component/SparseArray.hpp"
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -140,6 +141,7 @@ namespace eng
              * @param id Id of the components to update.
              */
             void updateComponent(std::size_t id);
+
             void clear();
     };
 }

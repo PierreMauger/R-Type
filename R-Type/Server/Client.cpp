@@ -1,7 +1,11 @@
 #include "Client.hpp"
 
-eng::Client::Client(std::shared_ptr<Connection> connection) : _connection(connection)
+eng::Client::Client(std::shared_ptr<Connection> connection, std::size_t id)
 {
+    this->_connection = connection;
+    this->_id = id;
+
+    connection->getTcpSocket().write_some(boost::asio::buffer(&this->_id, sizeof(this->_id)));
 }
 
 int eng::Client::getVesselId() const
