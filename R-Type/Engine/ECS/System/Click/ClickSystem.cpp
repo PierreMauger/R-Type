@@ -7,6 +7,7 @@ ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
     this->_event = graphic.getEvent();
+    this->_sceneId = graphic.getSceneId();
 
     entityManager.addMaskCategory(this->_buttonTag);
 }
@@ -35,8 +36,8 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     changed = id;
                 } else if (button.type == ButtonType::CONNECT) {
                     std::size_t idChild = componentManager.getSingleComponent<Parent>(id).id;
-                    std::string &text = componentManager.getSingleComponent<Text>(idChild).str;
-                    std::cout << "Connect to " << text << std::endl;
+                    std::string text = componentManager.getSingleComponent<Text>(idChild).str;
+                    this->_sceneId = std::make_shared<std::size_t>(*this->_sceneId + 1);
                     break;
                 }
             }

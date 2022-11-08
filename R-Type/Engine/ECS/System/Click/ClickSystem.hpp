@@ -30,6 +30,7 @@ namespace eng
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
             std::shared_ptr<sf::Event> _event;
+            std::shared_ptr<std::size_t> _sceneId;
 
             std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
 
