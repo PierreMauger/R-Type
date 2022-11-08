@@ -6,7 +6,7 @@ void EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, Compo
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
-    std::size_t rand = static_cast<std::size_t>(createRandom(1, 3));
+    std::size_t rand = static_cast<std::size_t>(createRandom(0, 3));
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
     float randY = createRandom(0, windowsSize.y);
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SYNCID | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);

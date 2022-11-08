@@ -41,7 +41,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
 
     float delayIdle = 3;
     float delayTransform = 3;
-    float delayShoot = 5;
+    float delayShoot = 8;
     float delayAttack = 0.6;
     float delayMove = 2;
 
@@ -80,7 +80,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     if (pat.phase == TypePhase::PHASE02) {
         if (pat.phaseCount == 0) {
             pat.phase = TypePhase::PHASE03;
-            pat.phaseCount = 5;
+            pat.phaseCount = 6;
         }
         delayIdle = 0;
     } else if (pat.phase == TypePhase::PHASE03) {
@@ -93,120 +93,120 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
 
     // Pattern Status Part
     switch (pat.status) {
-    case TypeStatus::SEARCH:
-        pat.status = TypeStatus::IDLE;
-        if (!this->setRandIdPlayer(pat, entityManager)) {
-            pat.status = TypeStatus::SEARCH;
-            checkPlayer = false;
-        }
-        if (pat.phase == TypePhase::PHASE01)
-            pat.phaseCount = 1;
-        vel.x = 0;
-        vel.y = 0;
-        break;
-
-    case TypeStatus::IDLE:
-        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayIdle) {
-            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-            pat.status = TypeStatus::MOVE;
-            if (checkPlayer)
-                pat.lastPosFocus = componentManager.getSingleComponent<Position>(pat.focusEntity);
-            if (pat.phase == TypePhase::PHASE01) {
-                id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
-            } else if (pat.phase == PHASE02) {
-                pat.status = TypeStatus::MOVE;
-                pat.phaseCount--;
-            } else if (pat.phase == PHASE03) {
-                pat.status = TypeStatus::ATTACK;
-                pat.phaseCount--;
-                id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{3, false, false, 1});
+        case TypeStatus::SEARCH :
+            pat.status = TypeStatus::IDLE;
+            if (!this->setRandIdPlayer(pat, entityManager)) {
+                pat.status = TypeStatus::SEARCH;
+                checkPlayer = false;
             }
-        }
-        if (checkPlayer) {
-            posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
-            vel.x = ((posPlayer.x - 20) - pos.x) / 500;
-            vel.y = ((posPlayer.y - 20) - pos.y) / 500;
-        } else {
+            if (pat.phase == TypePhase::PHASE01)
+                pat.phaseCount = 1;
             vel.x = 0;
             vel.y = 0;
-        }
-        break;
+            break;
 
-    case TypeStatus::MOVE:
-        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
-            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-            if (pat.phase == TypePhase::PHASE01) {
-                pat.angle = std::atan2(posPlayer.y - pos.y, posPlayer.x - pos.x);
-                pat.status = TypeStatus::SHOOT;
-                if (pat.phaseCount == 0)
-                    pat.status = TypeStatus::SEARCH;
-            } else {
-                pat.status = TypeStatus::IDLE;
+        case TypeStatus::IDLE :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayIdle) {
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+                pat.status = TypeStatus::MOVE;
+                if (checkPlayer)
+                    pat.lastPosFocus = componentManager.getSingleComponent<Position>(pat.focusEntity);
+                if (pat.phase == TypePhase::PHASE01) {
+                    id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+                    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
+                } else if (pat.phase == PHASE02) {
+                    pat.status = TypeStatus::MOVE;
+                    pat.phaseCount--;
+                } else if (pat.phase == PHASE03) {
+                    pat.status = TypeStatus::ATTACK;
+                    pat.phaseCount--;
+                    id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+                    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{3, false, false, 1});
+                }
             }
-        }
-        if (checkPlayer) {
-            posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
-            if (pat.phase == TypePhase::PHASE01) {
-                vel.x = ((posPlayer.x - 20) - pos.x) / 60;
-                vel.y = ((posPlayer.y - 20) - pos.y) / 60;
+            if (checkPlayer) {
+                posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+                vel.x = ((posPlayer.x - 20) - pos.x) / 500;
+                vel.y = ((posPlayer.y - 20) - pos.y) / 500;
             } else {
-                vel.x = ((posPlayer.x - 20) - pos.x) / 200;
-                vel.y = ((posPlayer.y - 20) - pos.y) / 200;
+                vel.x = 0;
+                vel.y = 0;
             }
-        }
-        break;
+            break;
 
-    case TypeStatus::SHOOT:
-        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayShoot) {
-            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-            pat.status = TypeStatus::MOVE;
-            pat.phaseCount--;
-        }
-        if (checkPlayer) {
-            posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
-            vel.x = ((posPlayer.x - pos.x) / 100) + (std::cos(pat.angle) * SPEED_OSC);
-            vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
-        }
-        if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1);
-            clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
-        }
-        break;
+        case TypeStatus::MOVE :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+                if (pat.phase == TypePhase::PHASE01) {
+                    pat.angle = std::atan2(posPlayer.y - pos.y, posPlayer.x - pos.x);
+                    pat.status = TypeStatus::SHOOT;
+                    if (pat.phaseCount == 0)
+                        pat.status = TypeStatus::SEARCH;
+                } else {
+                    pat.status = TypeStatus::IDLE;
+                }
+            }
+            if (checkPlayer) {
+                posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+                if (pat.phase == TypePhase::PHASE01) {
+                    vel.x = ((posPlayer.x - 20) - pos.x) / 60;
+                    vel.y = ((posPlayer.y - 20) - pos.y) / 60;
+                } else {
+                    vel.x = ((posPlayer.x - 20) - pos.x) / 200;
+                    vel.y = ((posPlayer.y - 20) - pos.y) / 200;
+                }
+            }
+            break;
 
-    case TypeStatus::ATTACK:
-        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayAttack) {
-            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-            pat.status = TypeStatus::SEARCH;
-            if (pat.phaseCount == 0) {
+        case TypeStatus::SHOOT :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayShoot) {
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+                pat.status = TypeStatus::MOVE;
+                pat.phaseCount--;
+            }
+            if (checkPlayer) {
+                posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+                vel.x = ((posPlayer.x - pos.x) / 100) + (std::cos(pat.angle) * SPEED_OSC);
+                vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
+            }
+            if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1, ((posPlayer.x - pos.x) / 35), ((posPlayer.y - pos.y) / 35), spriteAttribut.rotation + 90);
+                clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
+            }
+            break;
+
+        case TypeStatus::ATTACK :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayAttack) {
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+                pat.status = TypeStatus::SEARCH;
+                if (pat.phaseCount == 0) {
+                    id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+                    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
+                }
+            }
+            vel.x = ((pat.lastPosFocus.x) - pos.x) / 10;
+            vel.y = ((pat.lastPosFocus.y) - pos.y) / 10;
+            break;
+
+        case TypeStatus::TRANSFORM :
+            if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayTransform) {
+                pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+                pat.status = TypeStatus::SEARCH;
+                spriteID = SpriteID{20, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
+                spriteAttribut.rect = {0, 0, 110, 146};
                 id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
                 componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
             }
-        }
-        vel.x = ((pat.lastPosFocus.x) - pos.x) / 10;
-        vel.y = ((pat.lastPosFocus.y) - pos.y) / 10;
-        break;
+            checkPlayer = false;
+            spriteAttribut.rotation += (this->_clock->getElapsedTime().asSeconds() - pat.statusTime) * 10;
+            vel.x = 0;
+            vel.y = 0;
+            break;
 
-    case TypeStatus::TRANSFORM:
-        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayTransform) {
-            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+        default :
             pat.status = TypeStatus::SEARCH;
-            spriteID = SpriteID{20, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
-            spriteAttribut.rect = {0, 0, 110, 146};
-            id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-            componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
-        }
-        checkPlayer = false;
-        spriteAttribut.rotation += (this->_clock->getElapsedTime().asSeconds() - pat.statusTime) * 10;
-        vel.x = 0;
-        vel.y = 0;
-        break;
-
-    default:
-        pat.status = TypeStatus::SEARCH;
-        pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-        break;
+            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            break;
     }
 
     // Rotation Part
@@ -260,7 +260,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
         if ((masks[i].value() & cooldownEnemy) == cooldownEnemy) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, 1);
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, 1, -10, 0, 180);
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }

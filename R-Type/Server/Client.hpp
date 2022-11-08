@@ -12,6 +12,7 @@ namespace eng
     class Client : public std::enable_shared_from_this<Client>
     {
         private:
+            std::size_t _id;
             int _vesselId = -1;
             bool _isAlive = -1;
             int _roomId = -1;
@@ -19,7 +20,7 @@ namespace eng
             std::shared_ptr<Connection> _connection;
 
         public:
-            Client(std::shared_ptr<Connection> connection);
+            Client(std::shared_ptr<Connection> connection, std::size_t id);
             ~Client() = default;
 
             int getVesselId() const;

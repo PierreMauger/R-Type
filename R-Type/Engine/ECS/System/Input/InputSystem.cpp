@@ -26,10 +26,10 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
         CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(id);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 2);
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 2, 10, 0, 0);
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) {
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1);
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1, 10, 0, 0);
         }
         sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = vel.baseSpeedX * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = vel.baseSpeedX : vel.x = 0);
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = vel.baseSpeedY * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = vel.baseSpeedY : vel.y = 0);

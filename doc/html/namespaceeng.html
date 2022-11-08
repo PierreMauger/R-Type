@@ -83,6 +83,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ClientNetwork.html">ClientNetwork</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The client network handling functions.  <a href="classeng_1_1ClientNetwork.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html">GameSerializer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html">MenuSerializer</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The menu serializer.  <a href="classeng_1_1MenuSerializer.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The engine's <a class="el" href="classeng_1_1ComponentManager.html" title="The engine&#39;s ComponentManager.">ComponentManager</a>.  <a href="classeng_1_1ComponentManager.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,11 +177,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Connection.html">Connection</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The network's connection.  <a href="classeng_1_1Connection.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html">GameSerializer</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html">MenuSerializer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The menu serializer.  <a href="classeng_1_1MenuSerializer.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Network.html">Network</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The engine's network.  <a href="classeng_1_1Network.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,17 +189,67 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Server.html">Server</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The engine of the game containing the <a class="el" href="classeng_1_1ECS.html" title="The Engine&#39;s ECS (Entity Component System, see the readme for more infos).">ECS</a>, the graphics and the loader.  <a href="classeng_1_1Server.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ServerGameSerializer.html">ServerGameSerializer</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ServerMenuSerializer.html">ServerMenuSerializer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The menu serializer.  <a href="classeng_1_1ServerMenuSerializer.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ServerNetwork.html">ServerNetwork</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The server network handling functions.  <a href="classeng_1_1ServerNetwork.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
+<tr class="memitem:acd6b477f4babe5b62316b045c1f28f0c"><td class="memItemLeft" align="right" valign="top"><a id="acd6b477f4babe5b62316b045c1f28f0c"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#acd6b477f4babe5b62316b045c1f28f0c">GamePacketType</a> { <br />
+&#160;&#160;<b>ENTITY</b>
+, <b>INPUT</b>
+, <b>UNKNOWN_GAME</b>
+, <b>ENTITY</b>
+, <br />
+&#160;&#160;<b>INPUT</b>
+, <b>UNKNOWN_GAME</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:acd6b477f4babe5b62316b045c1f28f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The game packet type enum. <br /></td></tr>
+<tr class="separator:acd6b477f4babe5b62316b045c1f28f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="memItemLeft" align="right" valign="top"><a id="accbb8d9690e9e23ef9c654fd28ebc7fe"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#accbb8d9690e9e23ef9c654fd28ebc7fe">MenuPacketType</a> { <br />
+&#160;&#160;<b>ROOM_EDIT</b>
+, <b>ROOM_ACTION</b>
+, <b>EVENT</b>
+, <b>UNKNOWN_MENU</b>
+, <br />
+&#160;&#160;<b>ROOM_EDIT</b>
+, <b>ROOM_ACTION</b>
+, <b>EVENT</b>
+, <b>UNKNOWN_MENU</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The menu packet type enum. <br /></td></tr>
+<tr class="separator:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacb09346091a4338e64924a813c9ef78"><td class="memItemLeft" align="right" valign="top"><a id="aacb09346091a4338e64924a813c9ef78"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#aacb09346091a4338e64924a813c9ef78">RoomAction</a> { <br />
+&#160;&#160;<b>JOIN</b>
+, <b>LEAVE</b>
+, <b>READY</b>
+, <b>UNREADY</b>
+, <br />
+&#160;&#160;<b>UNKNOWN_ACTION</b>
+, <b>JOIN</b>
+, <b>LEAVE</b>
+, <b>READY</b>
+, <br />
+&#160;&#160;<b>UNREADY</b>
+, <b>UNKNOWN_ACTION</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:aacb09346091a4338e64924a813c9ef78"><td class="mdescLeft">&#160;</td><td class="mdescRight">The room action enum. <br /></td></tr>
+<tr class="separator:aacb09346091a4338e64924a813c9ef78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="memItemLeft" align="right" valign="top"><a id="a8b0eb6c4e2fcc687bb01f8de9979e25b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#a8b0eb6c4e2fcc687bb01f8de9979e25b">MenuEvent</a> { <br />
+&#160;&#160;<b>GAME_START</b>
+, <b>GAME_END</b>
+, <b>UNKNOWN_EVENT</b>
+, <b>GAME_START</b>
+, <br />
+&#160;&#160;<b>GAME_END</b>
+, <b>UNKNOWN_EVENT</b>
+<br />
+ }</td></tr>
+<tr class="memdesc:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The menu event enum. <br /></td></tr>
+<tr class="separator:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae58dbf00a8a6d1168e886cb3aabd5e8c"><td class="memItemLeft" align="right" valign="top"><a id="ae58dbf00a8a6d1168e886cb3aabd5e8c"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#ae58dbf00a8a6d1168e886cb3aabd5e8c">InfoComp</a> { <br />
 &#160;&#160;<b>POS</b> = 1 &lt;&lt; 0
 , <b>VEL</b> = 1 &lt;&lt; 1
@@ -228,46 +278,68 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<b>SPRITEAT</b> = 1 &lt;&lt; 20
 , <b>BUTTON</b> = 1 &lt;&lt; 21
+, <b>SHIELD</b> = 1 &lt;&lt; 22
 <br />
  }</td></tr>
 <tr class="memdesc:ae58dbf00a8a6d1168e886cb3aabd5e8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Masks of the components. <br /></td></tr>
 <tr class="separator:ae58dbf00a8a6d1168e886cb3aabd5e8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd6b477f4babe5b62316b045c1f28f0c"><td class="memItemLeft" align="right" valign="top"><a id="acd6b477f4babe5b62316b045c1f28f0c"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#acd6b477f4babe5b62316b045c1f28f0c">GamePacketType</a> { <b>ENTITY</b>
-, <b>INPUT</b>
-, <b>UNKNOWN_GAME</b>
- }</td></tr>
-<tr class="memdesc:acd6b477f4babe5b62316b045c1f28f0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The game packet type enum. <br /></td></tr>
-<tr class="separator:acd6b477f4babe5b62316b045c1f28f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="memItemLeft" align="right" valign="top"><a id="accbb8d9690e9e23ef9c654fd28ebc7fe"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#accbb8d9690e9e23ef9c654fd28ebc7fe">MenuPacketType</a> { <b>ROOM_EDIT</b>
-, <b>ROOM_ACTION</b>
-, <b>EVENT</b>
-, <b>UNKNOWN_MENU</b>
- }</td></tr>
-<tr class="memdesc:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">The menu packet type enum. <br /></td></tr>
-<tr class="separator:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacb09346091a4338e64924a813c9ef78"><td class="memItemLeft" align="right" valign="top"><a id="aacb09346091a4338e64924a813c9ef78"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#aacb09346091a4338e64924a813c9ef78">RoomAction</a> { <br />
-&#160;&#160;<b>JOIN</b>
-, <b>LEAVE</b>
-, <b>READY</b>
-, <b>UNREADY</b>
-, <br />
-&#160;&#160;<b>UNKNOWN_ACTION</b>
-<br />
- }</td></tr>
-<tr class="memdesc:aacb09346091a4338e64924a813c9ef78"><td class="mdescLeft">&#160;</td><td class="mdescRight">The room action enum. <br /></td></tr>
-<tr class="separator:aacb09346091a4338e64924a813c9ef78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="memItemLeft" align="right" valign="top"><a id="a8b0eb6c4e2fcc687bb01f8de9979e25b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#a8b0eb6c4e2fcc687bb01f8de9979e25b">MenuEvent</a> { <b>GAME_START</b>
-, <b>GAME_END</b>
-, <b>UNKNOWN_EVENT</b>
- }</td></tr>
-<tr class="memdesc:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The menu event enum. <br /></td></tr>
-<tr class="separator:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a8e3f390a5b8c1d4200d0d11b4f3574"><td class="memItemLeft" align="right" valign="top"><a id="a9a8e3f390a5b8c1d4200d0d11b4f3574"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> { <b>DESTROY</b>
 , <b>UPDATE</b>
 , <b>UNKNOWN</b>
  }</td></tr>
 <tr class="memdesc:a9a8e3f390a5b8c1d4200d0d11b4f3574"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of operation to perform. <br /></td></tr>
 <tr class="separator:a9a8e3f390a5b8c1d4200d0d11b4f3574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd6b477f4babe5b62316b045c1f28f0c"><td class="memItemLeft" align="right" valign="top"><a id="acd6b477f4babe5b62316b045c1f28f0c"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>GamePacketType</b> { <br />
+&#160;&#160;<b>ENTITY</b>
+, <b>INPUT</b>
+, <b>UNKNOWN_GAME</b>
+, <b>ENTITY</b>
+, <br />
+&#160;&#160;<b>INPUT</b>
+, <b>UNKNOWN_GAME</b>
+<br />
+ }</td></tr>
+<tr class="separator:acd6b477f4babe5b62316b045c1f28f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="memItemLeft" align="right" valign="top"><a id="accbb8d9690e9e23ef9c654fd28ebc7fe"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>MenuPacketType</b> { <br />
+&#160;&#160;<b>ROOM_EDIT</b>
+, <b>ROOM_ACTION</b>
+, <b>EVENT</b>
+, <b>UNKNOWN_MENU</b>
+, <br />
+&#160;&#160;<b>ROOM_EDIT</b>
+, <b>ROOM_ACTION</b>
+, <b>EVENT</b>
+, <b>UNKNOWN_MENU</b>
+<br />
+ }</td></tr>
+<tr class="separator:accbb8d9690e9e23ef9c654fd28ebc7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacb09346091a4338e64924a813c9ef78"><td class="memItemLeft" align="right" valign="top"><a id="aacb09346091a4338e64924a813c9ef78"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>RoomAction</b> { <br />
+&#160;&#160;<b>JOIN</b>
+, <b>LEAVE</b>
+, <b>READY</b>
+, <b>UNREADY</b>
+, <br />
+&#160;&#160;<b>UNKNOWN_ACTION</b>
+, <b>JOIN</b>
+, <b>LEAVE</b>
+, <b>READY</b>
+, <br />
+&#160;&#160;<b>UNREADY</b>
+, <b>UNKNOWN_ACTION</b>
+<br />
+ }</td></tr>
+<tr class="separator:aacb09346091a4338e64924a813c9ef78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="memItemLeft" align="right" valign="top"><a id="a8b0eb6c4e2fcc687bb01f8de9979e25b"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>MenuEvent</b> { <br />
+&#160;&#160;<b>GAME_START</b>
+, <b>GAME_END</b>
+, <b>UNKNOWN_EVENT</b>
+, <b>GAME_START</b>
+, <br />
+&#160;&#160;<b>GAME_END</b>
+, <b>UNKNOWN_EVENT</b>
+<br />
+ }</td></tr>
+<tr class="separator:a8b0eb6c4e2fcc687bb01f8de9979e25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classeng_1_1Engine.html" title="The engine of the game containing the ECS, the graphics and the loader.">Engine</a> namespace. </p>

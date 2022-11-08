@@ -19,6 +19,16 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
         Size &size = componentManager.getSingleComponent<Size>(id);
         Position &pos = componentManager.getSingleComponent<Position>(id);
         std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE | InfoComp::SPRITEAT), componentManager);
+        if (drop == 2) {
+            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{22, Priority::MEDIUM, 0, 14, false, false, 0, 0.05, 32, 0});
+            componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 32, 32}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
+            componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2});
+            componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
+            componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{32 * sizeBonus.x / _screenSize->x * _window->getSize().x, 32 * sizeBonus.y / _screenSize->y * _window->getSize().y});
+            addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+            componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{0, false, false});
+            return;
+        }
         if (drop == 0)
             componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{8, Priority::MEDIUM});
         if (drop == 1)
@@ -83,6 +93,14 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
                 componentManager.getSingleComponent<Controllable>(i).kill = 0;
                 componentManager.getSingleComponent<Controllable>(i).death += 1;
                 componentManager.getSingleComponent<SpriteAttribut>(i).rotation = 0;
+                for (std::size_t j = 0; j < mask.size(); j++) {
+                    if (!mask[j].has_value() || (mask[j].value() & InfoComp::SHIELD) != InfoComp::SHIELD)
+                        continue;
+                    if (componentManager.getSingleComponent<Parent>(j).id == i) {
+                        componentManager.removeAllComponents(j);
+                        entityManager.removeMask(j);
+                    }
+                }
             } else {
                 componentManager.removeAllComponents(i);
                 entityManager.removeMask(i);
@@ -98,6 +116,8 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
     auto &masks = entityManager.getMasks();
     std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS | InfoComp::DROP);
     std::size_t physicCont = (InfoComp::CONTROLLABLE | InfoComp::POS | InfoComp::SIZE);
+    std::size_t physicShield = (InfoComp::PARENT | InfoComp::SHIELD);
+    bool checkShield = false;
 
     if (!masks[i].has_value() || (masks[i].value() & physicCont) != physicCont)
         return false;
@@ -115,6 +135,26 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                 componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 > 0.1 ? componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 : 0;
             if (drop.id == 1)
                 componentManager.getSingleComponent<CooldownShoot>(i).size < 3 ? componentManager.getSingleComponent<CooldownShoot>(i).size += 1 : 0;
+            if (drop.id == 2) {
+                for (std::size_t k = 0; k < masks.size(); k++) {
+                    if (!masks[k].has_value() || ((masks[k].value() & physicShield) != physicShield))
+                        continue;
+                    if (componentManager.getSingleComponent<Parent>(k).id == i) {
+                        checkShield = true;
+                        componentManager.getSingleComponent<Shield>(k).life = componentManager.getSingleComponent<Shield>(k).defaultLife;
+                        break;
+                    }
+                }
+                if (!checkShield) {
+                    std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD), componentManager);
+                    componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{21, Priority::MEDIUM});
+                    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {size.x / _screenSize->x * this->_window->getSize().x, size.y / _screenSize->y * this->_window->getSize().y}, {700 / 2, 440 / 2}});
+                    componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
+                    componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{i});
+                    componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});
+                    componentManager.getComponent(typeid(SyncID)).emplaceData(idShield, SyncID{this->_syncId ? *(this->_syncId.get()) : 0});
+                }
+            }
             return true;
         }
     }
@@ -184,6 +224,9 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
     std::size_t physicEne = (InfoComp::ENEMY);
     std::size_t physicDis = (InfoComp::DIS);
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
+    std::size_t physicDrop = (InfoComp::DROP);
+    std::size_t physicShield = (InfoComp::PARENT | InfoComp::SHIELD);
+    bool checkShield = false;
 
     if (masks[i].has_value() && (masks[i].value() & physicProj) == physicProj) {
         Parent &par = componentManager.getSingleComponent<Parent>(i);
@@ -198,7 +241,45 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                     ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
                 if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
-                    checkFireballDamage(i, j, componentManager, entityManager);
+                    Life &hp = componentManager.getSingleComponent<Life>(j);
+                    Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
+                    if ((masks[par.id].value() & physicCon) == physicCon)
+                        componentManager.getSingleComponent<Controllable>(par.id).kill++;
+                    for (std::size_t k = 0; k < masks.size(); k++) {
+                        if (!masks[k].has_value() || ((masks[k].value() & physicShield) != physicShield))
+                            continue;
+                        if (componentManager.getSingleComponent<Parent>(k).id == j) {
+                            Shield &shield = componentManager.getSingleComponent<Shield>(k);
+                            if (proj.damage >= shield.life) {
+                                hp.life -= proj.damage - shield.life;
+                                shield.life = 0;
+                            } else {
+                                shield.life -= proj.damage;
+                            }
+                            checkShield = true;
+                            break;
+                        }
+                    }
+                    if (!checkShield) {
+                        if (proj.damage >= hp.life) {
+                            if ((masks[j].value() & physicDrop) == physicDrop)
+                                this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
+                            hp.life = 0;
+                            if (masks[j].has_value() && (masks[j].value() & physicDis) == physicDis)
+                                componentManager.getSingleComponent<Disappearance>(j).dis = true;
+                            else {
+                                componentManager.removeAllComponents(j);
+                                entityManager.removeMask(j);
+                            }
+                        } else
+                            hp.life -= proj.damage;
+                    }
+                    if (masks[i].has_value() && (masks[i].value() & physicDis) == physicDis)
+                        componentManager.getSingleComponent<Disappearance>(i).dis = true;
+                    else {
+                        componentManager.removeAllComponents(i);
+                        entityManager.removeMask(i);
+                    }
                     return true;
                 }
             }

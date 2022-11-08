@@ -37,6 +37,7 @@ namespace eng
             std::thread _threadContext;
 
             std::time_t _time;
+            std::size_t _id;
 
         public:
             /**
@@ -112,6 +113,13 @@ namespace eng
              * @return The time
              */
             std::time_t getTime();
+
+            /**
+             * @brief Get the id
+             * @fn std::size_t getId()
+             * @return The id
+             */
+            std::size_t getId();
     };
 } // namespace eng
 
