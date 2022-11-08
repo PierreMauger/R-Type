@@ -100,11 +100,11 @@ void Server::manageEnemy()
 
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
         CthulhuPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 200);
+        this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 120);
     } 
-    // else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        // EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        // this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
+    // if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
+    //     EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    //     this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
     // }
 }
 

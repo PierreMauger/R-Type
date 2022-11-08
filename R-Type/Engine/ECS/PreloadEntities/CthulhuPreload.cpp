@@ -19,8 +19,8 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{96 * size.x / screenSize->x * windowsSize.x, 96 * size.y / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
-    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{static_cast<std::size_t>(randY) % 2});
-    componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 2});
+    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{static_cast<std::size_t>(randY) % 3});
+    componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1.5});
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR), componentManager);
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});

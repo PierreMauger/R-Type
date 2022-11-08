@@ -80,12 +80,13 @@ void RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
             if ((masks[idPar].value() & shieldChild) == shieldChild) {
                 Shield &shield = componentManager.getSingleComponent<Shield>(i);
                 if (shield.life > 0) {
+                    SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
                     Position &pos = componentManager.getSingleComponent<Position>(idPar);
-                    Size &size = componentManager.getSingleComponent<Size>(idPar);
-                    // spriteRef.setScale(shield.life * size.x / shield.defaultLife, shield.life * size.y / shield.defaultLife);
-                    spriteRef.setPosition(pos.x, pos.y);
+                    spriteRef.setOrigin(spriteAt.offset);
+                    spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
                     spriteRef.setScale(scal, scal);
                     spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
+                    spriteRef.setPosition(pos.x + (64 * scal) * 2, pos.y + (28 * scal));
                 } else {
                     componentManager.removeAllComponents(i);
                     entityManager.removeMask(i);
