@@ -76,11 +76,17 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
             vel.y = 0;
             dis.dis = false;
             if (mask[i].has_value() && (mask[i].value() & InfoComp::CONTROLLABLE) == InfoComp::CONTROLLABLE) {
-                Controllable &con = componentManager.getSingleComponent<Controllable>(i);
-                VesselPreload::preloadScore(entityManager, componentManager, con.kill, con.death + 1, this->_syncId ? *(this->_syncId.get()) : 0, this->_window->getSize(), this->_screenSize);
+                componentManager.getSingleComponent<Appearance>(i).app = true;
+                componentManager.getSingleComponent<Appearance>(i).end = 100 / _screenSize->y * _window->getSize().y;
+                componentManager.getSingleComponent<Position>(i).x = 10;
+                componentManager.getSingleComponent<Position>(i).y = 28 / _screenSize->y * _window->getSize().y * -1;
+                componentManager.getSingleComponent<Controllable>(i).kill = 0;
+                componentManager.getSingleComponent<Controllable>(i).death += 1;
+                componentManager.getSingleComponent<SpriteAttribut>(i).rotation = 0;
+            } else {
+                componentManager.removeAllComponents(i);
+                entityManager.removeMask(i);
             }
-            componentManager.removeAllComponents(i);
-            entityManager.removeMask(i);
         }
         return true;
     }

@@ -28,6 +28,7 @@ namespace eng
     {
         private:
             std::vector<sf::Texture> _textures;
+            std::vector<sf::Texture *> _saveTextures;
             std::vector<sf::Sprite> _sprites;
             std::vector<sf::SoundBuffer> _sounds;
             std::vector<eng::Level> _level;
@@ -42,7 +43,7 @@ namespace eng
              * @brief Loader destructor.
              * @fn ~Loader()
              */
-            ~Loader() = default;
+            ~Loader();
 
             /**
              * @brief Get a reference to the vector of sprite textures.
