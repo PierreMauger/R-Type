@@ -2,12 +2,15 @@
 
 using namespace eng;
 
-ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
+ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
     this->_event = graphic.getEvent();
     this->_sceneId = graphic.getSceneId();
+
+    this->_port = port;
+    this->_ip = ip;
 
     entityManager.addMaskCategory(this->_buttonTag);
 }
@@ -35,11 +38,17 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     button.selected = true;
                     changed = id;
                 } else if (button.type == ButtonType::CONNECT) {
+                    if (*this->_sceneId != 0)
+                        continue;
                     Parent parent = componentManager.getSingleComponent<Parent>(id);
                     std::string text = componentManager.getSingleComponent<Text>(parent.id).str;
                     std::string text2 = componentManager.getSingleComponent<Text>(parent.id2).str;
-                    this->_sceneId = std::make_shared<std::size_t>(*this->_sceneId + 1);
-                    break;
+                    *this->_sceneId = *this->_sceneId + 1;
+                    *this->_ip = text;
+                    if (text2 != "")
+                        *this->_port = std::stoi(text2);
+                    else
+                        *this->_port = 0;
                 }
             }
             if (changed) {

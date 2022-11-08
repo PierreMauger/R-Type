@@ -21,7 +21,7 @@ void MenuPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{10, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 265, 116}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 3 - 265 / 2), static_cast<float>(windowsSize.y / 2 - 116 / 2), 0});
-    componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::TEXTZONE, false, 15, true});
+    componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::TEXTZONE, false, 15});
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"", false, 0, {static_cast<float>(windowsSize.x / 3), static_cast<float>(windowsSize.y / 2)}});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265, 116});
 
@@ -33,13 +33,12 @@ void MenuPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{10, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 265, 116}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 3 - 265 / 2), static_cast<float>(windowsSize.y / 3 - 116 / 2), 0});
-    componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::TEXTZONE, false, 4, false});
+    componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::TEXTZONE, false, 4});
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"", false, 0, {static_cast<float>(windowsSize.x / 3), static_cast<float>(windowsSize.y / 3)}});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265, 116});
 
     id = entityManager.addMask(InfoComp::TEXT, componentManager);
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"PORT", false, 0, {static_cast<float>(windowsSize.x / 3), static_cast<float>(windowsSize.y / 3 - 116 / 2)}});
-
 
     id = entityManager.addMask((mask | InfoComp::PARENT), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{10, Priority::MEDIUM});

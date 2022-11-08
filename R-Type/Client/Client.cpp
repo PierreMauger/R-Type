@@ -2,8 +2,10 @@
 
 using namespace eng;
 
-Client::Client(std::string ip, uint16_t portTcp) : _network(ip, portTcp)
+Client::Client() : _network()
 {
+    this->_ip = std::make_shared<std::string>("");
+    this->_port = std::make_shared<std::size_t>(0);
     this->initSystems();
     this->initComponents();
     this->initEntities();
@@ -20,7 +22,7 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    // systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, nullptr));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
@@ -30,6 +32,7 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, entityManager));
 }
 
 void Client::initComponents()
@@ -98,9 +101,14 @@ void Client::updateNetwork()
 {
     Graphic &graphic = this->_engine.getGraphic();
 
-    if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
-        return;
+    if (*this->_ip != "" && *this->_port != 0) {
+        this->_network.start(*this->_ip, *this->_port);
+        *this->_ip = "";
+        *this->_port = 0;
     }
+
+    if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
+        return;
     this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->syncUdpNetwork();
     this->syncTcpNetwork();
@@ -120,13 +128,16 @@ void Client::mainLoop()
 #endif
             if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 graphic.getWindow()->close();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
+                graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen - graphic.isFullscreen());
+                graphic.getWindow()->setFramerateLimit(60);
+                graphic.setFullscreen(!graphic.isFullscreen());
+            }
             if (graphic.getEvent()->type == sf::Event::Resized) {
                 this->_engine.updateSizeWindow();
                 graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
             }
         }
-        if (!this->_network.isConnected())
-            graphic.getWindow()->close();
         this->updateNetwork();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
