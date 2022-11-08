@@ -77,50 +77,59 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define CLIENTNETWORK_HPP_</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Connection_8hpp.html">Connection.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classeng_1_1ClientNetwork.html">   25</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1ClientNetwork.html">ClientNetwork</a></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keywordtype">void</span> initClientNetwork();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keywordtype">void</span> open();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            boost::asio::io_context _ioContext;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            _B_ASIO_TCP::resolver _resolver;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            boost::shared_ptr&lt;Connection&gt; _connection;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <a class="code" href="classQueue.html">_QUEUE_TYPE</a> _dataIn;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::thread _threadContext;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="classeng_1_1ClientNetwork.html#a418df644c58d89008ad627553cee64e6">ClientNetwork</a>(std::string ip, uint16_t portTcp);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="classeng_1_1ClientNetwork.html#a0b3d73544cb0b2758b122731360cbd3e">~ClientNetwork</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#a3048ab4fcabe30f5c905632e58a7ad02">run</a>();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#a79ccd5b458fe498556e81bc0b97a5b83">stop</a>();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classeng_1_1ClientNetwork.html#aa2544d31405acf5e87c817f3b9245224">isConnected</a>();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#aa94c3657d8232764967996bb8e448086">tcpMsg</a>(_STORAGE_DATA data);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#ad02279551e9d6c12f9bcf00006b11548">udpMsg</a>(_STORAGE_DATA data);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <a class="code" href="classQueue.html">_QUEUE_TYPE</a> &amp;<a class="code" href="classeng_1_1ClientNetwork.html#a7b849a2daa061f27341086fb99a5ced1">getQueueIn</a>();</div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classeng_1_1ClientNetwork.html#ae397e3975cbd54f1358fe82f6b73ff3c">   92</a></span>&#160;            <a class="code" href="classQueue.html">_QUEUE_TYPE</a> &amp;<a class="code" href="classeng_1_1ClientNetwork.html#ae397e3975cbd54f1358fe82f6b73ff3c">getQueueOut</a>();</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    };</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;} <span class="comment">// namespace eng</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !CLIENTNETWORK_HPP_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classeng_1_1ClientNetwork.html">   26</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1ClientNetwork.html">ClientNetwork</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keywordtype">void</span> initClientNetwork();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordtype">void</span> open();</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            boost::asio::io_context _ioContext;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            _B_ASIO_TCP::resolver _resolver;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            std::shared_ptr&lt;_QUEUE_TYPE&gt; _dataInTcp;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::shared_ptr&lt;_QUEUE_TYPE&gt; _dataInUdp;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            std::shared_ptr&lt;Connection&gt; _connection;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            std::thread _threadContext;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            std::time_t _time;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="classeng_1_1ClientNetwork.html#a418df644c58d89008ad627553cee64e6">ClientNetwork</a>(std::string ip, uint16_t portTcp);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <a class="code" href="classeng_1_1ClientNetwork.html#a0b3d73544cb0b2758b122731360cbd3e">~ClientNetwork</a>();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#a3048ab4fcabe30f5c905632e58a7ad02">run</a>();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#a79ccd5b458fe498556e81bc0b97a5b83">stop</a>();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classeng_1_1ClientNetwork.html#aa2544d31405acf5e87c817f3b9245224">isConnected</a>();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#aa94c3657d8232764967996bb8e448086">tcpMsg</a>(_STORAGE_DATA data);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClientNetwork.html#ad02279551e9d6c12f9bcf00006b11548">udpMsg</a>(_STORAGE_DATA data);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <a class="code" href="classQueue.html">_QUEUE_TYPE</a> &amp;<a class="code" href="classeng_1_1ClientNetwork.html#ab1b103da424fb4591d4e4f55c864fdc0">getQueueInTcp</a>();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <a class="code" href="classQueue.html">_QUEUE_TYPE</a> &amp;<a class="code" href="classeng_1_1ClientNetwork.html#a8cd1da2560be360524c03659f1683036">getQueueInUdp</a>();</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordtype">void</span> updateConnection();</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            std::time_t <a class="code" href="classeng_1_1ClientNetwork.html#ae065b7689ddfbb1a306b43743e91ef87">getTime</a>();</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    };</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;} <span class="comment">// namespace eng</span></div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* !CLIENTNETWORK_HPP_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="aConnection_8hpp_html"><div class="ttname"><a href="Connection_8hpp.html">Connection.hpp</a></div><div class="ttdoc">The network's connection.</div></div>
-<div class="ttc" id="aclassQueue_html"><div class="ttname"><a href="classQueue.html">Queue&lt; _STORAGE_DATA &gt;</a></div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html"><div class="ttname"><a href="classeng_1_1ClientNetwork.html">eng::ClientNetwork</a></div><div class="ttdoc">The client network handling functions.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.hpp:26</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a0b3d73544cb0b2758b122731360cbd3e"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a0b3d73544cb0b2758b122731360cbd3e">eng::ClientNetwork::~ClientNetwork</a></div><div class="ttdeci">~ClientNetwork()</div><div class="ttdoc">ClientNetwork destructor.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:13</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a3048ab4fcabe30f5c905632e58a7ad02"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a3048ab4fcabe30f5c905632e58a7ad02">eng::ClientNetwork::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Run the client network.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:34</div></div>
+<div class="ttc" id="aclassQueue_html"><div class="ttname"><a href="classQueue.html">Queue</a></div><div class="ttdoc">The network queue.</div><div class="ttdef"><b>Definition:</b> Queue.hpp:20</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html"><div class="ttname"><a href="classeng_1_1ClientNetwork.html">eng::ClientNetwork</a></div><div class="ttdoc">The client network handling functions.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.hpp:27</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a0b3d73544cb0b2758b122731360cbd3e"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a0b3d73544cb0b2758b122731360cbd3e">eng::ClientNetwork::~ClientNetwork</a></div><div class="ttdeci">~ClientNetwork()</div><div class="ttdoc">ClientNetwork destructor.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:14</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a3048ab4fcabe30f5c905632e58a7ad02"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a3048ab4fcabe30f5c905632e58a7ad02">eng::ClientNetwork::run</a></div><div class="ttdeci">void run()</div><div class="ttdoc">Run the client network.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:37</div></div>
 <div class="ttc" id="aclasseng_1_1ClientNetwork_html_a418df644c58d89008ad627553cee64e6"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a418df644c58d89008ad627553cee64e6">eng::ClientNetwork::ClientNetwork</a></div><div class="ttdeci">ClientNetwork(std::string ip, uint16_t portTcp)</div><div class="ttdoc">ClientNetwork constructor.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:5</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a79ccd5b458fe498556e81bc0b97a5b83"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a79ccd5b458fe498556e81bc0b97a5b83">eng::ClientNetwork::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stop the client network.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:41</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a7b849a2daa061f27341086fb99a5ced1"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a7b849a2daa061f27341086fb99a5ced1">eng::ClientNetwork::getQueueIn</a></div><div class="ttdeci">_QUEUE_TYPE &amp; getQueueIn()</div><div class="ttdoc">Get the input queue.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:68</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_aa2544d31405acf5e87c817f3b9245224"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#aa2544d31405acf5e87c817f3b9245224">eng::ClientNetwork::isConnected</a></div><div class="ttdeci">bool isConnected()</div><div class="ttdoc">Check if the client is connected.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:53</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_aa94c3657d8232764967996bb8e448086"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#aa94c3657d8232764967996bb8e448086">eng::ClientNetwork::tcpMsg</a></div><div class="ttdeci">void tcpMsg(_STORAGE_DATA data)</div><div class="ttdoc">Send a tcp message to the server.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:58</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_ad02279551e9d6c12f9bcf00006b11548"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#ad02279551e9d6c12f9bcf00006b11548">eng::ClientNetwork::udpMsg</a></div><div class="ttdeci">void udpMsg(_STORAGE_DATA data)</div><div class="ttdoc">Send an udp message to the server.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:63</div></div>
-<div class="ttc" id="aclasseng_1_1ClientNetwork_html_ae397e3975cbd54f1358fe82f6b73ff3c"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#ae397e3975cbd54f1358fe82f6b73ff3c">eng::ClientNetwork::getQueueOut</a></div><div class="ttdeci">_QUEUE_TYPE &amp; getQueueOut()</div><div class="ttdoc">Get the output queue.</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a79ccd5b458fe498556e81bc0b97a5b83"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a79ccd5b458fe498556e81bc0b97a5b83">eng::ClientNetwork::stop</a></div><div class="ttdeci">void stop()</div><div class="ttdoc">Stop the client network.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:42</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_a8cd1da2560be360524c03659f1683036"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#a8cd1da2560be360524c03659f1683036">eng::ClientNetwork::getQueueInUdp</a></div><div class="ttdeci">_QUEUE_TYPE &amp; getQueueInUdp()</div><div class="ttdoc">Get the input queue.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:74</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_aa2544d31405acf5e87c817f3b9245224"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#aa2544d31405acf5e87c817f3b9245224">eng::ClientNetwork::isConnected</a></div><div class="ttdeci">bool isConnected()</div><div class="ttdoc">Check if the client is connected.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:54</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_aa94c3657d8232764967996bb8e448086"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#aa94c3657d8232764967996bb8e448086">eng::ClientNetwork::tcpMsg</a></div><div class="ttdeci">void tcpMsg(_STORAGE_DATA data)</div><div class="ttdoc">Send a tcp message to the server.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:59</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_ab1b103da424fb4591d4e4f55c864fdc0"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#ab1b103da424fb4591d4e4f55c864fdc0">eng::ClientNetwork::getQueueInTcp</a></div><div class="ttdeci">_QUEUE_TYPE &amp; getQueueInTcp()</div><div class="ttdoc">Get the input queue.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:69</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_ad02279551e9d6c12f9bcf00006b11548"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#ad02279551e9d6c12f9bcf00006b11548">eng::ClientNetwork::udpMsg</a></div><div class="ttdeci">void udpMsg(_STORAGE_DATA data)</div><div class="ttdoc">Send an udp message to the server.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:64</div></div>
+<div class="ttc" id="aclasseng_1_1ClientNetwork_html_ae065b7689ddfbb1a306b43743e91ef87"><div class="ttname"><a href="classeng_1_1ClientNetwork.html#ae065b7689ddfbb1a306b43743e91ef87">eng::ClientNetwork::getTime</a></div><div class="ttdeci">std::time_t getTime()</div><div class="ttdoc">Get the time.</div><div class="ttdef"><b>Definition:</b> ClientNetwork.cpp:84</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
