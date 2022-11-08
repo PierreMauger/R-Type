@@ -104,9 +104,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a1062f9c86d4029ba308883ee3c12956e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ProjectilePreload.html#a1062f9c86d4029ba308883ee3c12956e">preload</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="memdesc:a1062f9c86d4029ba308883ee3c12956e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preloads the projectile.  <a href="classeng_1_1ProjectilePreload.html#a1062f9c86d4029ba308883ee3c12956e">More...</a><br /></td></tr>
 <tr class="separator:a1062f9c86d4029ba308883ee3c12956e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfbba2f4e3df72f455b474b9a5742493"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ProjectilePreload.html#adfbba2f4e3df72f455b474b9a5742493">createShoot</a> (<a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, sf::Vector2u windowsSize, std::shared_ptr&lt; sf::Vector2f &gt; screenSize, std::size_t id, std::size_t damage)</td></tr>
-<tr class="memdesc:adfbba2f4e3df72f455b474b9a5742493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a shot.  <a href="classeng_1_1ProjectilePreload.html#adfbba2f4e3df72f455b474b9a5742493">More...</a><br /></td></tr>
-<tr class="separator:adfbba2f4e3df72f455b474b9a5742493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae65048a06edb35af63cdb393f6d5727f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ProjectilePreload.html#ae65048a06edb35af63cdb393f6d5727f">createShoot</a> (<a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, sf::Vector2u windowsSize, std::shared_ptr&lt; sf::Vector2f &gt; screenSize, std::size_t id, std::size_t damage, float velX, float velY, float rotation)</td></tr>
+<tr class="memdesc:ae65048a06edb35af63cdb393f6d5727f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a shot.  <a href="classeng_1_1ProjectilePreload.html#ae65048a06edb35af63cdb393f6d5727f">More...</a><br /></td></tr>
+<tr class="separator:ae65048a06edb35af63cdb393f6d5727f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classeng_1_1EntityPreload"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classeng_1_1EntityPreload')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classeng_1_1EntityPreload.html">eng::EntityPreload</a></td></tr>
 <tr class="memitem:ab60650f43fec48b38c0f639c8b5a7d68 inherit pub_static_methods_classeng_1_1EntityPreload"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1EntityPreload.html#ab60650f43fec48b38c0f639c8b5a7d68">preload</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="memdesc:ab60650f43fec48b38c0f639c8b5a7d68 inherit pub_static_methods_classeng_1_1EntityPreload"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preloads an entity.  <a href="classeng_1_1EntityPreload.html#ab60650f43fec48b38c0f639c8b5a7d68">More...</a><br /></td></tr>
@@ -118,8 +118,8 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Preloads the projectile. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="adfbba2f4e3df72f455b474b9a5742493"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfbba2f4e3df72f455b474b9a5742493">&#9670;&nbsp;</a></span>createShoot()</h2>
+<a id="ae65048a06edb35af63cdb393f6d5727f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae65048a06edb35af63cdb393f6d5727f">&#9670;&nbsp;</a></span>createShoot()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -161,7 +161,25 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>damage</em>&#160;</td>
+          <td class="paramname"><em>damage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>velX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>velY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>rotation</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
