@@ -11,14 +11,14 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
     if (!this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf"))
         throw std::runtime_error("Error: Font not found");
     this->_text.setFont(this->_font);
-    this->_text.setCharacterSize(20);
+    this->_text.setCharacterSize(35);
     this->_text.setFillColor(sf::Color::White);
 
     entityManager.addMaskCategory(InfoComp::TEXT);
     entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
 }
 
-void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
 
@@ -39,11 +39,13 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
-void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
@@ -63,8 +65,10 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
@@ -83,7 +87,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Sprite> stockButton;
 
     for (auto id : entityManager.getMaskCategory(renderText)) {
-        this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
+        this->_text.setCharacterSize(35 / this->_screenSize->x * this->_window->getSize().x);
         if (componentManager.getSingleComponent<Text>(id).hasValue)
             this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
         else {
@@ -96,13 +100,17 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     for (auto id : entityManager.getMaskCategory(render)) {
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
+
         sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
         spriteRef.setPosition(pos.x, pos.y);
         if (masks[id].has_value() && (masks[id].value() & renderAnim) == renderAnim) {
-            spriteRef.setTextureRect(static_cast<sf::IntRect>(componentManager.getSingleComponent<SpriteAttribut>(id).rect));
-            spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(id).rotation);
-            spriteRef.setColor(componentManager.getSingleComponent<SpriteAttribut>(id).color);
-            spriteRef.setScale(componentManager.getSingleComponent<SpriteAttribut>(id).scale);
+            SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
+            spriteRef.setTextureRect(static_cast<sf::IntRect>(spriteAt.rect));
+            spriteRef.setRotation(spriteAt.rotation);
+            spriteRef.setColor(spriteAt.color);
+            spriteRef.setScale(spriteAt.scale);
+            spriteRef.setOrigin(spriteAt.offset);
+            spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
         }
         if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown)
             displayCooldownBar(componentManager, entityManager, spriteRef, id);

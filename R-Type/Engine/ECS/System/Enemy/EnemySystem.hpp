@@ -14,7 +14,7 @@
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
 
-#define RADIUS 50
+#define RADIUS 225
 #define SPEED_OSC 5
 
 /**
@@ -33,6 +33,9 @@ namespace eng
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
+
+            bool setRandIdPlayer(Pattern &pat, EntityManager &entityManager);
+            void cthulhuPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager);
 
         public:
             /**

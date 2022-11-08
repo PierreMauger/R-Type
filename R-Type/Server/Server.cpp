@@ -17,9 +17,10 @@ void Server::initSystems()
     EntityManager &entityManager = this->_engine.getECS().getEntityManager();
     Graphic &graphic = this->_engine.getGraphic();
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
+    std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
     systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, std::make_shared<std::size_t>(this->_syncId)));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
@@ -27,6 +28,7 @@ void Server::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
+    systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
@@ -91,16 +93,11 @@ void Server::manageEvent()
     }
 }
 
-void Server::manageEnemy()
+void Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
 {
-    Graphic &graphic = this->_engine.getGraphic();
-
-    if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
-        BossPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId++);
-        this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 30);
-    } else if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
-        EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId++);
-        this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
+    if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
+        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
+        level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
 }
 
@@ -176,11 +173,13 @@ void Server::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
+    VesselPreload vesselPreload;
+    std::vector<Level> &level = this->_engine.getLoader().getLevels();
 
-    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId++);
+    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
-        this->manageEnemy();
+        this->manageEnemy(level[0], graphic, ecs);
         this->updateRooms();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();

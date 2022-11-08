@@ -21,7 +21,7 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
     // systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, nullptr));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG

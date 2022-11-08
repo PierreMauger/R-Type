@@ -12,10 +12,13 @@
 #include "Client.hpp"
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
+#include "Engine/ECS/PreloadEntities/CthulhuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
+#include "Engine/Level/Level.hpp"
 #include "Engine/Network/Room.hpp"
 #include "Includes.hpp"
 #include "ServerGameSerializer.hpp"
@@ -57,8 +60,8 @@ namespace eng
             void initSystems();
             void initComponents();
             void initEntities();
+            void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
             void manageEvent();
-            void manageEnemy();
             void updateRooms();
             void updateClients();
             void updateEntities();

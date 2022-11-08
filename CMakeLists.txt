@@ -111,6 +111,8 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/PreloadEntities/
     ${ENGINE_ROOT}/Graphic/
     ${ENGINE_ROOT}/Network/
+    ${ENGINE_ROOT}/Loader/
+    ${ENGINE_ROOT}/Level/
 )
 
 #fetch source files
@@ -138,6 +140,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/PreloadEntities/BackgroundMusicPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ScoreTextPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/DevourerOfGodsPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/CthulhuPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ProjectilePreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
@@ -153,6 +156,9 @@ set(ENGINE_SRC
 
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
+
+    # Loader files
+    ${ENGINE_ROOT}/Level/Level.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
