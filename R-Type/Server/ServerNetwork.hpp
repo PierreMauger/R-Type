@@ -9,7 +9,9 @@
 #define SERVERNETWORK_HPP_
 
 /// @cond
+#include "Client.hpp"
 #include "Connection.hpp"
+
 /// @endcond
 
 /**
@@ -25,14 +27,14 @@ namespace eng
     class ServerNetwork
     {
         private:
-            void handleNewTcp(const boost::system::error_code &error, boost::shared_ptr<Connection> newConnection);
-            void initServerNetwork();
+            void handleNewTcp(const boost::system::error_code &error, std::shared_ptr<Connection> newConnection, std::time_t time);
+            void initServerNetwork(std::time_t time);
 
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::acceptor _acceptor;
-            std::vector<boost::shared_ptr<Connection>> _listConnections;
-            _QUEUE_TYPE _dataIn;
-            _QUEUE_TYPE _dataOut;
+            std::shared_ptr<_QUEUE_TYPE> _dataInTcp;
+            std::shared_ptr<_QUEUE_TYPE> _dataInUdp;
+            std::vector<std::shared_ptr<Connection>> _listConnections;
             std::thread _threadContext;
 
         public:
@@ -41,7 +43,7 @@ namespace eng
              * @fn ServerNetwork(uint16_t portTcp)
              * @param portTcp The tcp port
              */
-            ServerNetwork(uint16_t portTcp);
+            ServerNetwork(uint16_t portTcp, std::time_t time);
             /**
              * @brief ServerNetwork destructor
              * @fn ~ServerNetwork()
@@ -88,6 +90,21 @@ namespace eng
             void udpMsgAll(_STORAGE_DATA data);
 
             /**
+             * @brief Message the every client in the room with tcp.
+             * @fn void tcpMsgRoom(_STORAGE_DATA data, int roomId, std::vector<Client> &clients)
+             * @param data The data to send.
+             * @param roomId The room id.
+             */
+            void tcpMsgRoom(_STORAGE_DATA data, int roomId, std::vector<Client> &clients);
+            /**
+             * @brief Message the every client in the room with udp.
+             * @fn void udpMsgRoom(_STORAGE_DATA data, int roomId, std::vector<Client> &clients)
+             * @param data The data to send.
+             * @param roomId The room id.
+             */
+            void udpMsgRoom(_STORAGE_DATA data, int roomId, std::vector<Client> &clients);
+
+            /**
              * @brief Close the connection to a client.
              * @fn void closeConnection(_B_ASIO_TCP::endpoint endpoint)
              * @param endpoint The endpoint of the client to close the connection to.
@@ -100,23 +117,24 @@ namespace eng
             void updateConnection();
 
             /**
-             * @brief Get the input queue
-             * @fn _QUEUE_TYPE &getQueueIn()
-             * @return A reference to the input queue
-             */
-            _QUEUE_TYPE &getQueueIn();
-            /**
-             * @brief Get the output queue
-             * @fn _QUEUE_TYPE &getQueueOut()
-             * @return A reference to the output queue
-             */
-            _QUEUE_TYPE &getQueueOut();
-            /**
              * @brief Get the connections
-             * @fn std::vector<boost::shared_ptr<Connection>> &getConnections()
+             * @fn std::vector<std::shared_ptr<Connection>> &getConnections()
              * @return A reference to a vector of shared pointers of connections
              */
-            std::vector<boost::shared_ptr<Connection>> &getConnections();
+            std::vector<std::shared_ptr<Connection>> &getConnections();
+
+            /**
+             * @brief Get the input queue
+             * @fn _QUEUE_TYPE &getQueueInTcp()
+             * @return A reference to the tcp input queue
+             */
+            _QUEUE_TYPE &getQueueInTcp();
+            /**
+             * @brief Get the input queue
+             * @fn _QUEUE_TYPE &getQueueInUdp()
+             * @return A reference to the udp input queue
+             */
+            _QUEUE_TYPE &getQueueInUdp();
     };
 } // namespace eng
 

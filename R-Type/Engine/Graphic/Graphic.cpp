@@ -7,7 +7,7 @@ Graphic::Graphic()
     this->_isFullscreen = true;
     this->_sceneId = std::make_shared<std::size_t>(0);
     this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "R-Type", sf::Style::Fullscreen);
-    this->_screenSize = std::make_shared<sf::Vector2f>(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
+    this->_screenSize = std::make_shared<sf::Vector2f>(1920, 1080);
     this->_lastSize = sf::Vector2f(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
     this->_event = std::make_shared<sf::Event>();
     this->_clock = std::make_shared<sf::Clock>();

@@ -16,7 +16,7 @@ std::size_t GameSerializer::getEntityID(SyncID syncID, EntityManager &entityMana
             return id;
         }
     }
-    throw std::runtime_error("[ERROR] SyncID not found");
+    return id;
 }
 
 void GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager)
@@ -168,6 +168,9 @@ void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id,
         case 20:
             this->updateEntity<SpriteAttribut>(packet, id, adv, componentManager);
             break;
+        case 21:
+            this->updateEntity<Button>(packet, id, adv, componentManager);
+            break;
         default:
             break;
         }
@@ -214,21 +217,21 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
     this->deserializeData<SyncID>(packet, adv, &syncID);
     this->deserializeData<std::size_t>(packet, adv, &mask);
 
-    if (type == CrudType::DESTROY) { // TODO if destroyed dosnt check magic
-        id = this->getEntityID(syncID, entityManager, componentManager);
-        entityManager.removeMask(id);
-        componentManager.removeAllComponents(id);
-        return;
-    }
-    if (type == CrudType::CREATE) {
+    id = this->getEntityID(syncID, entityManager, componentManager);
+
+    if (id == entityManager.getMasks().size()) {
         id = entityManager.addMask(mask, componentManager);
+        componentManager.addComponent<SyncID>(id);
         componentManager.getSingleComponent<SyncID>(id) = syncID;
+    }
+    if (type == CrudType::DESTROY) {
+        componentManager.removeAllComponents(id);
+        entityManager.removeMask(id);
     } else if (type == CrudType::UPDATE) {
-        id = this->getEntityID(syncID, entityManager, componentManager);
+        this->getComponents(packet, id, mask, adv, componentManager);
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
     }
-    this->getComponents(packet, id, mask, adv, componentManager);
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
@@ -248,7 +251,7 @@ _STORAGE_DATA GameSerializer::serializeInput(sf::Keyboard::Key input)
     return this->convertToData(packet);
 }
 
-void GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock)
+void GameSerializer::deserializeInput(std::vector<uint8_t> packet)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
     sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
@@ -257,10 +260,9 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, std::size_t i
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
-    input.checkInput(id, keyPress, componentManager, entityManager, clock);
 }
 
-void GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityManager &entityManager, ComponentManager &componentManager, Input &input, std::shared_ptr<sf::Clock> clock)
+void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager)
 {
     std::size_t adv = 0;
     std::vector<uint8_t> packetVector = this->convertToVector(packet);
@@ -276,7 +278,7 @@ void GameSerializer::handlePacket(_STORAGE_DATA packet, std::size_t id, EntityMa
         this->deserializeEntity(packetVector, entityManager, componentManager);
         break;
     case INPUT:
-        this->deserializeInput(packetVector, id, entityManager, componentManager, input, clock);
+        this->deserializeInput(packetVector);
         break;
     default:
         throw std::runtime_error("[ERROR] Unknown packet type");

@@ -14,6 +14,7 @@
 #include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Loader/Loader.hpp"
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -39,8 +40,8 @@ namespace eng
             std::size_t _renderTag = (InfoComp::POS | InfoComp::SPRITEID);
             std::size_t _textTag = (InfoComp::TEXT);
 
-            void displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
-            void displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
+            bool displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
+            bool displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
 
         public:
             /**

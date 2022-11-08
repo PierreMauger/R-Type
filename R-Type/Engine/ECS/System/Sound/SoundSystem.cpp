@@ -12,6 +12,8 @@ SoundSystem::SoundSystem(Graphic &graphic, EntityManager &entityManager, std::sh
 
 void SoundSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
+    if (_soundBuffer->size() == 0)
+        return;
     for (auto id : entityManager.getMaskCategory(this->_soundTag)) {
         SoundID &soundId = componentManager.getSingleComponent<SoundID>(id);
         if (soundId.play && this->_sounds[id].getStatus() != sf::Sound::Status::Playing) {
