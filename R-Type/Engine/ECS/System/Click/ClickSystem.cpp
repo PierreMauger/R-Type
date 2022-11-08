@@ -6,6 +6,7 @@ ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
+    this->_event = graphic.getEvent();
 
     entityManager.addMaskCategory(this->_buttonTag);
 }
@@ -14,12 +15,12 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
 {
     unsigned long int changed = -1;
 
-    for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
-        Button &button = componentManager.getSingleComponent<Button>(id);
-        Position pos = componentManager.getSingleComponent<Position>(id);
-        SpriteAttribut spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
+            Button &button = componentManager.getSingleComponent<Button>(id);
+            Position pos = componentManager.getSingleComponent<Position>(id);
+            SpriteAttribut spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2i mousePos = sf::Mouse::getPosition(*this->_window);
 
             if (mousePos.x >= pos.x && mousePos.x <= pos.x + spriteAt.rect.width && mousePos.y >= pos.y && mousePos.y <= pos.y + spriteAt.rect.height) {
@@ -32,6 +33,11 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                 } else if (button.type == ButtonType::TEXTZONE) {
                     button.selected = true;
                     changed = id;
+                } else if (button.type == ButtonType::CONNECT) {
+                    std::size_t idChild = componentManager.getSingleComponent<Parent>(id).id;
+                    std::string &text = componentManager.getSingleComponent<Text>(idChild).str;
+                    std::cout << "Connect to " << text << std::endl;
+                    break;
                 }
             }
             if (changed) {

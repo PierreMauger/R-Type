@@ -283,6 +283,7 @@ enum ButtonType {
     PLAY,
     TEXTZONE,
     BACK,
+    CONNECT,
 };
 
 /**
