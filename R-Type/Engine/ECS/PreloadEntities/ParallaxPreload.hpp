@@ -31,6 +31,7 @@ namespace eng
              * @param engine A reference to the engine.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
+            static void preload(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager);
     };
 }
 

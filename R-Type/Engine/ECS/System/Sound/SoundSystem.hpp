@@ -31,6 +31,8 @@ namespace eng
             std::shared_ptr<std::vector<sf::SoundBuffer>> _soundBuffer;
             std::map<std::size_t, sf::Sound> _sounds;
 
+            std::size_t _soundTag = (InfoComp::SOUNDID);
+
         public:
             /**
              * @brief SoundSystem constructor

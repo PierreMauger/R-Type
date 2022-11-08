@@ -26,6 +26,9 @@ namespace eng
     class ScoreSystem : public virtual ISystem
     {
         private:
+            std::size_t _textTag = (InfoComp::TEXT);
+            std::size_t _controlTag = (InfoComp::CONTROLLABLE);
+
             bool findVessel(ComponentManager &componentManager, EntityManager &entityManager, Controllable &Controllable);
 
         public:
