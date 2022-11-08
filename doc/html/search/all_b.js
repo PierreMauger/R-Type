@@ -8,5 +8,5 @@ var searchData=
   ['menupreload_292',['MenuPreload',['../classeng_1_1MenuPreload.html',1,'eng']]],
   ['menupreload_2ehpp_293',['MenuPreload.hpp',['../MenuPreload_8hpp.html',1,'']]],
   ['menuserializer_294',['MenuSerializer',['../classeng_1_1MenuSerializer.html',1,'eng::MenuSerializer'],['../classeng_1_1MenuSerializer.html#a747b58808acc7fb21da742419a582c7c',1,'eng::MenuSerializer::MenuSerializer()']]],
-  ['menuserializer_2ehpp_295',['MenuSerializer.hpp',['../MenuSerializer_8hpp.html',1,'']]]
+  ['menuserializer_2ehpp_295',['MenuSerializer.hpp',['../Client_2MenuSerializer_8hpp.html',1,'(Global Namespace)'],['../Server_2MenuSerializer_8hpp.html',1,'(Global Namespace)']]]
 ];
