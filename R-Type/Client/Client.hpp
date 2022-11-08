@@ -9,15 +9,15 @@
 #define CLIENT_HPP
 
 /// @cond
-#include "ClientNetwork.hpp"
+#include "Client/ClientNetwork.hpp"
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
-#include "Engine/Network/GameSerializer.hpp"
-#include "Engine/Network/MenuSerializer.hpp"
+#include "GameSerializer.hpp"
 #include "Includes.hpp"
+#include "MenuSerializer.hpp"
 
 /// @endcond
 
@@ -40,9 +40,15 @@ namespace eng
             MenuSerializer _menuSerializer;
             GameSerializer _gameSerializer;
 
+            std::size_t _id;
+
+            std::size_t _roomId = 0;
             std::vector<Room> _rooms;
 
             sf::Time _networkTime = sf::milliseconds(50);
+
+            std::shared_ptr<std::string> _ip;
+            std::shared_ptr<std::size_t> _port;
 
             void initSystems();
             void initComponents();
@@ -54,11 +60,9 @@ namespace eng
         public:
             /**
              * @brief Client constructor
-             * @fn Client(std::string ip, uint16_t portTcp)
-             * @param ip The ip of the client
-             * @param portTcp The tcp port of the client
+             * @fn Client()
              */
-            Client(std::string ip, uint16_t portTcp);
+            Client();
             /**
              * @brief Client destructor
              * @fn ~Client()

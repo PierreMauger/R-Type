@@ -1,7 +1,15 @@
-# charPerScreen:5
+# charPerScreen:105
 -----------------
+<<<<<<< HEAD
 -E              -
 -EE             -
 -EE             -
 -EE             -
 -----------------
+=======
+-ECCCCCCCCCCCCCC-
+-CCCCCCCCCCCCCCC-
+-ECCCCCCCCCCCCCC-
+-               -
+-----------------
+>>>>>>> a9280d0e5e7899de40737e0c0da5e579c3ec5c87

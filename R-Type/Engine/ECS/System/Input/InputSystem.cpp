@@ -9,17 +9,17 @@ InputSystem::InputSystem(Graphic &graphic, EntityManager &entityManager)
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
 
-    entityManager.addMaskCategory(InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
+    entityManager.addMaskCategory(this->_controlTag);
+    entityManager.addMaskCategory(this->_buttonTag);
 }
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t input = (InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);
     std::size_t app = (InfoComp::APP);
     std::size_t dis = (InfoComp::DIS);
 
-    for (auto id : entityManager.getMaskCategory(input)) {
+    for (auto id : entityManager.getMaskCategory(this->_controlTag)) {
         if (((masks[id].value() & app) == app && componentManager.getSingleComponent<Appearance>(id).app) || ((masks[id].value() & dis) == dis && componentManager.getSingleComponent<Disappearance>(id).dis))
             continue;
         Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
@@ -33,5 +33,26 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
         }
         sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = vel.baseSpeedX * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = vel.baseSpeedX : vel.x = 0);
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = vel.baseSpeedY * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = vel.baseSpeedY : vel.y = 0);
+    }
+
+    for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
+        Button button = componentManager.getSingleComponent<Button>(id);
+        Text &text = componentManager.getSingleComponent<Text>(id);
+
+        if (button.type != ButtonType::TEXTZONE || !button.selected)
+            continue;
+        for (int i = 0; i < 9; i++) {
+            if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Num0) + i)) && _event->type == sf::Event::KeyPressed && text.str.size() < button.maxSize)
+                text.str += std::to_string(i);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Period) && _event->type == sf::Event::KeyPressed && text.str.size() < button.maxSize)
+            text.str += ".";
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && _event->type == sf::Event::KeyPressed && text.str.size() > 0)
+            text.str = text.str.substr(0, text.str.size() - 1);
+        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+        // componentManager.clear();
+        // entityManager.clear();
+        // ParallaxPreload::preload(this->_window, this->_screenSize, entityManager, componentManager);
+        // }
     }
 }

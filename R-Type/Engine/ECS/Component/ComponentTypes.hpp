@@ -214,6 +214,7 @@ typedef struct LifeBar {
  */
 typedef struct Parent {
         std::size_t id = 0;
+        std::size_t id2 = 0;
         bool follow = false;
 } Parent;
 
@@ -319,14 +320,26 @@ typedef struct SpriteAttribut {
         sf::Vector2f offset = {0.0f, 0.0f};
 } SpriteAttribut;
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 enum ButtonType {
     QUIT = 0,
     PLAY,
+    TEXTZONE,
     BACK,
+    CONNECT,
 };
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 typedef struct Button {
         ButtonType type = QUIT;
+        bool selected = false;
+        std::size_t maxSize = 15;
 } Button;
 
 #endif // COMPONENTTYPES_HPP

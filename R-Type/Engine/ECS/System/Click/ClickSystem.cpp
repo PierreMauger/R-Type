@@ -2,33 +2,61 @@
 
 using namespace eng;
 
-ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
+ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
+    this->_event = graphic.getEvent();
+    this->_sceneId = graphic.getSceneId();
 
-    entityManager.addMaskCategory(InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
+    this->_port = port;
+    this->_ip = ip;
+
+    entityManager.addMaskCategory(this->_buttonTag);
 }
 
 void ClickSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    std::size_t button = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
+    unsigned long int changed = -1;
 
-    for (auto id : entityManager.getMaskCategory(button)) {
-        Button button = componentManager.getSingleComponent<Button>(id);
-        Position pos = componentManager.getSingleComponent<Position>(id);
-        SpriteAttribut spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
+            Button &button = componentManager.getSingleComponent<Button>(id);
+            Position pos = componentManager.getSingleComponent<Position>(id);
+            Size size = componentManager.getSingleComponent<Size>(id);
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             sf::Vector2i mousePos = sf::Mouse::getPosition(*this->_window);
 
-            if (mousePos.x >= pos.x && mousePos.x <= pos.x + spriteAt.rect.width && mousePos.y >= pos.y && mousePos.y <= pos.y + spriteAt.rect.height) {
+            if (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x && mousePos.y >= pos.y && mousePos.y <= pos.y + size.y) {
                 if (button.type == ButtonType::PLAY) {
                     componentManager.clear();
                     entityManager.clear();
-                    // ParallaxPreload::preload(componentManager, entityManager, this->_window, this->_screenSize);
+                    ParallaxPreload::preload(this->_window, this->_screenSize, entityManager, componentManager);
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();
+                } else if (button.type == ButtonType::TEXTZONE) {
+                    button.selected = true;
+                    changed = id;
+                } else if (button.type == ButtonType::CONNECT) {
+                    if (*this->_sceneId != 0)
+                        continue;
+                    Parent parent = componentManager.getSingleComponent<Parent>(id);
+                    std::string text = componentManager.getSingleComponent<Text>(parent.id).str;
+                    std::string text2 = componentManager.getSingleComponent<Text>(parent.id2).str;
+                    *this->_sceneId = *this->_sceneId + 1;
+                    *this->_ip = text;
+                    if (text2 != "")
+                        *this->_port = std::stoi(text2);
+                    else
+                        *this->_port = 0;
+                }
+            }
+            if (changed) {
+                for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
+                    Button &button = componentManager.getSingleComponent<Button>(id);
+                    if (button.type == ButtonType::TEXTZONE && id != changed) {
+                        button.selected = false;
+                    }
                 }
             }
         }

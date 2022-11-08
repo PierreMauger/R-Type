@@ -29,7 +29,7 @@ void Server::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
+    // systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
 void Server::initComponents()
@@ -78,14 +78,10 @@ void Server::manageEvent()
 #endif
         if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             graphic.getWindow()->close();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && !graphic.isFullscreen()) {
-            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
+            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen - graphic.isFullscreen());
             graphic.getWindow()->setFramerateLimit(60);
-            graphic.setFullscreen(true);
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11) && graphic.isFullscreen()) {
-            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Default);
-            graphic.getWindow()->setFramerateLimit(60);
-            graphic.setFullscreen(false);
+            graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
             this->_engine.updateSizeWindow();
@@ -99,6 +95,34 @@ void Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
     if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
         level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
+    }
+}
+
+void Server::syncUdpNetwork(Client &client)
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInUdp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), client);
+        if (dataIn.empty())
+            break;
+    }
+}
+
+void Server::syncTcpNetwork(Client &client)
+{
+    _QUEUE_TYPE &dataIn = this->_network.getQueueInTcp();
+    _STORAGE_DATA packet;
+
+    if (dataIn.empty())
+        return;
+    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        this->_menuSerializer.handlePacket(packet, this->_rooms, client, this->_roomId);
+        if (dataIn.empty())
+            break;
     }
 }
 
@@ -129,7 +153,7 @@ void Server::updateClients()
                 check = true;
         }
         if (!check) {
-            this->_clients.push_back(Client(connection));
+            this->_clients.push_back(Client(connection, this->_roomId++));
         }
         check = false;
     }
@@ -161,6 +185,8 @@ void Server::updateNetwork()
 {
     Graphic &graphic = this->_engine.getGraphic();
 
+    // this->syncTcpNetwork();
+    // this->syncUdpNetwork();
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
         return;
     }
