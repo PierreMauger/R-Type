@@ -41,7 +41,7 @@ namespace eng
              * @param id The id of the projectile.
              * @param damage The damage of the projectile.
              */
-            static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, std::size_t damage);
+            static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, std::size_t damage, float velX, float velY, float rotation);
     };
 }
 

@@ -71,6 +71,41 @@ bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
     return false;
 }
 
+bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+{
+    auto &masks = entityManager.getMasks();
+    std::size_t shieldParent = (InfoComp::POS | InfoComp::SHIELD | InfoComp::PARENT);
+    std::size_t shieldChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
+    float scal = 0.3;
+
+    if (masks[i].has_value() && (masks[i].value() & shieldParent) == shieldParent) {
+        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        if (masks[idPar].has_value()) {
+            if ((masks[idPar].value() & shieldChild) == shieldChild) {
+                Shield &shield = componentManager.getSingleComponent<Shield>(i);
+                if (shield.life > 0) {
+                    SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
+                    Position &pos = componentManager.getSingleComponent<Position>(idPar);
+                    spriteRef.setOrigin(spriteAt.offset);
+                    spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
+                    spriteRef.setScale(scal, scal);
+                    spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
+                    spriteRef.setPosition(pos.x + (64 * scal) * 2, pos.y + (28 * scal));
+                } else {
+                    componentManager.removeAllComponents(i);
+                    entityManager.removeMask(i);
+                    return true;
+                }
+            }
+        } else {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+            return true;
+        }
+    }
+    return false;
+}
+
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
@@ -80,6 +115,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
     std::size_t renderText = (InfoComp::TEXT);
+    std::size_t renderShield = (InfoComp::PARENT | InfoComp::SHIELD);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
@@ -115,6 +151,8 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;
         if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife && displayLifeBar(componentManager, entityManager, spriteRef, id))
+            continue;
+        if (masks[id].has_value() && (masks[id].value() & renderShield) == renderShield && displayShield(componentManager, entityManager, spriteRef, id))
             continue;
         if (spriteId.priority == Priority::HIGH)
             stockSpriteHigh.push_back(spriteRef);
