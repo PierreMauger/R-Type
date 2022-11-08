@@ -41,11 +41,10 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
 
         if (button.type != ButtonType::TEXTZONE || !button.selected)
             continue;
-
         for (int i = 0; i < 9; i++) {
-            if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Num0) + i)) && _event->type == sf::Event::KeyPressed && text.str.size() < 15) {
+            if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Num0) + i)) && _event->type == sf::Event::KeyPressed && text.str.size() < button.maxSize) {
                 text.str += std::to_string(i);
-                if ((text.str.size() + 1) % 4 == 0 && text.str.size() < 15)
+                if (button.dots && (text.str.size() + 1) % 4 == 0 && text.str.size() < button.maxSize)
                     text.str += ".";
             }
         }

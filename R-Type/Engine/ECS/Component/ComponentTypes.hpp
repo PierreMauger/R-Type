@@ -329,6 +329,8 @@ enum ButtonType {
 typedef struct Button {
         ButtonType type = QUIT;
         bool selected = false;
+        std::size_t maxSize = 15;
+        bool dots = false;
 } Button;
 
 #endif // COMPONENTTYPES_HPP
