@@ -6,5 +6,5 @@ void BackgroundMusicPreload::preload([[maybe_unused]] Graphic &graphic, EntityMa
 {
     std::size_t id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
 
-    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{1, false, true});
+    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{5, false, true});
 }

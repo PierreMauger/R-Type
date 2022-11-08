@@ -101,7 +101,7 @@ void Server::manageEnemy()
     if (graphic.getClock()->getElapsedTime() > this->_bossTime) {
         CthulhuPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
         this->_bossTime = sf::seconds(this->_bossTime.asSeconds() + 120);
-    } 
+    }
     // if (graphic.getClock()->getElapsedTime() > this->_elapsedTime) {
     //     EnemyPreload::preload(graphic, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     //     this->_elapsedTime = graphic.getClock()->getElapsedTime() + this->_deltaTime;
@@ -117,6 +117,8 @@ void Server::mainLoop()
 
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
+
+    BackgroundMusicPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
 
     VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager());
     while (graphic.getWindow()->isOpen()) {
