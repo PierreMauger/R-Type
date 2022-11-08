@@ -93,6 +93,14 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
                 componentManager.getSingleComponent<Controllable>(i).kill = 0;
                 componentManager.getSingleComponent<Controllable>(i).death += 1;
                 componentManager.getSingleComponent<SpriteAttribut>(i).rotation = 0;
+                for (std::size_t j = 0; j < mask.size(); j++) {
+                    if (!mask[j].has_value() || (mask[j].value() & InfoComp::SHIELD) != InfoComp::SHIELD)
+                        continue;
+                    if (componentManager.getSingleComponent<Parent>(j).id == i) {
+                        componentManager.removeAllComponents(j);
+                        entityManager.removeMask(j);
+                    }
+                }
             } else {
                 componentManager.removeAllComponents(i);
                 entityManager.removeMask(i);
