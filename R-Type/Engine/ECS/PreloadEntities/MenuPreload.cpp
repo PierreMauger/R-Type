@@ -11,19 +11,19 @@ void MenuPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_BUTTON, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 265, 116}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 2 - (265 / screenSize->x * windowsSize.x) / 2), static_cast<float>(windowsSize.y * 2 / 3 - (116 / screenSize->y * windowsSize.y) / 2), 0});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 2 - 265 / 2), static_cast<float>(windowsSize.y * 2 / 3 - 116 / 2), 0});
     componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::QUIT});
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"Quit", false, 0, {static_cast<float>(windowsSize.x / 2), static_cast<float>(windowsSize.y * 2 / 3)}});
-    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265 / screenSize->x * windowsSize.x, 116 / screenSize->y * windowsSize.y});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265, 116});
 
     id = entityManager.addMask(mask, componentManager);
     std::size_t idIp = id;
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_BUTTON, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 265, 116}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 3 - (265 / screenSize->x * windowsSize.x) / 2), static_cast<float>(windowsSize.y / 2 - (116 / screenSize->y * windowsSize.y) / 2), 0});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 3 - 265 / 2), static_cast<float>(windowsSize.y / 2 - 116 / 2), 0});
     componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::TEXTZONE, false, 15});
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"", false, 0, {static_cast<float>(windowsSize.x / 3), static_cast<float>(windowsSize.y / 2)}});
-    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265 / screenSize->x * windowsSize.x, 116 / screenSize->y * windowsSize.y});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265, 116});
 
     id = entityManager.addMask(InfoComp::TEXT, componentManager);
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"IP", false, 0, {static_cast<float>(windowsSize.x / 3), static_cast<float>(windowsSize.y / 2 - 116 / 2)}});
@@ -32,10 +32,10 @@ void MenuPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     std::size_t idPort = id;
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_BUTTON, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 265, 116}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 3 - (265 / screenSize->x * windowsSize.x) / 2), static_cast<float>(windowsSize.y / 3 - (116 / screenSize->y * windowsSize.y) / 2), 0});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x / 3 - 265 / 2), static_cast<float>(windowsSize.y / 3 - 116 / 2), 0});
     componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::TEXTZONE, false, 4});
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"", false, 0, {static_cast<float>(windowsSize.x / 3), static_cast<float>(windowsSize.y / 3)}});
-    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265 / screenSize->x * windowsSize.x, 116 / screenSize->y * windowsSize.y});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265, 116});
 
     id = entityManager.addMask(InfoComp::TEXT, componentManager);
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"PORT", false, 0, {static_cast<float>(windowsSize.x / 3), static_cast<float>(windowsSize.y / 3 - 116 / 2)}});
@@ -43,9 +43,9 @@ void MenuPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     id = entityManager.addMask((mask | InfoComp::PARENT), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_BUTTON, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 265, 116}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x * 2 / 3 - (265 / screenSize->x * windowsSize.x) / 2), static_cast<float>(windowsSize.y * 2 / 5 - (116 / screenSize->y * windowsSize.y) / 2), 0});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x * 2 / 3 - 265 / 2), static_cast<float>(windowsSize.y * 2 / 5 - 116 / 2), 0});
     componentManager.getComponent(typeid(Button)).emplaceData(id, Button{ButtonType::CONNECT});
     componentManager.getComponent(typeid(Text)).emplaceData(id, Text{"Connect", false, 0, {static_cast<float>(windowsSize.x * 2 / 3), static_cast<float>(windowsSize.y * 2 / 5)}});
-    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265 / screenSize->x * windowsSize.x, 116 / screenSize->y * windowsSize.y});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{265, 116});
     componentManager.getComponent(typeid(Parent)).emplaceData(id, Parent{idIp, idPort});
 }
