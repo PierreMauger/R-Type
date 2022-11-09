@@ -8,6 +8,12 @@ Loader::Loader()
 {
 }
 
+Loader::~Loader()
+{
+    for (std::size_t i = 0; i < this->_saveTextures.size(); i++)
+        delete this->_saveTextures[i];
+}
+
 std::vector<sf::Texture> &Loader::getTextures()
 {
     return this->_textures;
@@ -41,6 +47,7 @@ void Loader::loadSprites(std::vector<std::string> paths)
                 sf::Texture *texture = new sf::Texture();
                 sf::Sprite sprite;
 
+                this->_saveTextures.push_back(texture);
                 if (texture->loadFromFile(file_name.string())) {
                     sprite.setTexture(*texture);
                     this->_textures.push_back(*texture);
@@ -82,25 +89,21 @@ void Loader::loadLevel(std::vector<std::string> paths)
     std::set<std::filesystem::path> sorted;
 
     for (auto &path : paths) {
-        try {
-            for (auto &file_name : std::filesystem::directory_iterator(path))
-                sorted.insert(file_name.path());
+        for (auto &file_name : std::filesystem::directory_iterator(path))
+            sorted.insert(file_name.path());
 
-            for (auto &file_name : sorted) {
-                std::ifstream file(file_name.string());
-                std::string line;
-                std::vector<std::string> lines;
-                std::vector<std::string> totalLine;
+        for (auto &file_name : sorted) {
+            std::ifstream file(file_name.string());
+            std::string line;
+            std::vector<std::string> lines;
+            std::vector<std::string> totalLine;
 
-                if (file.is_open()) {
-                    while (getline(file, line))
-                        totalLine.push_back(line);
-                    file.close();
-                    this->_level.push_back(Level(totalLine));
-                }
+            if (file.is_open()) {
+                while (getline(file, line))
+                    totalLine.push_back(line);
+                file.close();
+                this->_level.push_back(Level(totalLine));
             }
-        } catch (std::runtime_error &error) {
-            std::cerr << error.what() << std::endl;
         }
         sorted.clear();
     }

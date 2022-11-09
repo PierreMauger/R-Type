@@ -64,6 +64,19 @@ void EntityManager::updateMask(std::size_t id, std::optional<std::size_t> mask)
     }
 }
 
+std::size_t EntityManager::getBySyncId(std::size_t syncId, ComponentManager &componentManager)
+{
+    std::size_t id = 0;
+    auto masks = this->getMasks();
+
+    for (; id < masks.size(); id++) {
+        if (masks[id].has_value() && (masks[id].value() & InfoComp::SYNCID) && componentManager.getSingleComponent<SyncID>(id).id == syncId) {
+            return id;
+        }
+    }
+    return id;
+}
+
 void EntityManager::clear()
 {
     this->_masks.clear();

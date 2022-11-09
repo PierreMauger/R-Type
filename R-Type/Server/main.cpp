@@ -21,7 +21,12 @@ int main(int ac, char **av)
         return 84;
     }
 
-    eng::Server server(std::stoi(av[1]));
+    // init random
+    time_t time = std::time(nullptr);
+    std::srand(time);
+
+    eng::Server server(std::stoi(av[1]), time);
+
     server.mainLoop();
     return 0;
 }

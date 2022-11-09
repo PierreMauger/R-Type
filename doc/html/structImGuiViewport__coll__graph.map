@@ -1,5 +1,4 @@
 <map id="ImGuiViewport" name="ImGuiViewport">
-<area shape="rect" id="node1" title=" " alt="" coords="27,139,145,165"/>
-<area shape="rect" id="node2" href="$structImVec2.html" title=" " alt="" coords="5,5,76,32"/>
-<area shape="rect" id="node3" href="$classvoid.html" title="Check an input. id, sf::Keyboard::Key input, ComponentManager &amp;componentManager, EntityManager &amp;entit..." alt="" coords="107,5,158,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,139,124,165"/>
+<area shape="rect" id="node2" href="$structImVec2.html" title=" " alt="" coords="29,5,100,32"/>
 </map>

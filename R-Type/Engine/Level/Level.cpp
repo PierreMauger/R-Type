@@ -59,7 +59,7 @@ Level::Level(std::vector<std::string> lines)
     }
 }
 
-void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
 {
     float compt = 0;
     std::smatch match;
@@ -82,16 +82,16 @@ void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, Component
             this->_index += match[0].length();
             switch (match[1].str()[0]) {
             case 'E':
-                EnemyPreload::preload(graphic, entityManager, componentManager, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+                EnemyPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
                 break;
             case 'B':
-                BossPreload::preload(graphic, entityManager, componentManager, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+                BossPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
                 break;
             case 'D':
-                DevourerPreload::preload(graphic, entityManager, componentManager, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+                DevourerPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
                 break;
             case 'C':
-                CthulhuPreload::preload(graphic, entityManager, componentManager, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+                CthulhuPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
                 break;
             default:
                 break;

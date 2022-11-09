@@ -28,10 +28,12 @@ namespace eng
     class PhysicSystem : public virtual ISystem
     {
         private:
+            std::shared_ptr<std::size_t> _syncId;
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
             sf::Rect<float> _rect1;
             sf::Rect<float> _rect2;
+
             void createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager);
             bool checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
             bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
@@ -48,7 +50,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            PhysicSystem(Graphic &graphic, EntityManager &entityManager);
+            PhysicSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::size_t> syncId);
             /**
              * @brief PhysicSystem destructor.
              * @fn ~PhysicSystem

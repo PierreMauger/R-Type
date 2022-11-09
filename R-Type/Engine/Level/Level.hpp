@@ -41,7 +41,7 @@ namespace eng
              * @fn ~Level()
              */
             ~Level() = default;
-            void parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
+            void parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId);
             float getSpeedRead();
             float getDelayRead();
             void setDelayRead(float delayRead);

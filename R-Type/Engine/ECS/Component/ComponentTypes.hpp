@@ -46,6 +46,7 @@ namespace eng
         SOUNDID = 1 << 19,
         SPRITEAT = 1 << 20,
         BUTTON = 1 << 21,
+        SHIELD = 1 << 22,
     };
 }
 
@@ -145,6 +146,15 @@ typedef struct Life {
 } Life;
 
 /**
+ * @struct Shield
+ * @brief The shield component.
+ */
+typedef struct Shield {
+        std::size_t defaultLife = 0;
+        std::size_t life = defaultLife;
+} Shield;
+
+/**
  * @struct Enemy
  * @brief The enemy component.
  */
@@ -204,6 +214,7 @@ typedef struct LifeBar {
  */
 typedef struct Parent {
         std::size_t id = 0;
+        std::size_t id2 = 0;
         bool follow = false;
 } Parent;
 
@@ -309,14 +320,26 @@ typedef struct SpriteAttribut {
         sf::Vector2f offset = {0.0f, 0.0f};
 } SpriteAttribut;
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 enum ButtonType {
     QUIT = 0,
     PLAY,
+    TEXTZONE,
     BACK,
+    CONNECT,
 };
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 typedef struct Button {
         ButtonType type = QUIT;
+        bool selected = false;
+        std::size_t maxSize = 15;
 } Button;
 
 #endif // COMPONENTTYPES_HPP
