@@ -56,6 +56,7 @@ namespace eng
             void syncUdpNetwork();
             void syncTcpNetwork();
             void updateNetwork();
+            void updateEvent();
 
         public:
             /**
