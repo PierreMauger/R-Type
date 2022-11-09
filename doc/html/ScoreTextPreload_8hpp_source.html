@@ -77,23 +77,24 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define SCORETEXTPRELOAD_HPP</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="EntityPreload_8hpp.html">Engine/ECS/PreloadEntities/EntityPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classeng_1_1ScoreTextPreload.html">   25</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1ScoreTextPreload.html">ScoreTextPreload</a> : <span class="keyword">public</span> <a class="code" href="classeng_1_1EntityPreload.html">EntityPreload</a></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ScoreTextPreload.html#a37ebbc8871859fa37bf691689b6c4b3b">preload</a>(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// SCORETEXTPRELOAD_HPP</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classeng_1_1ScoreTextPreload.html">   26</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1ScoreTextPreload.html">ScoreTextPreload</a> : <span class="keyword">public</span> <a class="code" href="classeng_1_1EntityPreload.html">EntityPreload</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ScoreTextPreload.html#a37ebbc8871859fa37bf691689b6c4b3b">preload</a>(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// SCORETEXTPRELOAD_HPP</span></div>
 <div class="ttc" id="aEntityPreload_8hpp_html"><div class="ttname"><a href="EntityPreload_8hpp.html">EntityPreload.hpp</a></div><div class="ttdoc">Preload an entity (parent class of the other preloads).</div></div>
 <div class="ttc" id="aclasseng_1_1ComponentManager_html"><div class="ttname"><a href="classeng_1_1ComponentManager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:29</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html"><div class="ttname"><a href="classeng_1_1EntityManager.html">eng::EntityManager</a></div><div class="ttdoc">The engine's EntityManager.</div><div class="ttdef"><b>Definition:</b> EntityManager.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1EntityPreload_html"><div class="ttname"><a href="classeng_1_1EntityPreload.html">eng::EntityPreload</a></div><div class="ttdoc">Preloads an entity.</div><div class="ttdef"><b>Definition:</b> EntityPreload.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1Graphic_html"><div class="ttname"><a href="classeng_1_1Graphic.html">eng::Graphic</a></div><div class="ttdoc">The Engine graphics (SFML).</div><div class="ttdef"><b>Definition:</b> Graphic.hpp:27</div></div>
-<div class="ttc" id="aclasseng_1_1ScoreTextPreload_html"><div class="ttname"><a href="classeng_1_1ScoreTextPreload.html">eng::ScoreTextPreload</a></div><div class="ttdoc">Preloads the score text.</div><div class="ttdef"><b>Definition:</b> ScoreTextPreload.hpp:26</div></div>
+<div class="ttc" id="aclasseng_1_1ScoreTextPreload_html"><div class="ttname"><a href="classeng_1_1ScoreTextPreload.html">eng::ScoreTextPreload</a></div><div class="ttdoc">Preloads the score text.</div><div class="ttdef"><b>Definition:</b> ScoreTextPreload.hpp:27</div></div>
 <div class="ttc" id="aclasseng_1_1ScoreTextPreload_html_a37ebbc8871859fa37bf691689b6c4b3b"><div class="ttname"><a href="classeng_1_1ScoreTextPreload.html#a37ebbc8871859fa37bf691689b6c4b3b">eng::ScoreTextPreload::preload</a></div><div class="ttdeci">static void preload(Graphic &amp;graphic, EntityManager &amp;entityManager, ComponentManager &amp;componentManager)</div><div class="ttdoc">Preloads the score text.</div><div class="ttdef"><b>Definition:</b> ScoreTextPreload.cpp:5</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
