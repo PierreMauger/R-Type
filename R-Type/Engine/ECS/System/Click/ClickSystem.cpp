@@ -25,13 +25,16 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
             Position pos = componentManager.getSingleComponent<Position>(id);
             Size size = componentManager.getSingleComponent<Size>(id);
 
+            if (entityManager.hasMask(id, this->_sceneTag)) {
+                Scene &scene = componentManager.getSingleComponent<Scene>(id);
+                if (scene.id != *this->_sceneId)
+                    continue;
+            }
             sf::Vector2i mousePos = sf::Mouse::getPosition(*this->_window);
 
             if (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x && mousePos.y >= pos.y && mousePos.y <= pos.y + size.y) {
-                if (button.type == ButtonType::PLAY) {
-                    componentManager.clear();
-                    entityManager.clear();
-                    ParallaxPreload::preload(this->_window, this->_screenSize, entityManager, componentManager);
+                if (button.type == ButtonType::PLAY_SOLO) {
+                    *this->_sceneId = *this->_sceneId + 1;
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();
                 } else if (button.type == ButtonType::TEXTZONE) {
@@ -45,18 +48,14 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     std::string text2 = componentManager.getSingleComponent<Text>(parent.id2).str;
                     *this->_sceneId = *this->_sceneId + 1;
                     *this->_ip = text;
-                    if (text2 != "")
-                        *this->_port = std::stoi(text2);
-                    else
-                        *this->_port = 0;
+                    text2 != "" ? *this->_port = std::stoi(text2) : *this->_port = 0;
                 }
             }
             if (changed) {
                 for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
                     Button &button = componentManager.getSingleComponent<Button>(id);
-                    if (button.type == ButtonType::TEXTZONE && id != changed) {
+                    if (button.type == ButtonType::TEXTZONE && id != changed)
                         button.selected = false;
-                    }
                 }
             }
         }

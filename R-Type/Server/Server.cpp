@@ -59,6 +59,7 @@ void Server::initComponents()
     componentManager.bindComponent<SpriteAttribut>();
     componentManager.bindComponent<Button>();
     componentManager.bindComponent<Shield>();
+    componentManager.bindComponent<Scene>();
 }
 
 void Server::initEntities()
