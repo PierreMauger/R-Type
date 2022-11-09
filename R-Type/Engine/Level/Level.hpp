@@ -5,6 +5,7 @@
 #include "Engine/ECS/PreloadEntities/CthulhuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
+#include "Engine/ECS/PreloadEntities/ObstaclePreload.hpp"
 #include "Includes.hpp"
 
 /**
@@ -29,6 +30,7 @@ namespace eng
             float _charPerScreen;
             float _sizeChar;
             void initializeLevelFormat(std::vector<std::string> &lines);
+            void parseStringLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, std::smatch match, std::string levelStr);
 
         public:
             /**
