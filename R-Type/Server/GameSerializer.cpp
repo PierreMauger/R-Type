@@ -94,7 +94,7 @@ void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityMan
     if (!this->checkMagic(packetVector, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
-    adv += MAGIC_SIZE;
+    adv += (MAGIC_SIZE + sizeof(std::size_t));
     this->deserializeData<GamePacketType>(packetVector, adv, &type);
     switch (type) {
     case ENTITY:
