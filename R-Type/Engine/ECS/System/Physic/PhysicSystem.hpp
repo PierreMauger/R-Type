@@ -35,13 +35,24 @@ namespace eng
             sf::Rect<float> _rect2;
 
             void createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager);
+            void switchCreateBonus(std::size_t addEntity, std::size_t drop, ComponentManager &componentManager, Size &size, Position &pos);
             bool checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
             bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
-            bool checkColision(Position &pos, Position &pos2, Size &sz, Size &sz2);
+            void killWhenDisappeared(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, std::vector<std::optional<std::size_t>> &mask);
+            bool checkCollision(Position &pos, Position &pos2, Size &sz, Size &sz2);
             bool collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
+            void bonusFound(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, DropBonus &drop, Size &size);
             bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
+            bool collisionEnemySplit(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Position &pos);
             bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
+            bool splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Position &pos);
+            void collisionFireballEnemy(ComponentManager &componentManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Parent &par, bool &checkShield);
+            void collisionCheckShield(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, std::vector<std::optional<std::size_t>> &masks, bool &checkShield);
             void checkFireballDamage(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager);
+            void physicVessel(ComponentManager &componentManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i);
+            void physicPattern(ComponentManager &componentManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i);
+            bool physicCollision(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, Position &pos);
+            bool physicAnim(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, Position &pos, Velocity &vel);
 
         public:
             /**
