@@ -139,12 +139,14 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
     }
 }
 
-_STORAGE_DATA GameSerializer::serializeInput(sf::Keyboard::Key input)
+_STORAGE_DATA GameSerializer::serializeInput(std::size_t clientId, sf::Keyboard::Key input)
 {
     std::vector<uint8_t> packet;
     GamePacketType type = GamePacketType::INPUT;
 
     this->insertMagic(packet);
+
+    this->serializeData(packet, &clientId);
 
     this->serializeData<GamePacketType>(packet, &type);
     this->serializeData<sf::Keyboard::Key>(packet, &input);

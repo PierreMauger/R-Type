@@ -137,7 +137,7 @@ _STORAGE_DATA GameSerializer::serializeEntity(std::size_t entityId, CrudType typ
 
 void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
+    std::size_t adv = MAGIC_SIZE + sizeof(std::size_t) + sizeof(GamePacketType);
     sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
 
     this->deserializeData<sf::Keyboard::Key>(packet, adv, &keyPress);
@@ -146,4 +146,14 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager
     }
 
     // TODO
+}
+
+std::size_t GameSerializer::getClientId(_STORAGE_DATA packet)
+{
+    std::vector<uint8_t> packetVector = this->convertToVector(packet);
+    std::size_t adv = MAGIC_SIZE;
+    std::size_t id;
+
+    this->deserializeData(packetVector, adv, &id);
+    return id;
 }
