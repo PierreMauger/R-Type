@@ -16,6 +16,8 @@ A normal boss (has 10 hp and shoots while circling around after the appearance a
 Terraria's Cthulu (has 10 hp and, after its appearance animation from the top of the screen, follows/dashes on you or shoots and has a 2nd phase where he dashes 5 times to you if you damage him enough)
 - `D`
 Terraria's Devourer of gods (has 10 hp for each parts of the body and rushes you while weaving)
+- `O`
+An obstacle (indestructible)
 
 Note that:
 - The layout that you represent is actually the layout of enemies that will appear on the right of the playable zone
