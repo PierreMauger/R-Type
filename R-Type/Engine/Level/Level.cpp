@@ -5,7 +5,7 @@ using namespace eng;
 void Level::initializeLevelFormat(std::vector<std::string> &lines)
 {
     std::smatch match;
-    this->_speedRead = (1920 / 3 / 60) + 0.5;
+    this->_speedRead = (1920 / 3 / 60) + 2;
     this->_delayRead = 0;
 
     if (std::regex_match(lines[0], std::regex("^#.*"))) {
@@ -88,18 +88,16 @@ void Level::parseStringLevel(Graphic &graphic, EntityManager &entityManager, Com
     }
 }
 
-void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
+bool Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
 {
     float compt = 0;
     std::smatch match;
 
-    if (this->_index >= this->_level.size()) {
-        // std::cout << "Level: End of level." << std::endl;
-        return;
-    }
+    if (this->_index >= this->_level.size())
+        return true;
     if (this->_index == this->_level.size() - 1) {
         this->_index++;
-        return;
+        return false;
     }
     for (std::string levelStr = (this->_level.substr(this->_index)); compt != this->_charPerScreen && !levelStr.empty(); levelStr = (this->_level.substr(this->_index))) {
         if (this->_level[this->_index] == '|') {
@@ -109,6 +107,7 @@ void Level::parseLevel(Graphic &graphic, EntityManager &entityManager, Component
         }
         parseStringLevel(graphic, entityManager, componentManager, syncId, match, levelStr);
     }
+    return false;
 }
 
 float Level::getSpeedRead()

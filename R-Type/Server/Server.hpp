@@ -57,11 +57,13 @@ namespace eng
             sf::Time _deltaTime = sf::seconds(5);
             sf::Time _bossTime = sf::seconds(5);
             sf::Time _networkTime = sf::milliseconds(50);
+            bool _isLevelFinished = false;
 
             void initSystems();
             void initComponents();
             void initEntities();
-            void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
+            bool manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
+            bool checkIfEnemyAlive(EntityManager &entityManager);
             void manageEvent();
             void syncUdpNetwork(Client &client);
             void syncTcpNetwork(Client &client);

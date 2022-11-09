@@ -59,7 +59,7 @@ namespace eng
              * @param componentManager A shared pointer to the ComponentManager
              * @param syncId A shared pointer to the sync id when creating an enemy
              */
-            void parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId);
+            bool parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId);
             /**
              * @brief Get the speed of appearance of the waves in the map
              * @fn float getSpeedRead()

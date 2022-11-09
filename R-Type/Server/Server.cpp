@@ -90,12 +90,28 @@ void Server::manageEvent()
     }
 }
 
-void Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+bool Server::checkIfEnemyAlive(EntityManager &entityManager)
 {
+    auto &masks = entityManager.getMasks();
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value() && (masks[i].value() & InfoComp::ENEMY) == InfoComp::ENEMY)
+            return false;
+    }
+    return true;
+}
+
+bool Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+{
+    if (this->_isLevelFinished) {
+        if (this->checkIfEnemyAlive(ecs.getEntityManager()))
+            return true;
+    }
     if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
-        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
+        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
+    return false;
 }
 
 void Server::syncUdpNetwork(Client &client)
@@ -202,11 +218,18 @@ void Server::mainLoop()
     ECS &ecs = this->_engine.getECS();
     VesselPreload vesselPreload;
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
+    std::size_t levelId = 0;
 
     VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
-        this->manageEnemy(level[0], graphic, ecs);
+        if (this->manageEnemy(level[levelId], graphic, ecs)) {
+            this->_isLevelFinished = false;
+            if (level.size() - 1 == levelId)
+                graphic.getWindow()->close();
+            else
+                levelId++;
+        }
         this->updateRooms();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();

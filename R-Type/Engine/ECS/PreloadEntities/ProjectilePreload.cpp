@@ -22,7 +22,7 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((projectile.damage == 2) ? 4 : 3), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{projectile.rotation, {0, 0, 56, 32}, sf::Color::White, {(sizeProj.size / screenSize->x * windowsSize.x) * sizeProjScreen.x, (sizeProj.size / screenSize->y * windowsSize.y) * sizeProjScreen.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x, (pos.y + (size.y / 2)) - (sizeFire.y * sizeProj.size / 2), pos.z});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{projectile.velX, projectile.velY, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{(windowsSize.x / (screenSize->x / projectile.velX)), (windowsSize.x / (screenSize->x / projectile.velY)), 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, projectile.damage, sizeProj.size});
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * sizeProj.size, sizeFire.y * sizeProj.size});
