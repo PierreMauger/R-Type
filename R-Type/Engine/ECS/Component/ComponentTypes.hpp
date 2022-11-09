@@ -327,10 +327,10 @@ typedef struct SpriteAttribut {
  */
 enum ButtonType {
     QUIT = 0,
-    PLAY,
     TEXTZONE,
     BACK,
     CONNECT,
+    PLAY_SOLO,
 };
 
 /**

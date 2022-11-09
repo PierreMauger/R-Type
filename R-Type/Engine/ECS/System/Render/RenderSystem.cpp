@@ -17,7 +17,6 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
 
     entityManager.addMaskCategory(this->_renderTag);
     entityManager.addMaskCategory(this->_textTag);
-    // entityManager.addMaskCategory(this->_sceneTag);
 }
 
 bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
