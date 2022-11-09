@@ -1,0 +1,4 @@
+<map id="eng::ScoreTextPreload" name="eng::ScoreTextPreload">
+<area shape="rect" id="node1" title="Preloads the score text." alt="" coords="5,80,172,107"/>
+<area shape="rect" id="node2" href="$classeng_1_1EntityPreload.html" title="Preloads an entity." alt="" coords="18,5,159,32"/>
+</map>

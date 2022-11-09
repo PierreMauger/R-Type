@@ -2,9 +2,9 @@
 
 using namespace eng;
 
-GUISystem::GUISystem(std::shared_ptr<sf::RenderWindow> window)
+GUISystem::GUISystem(Graphic &graphic)
 {
-    this->_window = window;
+    this->_window = graphic.getWindow();
     if (!ImGui::SFML::Init(*this->_window))
         std::cout << "ImGui counldn't init" << std::endl;
 }
@@ -147,7 +147,7 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                         componentManager.addComponent<Parent>(this->_selectedEntity);
                         break;
                     case 15:
-                        componentManager.addComponent<Patern>(this->_selectedEntity);
+                        componentManager.addComponent<Pattern>(this->_selectedEntity);
                         break;
                     case 16:
                         componentManager.addComponent<SyncID>(this->_selectedEntity);
@@ -164,6 +164,9 @@ void GUISystem::drawEntityDetails(ComponentManager &componentManager, EntityMana
                     case 20:
                         componentManager.addComponent<SpriteAttribut>(this->_selectedEntity);
                         break;
+                    case 21:
+                        componentManager.addComponent<Button>(this->_selectedEntity);
+                        break;
                     default:
                         break;
                     }
@@ -179,99 +182,99 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     switch (type) {
     case 0: {
         Position &position = componentManager.getSingleComponent<Position>(this->_selectedEntity);
-        ImGui::DragFloat("X##pos", &position.x, 1.0f, -FLT_MAX, +FLT_MAX);
-        ImGui::DragFloat("Y##pos", &position.y, 1.0f, -FLT_MAX, +FLT_MAX);
-        ImGui::DragFloat("Z##pos", &position.z, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("X##0", &position.x, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("Y##0", &position.y, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("Z##0", &position.z, 1.0f, -FLT_MAX, +FLT_MAX);
         break;
     }
     case 1: {
         Velocity &velocity = componentManager.getSingleComponent<Velocity>(this->_selectedEntity);
-        ImGui::SliderFloat("X##vel", &velocity.x, -10.0f, 10.0f);
-        ImGui::SliderFloat("Y##vel", &velocity.y, -10.0f, 10.0f);
-        ImGui::SliderFloat("Z##vel", &velocity.z, -10.0f, 10.0f);
-        ImGui::SliderFloat("baseSpeedX##vel", &velocity.baseSpeedX, 0.0f, 10.0f);
-        ImGui::SliderFloat("baseSpeedY##vel", &velocity.baseSpeedY, 0.0f, 10.0f);
+        ImGui::SliderFloat("X##1", &velocity.x, -10.0f, 10.0f);
+        ImGui::SliderFloat("Y##1", &velocity.y, -10.0f, 10.0f);
+        ImGui::SliderFloat("Z##1", &velocity.z, -10.0f, 10.0f);
+        ImGui::SliderFloat("baseSpeedX##1", &velocity.baseSpeedX, 0.0f, 10.0f);
+        ImGui::SliderFloat("baseSpeedY##1", &velocity.baseSpeedY, 0.0f, 10.0f);
         break;
     }
     case 2: {
         Size &size = componentManager.getSingleComponent<Size>(this->_selectedEntity);
-        ImGui::DragFloat("X##size", &size.x, 1.0f, -FLT_MAX, +FLT_MAX);
-        ImGui::DragFloat("Y##size", &size.y, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("X##2", &size.x, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::DragFloat("Y##2", &size.y, 1.0f, -FLT_MAX, +FLT_MAX);
         break;
     }
     case 3: {
         SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(this->_selectedEntity);
         const ImU64 increment = 1;
-        ImGui::InputScalar("SpriteID##spr", ImGuiDataType_U64, &spriteID.id, &increment);
+        ImGui::InputScalar("ID##3", ImGuiDataType_U64, &spriteID.id, &increment);
+
         break;
     }
     case 4: {
         Controllable &controllable = componentManager.getSingleComponent<Controllable>(this->_selectedEntity);
-        ImGui::Checkbox("Controllable##con", &controllable.con);
-        ImGui::DragScalar("Kill##con", ImGuiDataType_U64, &controllable.kill, 1.0f, nullptr, nullptr, "%llu");
-        ImGui::DragScalar("Death##con", ImGuiDataType_U64, &controllable.death, 1.0f, nullptr, nullptr, "%llu");
+        ImGui::Checkbox("Controllable##4", &controllable.con);
+        ImGui::DragScalar("Kill##4", ImGuiDataType_U64, &controllable.kill, 1.0f, nullptr, nullptr, "%llu");
+        ImGui::DragScalar("Death##4", ImGuiDataType_U64, &controllable.death, 1.0f, nullptr, nullptr, "%llu");
         break;
     }
     case 5: {
         Parallax &parallax = componentManager.getSingleComponent<Parallax>(this->_selectedEntity);
-        ImGui::Checkbox("Parallax##par", &parallax.par);
+        ImGui::Checkbox("Parallax##5", &parallax.par);
         break;
     }
     case 6: {
         Projectile &projectile = componentManager.getSingleComponent<Projectile>(this->_selectedEntity);
-        ImGui::Checkbox("Projectile##proj", &projectile.proj);
-        ImGui::DragScalar("Damage##proj", ImGuiDataType_U64, &projectile.damage, 1.0f, nullptr, nullptr, "%llu");
-        ImGui::DragFloat("Speed##proj", &projectile.size, 1.0f, -FLT_MAX, +FLT_MAX);
+        ImGui::Checkbox("Projectile##6", &projectile.proj);
+        ImGui::DragScalar("Damage##6", ImGuiDataType_U64, &projectile.damage, 1.0f, nullptr, nullptr, "%llu");
+        ImGui::DragFloat("Speed##6", &projectile.size, 1.0f, -FLT_MAX, +FLT_MAX);
         break;
     }
     case 7: {
         Life &life = componentManager.getSingleComponent<Life>(this->_selectedEntity);
         const ImU64 increment = 1;
-        ImGui::InputScalar("Life", ImGuiDataType_U64, &life.life, &increment);
+        ImGui::InputScalar("Default Life##7", ImGuiDataType_U64, &life.defaultLife, &increment);
+        ImGui::InputScalar("Life##7", ImGuiDataType_U64, &life.life, &increment);
         break;
     }
     case 8: {
         Enemy &enemy = componentManager.getSingleComponent<Enemy>(this->_selectedEntity);
-        ImGui::Checkbox("Enemy##enemy", &enemy.enemy);
-        ImGui::SliderFloat("Last shoot##enemy", &enemy.lastShoot, 0.0f, 10.0f);
-        ImGui::SliderFloat("Shoot delay##enemy", &enemy.shootDelay, 0.0f, 10.0f);
+        ImGui::Checkbox("Enemy##8", &enemy.enemy);
         break;
     }
     case 9: {
         Appearance &app = componentManager.getSingleComponent<Appearance>(this->_selectedEntity);
-        ImGui::Checkbox("Appearance##app", &app.app);
-        ImGui::SliderFloat("Appearance time##app", &app.end, 0.0f, 10.0f);
+        ImGui::Checkbox("Appearance##9", &app.app);
+        ImGui::SliderFloat("Appearance time##9", &app.end, 0.0f, 10.0f);
         break;
     }
     case 10: {
         Disappearance &dis = componentManager.getSingleComponent<Disappearance>(this->_selectedEntity);
-        ImGui::Checkbox("Disappearance##dis", &dis.dis);
-        ImGui::SliderFloat("Disappearance time##dis", &dis.end, 0.0f, 10.0f);
+        ImGui::Checkbox("Disappearance##10", &dis.dis);
+        ImGui::SliderFloat("Disappearance time##10", &dis.end, 0.0f, 10.0f);
         break;
     }
     case 11: {
         CooldownShoot &cdShoot = componentManager.getSingleComponent<CooldownShoot>(this->_selectedEntity);
-        ImGui::SliderFloat("Last shoot##cd", &cdShoot.lastShoot, 0.0f, 10.0f);
-        ImGui::SliderFloat("Shoot delay##cd", &cdShoot.shootDelay, 0.0f, 10.0f);
-        ImGui::SliderFloat("Size##cd", &cdShoot.size, 0.0f, 10.0f);
+        ImGui::SliderFloat("Last shoot##11", &cdShoot.lastShoot, 0.0f, 10.0f);
+        ImGui::SliderFloat("Shoot delay##11", &cdShoot.shootDelay, 0.0f, 10.0f);
+        ImGui::SliderFloat("Size##11", &cdShoot.size, 0.0f, 10.0f);
         break;
     }
     case 12: {
         CooldownBar &cdBar = componentManager.getSingleComponent<CooldownBar>(this->_selectedEntity);
-        ImGui::Checkbox("CooldownBar##cdbar", &cdBar.bar);
+        ImGui::Checkbox("CooldownBar##12", &cdBar.bar);
         break;
     }
     case 13: {
         LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(this->_selectedEntity);
-        ImGui::Checkbox("LifeBar##lifebar", &lifeBar.bar);
+        ImGui::Checkbox("LifeBar##13", &lifeBar.bar);
         const ImU64 increment = 1;
-        ImGui::InputScalar("Life Max##lifebar", ImGuiDataType_U64, &lifeBar.lifeMax, &increment);
+        ImGui::InputScalar("Life Max##13", ImGuiDataType_U64, &lifeBar.lifeMax, &increment);
         break;
     }
     case 14: {
         Parent &parent = componentManager.getSingleComponent<Parent>(this->_selectedEntity);
         const ImU64 increment = 1;
-        ImGui::InputScalar("Parent ID##parent", ImGuiDataType_U64, &parent.id, &increment);
+        ImGui::InputScalar("Parent ID##14", ImGuiDataType_U64, &parent.id, &increment);
         break;
     }
     case 15:
@@ -286,6 +289,12 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
         break;
     case 20:
         break;
+    case 21: {
+        Button &button = componentManager.getSingleComponent<Button>(this->_selectedEntity);
+        const ImU64 increment = 1;
+        ImGui::InputScalar("Sprite ID##21", ImGuiDataType_U64, &button.type, &increment);
+        break;
+    }
     default:
         break;
     }

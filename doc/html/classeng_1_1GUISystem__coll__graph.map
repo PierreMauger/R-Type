@@ -1,0 +1,4 @@
+<map id="eng::GUISystem" name="eng::GUISystem">
+<area shape="rect" id="node1" title="System of the GUI." alt="" coords="5,80,132,107"/>
+<area shape="rect" id="node2" href="$classeng_1_1ISystem.html" title="Interface of the system." alt="" coords="15,5,122,32"/>
+</map>

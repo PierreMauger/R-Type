@@ -1,0 +1,5 @@
+<map id="eng::ServerGameSerializer" name="eng::ServerGameSerializer">
+<area shape="rect" id="node1" title=" " alt="" coords="5,155,201,181"/>
+<area shape="rect" id="node2" href="$classeng_1_1GameSerializer.html" title=" " alt="" coords="26,80,181,107"/>
+<area shape="rect" id="node3" href="$classeng_1_1Serializer.html" title="The network serializer (formats packets to be sent through network)." alt="" coords="46,5,161,32"/>
+</map>
