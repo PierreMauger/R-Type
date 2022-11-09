@@ -322,7 +322,7 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
             continue;
         if ((masks[i].value() & physicDis) == physicDis && checkDisappearance(entityManager, componentManager, i, pos, vel))
             continue;
-        if ((masks[i].value() & physicPar) == physicPar) {
+        if ((masks[i].value() & physicPar) == physicPar && componentManager.getSingleComponent<Parallax>(i).par) {
             pos.x += vel.x;
             if (pos.x <= -static_cast<int>(_window->getSize().x))
                 pos.x = 0;
