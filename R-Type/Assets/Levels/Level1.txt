@@ -1,7 +1,7 @@
 # charPerScreen:105
 -----------------
--ECCCCCCCCCCCCCC-
--CCCCCCCCCCCCCCC-
--ECCCCCCCCCCCCCC-
+-               -
+-D C            -
+-               -
 -               -
 -----------------

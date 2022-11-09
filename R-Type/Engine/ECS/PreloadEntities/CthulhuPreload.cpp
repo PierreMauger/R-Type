@@ -10,7 +10,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SYNCID | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{19, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_CTHULHU_EYE, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 110, 162}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {110 / 2, 110 / 2 + 52}});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, randY});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{static_cast<float>(windowsSize.x - (500 / screenSize->x * windowsSize.x)), -110 / screenSize->y * windowsSize.y, 0});
@@ -25,10 +25,10 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR | InfoComp::SYNCID), componentManager);
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
-    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 10});
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::MEDIUM});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{S_IDBAR, Priority::MEDIUM});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
+    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(id).id});
 }
 
 void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos)
@@ -39,7 +39,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
     sf::Vector2f size{screenSize->x / (1920 / 2), screenSize->y / (1080 / 2)};
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SYNCID | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{19, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_CTHULHU_EYE, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 110, 162}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {110 / 2, 110 / 2 + 52}});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, pos.y / screenSize->y * windowsSize.y, (pos.x - graphic.getScreenSize()->x) / screenSize->x * windowsSize.x});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x / screenSize->x * windowsSize.x, -324 / screenSize->y * windowsSize.y, 0});
@@ -54,8 +54,8 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR | InfoComp::SYNCID), componentManager);
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
-    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{id});
     componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 10});
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{1, Priority::MEDIUM});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{S_IDBAR, Priority::MEDIUM});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
+    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(id).id});
 }
