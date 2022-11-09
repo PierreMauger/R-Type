@@ -7,15 +7,16 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
     std::size_t lastId = 0;
-    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
+    float scal = 0.5f;
 
+    std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_DEVOURER_HEAD, Priority::MEDIUM});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 375, 311}, sf::Color::White, {0.5f / screenSize->x * windowsSize.x, 0.5f / screenSize->y * windowsSize.y}});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 375, 331}, sf::Color::White, {scal / screenSize->x * windowsSize.x, scal / screenSize->y * windowsSize.y}, {375 / 2, 331 / 2}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{position.x / screenSize->x * windowsSize.x, position.y / screenSize->y * windowsSize.y, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{2 / screenSize->x * windowsSize.x * -1, 0, 0});
-    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::BIGOSCILLATION, TypeStatus(IDLE), TypePhase(PHASE01), 0});
+    // componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::BIGOSCILLATION, TypeStatus(IDLE), TypePhase(PHASE01), 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
-    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{(375 * 0.5f) / screenSize->x * windowsSize.x, (331 * 0.5f) / screenSize->y * windowsSize.y});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{(375 / screenSize->x * windowsSize.x) * scal, (331 / screenSize->y * windowsSize.y) * scal});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
@@ -23,13 +24,28 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
         lastId = id;
         Position &pos = componentManager.getSingleComponent<Position>(lastId);
         id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::PARENT), componentManager);
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_PARALLAX_2, Priority::MEDIUM});
-        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 187, 282}, sf::Color::White, {0.5f / screenSize->x * windowsSize.x, 0.5f / screenSize->y * windowsSize.y}});
-        componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 187, pos.y, 0});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_DEVOURER_BODY, Priority::MEDIUM});
+        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 187, 282}, sf::Color::White, {scal / screenSize->x * windowsSize.x, scal / screenSize->y * windowsSize.y}, {187 / 2, 282 / 2}});
+        if (i == 0)
+            componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 375 * scal, pos.y, 0});
+        else
+            componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 187 * scal, pos.y, 0});
         componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{2 / screenSize->x * windowsSize.x * -1, 0, 0});
         componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
-        componentManager.getComponent(typeid(Size)).emplaceData(id, Size{(187 * 0.5f) / screenSize->x * windowsSize.x, (282 * 0.5f) / screenSize->y * windowsSize.y});
+        componentManager.getComponent(typeid(Size)).emplaceData(id, Size{(187 / screenSize->x * windowsSize.x) * scal, (282 / screenSize->y * windowsSize.y) * scal});
         componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
         componentManager.getComponent(typeid(Parent)).emplaceData(id, Parent{lastId, true});
     }
+
+    lastId++;
+    Position &pos = componentManager.getSingleComponent<Position>(lastId);
+    id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::PARENT), componentManager);
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_DEVOURER_TAIL, Priority::MEDIUM});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 237, 256}, sf::Color::White, {scal / screenSize->x * windowsSize.x, scal / screenSize->y * windowsSize.y}, {237 / 2, 256 / 2}});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 187 * scal, pos.y, 0});
+    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{2 / screenSize->x * windowsSize.x * -1, 0, 0});
+    componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
+    componentManager.getComponent(typeid(Size)).emplaceData(id, Size{(237 / screenSize->x * windowsSize.x) * scal, (256 / screenSize->y * windowsSize.y) * scal});
+    componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
+    componentManager.getComponent(typeid(Parent)).emplaceData(id, Parent{lastId, true});
 }
