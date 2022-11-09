@@ -10,6 +10,8 @@
 
 /// @cond
 #include "Engine/ECS/Component/ComponentManager.hpp"
+#include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -89,6 +91,25 @@ namespace eng
              * @param id The id of the mask to update.
              */
             void updateMask(std::size_t id, std::optional<std::size_t> mask);
+
+            /**
+             * @brief Get the mask of an entity.
+             * @fn bool getMask(std::size_t id, std::size_t mask)
+             * @param id The id of the entity.
+             * @param mask The mask of the entity.
+             * @return true if the entity has the mask, otherwise false.
+             */
+            bool hasMask(std::size_t id, std::size_t mask);
+
+            /**
+             * @brief Get the id by syncId
+             * @fn std::size_t getBySyncId(std::size_t syncId, EntityManager &entityManager)
+             * @param syncId SyncId of the entity to get.
+             * @param entityManager EntityManager to get the entity from.
+             * @return The id of the entity.
+             */
+            std::size_t getBySyncId(std::size_t syncId, ComponentManager &componentManager);
+
             void clear();
     };
 }

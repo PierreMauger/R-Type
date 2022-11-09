@@ -8,26 +8,27 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
     this->_sprites = sprites;
+    this->_sceneId = graphic.getSceneId();
     if (!this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf"))
         throw std::runtime_error("Error: Font not found");
     this->_text.setFont(this->_font);
-    this->_text.setCharacterSize(20);
+    this->_text.setCharacterSize(35);
     this->_text.setFillColor(sf::Color::White);
 
-    entityManager.addMaskCategory(InfoComp::TEXT);
-    entityManager.addMaskCategory(InfoComp::POS | InfoComp::SPRITEID);
+    entityManager.addMaskCategory(this->_renderTag);
+    entityManager.addMaskCategory(this->_textTag);
+    // entityManager.addMaskCategory(this->_sceneTag);
 }
 
-void RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
-
     std::size_t cooldownBarParent = (InfoComp::COOLDOWNBAR | InfoComp::SPRITEID | InfoComp::PARENT);
     std::size_t cooldownBarChild = (InfoComp::COOLDOWNSHOOT);
     std::size_t size = 100 / this->_screenSize->x * this->_window->getSize().x;
 
     if (masks[i].has_value() && (masks[i].value() & cooldownBarParent) == cooldownBarParent) {
-        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        std::size_t idPar = entityManager.getBySyncId(componentManager.getSingleComponent<Parent>(i).id, componentManager);
         if (masks[idPar].has_value()) {
             if ((masks[idPar].value() & cooldownBarChild) == cooldownBarChild) {
                 CooldownShoot &cooldownShoot = componentManager.getSingleComponent<CooldownShoot>(idPar);
@@ -39,18 +40,20 @@ void RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
 }
 
-void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
     auto &masks = entityManager.getMasks();
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
     std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
 
     if (masks[i].has_value() && (masks[i].value() & lifeBarParent) == lifeBarParent) {
-        std::size_t idPar = componentManager.getSingleComponent<Parent>(i).id;
+        std::size_t idPar = entityManager.getBySyncId(componentManager.getSingleComponent<Parent>(i).id, componentManager);
         if (masks[idPar].has_value()) {
             if ((masks[idPar].value() & lifeBarChild) == lifeBarChild) {
                 LifeBar &lifeBar = componentManager.getSingleComponent<LifeBar>(i);
@@ -63,40 +66,86 @@ void RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
         } else {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
+            return true;
         }
     }
+    return false;
+}
+
+bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
+{
+    auto &masks = entityManager.getMasks();
+    std::size_t shieldParent = (InfoComp::POS | InfoComp::SHIELD | InfoComp::PARENT);
+    std::size_t shieldChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
+    float scal = 0.3;
+
+    if (masks[i].has_value() && (masks[i].value() & shieldParent) == shieldParent) {
+        std::size_t idPar = entityManager.getBySyncId(componentManager.getSingleComponent<Parent>(i).id, componentManager);
+        if (masks[idPar].has_value()) {
+            if ((masks[idPar].value() & shieldChild) == shieldChild) {
+                Shield &shield = componentManager.getSingleComponent<Shield>(i);
+                if (shield.life > 0) {
+                    SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
+                    Position &pos = componentManager.getSingleComponent<Position>(idPar);
+                    spriteRef.setOrigin(spriteAt.offset);
+                    spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
+                    spriteRef.setScale(scal, scal);
+                    spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
+                    spriteRef.setPosition(pos.x + (64 * scal) * 2, pos.y + (28 * scal));
+                } else {
+                    componentManager.removeAllComponents(i);
+                    entityManager.removeMask(i);
+                    return true;
+                }
+            }
+        } else {
+            componentManager.removeAllComponents(i);
+            entityManager.removeMask(i);
+            return true;
+        }
+    }
+    return false;
 }
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t render = (InfoComp::POS | InfoComp::SPRITEID);
     std::size_t renderAnim = (InfoComp::SPRITEAT);
     std::size_t renderCooldown = (InfoComp::PARENT | InfoComp::COOLDOWNBAR);
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);
     std::size_t renderParallax = (InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARALLAX);
-    std::size_t renderText = (InfoComp::TEXT);
+    std::size_t renderShield = (InfoComp::PARENT | InfoComp::SHIELD);
     std::vector<sf::Sprite> stockSpriteHigh;
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
     std::vector<sf::Sprite> stockButton;
 
-    for (auto id : entityManager.getMaskCategory(renderText)) {
-        this->_text.setCharacterSize(20 / this->_screenSize->x * this->_window->getSize().x);
-        if (componentManager.getSingleComponent<Text>(id).hasValue)
-            this->_text.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
-        else {
-            this->_text.setString(componentManager.getSingleComponent<Text>(id).str);
-            this->_text.setOrigin(this->_text.getLocalBounds().width / 2, this->_text.getLocalBounds().height / 2);
+    for (auto id : entityManager.getMaskCategory(this->_textTag)) {
+        sf::Text &textRef = this->_text;
+        if (entityManager.hasMask(id, this->_sceneTag)) {
+            Scene &scene = componentManager.getSingleComponent<Scene>(id);
+            if (scene.id != *this->_sceneId)
+                continue;
         }
-        this->_text.setPosition(componentManager.getSingleComponent<Text>(id).pos);
-        stockText.push_back(this->_text);
+        textRef.setCharacterSize(35 / this->_screenSize->x * this->_window->getSize().x);
+        if (componentManager.getSingleComponent<Text>(id).hasValue)
+            textRef.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+        else {
+            textRef.setString(componentManager.getSingleComponent<Text>(id).str);
+            textRef.setOrigin(textRef.getLocalBounds().width / 2, textRef.getLocalBounds().height / 2);
+        }
+        textRef.setPosition(componentManager.getSingleComponent<Text>(id).pos);
+        stockText.push_back(textRef);
     }
-    for (auto id : entityManager.getMaskCategory(render)) {
+    for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
-
+        if (entityManager.hasMask(id, this->_sceneTag)) {
+            Scene &scene = componentManager.getSingleComponent<Scene>(id);
+            if (scene.id != *this->_sceneId)
+                continue;
+        }
         sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
         spriteRef.setPosition(pos.x, pos.y);
         if (masks[id].has_value() && (masks[id].value() & renderAnim) == renderAnim) {
@@ -108,10 +157,12 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setOrigin(spriteAt.offset);
             spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
         }
-        if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown)
-            displayCooldownBar(componentManager, entityManager, spriteRef, id);
-        if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife)
-            displayLifeBar(componentManager, entityManager, spriteRef, id);
+        if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, id))
+            continue;
+        if (masks[id].has_value() && (masks[id].value() & renderLife) == renderLife && displayLifeBar(componentManager, entityManager, spriteRef, id))
+            continue;
+        if (masks[id].has_value() && (masks[id].value() & renderShield) == renderShield && displayShield(componentManager, entityManager, spriteRef, id))
+            continue;
         if (spriteId.priority == Priority::HIGH)
             stockSpriteHigh.push_back(spriteRef);
         if (spriteId.priority == Priority::MEDIUM)

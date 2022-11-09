@@ -1,5 +1,5 @@
 <map id="/tmp/rtype/R&#45;Type/Includes.hpp" name="/tmp/rtype/R&#45;Type/Includes.hpp">
-<area shape="rect" id="node1" title="The standard c++ includes needed for this project." alt="" coords="1536,5,1759,32"/>
+<area shape="rect" id="node1" title="The standard c++ includes needed for this project." alt="" coords="1587,5,1809,32"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,80,132,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="157,80,303,107"/>
 <area shape="rect" id="node4" title=" " alt="" coords="327,80,466,107"/>
@@ -21,11 +21,12 @@
 <area shape="rect" id="node20" title=" " alt="" coords="2026,80,2101,107"/>
 <area shape="rect" id="node21" title=" " alt="" coords="2125,80,2188,107"/>
 <area shape="rect" id="node22" title=" " alt="" coords="2213,80,2285,107"/>
-<area shape="rect" id="node23" title=" " alt="" coords="2309,80,2351,107"/>
-<area shape="rect" id="node24" title=" " alt="" coords="2375,80,2450,107"/>
-<area shape="rect" id="node25" title=" " alt="" coords="2474,80,2533,107"/>
-<area shape="rect" id="node26" title=" " alt="" coords="2557,80,2621,107"/>
-<area shape="rect" id="node27" title=" " alt="" coords="2645,80,2732,107"/>
-<area shape="rect" id="node28" title=" " alt="" coords="2756,80,2880,107"/>
-<area shape="rect" id="node29" title=" " alt="" coords="2904,80,2967,107"/>
+<area shape="rect" id="node23" title=" " alt="" coords="2309,80,2367,107"/>
+<area shape="rect" id="node24" title=" " alt="" coords="2391,80,2434,107"/>
+<area shape="rect" id="node25" title=" " alt="" coords="2458,80,2533,107"/>
+<area shape="rect" id="node26" title=" " alt="" coords="2557,80,2615,107"/>
+<area shape="rect" id="node27" title=" " alt="" coords="2639,80,2703,107"/>
+<area shape="rect" id="node28" title=" " alt="" coords="2728,80,2815,107"/>
+<area shape="rect" id="node29" title=" " alt="" coords="2839,80,2963,107"/>
+<area shape="rect" id="node30" title=" " alt="" coords="2987,80,3049,107"/>
 </map>

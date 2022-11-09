@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Connection.hpp"
+
 /// @endcond
 
 /**
@@ -30,24 +31,33 @@ namespace eng
 
             boost::asio::io_context _ioContext;
             _B_ASIO_TCP::resolver _resolver;
-            boost::shared_ptr<Connection> _connection;
-            _QUEUE_TYPE _dataIn;
+            std::shared_ptr<_QUEUE_TYPE> _dataInTcp;
+            std::shared_ptr<_QUEUE_TYPE> _dataInUdp;
+            std::shared_ptr<Connection> _connection;
             std::thread _threadContext;
+
+            std::time_t _time;
+            std::size_t _id;
 
         public:
             /**
              * @brief ClientNetwork constructor
-             * @fn ClientNetwork(std::string ip, uint16_t portTcp)
-             * @param ip The ip of the client
-             * @param portTdp The tdp port
+             * @fn ClientNetwork()
              */
-            ClientNetwork(std::string ip, uint16_t portTcp);
+            ClientNetwork();
             /**
              * @brief ClientNetwork destructor
              * @fn ~ClientNetwork()
              */
             ~ClientNetwork();
 
+            /**
+             * @brief Start the client network.
+             * @fn void start(std::string ip, uint16_t portTcp)
+             * @param ip The server ip.
+             * @param portTcp The server tcp port.
+             */
+            void start(std::string ip, uint16_t portTcp);
             /**
              * @brief Run the client network
              * @fn void run()
@@ -80,16 +90,36 @@ namespace eng
 
             /**
              * @brief Get the input queue
-             * @fn _QUEUE_TYPE &getQueueIn()
-             * @return A reference to the input queue
+             * @fn _QUEUE_TYPE &getQueueInTcp()
+             * @return A reference to the tcp input queue
              */
-            _QUEUE_TYPE &getQueueIn();
+            _QUEUE_TYPE &getQueueInTcp();
             /**
-             * @brief Get the output queue
-             * @fn _QUEUE_TYPE &getQueueOut()
-             * @return A reference to the output queue
+             * @brief Get the input queue
+             * @fn _QUEUE_TYPE &getQueueInUdp()
+             * @return A reference to the udp input queue
              */
-            _QUEUE_TYPE &getQueueOut();
+            _QUEUE_TYPE &getQueueInUdp();
+
+            /**
+             * @brief Update the client network
+             * @fn void update()
+             */
+            void updateConnection();
+
+            /**
+             * @brief Get the time
+             * @fn st::size_t getTime()
+             * @return The time
+             */
+            std::time_t getTime();
+
+            /**
+             * @brief Get the id
+             * @fn std::size_t getId()
+             * @return The id
+             */
+            std::size_t getId();
     };
 } // namespace eng
 

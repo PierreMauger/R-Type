@@ -109,15 +109,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1889187816372dafd123aa07fb252e49"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#a1889187816372dafd123aa07fb252e49">isFullscreen</a> ()</td></tr>
 <tr class="memdesc:a1889187816372dafd123aa07fb252e49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the game is in full screen mode.  <a href="classeng_1_1Graphic.html#a1889187816372dafd123aa07fb252e49">More...</a><br /></td></tr>
 <tr class="separator:a1889187816372dafd123aa07fb252e49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a056b588764b02028c2a199a40fca3692"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvoid.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#a056b588764b02028c2a199a40fca3692">setScreenSize</a> (sf::Vector2f screenSize)</td></tr>
+<tr class="memitem:a056b588764b02028c2a199a40fca3692"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#a056b588764b02028c2a199a40fca3692">setScreenSize</a> (sf::Vector2f screenSize)</td></tr>
 <tr class="memdesc:a056b588764b02028c2a199a40fca3692"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the screen size.  <a href="classeng_1_1Graphic.html#a056b588764b02028c2a199a40fca3692">More...</a><br /></td></tr>
 <tr class="separator:a056b588764b02028c2a199a40fca3692"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad513a70ecad7580842d8b47aa6bb4e89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvoid.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#ad513a70ecad7580842d8b47aa6bb4e89">setLastSize</a> (sf::Vector2f lastSize)</td></tr>
+<tr class="memitem:ad513a70ecad7580842d8b47aa6bb4e89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#ad513a70ecad7580842d8b47aa6bb4e89">setLastSize</a> (sf::Vector2f lastSize)</td></tr>
 <tr class="memdesc:ad513a70ecad7580842d8b47aa6bb4e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the last (current) window size.  <a href="classeng_1_1Graphic.html#ad513a70ecad7580842d8b47aa6bb4e89">More...</a><br /></td></tr>
 <tr class="separator:ad513a70ecad7580842d8b47aa6bb4e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a758b3fd19d0470f0464f79f1c59df3da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classvoid.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#a758b3fd19d0470f0464f79f1c59df3da">setFullscreen</a> (bool <a class="el" href="classeng_1_1Graphic.html#a1889187816372dafd123aa07fb252e49">isFullscreen</a>)</td></tr>
+<tr class="memitem:a758b3fd19d0470f0464f79f1c59df3da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#a758b3fd19d0470f0464f79f1c59df3da">setFullscreen</a> (bool <a class="el" href="classeng_1_1Graphic.html#a1889187816372dafd123aa07fb252e49">isFullscreen</a>)</td></tr>
 <tr class="memdesc:a758b3fd19d0470f0464f79f1c59df3da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the game in full screen or not.  <a href="classeng_1_1Graphic.html#a758b3fd19d0470f0464f79f1c59df3da">More...</a><br /></td></tr>
 <tr class="separator:a758b3fd19d0470f0464f79f1c59df3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92a017b27309f949c82dc3e5409b2d5e"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; std::size_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Graphic.html#a92a017b27309f949c82dc3e5409b2d5e">getSceneId</a> ()</td></tr>
+<tr class="memdesc:a92a017b27309f949c82dc3e5409b2d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the scene id.  <a href="classeng_1_1Graphic.html#a92a017b27309f949c82dc3e5409b2d5e">More...</a><br /></td></tr>
+<tr class="separator:a92a017b27309f949c82dc3e5409b2d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="classeng_1_1Engine.html" title="The engine of the game containing the ECS, the graphics and the loader.">Engine</a> graphics (SFML). </p>
@@ -179,6 +182,26 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the last window size. </p>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the last window size. </dd></dl>
+
+</div>
+</div>
+<a id="a92a017b27309f949c82dc3e5409b2d5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92a017b27309f949c82dc3e5409b2d5e">&#9670;&nbsp;</a></span>getSceneId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t eng::Graphic::getSceneId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the scene id. </p>
+<dl class="section return"><dt>Returns</dt><dd>The scene id </dd></dl>
 
 </div>
 </div>
@@ -249,7 +272,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvoid.html">void</a> eng::Graphic::setFullscreen </td>
+          <td class="memname">void eng::Graphic::setFullscreen </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>isFullscreen</em></td><td>)</td>
@@ -275,7 +298,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvoid.html">void</a> eng::Graphic::setLastSize </td>
+          <td class="memname">void eng::Graphic::setLastSize </td>
           <td>(</td>
           <td class="paramtype">sf::Vector2f&#160;</td>
           <td class="paramname"><em>lastSize</em></td><td>)</td>
@@ -301,7 +324,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classvoid.html">void</a> eng::Graphic::setScreenSize </td>
+          <td class="memname">void eng::Graphic::setScreenSize </td>
           <td>(</td>
           <td class="paramtype">sf::Vector2f&#160;</td>
           <td class="paramname"><em>screenSize</em></td><td>)</td>

@@ -8,17 +8,16 @@ AnimationSystem::AnimationSystem(Graphic &graphic, EntityManager &entityManager,
     this->_clock = graphic.getClock();
     this->_sprites = sprites;
 
-    entityManager.addMaskCategory(InfoComp::SPRITEID | InfoComp::SPRITEAT);
+    entityManager.addMaskCategory(this->_spriteTag);
 }
 
 void AnimationSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
-    std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
     std::size_t appMask = (InfoComp::APP);
     std::size_t contMask = (InfoComp::CONTROLLABLE | InfoComp::VEL);
 
-    for (auto id : entityManager.getMaskCategory(spriteMask)) {
+    for (auto id : entityManager.getMaskCategory(this->_spriteTag)) {
         SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(id);
         SpriteAttribut &spriteAT = componentManager.getSingleComponent<SpriteAttribut>(id);
         if (masks[id].has_value() && (masks[id].value() & contMask) == contMask) {

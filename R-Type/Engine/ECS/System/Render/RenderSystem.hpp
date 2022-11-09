@@ -14,6 +14,7 @@
 #include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Loader/Loader.hpp"
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -33,10 +34,17 @@ namespace eng
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<std::vector<sf::Sprite>> _sprites;
             std::shared_ptr<sf::Vector2f> _screenSize;
+            std::shared_ptr<std::size_t> _sceneId;
             sf::Text _text;
             sf::Font _font;
-            void displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
-            void displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
+
+            std::size_t _renderTag = (InfoComp::POS | InfoComp::SPRITEID);
+            std::size_t _textTag = (InfoComp::TEXT);
+            std::size_t _sceneTag = (InfoComp::SCENE);
+
+            bool displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
+            bool displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
+            bool displayShield(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i);
 
         public:
             /**

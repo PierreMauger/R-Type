@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -45,6 +46,8 @@ namespace eng
         SOUNDID = 1 << 19,
         SPRITEAT = 1 << 20,
         BUTTON = 1 << 21,
+        SHIELD = 1 << 22,
+        SCENE = 1 << 23,
     };
 }
 
@@ -95,7 +98,7 @@ enum Priority {
  */
 typedef struct SpriteID {
         std::size_t id = 0;
-        Priority priority = Priority::HIGH;
+        Priority priority = Priority::MEDIUM;
         std::size_t curFrame = 0;
         std::size_t nbFrame = 0;
         bool autoLoop = false;
@@ -144,6 +147,15 @@ typedef struct Life {
 } Life;
 
 /**
+ * @struct Shield
+ * @brief The shield component.
+ */
+typedef struct Shield {
+        std::size_t defaultLife = 0;
+        std::size_t life = defaultLife;
+} Shield;
+
+/**
  * @struct Enemy
  * @brief The enemy component.
  */
@@ -158,6 +170,7 @@ typedef struct Enemy {
 typedef struct Appearance {
         bool app = false;
         float end = 0.0f;
+        float x_app = 0.0f;
 } Appearance;
 
 /**
@@ -202,6 +215,7 @@ typedef struct LifeBar {
  */
 typedef struct Parent {
         std::size_t id = 0;
+        std::size_t id2 = 0;
         bool follow = false;
 } Parent;
 
@@ -215,6 +229,7 @@ enum TypePattern {
     OSCILLATION,
     BIGOSCILLATION,
     CIRCLE,
+    DEVOUREROSC,
     CTHULHU
 };
 
@@ -252,6 +267,7 @@ typedef struct Pattern {
         float angle = 0.0f;
         float statusTime = 0.0f;
         size_t focusEntity = 0;
+        size_t phaseCount = 0;
         Position lastPosFocus = {0.0f, 0.0f, 0.0f};
 } Pattern;
 
@@ -305,18 +321,39 @@ typedef struct SpriteAttribut {
         sf::Vector2f offset = {0.0f, 0.0f};
 } SpriteAttribut;
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 enum ButtonType {
     QUIT = 0,
     PLAY,
+    TEXTZONE,
     BACK,
+    CONNECT,
 };
 
+/**
+ * @struct Button
+ * @brief The button component.
+ */
 typedef struct Button {
         ButtonType type = QUIT;
+        bool selected = false;
+        std::size_t maxSize = 15;
 } Button;
 
+enum SceneType {
+    MENU = 0,
+    GAME,
+};
+
+/**
+ * @struct Scene
+ * @brief The scene component.
+ */
 typedef struct Scene {
-        int id = 0;
+        std::size_t id = 0;
 } Scene;
 
 #endif // COMPONENTTYPES_HPP

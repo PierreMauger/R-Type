@@ -4,8 +4,9 @@ using namespace eng;
 
 Engine::Engine()
 {
+    this->_loader.loadLevel({"R-Type/Assets/Levels"});
     this->_loader.loadSounds({"R-Type/Assets/Sound"});
-    this->_loader.loadSprites({"R-Type/Assets/Sprites", "R-Type/Assets/Sprites/Parallax", "R-Type/Assets/Sprites/zDevourerOfGods", "R-Type/Assets/Sprites/CthulhuEye"});
+    this->_loader.loadSprites({"R-Type/Assets/Sprites", "R-Type/Assets/Sprites/Parallax", "R-Type/Assets/Sprites/zDevourerOfGods", "R-Type/Assets/Sprites/CthulhuEye", "R-Type/Assets/Sprites/Bonus"});
 }
 
 ECS &Engine::getECS()
@@ -21,11 +22,6 @@ Graphic &Engine::getGraphic()
 Loader &Engine::getLoader()
 {
     return this->_loader;
-}
-
-Input &Engine::getInput()
-{
-    return this->_input;
 }
 
 void Engine::updateSize(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize)

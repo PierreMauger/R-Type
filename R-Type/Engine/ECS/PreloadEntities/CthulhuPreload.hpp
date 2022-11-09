@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
+
 /// @endcond
 
 /**
@@ -30,9 +31,8 @@ namespace eng
              * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
              * @param engine A reference to the engine.
              */
-            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos);
     };
 }
-
 
 #endif /* !CTHULHUPRELOAD_HPP_ */

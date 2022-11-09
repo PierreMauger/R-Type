@@ -10,6 +10,7 @@
 
 /// @cond
 #include "NetCommon.hpp"
+
 /// @endcond
 
 /**
@@ -38,7 +39,10 @@ namespace eng
             _B_ASIO_UDP::socket _udpSocketIn;
             _B_ASIO_UDP::socket _udpSocketOut;
             _B_ASIO_TCP::socket _tcpSocket;
-            _QUEUE_TYPE &_dataIn;
+            std::vector<_STORAGE_DATA> _dataOutUdp;
+            std::vector<_STORAGE_DATA> _dataOutTcp;
+            std::shared_ptr<_QUEUE_TYPE> _dataInUdp;
+            std::shared_ptr<_QUEUE_TYPE> _dataInTcp;
             std::thread _threadConnection;
             _STORAGE_DATA _tcpTmpBuffer;
             _STORAGE_DATA _udpTmpBuffer;
@@ -46,20 +50,22 @@ namespace eng
         public:
             /**
              * @brief Connection constructor.
-             * @fn Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
+             * @fn Connection(boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInUdp, std::shared_ptr<_QUEUE_TYPE> &dataInTcp)
              * @param ioContext A reference to the input output context.
-             * @param dataIn A reference to the input data.
+             * @param dataInTcp A reference to the tcp input data.
+             * @param dataInUdp A reference to the udp input data.
              */
-            Connection(boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn);
+            Connection(boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp);
             /**
              * @brief Connection constructor.
-             * @fn Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn)
+             * @fn Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInUdp, std::shared_ptr<_QUEUE_TYPE> &dataInTcp)
              * @param ip The ip of the client.
              * @param portUdp The udp port.
              * @param ioContext A reference to the input output context.
-             * @param dataIn A reference to the input data.
+             * @param dataInTcp A reference to the tcp input data.
+             * @param dataInUdp A reference to the udp input data.
              */
-            Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, _QUEUE_TYPE &dataIn);
+            Connection(std::string ip, uint16_t portTcp, boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp);
             /**
              * @brief Connection destructor.
              * @fn ~Connection()
@@ -141,11 +147,17 @@ namespace eng
              */
             void tcpMsg(_STORAGE_DATA data);
             /**
-             * @brief Send an ucp message.
+             * @brief Send an udp message.
              * @fn void udpMsg(_STORAGE_DATA data)
              * @param data The data to send through udp connection.
              */
             void udpMsg(_STORAGE_DATA data);
+
+            /**
+             * @brief Update the output data.
+             * @fn void updateDataOut()
+             */
+            void updateDataOut();
     };
 } // namespace eng
 

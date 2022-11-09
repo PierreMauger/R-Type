@@ -9,8 +9,8 @@
 #define ECS_HPP
 
 /// @cond
-#include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
+#include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/System/Animation/AnimationSystem.hpp"
 #include "Engine/ECS/System/Click/ClickSystem.hpp"
 #include "Engine/ECS/System/Enemy/EnemySystem.hpp"
@@ -21,6 +21,7 @@
 #include "Engine/ECS/System/Score/ScoreSystem.hpp"
 #include "Engine/ECS/System/Sound/SoundSystem.hpp"
 #include "Engine/ECS/System/SystemManager.hpp"
+
 /// @endcond
 
 /**

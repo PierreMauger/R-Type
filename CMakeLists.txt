@@ -109,9 +109,10 @@ set(ENGINE_INC
     ${ENGINE_ROOT}/ECS/Component/
     ${ENGINE_ROOT}/ECS/System/
     ${ENGINE_ROOT}/ECS/PreloadEntities/
-    ${ENGINE_ROOT}/Input/
     ${ENGINE_ROOT}/Graphic/
     ${ENGINE_ROOT}/Network/
+    ${ENGINE_ROOT}/Loader/
+    ${ENGINE_ROOT}/Level/
 )
 
 #fetch source files
@@ -141,13 +142,12 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/PreloadEntities/DevourerOfGodsPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/CthulhuPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ProjectilePreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/ObstaclePreload.cpp
     ${ENGINE_ROOT}/ECS/System/Enemy/EnemySystem.cpp
 
     # Network files
     ${ENGINE_ROOT}/Network/Connection.cpp
     ${ENGINE_ROOT}/Network/Serializer.cpp
-    ${ENGINE_ROOT}/Network/GameSerializer.cpp
-    ${ENGINE_ROOT}/Network/MenuSerializer.cpp
     ${ENGINE_ROOT}/Network/Room.cpp
 
     # Graphic files
@@ -156,8 +156,8 @@ set(ENGINE_SRC
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
 
-    # Input files
-    ${ENGINE_ROOT}/Input/Input.cpp
+    # Loader files
+    ${ENGINE_ROOT}/Level/Level.cpp
 
     # Engine files
     ${ENGINE_ROOT}/Engine.cpp
@@ -200,6 +200,8 @@ set(CLIENT_SRC
     ${CLIENT_ROOT}/main.cpp
     ${CLIENT_ROOT}/Client.cpp
     ${CLIENT_ROOT}/ClientNetwork.cpp
+    ${CLIENT_ROOT}/MenuSerializer.cpp
+    ${CLIENT_ROOT}/GameSerializer.cpp
 )
 
 #set include paths
@@ -240,8 +242,11 @@ set(SERVER_INC
 #fetch source files
 set(SERVER_SRC
     ${SERVER_ROOT}/main.cpp
+    ${SERVER_ROOT}/Client.cpp
     ${SERVER_ROOT}/Server.cpp
     ${SERVER_ROOT}/ServerNetwork.cpp
+    ${SERVER_ROOT}/MenuSerializer.cpp
+    ${SERVER_ROOT}/GameSerializer.cpp
 )
 
 #set include paths

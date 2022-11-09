@@ -7,11 +7,14 @@
 
 /// @cond
 #include "Server.hpp"
+
 /// @endcond
 
 /**
  * @brief Main function ran first when the r-type_server exectuable is launched.
  * @fn int main(int ac, char **av)
+ * @param ac The number of arguments
+ * @param av The arguments
  */
 int main(int ac, char **av)
 {
@@ -20,7 +23,11 @@ int main(int ac, char **av)
         return 84;
     }
 
-    eng::Server server(std::stoi(av[1]));
+    // init random
+    time_t time = std::time(nullptr);
+    std::srand(time);
+
+    eng::Server server(std::stoi(av[1]), time);
 
     server.mainLoop();
     return 0;

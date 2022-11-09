@@ -5,13 +5,13 @@
  * @copyright Epitech Rennes 2022
  */
 
-#ifndef GAMESERIALIZER_HPP
-#define GAMESERIALIZER_HPP
+#ifndef MENUSERIALIZER_HPP
+#define MENUSERIALIZER_HPP
 
 /// @cond
+#include "Client.hpp"
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
-#include "Engine/Input/Input.hpp"
 #include "Engine/Network/NetCommon.hpp"
 #include "Engine/Network/Room.hpp"
 #include "Engine/Network/Serializer.hpp"
@@ -48,7 +48,6 @@ namespace eng
         LEAVE,
         READY,
         UNREADY,
-        START,
 
         UNKNOWN_ACTION
     };
@@ -68,12 +67,12 @@ namespace eng
      * @brief The menu serializer
      * @class MenuSerializer
      */
-    class MenuSerializer : private Serializer
+    class MenuSerializer : protected Serializer
     {
-        private:
-            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, std::size_t id);
+        protected:
+            std::vector<Room>::iterator getRoom(std::vector<Room> rooms, int id);
 
-            void editRoom(CrudType crudType, std::vector<Room> &rooms, std::size_t id, std::size_t maxPlayers, std::size_t nbPlayers);
+            void editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers);
 
         public:
             /**
@@ -92,7 +91,7 @@ namespace eng
              * @fn handlePacket(_STORAGE_DATA packet)
              * @param packet The packet to handle.
              */
-            void handlePacket(_STORAGE_DATA packet);
+            void handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms, Client &client, std::size_t &roomCount);
 
             /**
              * @brief Serialize a room edit
@@ -108,7 +107,7 @@ namespace eng
              * @param packet The serialized packet
              * @param rooms A reference to the vector of rooms
              */
-            void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms);
+            void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms, std::size_t &roomCount);
 
             /**
              * @brief Serialize a room action
@@ -117,14 +116,14 @@ namespace eng
              * @param action A room action
              * @return The serialized packet
              */
-            _STORAGE_DATA serializeRoomAction(std::size_t id, RoomAction action);
+            // _STORAGE_DATA serializeRoomAction(std::size_t id, RoomAction action);
             /**
              * @brief Deserialize a room action
              * @fn void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms)
              * @param packet The serialized packet
              * @param rooms A reference to the vector of rooms
              */
-            void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms);
+            void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms, Client &client);
 
             /**
              * @brief Serialize an event
@@ -133,8 +132,14 @@ namespace eng
              * @return The serialized packet
              */
             _STORAGE_DATA serializeEvent(MenuEvent event);
-            // void deserializeEvent(std::vector<uint8_t> packet);
+
+            /**
+             * @brief Serialize an event
+             * @fn void deserializeEvent()
+             * @param event Event to deserialize
+             */
+            // void deserializeEvent();
     };
 }
 
-#endif // GAMESERIALIZER_HPP
+#endif // MENUSERIALIZER_HPP

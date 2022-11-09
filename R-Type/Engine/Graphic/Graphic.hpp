@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Includes.hpp"
+
 /// @endcond
 
 /**
@@ -31,6 +32,7 @@ namespace eng
             std::shared_ptr<sf::Vector2f> _screenSize;
             sf::Vector2f _lastSize;
             bool _isFullscreen;
+            std::shared_ptr<std::size_t> _sceneId;
 
         public:
             /**
@@ -97,6 +99,12 @@ namespace eng
              * @param isFullScreen Boolean setting the game in full screen or not
              */
             void setFullscreen(bool isFullscreen);
+            /**
+             * @brief Get the scene id
+             * @fn std::size_t getSceneId()
+             * @return The scene id
+             */
+            std::shared_ptr<std::size_t> getSceneId();
     };
 }
 

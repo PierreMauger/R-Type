@@ -4,15 +4,13 @@ using namespace eng;
 
 ScoreSystem::ScoreSystem(EntityManager &entityManager)
 {
-    entityManager.addMaskCategory(InfoComp::TEXT);
-    entityManager.addMaskCategory(InfoComp::CONTROLLABLE);
+    entityManager.addMaskCategory(this->_textTag);
+    entityManager.addMaskCategory(this->_controlTag);
 }
 
 bool ScoreSystem::findVessel(ComponentManager &componentManager, EntityManager &entityManager, Controllable &controllable)
 {
-    std::size_t checkCon = (InfoComp::CONTROLLABLE);
-
-    for (auto id : entityManager.getMaskCategory(checkCon)) {
+    for (auto id : entityManager.getMaskCategory(this->_controlTag)) {
         controllable = componentManager.getSingleComponent<Controllable>(id);
         return true;
     }
@@ -21,11 +19,10 @@ bool ScoreSystem::findVessel(ComponentManager &componentManager, EntityManager &
 
 void ScoreSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    std::size_t checkText = (InfoComp::TEXT);
     Controllable controllable;
 
     findVessel(componentManager, entityManager, controllable);
-    for (auto id : entityManager.getMaskCategory(checkText)) {
+    for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         Text &txt = componentManager.getSingleComponent<Text>(id);
         if (txt.str == "Death: ")
             txt.value = controllable.death;
