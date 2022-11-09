@@ -18,27 +18,37 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
     if (masks[id].has_value() && (masks[id].value() & physicDrop) == physicDrop) {
         Size &size = componentManager.getSingleComponent<Size>(id);
         Position &pos = componentManager.getSingleComponent<Position>(id);
-        std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE | InfoComp::SPRITEAT), componentManager);
-        if (drop == 2) {
-            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{22, Priority::MEDIUM, 0, 14, false, false, 0, 0.05, 32, 0});
-            componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 32, 32}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
-            componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2});
-            componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
-            componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{32 * sizeBonus.x / _screenSize->x * _window->getSize().x, 32 * sizeBonus.y / _screenSize->y * _window->getSize().y});
-            addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-            componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{0, false, false});
-            return;
+        std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::SYNCID), componentManager);
+        switch (drop) {
+            case 0:
+                componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SHOOT_SIZE, Priority::MEDIUM});
+                componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 18, 16}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
+                componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
+                componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18 * sizeBonus.x, 16 * sizeBonus.y});
+                break;
+
+            case 1:
+                componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SPEED, Priority::MEDIUM});
+                componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 18, 16}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
+                componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
+                componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18 * sizeBonus.x, 16 * sizeBonus.y});
+                break;
+
+            case 2:
+                componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SHIELD, Priority::MEDIUM, 0, 14, false, false, 0, 0.05, 32, 0});
+                componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 32, 32}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
+                componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2});
+                componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{32 * sizeBonus.x / _screenSize->x * _window->getSize().x, 32 * sizeBonus.y / _screenSize->y * _window->getSize().y});
+                break;
+
+            default:
+                break;
         }
-        if (drop == 0)
-            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{8, Priority::MEDIUM});
-        if (drop == 1)
-            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{7, Priority::MEDIUM});
-        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 18, 16}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
-        componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
         componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
-        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18 * sizeBonus.x, 16 * sizeBonus.y});
-        addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+        componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{this->_syncId ? *(this->_syncId.get()) : 0});
+        addEntity = entityManager.addMask((InfoComp::SOUNDID | InfoComp::SYNCID), componentManager);
         componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{0, false, false});
+        componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{this->_syncId ? *(this->_syncId.get()) : 0});
     }
 }
 
@@ -96,7 +106,7 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
                 for (std::size_t j = 0; j < mask.size(); j++) {
                     if (!mask[j].has_value() || (mask[j].value() & InfoComp::SHIELD) != InfoComp::SHIELD)
                         continue;
-                    if (componentManager.getSingleComponent<Parent>(j).id == i) {
+                    if (componentManager.getSingleComponent<Parent>(j).id == componentManager.getSingleComponent<SyncID>(i).id) {
                         componentManager.removeAllComponents(j);
                         entityManager.removeMask(j);
                     }
@@ -139,7 +149,7 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                 for (std::size_t k = 0; k < masks.size(); k++) {
                     if (!masks[k].has_value() || ((masks[k].value() & physicShield) != physicShield))
                         continue;
-                    if (componentManager.getSingleComponent<Parent>(k).id == i) {
+                    if (componentManager.getSingleComponent<Parent>(k).id == componentManager.getSingleComponent<SyncID>(i).id) {
                         checkShield = true;
                         componentManager.getSingleComponent<Shield>(k).life = componentManager.getSingleComponent<Shield>(k).defaultLife;
                         break;
@@ -147,12 +157,12 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
                 }
                 if (!checkShield) {
                     std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD), componentManager);
-                    componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{21, Priority::MEDIUM});
+                    componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{S_SHIELD, Priority::MEDIUM});
                     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {size.x / _screenSize->x * this->_window->getSize().x, size.y / _screenSize->y * this->_window->getSize().y}, {700 / 2, 440 / 2}});
                     componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
-                    componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{i});
                     componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});
                     componentManager.getComponent(typeid(SyncID)).emplaceData(idShield, SyncID{this->_syncId ? *(this->_syncId.get()) : 0});
+                    componentManager.getComponent(typeid(Parent)).emplaceData(idShield, Parent{componentManager.getSingleComponent<SyncID>(idShield).id});
                 }
             }
             return true;
@@ -250,7 +260,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                     for (std::size_t k = 0; k < masks.size(); k++) {
                         if (!masks[k].has_value() || ((masks[k].value() & physicShield) != physicShield))
                             continue;
-                        if (componentManager.getSingleComponent<Parent>(k).id == j) {
+                        if (componentManager.getSingleComponent<Parent>(k).id == componentManager.getSingleComponent<SyncID>(j).id) {
                             Shield &shield = componentManager.getSingleComponent<Shield>(k);
                             if (proj.damage >= shield.life) {
                                 hp.life -= proj.damage - shield.life;

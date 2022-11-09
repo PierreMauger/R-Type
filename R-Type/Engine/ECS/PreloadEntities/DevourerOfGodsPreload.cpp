@@ -9,7 +9,7 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     std::size_t lastId = 0;
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
 
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{16, Priority::MEDIUM});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_DEVOURER_HEAD, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 375, 311}, sf::Color::White, {0.5f / screenSize->x * windowsSize.x, 0.5f / screenSize->y * windowsSize.y}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{position.x / screenSize->x * windowsSize.x, position.y / screenSize->y * windowsSize.y, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{2 / screenSize->x * windowsSize.x * -1, 0, 0});
@@ -23,7 +23,7 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
         lastId = id;
         Position &pos = componentManager.getSingleComponent<Position>(lastId);
         id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::PARENT), componentManager);
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{15, Priority::MEDIUM});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_PARALLAX_2, Priority::MEDIUM});
         componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 187, 282}, sf::Color::White, {0.5f / screenSize->x * windowsSize.x, 0.5f / screenSize->y * windowsSize.y}});
         componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + 187, pos.y, 0});
         componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{2 / screenSize->x * windowsSize.x * -1, 0, 0});
