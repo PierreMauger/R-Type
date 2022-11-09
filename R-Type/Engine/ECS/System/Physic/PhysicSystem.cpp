@@ -318,7 +318,7 @@ bool PhysicSystem::splitCollisionFireball(ComponentManager &componentManager, En
             if ((masks[j].value() & InfoComp::LIFE) != InfoComp::LIFE) {
                 componentManager.removeAllComponents(i);
                 entityManager.removeMask(i);
-                return false;
+                return true;
             }
             this->collisionFireballEnemy(componentManager, masks, i, j, par, checkShield);
             this->collisionCheckShield(componentManager, entityManager, i, j, masks, checkShield);
