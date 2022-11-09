@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileS projectile)
+void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileStats projectile)
 {
     auto &masks = entityManager.getMasks();
     std::size_t sizeMask = (InfoComp::SIZE | InfoComp::COOLDOWNSHOOT | InfoComp::POS);

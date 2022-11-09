@@ -29,12 +29,12 @@ namespace eng
              * @struct Projectile
              * @brief struct of the projectile.
             */
-            typedef struct ProjectileS {
+            typedef struct ProjectileStats {
                 std::size_t damage = 0;
                 float velX = 0.0f;
                 float velY = 0.0f;
                 float rotation = 0.0f;
-            } ProjectileS;
+            } ProjectileStats;
 
             /**
              * @brief Preloads the projectile.
@@ -52,7 +52,7 @@ namespace eng
              * @param id The id of the projectile.
              * @param damage The damage of the projectile.
              */
-            static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileS projectile);
+            static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileStats projectile);
     };
 }
 
