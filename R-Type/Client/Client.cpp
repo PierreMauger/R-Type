@@ -67,8 +67,8 @@ void Client::initComponents()
 
 void Client::initEntities()
 {
-    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Client::syncUdpNetwork()
@@ -117,28 +117,6 @@ void Client::updateNetwork()
     this->_network.updateConnection();
 }
 
-void Client::updateEvent()
-{
-    Graphic &graphic = this->_engine.getGraphic();
-
-    while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
-#ifndef NDEBUG
-        ImGui::SFML::ProcessEvent(*graphic.getEvent());
-#endif
-        if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-            graphic.getWindow()->close();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
-            graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen - graphic.isFullscreen());
-            graphic.getWindow()->setFramerateLimit(60);
-            graphic.setFullscreen(!graphic.isFullscreen());
-        }
-        if (graphic.getEvent()->type == sf::Event::Resized) {
-            this->_engine.updateSizeWindow();
-            graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
-        }
-    }
-}
-
 void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
@@ -146,8 +124,23 @@ void Client::mainLoop()
     VesselPreload vesselPreload;
 
     while (graphic.getWindow()->isOpen()) {
+        while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
+#ifndef NDEBUG
+            ImGui::SFML::ProcessEvent(*graphic.getEvent());
+#endif
+            if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                graphic.getWindow()->close();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
+                graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen - graphic.isFullscreen());
+                graphic.getWindow()->setFramerateLimit(60);
+                graphic.setFullscreen(!graphic.isFullscreen());
+            }
+            if (graphic.getEvent()->type == sf::Event::Resized) {
+                this->_engine.updateSizeWindow();
+                graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
+            }
+        }
         this->updateNetwork();
-        this->updateEvent();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
