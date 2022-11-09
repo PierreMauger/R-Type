@@ -192,7 +192,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayTransform) {
                 pat.statusTime = this->_clock->getElapsedTime().asSeconds();
                 pat.status = TypeStatus::SEARCH;
-                spriteID = SpriteID{20, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
+                spriteID = SpriteID{S_CTHULHU_MOUTH, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
                 spriteAttribut.rect = {0, 0, 110, 146};
                 id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
                 componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
