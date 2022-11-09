@@ -153,7 +153,7 @@ void Server::updateClients()
                 check = true;
         }
         if (!check) {
-            this->_clients.push_back(Client(connection, this->_roomId++));
+            this->_clients.push_back(Client(connection, this->_clientId++));
         }
         check = false;
     }
