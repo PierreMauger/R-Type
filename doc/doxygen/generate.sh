@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /tmp/rtype/doc
+cd /tmp/rtype/doc/doxygen
 doxygen Doxyfile
