@@ -53,6 +53,7 @@
 #define S_BONUS_SPEED           7
 #define S_BONUS_SHOOT_SIZE      8
 
+// #define ???                      9
 #define S_BUTTON                10
 
 // Parallax
