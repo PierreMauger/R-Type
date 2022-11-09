@@ -1,4 +1,0 @@
-<map id="eng::ClickSystem" name="eng::ClickSystem">
-<area shape="rect" id="node1" title="System that handle mouse inputs." alt="" coords="5,79,131,104"/>
-<area shape="rect" id="node2" href="$classeng_1_1_i_system.html" title="Interface of the system." alt="" coords="19,5,117,31"/>
-</map>

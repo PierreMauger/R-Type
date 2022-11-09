@@ -1,19 +1,13 @@
 var searchData=
 [
-  ['ecs_0',['ECS',['../classeng_1_1_e_c_s.html#a15ee7037f1629d2d0b8c2528f79c88d4',1,'eng::ECS::ECS()'],['../classeng_1_1_e_c_s.html',1,'eng::ECS']]],
-  ['ecs_2ehpp_1',['ECS.hpp',['../_e_c_s_8hpp.html',1,'']]],
-  ['emplacedata_2',['emplaceData',['../classeng_1_1_sparse_array.html#a35efaddf77edb9fbbaed1d4d145a7fac',1,'eng::SparseArray']]],
-  ['empty_3',['empty',['../class_queue.html#a5530ceb38c44db1c9642f84fa7f36c07',1,'Queue']]],
-  ['enemy_4',['Enemy',['../struct_enemy.html',1,'']]],
-  ['enemypreload_5',['EnemyPreload',['../classeng_1_1_enemy_preload.html',1,'eng']]],
-  ['enemypreload_2ehpp_6',['EnemyPreload.hpp',['../_enemy_preload_8hpp.html',1,'']]],
-  ['enemysystem_7',['EnemySystem',['../classeng_1_1_enemy_system.html#a5168e400f97d9bf2d75eaddefd5aeb80',1,'eng::EnemySystem::EnemySystem()'],['../classeng_1_1_enemy_system.html',1,'eng::EnemySystem']]],
-  ['enemysystem_2ehpp_8',['EnemySystem.hpp',['../_enemy_system_8hpp.html',1,'']]],
-  ['eng_9',['eng',['../namespaceeng.html',1,'']]],
-  ['engine_10',['Engine',['../classeng_1_1_engine.html',1,'eng::Engine'],['../classeng_1_1_engine.html#afe566b13c6d554f2e618269d2af3cde1',1,'eng::Engine::Engine()']]],
-  ['engine_2ehpp_11',['Engine.hpp',['../_engine_8hpp.html',1,'']]],
-  ['entitymanager_12',['EntityManager',['../classeng_1_1_entity_manager.html',1,'eng::EntityManager'],['../classeng_1_1_entity_manager.html#a460e0548f9af3fb3e9b41c38cb9666b8',1,'eng::EntityManager::EntityManager()']]],
-  ['entitymanager_2ehpp_13',['EntityManager.hpp',['../_entity_manager_8hpp.html',1,'']]],
-  ['entitypreload_14',['EntityPreload',['../classeng_1_1_entity_preload.html',1,'eng']]],
-  ['entitypreload_2ehpp_15',['EntityPreload.hpp',['../_entity_preload_8hpp.html',1,'']]]
+  ['deserializeentity_40',['deserializeEntity',['../classeng_1_1GameSerializer.html#a18ef3379ad976dbaf980a5a31a6ff665',1,'eng::GameSerializer']]],
+  ['deserializeevent_41',['deserializeEvent',['../classeng_1_1MenuSerializer.html#ac6964bcda780fe3e0545c92445747344',1,'eng::MenuSerializer']]],
+  ['deserializeinput_42',['deserializeInput',['../classeng_1_1GameSerializer.html#a31555e90a55fb2b8e3b4079f74a1e8d9',1,'eng::GameSerializer']]],
+  ['deserializeroomaction_43',['deserializeRoomAction',['../classeng_1_1MenuSerializer.html#afd3e2ed39e15b471ce4485f9eab09105',1,'eng::MenuSerializer']]],
+  ['destroydata_44',['destroyData',['../classeng_1_1SparseArray.html#a7273bfca7fd6b69dcd6037d84b35fea9',1,'eng::SparseArray']]],
+  ['devourerofgodspreload_45',['DevourerOfGodsPreload',['../classDevourerOfGodsPreload.html',1,'']]],
+  ['devourerofgodspreload_2ehpp_46',['DevourerOfGodsPreload.hpp',['../DevourerOfGodsPreload_8hpp.html',1,'']]],
+  ['devourerpreload_47',['DevourerPreload',['../classeng_1_1DevourerPreload.html',1,'eng']]],
+  ['disappearance_48',['Disappearance',['../structDisappearance.html',1,'']]],
+  ['dropbonus_49',['DropBonus',['../structDropBonus.html',1,'']]]
 ];
