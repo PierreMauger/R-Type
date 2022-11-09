@@ -170,7 +170,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
             }
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, 1, ((posPlayer.x - pos.x) / 35), ((posPlayer.y - pos.y) / 35), spriteAttribut.rotation + 90);
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {1, ((posPlayer.x - pos.x) / 35), ((posPlayer.y - pos.y) / 35), spriteAttribut.rotation + 90});
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
             break;
@@ -192,7 +192,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayTransform) {
                 pat.statusTime = this->_clock->getElapsedTime().asSeconds();
                 pat.status = TypeStatus::SEARCH;
-                spriteID = SpriteID{20, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
+                spriteID = SpriteID{S_CTHULHU_MOUTH, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
                 spriteAttribut.rect = {0, 0, 110, 146};
                 id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
                 componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
@@ -260,7 +260,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
         if ((masks[i].value() & cooldownEnemy) == cooldownEnemy) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, 1, -10, 0, 180);
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, {1, -10, 0, 180});
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }
