@@ -33,12 +33,6 @@ void ParallaxPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 100, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-1, 0, 0});
     componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
-    id = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARALLAX | InfoComp::SPRITEAT), componentManager);
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_PARALLAX_4, Priority::HIGH});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, sf::FloatRect(0, 0, 96, 96), sf::Color::White, sf::Vector2f(size3.x / screenSize->x * windowsSize.x, size3.y / screenSize->y * windowsSize.y)});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{0, 500 / screenSize->y * windowsSize.y, 0});
-    componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{-2, 0, 0});
-    componentManager.getComponent(typeid(Parallax)).emplaceData(id, Parallax{true});
 }
 
 void ParallaxPreload::preload(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager)

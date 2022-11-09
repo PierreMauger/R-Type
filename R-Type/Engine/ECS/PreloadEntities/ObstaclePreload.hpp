@@ -1,12 +1,12 @@
 /**
- * @file CthulhuPreload.hpp
+ * @file ObstaclePreload.hpp
  * @authors Pierre HAMEL • Dorian AYOUL • Jean-Baptiste BROCHERIE • Pierre MAUGER • Xavier TONNELLIER
- * @brief Preload the Eye of Cthulhu (terraria boss).
+ * @brief Preload the enemy.
  * @copyright Epitech Rennes 2022
  */
 
-#ifndef CTHULHUPRELOAD_HPP_
-#define CTHULHUPRELOAD_HPP_
+#ifndef OBSTACLEPRELOAD_HPP
+#define OBSTACLEPRELOAD_HPP
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
@@ -20,19 +20,19 @@
 namespace eng
 {
     /**
-     * @brief Preloads the Eye of Cthulhu.
-     * @class CthulhuPreload
+     * @brief Preloads the enemy.
+     * @class ObstaclePreload
      */
-    class CthulhuPreload : public EntityPreload
+    class ObstaclePreload : public EntityPreload
     {
         public:
             /**
-             * @brief Preloads the Eye of Cthulhu.
-             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+             * @brief Preloads the enemy.
+             * @fn static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos)
              * @param engine A reference to the engine.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos);
     };
 }
 
-#endif /* !CTHULHUPRELOAD_HPP_ */
+#endif // OBSTACLEPRELOAD_HPP

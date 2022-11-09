@@ -251,6 +251,8 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
                     ((masks[j].value() & physicEne) == physicEne && (masks[par.id].value() & physicEne) == physicEne))
                     continue;
                 if (this->checkColision(pos, componentManager.getSingleComponent<Position>(j), componentManager.getSingleComponent<Size>(i), componentManager.getSingleComponent<Size>(j))) {
+                    if ((masks[j].value() & InfoComp::LIFE) != InfoComp::LIFE)
+                        continue;
                     Life &hp = componentManager.getSingleComponent<Life>(j);
                     Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
                     if ((masks[par.id].value() & physicCon) == physicCon)
