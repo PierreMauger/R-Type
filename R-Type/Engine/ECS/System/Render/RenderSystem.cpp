@@ -90,7 +90,7 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
                     spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
                     spriteRef.setScale(scal, scal);
                     spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
-                    spriteRef.setPosition(pos.x + (64 * scal) * 2, pos.y + (28 * scal));
+                    spriteRef.setPosition(pos.x + (64 * scal), pos.y + (28 * scal));
                 } else {
                     componentManager.removeAllComponents(i);
                     entityManager.removeMask(i);
@@ -154,7 +154,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setColor(spriteAt.color);
             spriteRef.setScale(spriteAt.scale);
             spriteRef.setOrigin(spriteAt.offset);
-            spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
+            spriteRef.setPosition(pos.x + spriteAt.offset.x * 2, pos.y + spriteAt.offset.y * 2);
         }
         if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;

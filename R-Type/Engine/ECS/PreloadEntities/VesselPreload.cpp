@@ -22,7 +22,7 @@ void VesselPreload::preload(Graphic &graphic, EntityManager &entityManager, Comp
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
     std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD | InfoComp::SYNCID), componentManager);
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{S_SHIELD, Priority::MEDIUM});
+    componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{21, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {size.x / screenSize->x * windowsSize.x, size.y / screenSize->y * windowsSize.y}, {700 / 2, 440 / 2}});
     componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
     componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});

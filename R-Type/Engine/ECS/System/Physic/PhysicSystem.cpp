@@ -166,7 +166,7 @@ void PhysicSystem::bonusFound(ComponentManager &componentManager, EntityManager 
     }
 }
 
-bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
+bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos)
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicDrop = (InfoComp::SIZE | InfoComp::POS | InfoComp::DROP);
@@ -189,7 +189,7 @@ bool PhysicSystem::collisionBonus(std::size_t i, ComponentManager &componentMana
     return false;
 }
 
-bool PhysicSystem::collisionEnemySplit(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Position &pos)
+bool PhysicSystem::collisionEnemySplit(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Position pos)
 {
     std::size_t physicCol = (InfoComp::POS | InfoComp::ENEMY | InfoComp::SIZE);
     std::size_t physicDis = (InfoComp::DIS);
@@ -206,7 +206,7 @@ bool PhysicSystem::collisionEnemySplit(ComponentManager &componentManager, Entit
     return false;
 }
 
-bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
+bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos)
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicCon = (InfoComp::CONTROLLABLE);
@@ -301,7 +301,7 @@ void PhysicSystem::collisionCheckShield(ComponentManager &componentManager, Enti
         hp.life -= proj.damage;
 }
 
-bool PhysicSystem::splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Position &pos)
+bool PhysicSystem::splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Position pos)
 {
     std::size_t physicApp = (InfoComp::APP);
     std::size_t physicEne = (InfoComp::ENEMY);
@@ -334,7 +334,7 @@ bool PhysicSystem::splitCollisionFireball(ComponentManager &componentManager, En
     return false;
 }
 
-bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos)
+bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos)
 {
     auto &masks = entityManager.getMasks();
     std::size_t physicProj = (InfoComp::PROJECTILE | InfoComp::PARENT | InfoComp::POS);
@@ -404,9 +404,11 @@ bool PhysicSystem::physicAnim(ComponentManager &componentManager, EntityManager 
     return false;
 }
 
-bool PhysicSystem::physicCollision(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, Position &pos)
+bool PhysicSystem::physicCollision(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, Position pos)
 {
-    if ((masks[i].value() & InfoComp::PATTERN) != InfoComp::PATTERN) {
+    std::size_t physicCol = (InfoComp::SPRITEAT | InfoComp::PATTERN);
+
+    if ((masks[i].value() & physicCol) != physicCol) {
         if (this->collisionEnemy(i, componentManager, entityManager, pos))
             return true;
         if (this->collisionBonus(i, componentManager, entityManager, pos))
