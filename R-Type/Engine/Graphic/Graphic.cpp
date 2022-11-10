@@ -59,3 +59,8 @@ std::shared_ptr<std::size_t> Graphic::getSceneId()
 {
     return this->_sceneId;
 }
+
+// std::vector<Level> &Graphic::getLevels()
+// {
+//     return this->_levels;
+// }
