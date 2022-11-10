@@ -29,7 +29,6 @@ void Server::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    // systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
 void Server::initComponents()
@@ -188,9 +187,8 @@ void Server::updateNetwork()
 
     // this->syncTcpNetwork();
     // this->syncUdpNetwork();
-    if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
+    if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
-    }
     this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->updateClients();
     this->updateEntities();
@@ -201,10 +199,9 @@ void Server::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    VesselPreload vesselPreload;
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
 
-    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
+    VesselPreload::preload(graphic.getWindow()->getSize(), graphic.getScreenSize(), ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy(level[0], graphic, ecs);
