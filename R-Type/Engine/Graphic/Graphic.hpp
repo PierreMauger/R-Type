@@ -9,7 +9,6 @@
 #define GRAPHIC_HPP
 
 /// @cond
-// #include "Engine/Level/Level.hpp"
 #include "Includes.hpp"
 
 /// @endcond
@@ -31,7 +30,6 @@ namespace eng
             std::shared_ptr<sf::Event> _event;
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::Vector2f> _screenSize;
-            // std::vector<Level> _levels;
             sf::Vector2f _lastSize;
             bool _isFullscreen;
             std::shared_ptr<std::size_t> _sceneId;
@@ -107,12 +105,6 @@ namespace eng
              * @return The scene id
              */
             std::shared_ptr<std::size_t> getSceneId();
-            /**
-             * @brief Get the levels
-             * @fn std::vector<Level> &getLevels()
-             * @return A reference to the levels
-             */
-            // std::vector<Level> &getLevels();
     };
 }
 
