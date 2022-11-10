@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, EntityManager &entityManager)
+ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
@@ -11,6 +11,7 @@ ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, st
 
     this->_port = port;
     this->_ip = ip;
+    this->_isLocal = isLocal;
 
     entityManager.addMaskCategory(this->_buttonTag);
 }
@@ -35,6 +36,9 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
             if (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x && mousePos.y >= pos.y && mousePos.y <= pos.y + size.y) {
                 if (button.type == ButtonType::PLAY_SOLO) {
                     *this->_sceneId = *this->_sceneId + 1;
+                    std::size_t temp = 0;
+                    *this->_isLocal = true;
+                    VesselPreload::preload(this->_window->getSize(), this->_screenSize, entityManager, componentManager, temp);
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();
                 } else if (button.type == ButtonType::TEXTZONE) {
