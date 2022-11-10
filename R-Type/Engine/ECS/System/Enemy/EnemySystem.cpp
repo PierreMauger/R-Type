@@ -226,7 +226,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
     for (std::size_t i = 0; i < masks.size(); i++) {
         if (!masks[i].has_value() || (entityManager.hasMask(i, appear) && componentManager.getSingleComponent<Appearance>(i).app))
             continue;
-        if ((masks[i].value() & eneParent) == eneParent && componentManager.getSingleComponent<Parent>(i).follow == true) {
+        if (entityManager.hasMask(i, eneParent) && componentManager.getSingleComponent<Parent>(i).follow == true) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
             Position &parentPos = componentManager.getSingleComponent<Position>(componentManager.getSingleComponent<Parent>(i).id);
             pos.x = parentPos.x;
@@ -234,7 +234,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
             continue;
         }
 
-        if ((masks[i].value() & enemyData) != enemyData)
+        if (!entityManager.hasMask(i, enemyData))
             continue;
 
         Velocity &vel = componentManager.getSingleComponent<Velocity>(i);
@@ -256,7 +256,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
             this->cthulhuPattern(i, componentManager, entityManager);
             continue;
         }
-        if ((masks[i].value() & cooldownEnemy) == cooldownEnemy) {
+        if (entityManager.hasMask(i, cooldownEnemy)) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
                 ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, {1, -10, 0, 180});

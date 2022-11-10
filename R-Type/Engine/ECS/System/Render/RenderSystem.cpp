@@ -21,7 +21,6 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
 
 bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t cooldownBarParent = (InfoComp::COOLDOWNBAR | InfoComp::SPRITEID | InfoComp::PARENT);
     std::size_t cooldownBarChild = (InfoComp::COOLDOWNSHOOT);
     std::size_t size = 100 / this->_screenSize->x * this->_window->getSize().x;
@@ -44,7 +43,6 @@ bool RenderSystem::displayCooldownBar(ComponentManager &componentManager, Entity
 
 bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t lifeBarParent = (InfoComp::POS | InfoComp::LIFEBAR | InfoComp::PARENT);
     std::size_t lifeBarChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
 
@@ -68,7 +66,6 @@ bool RenderSystem::displayLifeBar(ComponentManager &componentManager, EntityMana
 
 bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManager &entityManager, sf::Sprite &spriteRef, std::size_t i)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t shieldParent = (InfoComp::POS | InfoComp::SHIELD | InfoComp::PARENT);
     std::size_t shieldChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
     float scal = 0.3;
@@ -101,7 +98,6 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
 
 void RenderSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t renderAnim = (InfoComp::SPRITEAT);
     std::size_t renderCooldown = (InfoComp::PARENT | InfoComp::COOLDOWNBAR);
     std::size_t renderLife = (InfoComp::PARENT | InfoComp::LIFEBAR);

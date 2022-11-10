@@ -38,7 +38,7 @@ namespace eng
             void switchCreateBonus(std::size_t addEntity, std::size_t drop, ComponentManager &componentManager, Size &size, Position &pos);
             bool checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
             bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
-            void killWhenDisappeared(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, std::vector<std::optional<std::size_t>> &mask);
+            void killWhenDisappeared(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i);
             bool checkCollision(Position &pos, Position &pos2, Size &sz, Size &sz2);
             bool collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             void bonusFound(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, DropBonus &drop, Size &size);
@@ -51,7 +51,7 @@ namespace eng
             void checkFireballDamage(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager);
             void physicVessel(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i);
             void physicPattern(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i);
-            bool physicCollision(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, Position &pos);
+            bool physicCollision(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position &pos);
             bool physicAnim(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position &pos, Velocity &vel);
 
         public:

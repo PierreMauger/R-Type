@@ -13,7 +13,6 @@ AnimationSystem::AnimationSystem(Graphic &graphic, EntityManager &entityManager,
 
 void AnimationSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t appMask = (InfoComp::APP);
     std::size_t contMask = (InfoComp::CONTROLLABLE | InfoComp::VEL);
 
@@ -30,7 +29,7 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
                 spriteAT.rect.left = 0;
             continue;
         }
-        if (spriteID.nbFrame == 0 || ((masks[id].value() & appMask) == appMask && componentManager.getSingleComponent<Appearance>(id).app))
+        if (spriteID.nbFrame == 0 || (entityManager.hasMask(id, appMask) && componentManager.getSingleComponent<Appearance>(id).app))
             continue;
         if (this->_clock->getElapsedTime().asSeconds() >= spriteID.lastTime + spriteID.delay) {
             if (spriteID.curFrame == 0 && !spriteID.autoLoop)
