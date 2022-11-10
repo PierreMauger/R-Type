@@ -24,7 +24,7 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{(windowsSize.x / (screenSize->x / projectile.velX)), (windowsSize.x / (screenSize->x / projectile.velY)), 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, projectile.damage, sizeProj.size});
-    componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * (sizeProj.size / screenSize->x * windowsSize.x), sizeFire.y * (sizeProj.size / screenSize->y * windowsSize.y)});
+    componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * sizeProj.size, sizeFire.y * sizeProj.size});
     if (!enemy) {
         addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
         float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));
