@@ -63,8 +63,8 @@ namespace eng
             void initEntities();
             void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
             void manageEvent();
-            void syncUdpNetwork(Client &client);
-            void syncTcpNetwork(Client &client);
+            void syncUdpNetwork();
+            void syncTcpNetwork();
             void updateRooms();
             void updateClients();
             void updateEntities();
