@@ -93,6 +93,15 @@ namespace eng
             void updateMask(std::size_t id, std::optional<std::size_t> mask);
 
             /**
+             * @brief Get the mask of an entity.
+             * @fn bool getMask(std::size_t id, std::size_t mask)
+             * @param id The id of the entity.
+             * @param mask The mask of the entity.
+             * @return true if the entity has the mask, otherwise false.
+             */
+            bool hasMask(std::size_t id, std::size_t mask);
+
+            /**
              * @brief Get the id by syncId
              * @fn std::size_t getBySyncId(std::size_t syncId, EntityManager &entityManager)
              * @param syncId SyncId of the entity to get.

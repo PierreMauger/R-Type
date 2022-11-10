@@ -35,6 +35,7 @@ namespace eng
             std::shared_ptr<std::string> _ip;
 
             std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
+            std::size_t _sceneTag = (InfoComp::SCENE);
 
         public:
             /**
