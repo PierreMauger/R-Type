@@ -49,6 +49,7 @@ namespace eng
 
             std::shared_ptr<std::string> _ip;
             std::shared_ptr<std::size_t> _port;
+            std::shared_ptr<bool> _isLocal;
 
             void initSystems();
             void initComponents();
@@ -57,6 +58,7 @@ namespace eng
             void syncTcpNetwork();
             void updateNetwork();
             void updateEvent();
+            void manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
 
         public:
             /**
