@@ -6,6 +6,7 @@ Client::Client() : _network()
 {
     this->_ip = std::make_shared<std::string>("");
     this->_port = std::make_shared<std::size_t>(0);
+    this->_isLocal = std::make_shared<bool>(false);
     this->initSystems();
     this->initComponents();
     this->initEntities();
@@ -33,7 +34,7 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, entityManager));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, entityManager));
 }
 
 void Client::initComponents()
@@ -140,17 +141,30 @@ void Client::updateEvent()
     }
 }
 
+void Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+{
+    std::size_t i = 0;
+
+    if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
+        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), i);
+        level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
+    }
+}
+
 void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    VesselPreload vesselPreload;
+    std::vector<Level> &level = this->_engine.getLoader().getLevels();
 
+    std::size_t i = 0;
     while (graphic.getWindow()->isOpen()) {
-        this->updateNetwork();
         this->updateEvent();
+        if (*this->_isLocal)
+            this->manageEnemy(level[0], graphic, ecs);
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
+        this->updateNetwork();
     }
 }

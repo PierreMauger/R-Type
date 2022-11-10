@@ -17,9 +17,9 @@
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
+#include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
-#include "Engine/Level/Level.hpp"
 #include "Engine/Network/Room.hpp"
 #include "GameSerializer.hpp"
 #include "Includes.hpp"
@@ -63,7 +63,7 @@ namespace eng
             void initSystems();
             void initComponents();
             void initEntities();
-            bool manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
+            bool manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
             bool checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic);
             void manageEvent();
             void syncUdpNetwork(Client &client);

@@ -49,10 +49,5 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
             text.str += ".";
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && _event->type == sf::Event::KeyPressed && text.str.size() > 0)
             text.str = text.str.substr(0, text.str.size() - 1);
-        // if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-        // componentManager.clear();
-        // entityManager.clear();
-        // ParallaxPreload::preload(this->_window, this->_screenSize, entityManager, componentManager);
-        // }
     }
 }
