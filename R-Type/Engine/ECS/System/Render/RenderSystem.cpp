@@ -8,6 +8,7 @@ RenderSystem::RenderSystem(Graphic &graphic, EntityManager &entityManager, std::
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
     this->_sprites = sprites;
+    this->_sceneId = graphic.getSceneId();
     if (!this->_font.loadFromFile("R-Type/Assets/Fonts/PeachDays.ttf"))
         throw std::runtime_error("Error: Font not found");
     this->_text.setFont(this->_font);
@@ -121,6 +122,11 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
 
     for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         sf::Text &textRef = this->_text;
+        if (entityManager.hasMask(id, this->_sceneTag)) {
+            Scene &scene = componentManager.getSingleComponent<Scene>(id);
+            if (scene.id != *this->_sceneId)
+                continue;
+        }
         textRef.setCharacterSize(35 / this->_screenSize->x * this->_window->getSize().x);
         if (componentManager.getSingleComponent<Text>(id).hasValue)
             textRef.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
@@ -134,7 +140,11 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
-
+        if (entityManager.hasMask(id, this->_sceneTag)) {
+            Scene &scene = componentManager.getSingleComponent<Scene>(id);
+            if (scene.id != *this->_sceneId)
+                continue;
+        }
         sf::Sprite &spriteRef = this->_sprites->at(spriteId.id);
         spriteRef.setPosition(pos.x, pos.y);
         if (masks[id].has_value() && (masks[id].value() & renderAnim) == renderAnim) {

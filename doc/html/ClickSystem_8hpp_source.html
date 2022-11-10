@@ -93,15 +93,16 @@ $(function() {
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::shared_ptr&lt;std::string&gt; _ip;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="classeng_1_1ClickSystem.html#a629479f1743005085f9c4260a0a5839c">ClickSystem</a>(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, std::shared_ptr&lt;std::size_t&gt; port, std::shared_ptr&lt;std::string&gt; ip, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classeng_1_1ClickSystem.html#a46a70ade2a255e024d3d5b5a872ef848">   51</a></span>&#160;            <a class="code" href="classeng_1_1ClickSystem.html#a46a70ade2a255e024d3d5b5a872ef848">~ClickSystem</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClickSystem.html#a099304f154c64d1cc2944072ed216391">update</a>(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    };</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// CLICKSYSTEM_HPP</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            std::size_t _sceneTag = (InfoComp::SCENE);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <a class="code" href="classeng_1_1ClickSystem.html#a629479f1743005085f9c4260a0a5839c">ClickSystem</a>(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, std::shared_ptr&lt;std::size_t&gt; port, std::shared_ptr&lt;std::string&gt; ip, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classeng_1_1ClickSystem.html#a46a70ade2a255e024d3d5b5a872ef848">   52</a></span>&#160;            <a class="code" href="classeng_1_1ClickSystem.html#a46a70ade2a255e024d3d5b5a872ef848">~ClickSystem</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1ClickSystem.html#a099304f154c64d1cc2944072ed216391">update</a>(<a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    };</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// CLICKSYSTEM_HPP</span></div>
 <div class="ttc" id="aGraphic_8hpp_html"><div class="ttname"><a href="Graphic_8hpp.html">Graphic.hpp</a></div><div class="ttdoc">The Engine graphics (SFML).</div></div>
 <div class="ttc" id="aISystem_8hpp_html"><div class="ttname"><a href="ISystem_8hpp.html">ISystem.hpp</a></div><div class="ttdoc">Interface of the system.</div></div>
 <div class="ttc" id="aParallaxPreload_8hpp_html"><div class="ttname"><a href="ParallaxPreload_8hpp.html">ParallaxPreload.hpp</a></div><div class="ttdoc">Preload the parallax.</div></div>

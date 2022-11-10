@@ -102,13 +102,15 @@ $(function() {
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1EntityManager.html#a5c4b8da12d8df10cc2362489148e9454">removeMask</a>(std::size_t <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1EntityManager.html#a465dc393b0da213cf74cd343277c315d">updateMask</a>(std::size_t <span class="keywordtype">id</span>, std::optional&lt;std::size_t&gt; mask);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            std::size_t <a class="code" href="classeng_1_1EntityManager.html#af9006bfeddec8ff81c9fdb7ac7b6669e">getBySyncId</a>(std::size_t syncId, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordtype">bool</span> hasMask(std::size_t <span class="keywordtype">id</span>, std::size_t mask);</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordtype">void</span> clear();</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    };</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENTITYMANAGER_HPP</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            std::size_t <a class="code" href="classeng_1_1EntityManager.html#af9006bfeddec8ff81c9fdb7ac7b6669e">getBySyncId</a>(std::size_t syncId, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordtype">void</span> clear();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    };</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENTITYMANAGER_HPP</span></div>
 <div class="ttc" id="aComponentManager_8hpp_html"><div class="ttname"><a href="ComponentManager_8hpp.html">ComponentManager.hpp</a></div><div class="ttdoc">Functions definitions for the ComponentManager containing/handling the engine's components.</div></div>
 <div class="ttc" id="aIncludes_8hpp_html"><div class="ttname"><a href="Includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
 <div class="ttc" id="aclasseng_1_1ComponentManager_html"><div class="ttname"><a href="classeng_1_1ComponentManager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:29</div></div>
@@ -121,7 +123,7 @@ $(function() {
 <div class="ttc" id="aclasseng_1_1EntityManager_html_a9b200fa478c070bc3dd0046a11dea29f"><div class="ttname"><a href="classeng_1_1EntityManager.html#a9b200fa478c070bc3dd0046a11dea29f">eng::EntityManager::addMask</a></div><div class="ttdeci">std::size_t addMask(std::optional&lt; std::size_t &gt; mask, ComponentManager &amp;componentManager)</div><div class="ttdoc">Add a mask.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:24</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html_aa0788a80011917b8805db67fdee5f977"><div class="ttname"><a href="classeng_1_1EntityManager.html#aa0788a80011917b8805db67fdee5f977">eng::EntityManager::addManualMask</a></div><div class="ttdeci">void addManualMask(std::size_t id, std::optional&lt; std::size_t &gt; mask, ComponentManager &amp;componentManager)</div><div class="ttdoc">Add a mask manually.</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html_ab32b4216ef842a31a381c660372a1639"><div class="ttname"><a href="classeng_1_1EntityManager.html#ab32b4216ef842a31a381c660372a1639">eng::EntityManager::addMaskCategory</a></div><div class="ttdeci">void addMaskCategory(std::size_t category)</div><div class="ttdoc">Add a mask category.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:14</div></div>
-<div class="ttc" id="aclasseng_1_1EntityManager_html_af9006bfeddec8ff81c9fdb7ac7b6669e"><div class="ttname"><a href="classeng_1_1EntityManager.html#af9006bfeddec8ff81c9fdb7ac7b6669e">eng::EntityManager::getBySyncId</a></div><div class="ttdeci">std::size_t getBySyncId(std::size_t syncId, ComponentManager &amp;componentManager)</div><div class="ttdoc">Get the id by syncId.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:67</div></div>
+<div class="ttc" id="aclasseng_1_1EntityManager_html_af9006bfeddec8ff81c9fdb7ac7b6669e"><div class="ttname"><a href="classeng_1_1EntityManager.html#af9006bfeddec8ff81c9fdb7ac7b6669e">eng::EntityManager::getBySyncId</a></div><div class="ttdeci">std::size_t getBySyncId(std::size_t syncId, ComponentManager &amp;componentManager)</div><div class="ttdoc">Get the id by syncId.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:74</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
