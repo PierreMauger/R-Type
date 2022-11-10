@@ -51,10 +51,10 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
         std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::DROP | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::SYNCID), componentManager);
         this->switchCreateBonus(addEntity, drop, componentManager, size, pos);
         componentManager.getComponent(typeid(DropBonus)).emplaceData(addEntity, DropBonus{drop});
-        componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{this->_syncId ? *(this->_syncId.get()) : 0});
+        componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{this->_syncId ? *this->_syncId : 0});
         addEntity = entityManager.addMask((InfoComp::SOUNDID | InfoComp::SYNCID), componentManager);
         componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{0, false, false});
-        componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{this->_syncId ? *(this->_syncId.get()) : 0});
+        componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{this->_syncId ? *this->_syncId : 0});
     }
 }
 

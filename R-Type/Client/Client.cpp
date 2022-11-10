@@ -7,6 +7,7 @@ Client::Client() : _network()
     this->_ip = std::make_shared<std::string>("");
     this->_port = std::make_shared<std::size_t>(0);
     this->_isLocal = std::make_shared<bool>(false);
+    this->_syncId = std::make_shared<std::size_t>(0);
     this->initSystems();
     this->initComponents();
     this->initEntities();
@@ -25,7 +26,7 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
     systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, nullptr));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, this->_syncId));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
@@ -34,7 +35,7 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, entityManager));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, this->_syncId, entityManager));
 }
 
 void Client::initComponents()
@@ -141,14 +142,43 @@ void Client::updateEvent()
     }
 }
 
-void Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+bool Client::checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic)
 {
-    std::size_t i = 0;
+    auto &masks = entityManager.getMasks();
+    bool textSpawn = false;
+    bool isText = false;
 
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value() && (masks[i].value() & InfoComp::ENEMY) == InfoComp::ENEMY)
+            return false;
+        if (masks[i].has_value() && (masks[i].value() & InfoComp::TEXT) == InfoComp::TEXT && componentManager.getSingleComponent<Text>(i).delay != 0) {
+            isText = true;
+            Text &text = componentManager.getSingleComponent<Text>(i);
+            if (text.delay != 0 && text.last + text.delay < graphic.getClock()->getElapsedTime().asSeconds()) {
+                textSpawn = true;
+                componentManager.removeAllComponents(i);
+                entityManager.removeMask(i);
+            }
+        }
+    }
+    if (!isText) {
+        ScoreTextPreload::levelPreload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), 5);
+    }
+    return textSpawn;
+}
+
+bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+{
+    if (this->_isLevelFinished) {
+        if (this->checkIfEnemyAlive(ecs.getEntityManager(), ecs.getComponentManager(), graphic))
+            return true;
+    }
     if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
-        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), i);
+        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), *this->_syncId);
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
+    return false;
 }
 
 void Client::mainLoop()
@@ -156,12 +186,19 @@ void Client::mainLoop()
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
+    std::size_t levelId = 0;
 
-    std::size_t i = 0;
     while (graphic.getWindow()->isOpen()) {
         this->updateEvent();
-        if (*this->_isLocal)
-            this->manageEnemy(level[0], graphic, ecs);
+        if (*this->_isLocal) {
+            if (this->manageEnemy(level[levelId], graphic, ecs)) {
+                this->_isLevelFinished = false;
+                if (level.size() - 1 == levelId)
+                    graphic.getWindow()->close();
+                else
+                    levelId++;
+            }
+        }
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
