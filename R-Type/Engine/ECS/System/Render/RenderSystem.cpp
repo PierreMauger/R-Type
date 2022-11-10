@@ -134,7 +134,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             textRef.setString(text.str);
             textRef.setOrigin(textRef.getLocalBounds().width / 2, textRef.getLocalBounds().height / 2);
         }
-        textRef.setColor(text.color);
+        textRef.setFillColor(text.color);
         textRef.setCharacterSize(text.size);
         textRef.setPosition(text.pos);
         stockText.push_back(textRef);
