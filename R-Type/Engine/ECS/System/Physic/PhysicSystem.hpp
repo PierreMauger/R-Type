@@ -45,8 +45,8 @@ namespace eng
             bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
             bool collisionEnemySplit(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position &pos);
             bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position &pos);
-            bool splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Position &pos);
-            void collisionFireballEnemy(ComponentManager &componentManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Parent &par, bool &checkShield);
+            bool splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position &pos);
+            void collisionFireballEnemy(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Parent &par, bool &checkShield);
             void collisionCheckShield(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, bool &checkShield);
             void checkFireballDamage(std::size_t i, std::size_t j, ComponentManager &componentManager, EntityManager &entityManager);
             void physicVessel(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i);

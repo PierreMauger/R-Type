@@ -11,7 +11,6 @@ EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entit
 
 bool EnemySystem::setRandIdPlayer(Pattern &pat, EntityManager &entityManager)
 {
-    auto &masks = entityManager.getMasks();
     std::vector<size_t> idPlayers;
     std::size_t spriteMask = (InfoComp::SPRITEID | InfoComp::SPRITEAT);
     std::size_t contMask = (InfoComp::CONTROLLABLE | InfoComp::VEL);
@@ -225,7 +224,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
     std::size_t eneParent = (InfoComp::PARENT | InfoComp::POS);
 
     for (std::size_t i = 0; i < masks.size(); i++) {
-        if (!masks[i].has_value() || ((masks[i].value() & appear) == appear && componentManager.getSingleComponent<Appearance>(i).app))
+        if (!masks[i].has_value() || (entityManager.hasMask(i, appear) && componentManager.getSingleComponent<Appearance>(i).app))
             continue;
         if ((masks[i].value() & eneParent) == eneParent && componentManager.getSingleComponent<Parent>(i).follow == true) {
             Position &pos = componentManager.getSingleComponent<Position>(i);
