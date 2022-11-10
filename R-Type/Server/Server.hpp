@@ -11,6 +11,7 @@
 /// @cond
 #include "Client.hpp"
 #include "Engine.hpp"
+#include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CthulhuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
@@ -63,7 +64,7 @@ namespace eng
             void initComponents();
             void initEntities();
             bool manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
-            bool checkIfEnemyAlive(EntityManager &entityManager);
+            bool checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic);
             void manageEvent();
             void syncUdpNetwork(Client &client);
             void syncTcpNetwork(Client &client);

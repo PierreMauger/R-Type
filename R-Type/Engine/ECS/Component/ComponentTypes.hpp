@@ -295,7 +295,11 @@ typedef struct Text {
         std::string str = "";
         bool hasValue = true;
         std::size_t value = 0;
+        float size = 0;
+        sf::Color color = sf::Color::White;
         sf::Vector2f pos = {0.0f, 0.0f};
+        float last = 0.0f;
+        float delay = 0.0f;
 } Text;
 
 /**

@@ -8,3 +8,10 @@ void BackgroundMusicPreload::preload([[maybe_unused]] Graphic &graphic, EntityMa
 
     componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{5, false, true});
 }
+
+void BackgroundMusicPreload::preloadMusic(EntityManager &entityManager, ComponentManager &componentManager, std::size_t idSound)
+{
+    std::size_t id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+
+    componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{idSound, false, false});
+}

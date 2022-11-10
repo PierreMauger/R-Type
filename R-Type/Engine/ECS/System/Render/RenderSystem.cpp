@@ -122,19 +122,21 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
 
     for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         sf::Text &textRef = this->_text;
+        Text &text = componentManager.getSingleComponent<Text>(id);
         if (entityManager.hasMask(id, this->_sceneTag)) {
             Scene &scene = componentManager.getSingleComponent<Scene>(id);
             if (scene.id != *this->_sceneId)
                 continue;
         }
-        textRef.setCharacterSize(35 / this->_screenSize->x * this->_window->getSize().x);
         if (componentManager.getSingleComponent<Text>(id).hasValue)
-            textRef.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+            textRef.setString(text.str + std::to_string(text.value));
         else {
-            textRef.setString(componentManager.getSingleComponent<Text>(id).str);
+            textRef.setString(text.str);
             textRef.setOrigin(textRef.getLocalBounds().width / 2, textRef.getLocalBounds().height / 2);
         }
-        textRef.setPosition(componentManager.getSingleComponent<Text>(id).pos);
+        textRef.setColor(text.color);
+        textRef.setCharacterSize(text.size);
+        textRef.setPosition(text.pos);
         stockText.push_back(textRef);
     }
     for (auto id : entityManager.getMaskCategory(this->_renderTag)) {

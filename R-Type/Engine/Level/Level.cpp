@@ -5,7 +5,7 @@ using namespace eng;
 void Level::initializeLevelFormat(std::vector<std::string> &lines)
 {
     std::smatch match;
-    this->_speedRead = (1920 / 3 / 60) + 1.5;
+    this->_speedRead = (1920 / 3 / 60) + 1.3;
     this->_delayRead = 0;
 
     if (std::regex_match(lines[0], std::regex("^#.*"))) {
