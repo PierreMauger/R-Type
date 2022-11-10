@@ -72,42 +72,43 @@ $(function() {
 <div class="title">Level.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LEVEL_HPP</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define LEVEL_HPP</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="BossPreload_8hpp.html">Engine/ECS/PreloadEntities/BossPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="CthulhuPreload_8hpp.html">Engine/ECS/PreloadEntities/CthulhuPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DevourerOfGodsPreload_8hpp.html">Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="EnemyPreload_8hpp.html">Engine/ECS/PreloadEntities/EnemyPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ObstaclePreload_8hpp.html">Engine/ECS/PreloadEntities/ObstaclePreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
+<a href="Level_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef LEVEL_HPP</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define LEVEL_HPP</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classeng_1_1Level.html">   23</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1Level.html">Level</a></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            std::size_t _index;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            std::string _level;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keywordtype">float</span> _speedRead;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keywordtype">float</span> _delayRead;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordtype">float</span> _charPerScreen;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordtype">float</span> _sizeChar;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordtype">void</span> initializeLevelFormat(std::vector&lt;std::string&gt; &amp;lines);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordtype">void</span> parseStringLevel(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId, std::smatch match, std::string levelStr);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <a class="code" href="classeng_1_1Level.html#ac7e45382c52c87ef88b6ce8ce25b5234">Level</a>(std::vector&lt;std::string&gt; lines);</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="classeng_1_1Level.html#a0fd80b342852345a217665f2dac28a73">   45</a></span>&#160;            <a class="code" href="classeng_1_1Level.html#a0fd80b342852345a217665f2dac28a73">~Level</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordtype">void</span> parseLevel(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordtype">float</span> getSpeedRead();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordtype">float</span> getDelayRead();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keywordtype">void</span> setDelayRead(<span class="keywordtype">float</span> delayRead);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    };</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// LEVEL_HPP</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="BossPreload_8hpp.html">Engine/ECS/PreloadEntities/BossPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="CthulhuPreload_8hpp.html">Engine/ECS/PreloadEntities/CthulhuPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="DevourerOfGodsPreload_8hpp.html">Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="EnemyPreload_8hpp.html">Engine/ECS/PreloadEntities/EnemyPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ObstaclePreload_8hpp.html">Engine/ECS/PreloadEntities/ObstaclePreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classeng_1_1Level.html">   31</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1Level.html">Level</a></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            std::size_t _index;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::string _level;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordtype">float</span> _speedRead;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordtype">float</span> _delayRead;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keywordtype">float</span> _charPerScreen;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordtype">float</span> _sizeChar;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keywordtype">void</span> initializeLevelFormat(std::vector&lt;std::string&gt; &amp;lines);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordtype">void</span> parseStringLevel(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId, std::smatch match, std::string levelStr);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="classeng_1_1Level.html#ac7e45382c52c87ef88b6ce8ce25b5234">Level</a>(std::vector&lt;std::string&gt; lines);</div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="classeng_1_1Level.html#a0fd80b342852345a217665f2dac28a73">   53</a></span>&#160;            <a class="code" href="classeng_1_1Level.html#a0fd80b342852345a217665f2dac28a73">~Level</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1Level.html#a157297dcaa19588931a50e3abbe8e807">parseLevel</a>(<a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordtype">float</span> <a class="code" href="classeng_1_1Level.html#adbb9b8fac6a8673c611df8ef1b6be379">getSpeedRead</a>();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordtype">float</span> <a class="code" href="classeng_1_1Level.html#ad43493ab43a1ab990caf94d3f6d31aa5">getDelayRead</a>();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1Level.html#a9040969ee9b93d52b972c1596e44126c">setDelayRead</a>(<span class="keywordtype">float</span> delayRead);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    };</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// LEVEL_HPP</span></div>
 <div class="ttc" id="aBossPreload_8hpp_html"><div class="ttname"><a href="BossPreload_8hpp.html">BossPreload.hpp</a></div><div class="ttdoc">Preload the boss.</div></div>
 <div class="ttc" id="aCthulhuPreload_8hpp_html"><div class="ttname"><a href="CthulhuPreload_8hpp.html">CthulhuPreload.hpp</a></div><div class="ttdoc">Preload the Eye of Cthulhu (terraria boss).</div></div>
 <div class="ttc" id="aDevourerOfGodsPreload_8hpp_html"><div class="ttname"><a href="DevourerOfGodsPreload_8hpp.html">DevourerOfGodsPreload.hpp</a></div><div class="ttdoc">Preload the Devourer Of Gods (terraria boss).</div></div>
@@ -117,9 +118,13 @@ $(function() {
 <div class="ttc" id="aclasseng_1_1ComponentManager_html"><div class="ttname"><a href="classeng_1_1ComponentManager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:29</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html"><div class="ttname"><a href="classeng_1_1EntityManager.html">eng::EntityManager</a></div><div class="ttdoc">The engine's EntityManager.</div><div class="ttdef"><b>Definition:</b> EntityManager.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1Graphic_html"><div class="ttname"><a href="classeng_1_1Graphic.html">eng::Graphic</a></div><div class="ttdoc">The Engine graphics (SFML).</div><div class="ttdef"><b>Definition:</b> Graphic.hpp:27</div></div>
-<div class="ttc" id="aclasseng_1_1Level_html"><div class="ttname"><a href="classeng_1_1Level.html">eng::Level</a></div><div class="ttdoc">The Engine's level.</div><div class="ttdef"><b>Definition:</b> Level.hpp:24</div></div>
+<div class="ttc" id="aclasseng_1_1Level_html"><div class="ttname"><a href="classeng_1_1Level.html">eng::Level</a></div><div class="ttdoc">The Engine's level manager.</div><div class="ttdef"><b>Definition:</b> Level.hpp:32</div></div>
 <div class="ttc" id="aclasseng_1_1Level_html_a0fd80b342852345a217665f2dac28a73"><div class="ttname"><a href="classeng_1_1Level.html#a0fd80b342852345a217665f2dac28a73">eng::Level::~Level</a></div><div class="ttdeci">~Level()=default</div><div class="ttdoc">Level destructor.</div></div>
+<div class="ttc" id="aclasseng_1_1Level_html_a157297dcaa19588931a50e3abbe8e807"><div class="ttname"><a href="classeng_1_1Level.html#a157297dcaa19588931a50e3abbe8e807">eng::Level::parseLevel</a></div><div class="ttdeci">void parseLevel(Graphic &amp;graphic, EntityManager &amp;entityManager, ComponentManager &amp;componentManager, std::size_t &amp;syncId)</div><div class="ttdoc">Parse the level file.</div><div class="ttdef"><b>Definition:</b> Level.cpp:91</div></div>
+<div class="ttc" id="aclasseng_1_1Level_html_a9040969ee9b93d52b972c1596e44126c"><div class="ttname"><a href="classeng_1_1Level.html#a9040969ee9b93d52b972c1596e44126c">eng::Level::setDelayRead</a></div><div class="ttdeci">void setDelayRead(float delayRead)</div><div class="ttdoc">Set the last time a wave for the map appeared.</div><div class="ttdef"><b>Definition:</b> Level.cpp:124</div></div>
 <div class="ttc" id="aclasseng_1_1Level_html_ac7e45382c52c87ef88b6ce8ce25b5234"><div class="ttname"><a href="classeng_1_1Level.html#ac7e45382c52c87ef88b6ce8ce25b5234">eng::Level::Level</a></div><div class="ttdeci">Level(std::vector&lt; std::string &gt; lines)</div><div class="ttdoc">Level constructor.</div><div class="ttdef"><b>Definition:</b> Level.cpp:30</div></div>
+<div class="ttc" id="aclasseng_1_1Level_html_ad43493ab43a1ab990caf94d3f6d31aa5"><div class="ttname"><a href="classeng_1_1Level.html#ad43493ab43a1ab990caf94d3f6d31aa5">eng::Level::getDelayRead</a></div><div class="ttdeci">float getDelayRead()</div><div class="ttdoc">Get the last time a wave for the map appeared.</div><div class="ttdef"><b>Definition:</b> Level.cpp:119</div></div>
+<div class="ttc" id="aclasseng_1_1Level_html_adbb9b8fac6a8673c611df8ef1b6be379"><div class="ttname"><a href="classeng_1_1Level.html#adbb9b8fac6a8673c611df8ef1b6be379">eng::Level::getSpeedRead</a></div><div class="ttdeci">float getSpeedRead()</div><div class="ttdoc">Get the speed of appearance of the waves in the map.</div><div class="ttdef"><b>Definition:</b> Level.cpp:114</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

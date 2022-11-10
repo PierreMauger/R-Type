@@ -47,6 +47,7 @@ namespace eng
         SPRITEAT = 1 << 20,
         BUTTON = 1 << 21,
         SHIELD = 1 << 22,
+        SCENE = 1 << 23,
     };
 }
 
@@ -326,10 +327,10 @@ typedef struct SpriteAttribut {
  */
 enum ButtonType {
     QUIT = 0,
-    PLAY,
     TEXTZONE,
     BACK,
     CONNECT,
+    PLAY_SOLO,
 };
 
 /**
@@ -341,5 +342,18 @@ typedef struct Button {
         bool selected = false;
         std::size_t maxSize = 15;
 } Button;
+
+enum SceneType {
+    MENU = 0,
+    GAME,
+};
+
+/**
+ * @struct Scene
+ * @brief The scene component.
+ */
+typedef struct Scene {
+        std::size_t id = 0;
+} Scene;
 
 #endif // COMPONENTTYPES_HPP

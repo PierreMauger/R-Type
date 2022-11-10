@@ -76,7 +76,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classeng_1_1Engine.html" title="The engine of the game containing the ECS, the graphics and the loader.">Engine</a>'s level.  
+<p>The <a class="el" href="classeng_1_1Engine.html" title="The engine of the game containing the ECS, the graphics and the loader.">Engine</a>'s level manager.  
  <a href="classeng_1_1Level.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Level_8hpp_source.html">Level.hpp</a>&gt;</code></p>
@@ -85,28 +85,146 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ac7e45382c52c87ef88b6ce8ce25b5234"><td class="memItemLeft" align="right" valign="top"><a id="ac7e45382c52c87ef88b6ce8ce25b5234"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Level.html#ac7e45382c52c87ef88b6ce8ce25b5234">Level</a> (std::vector&lt; std::string &gt; lines)</td></tr>
-<tr class="memdesc:ac7e45382c52c87ef88b6ce8ce25b5234"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Level.html" title="The Engine&#39;s level.">Level</a> constructor. <br /></td></tr>
+<tr class="memdesc:ac7e45382c52c87ef88b6ce8ce25b5234"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Level.html" title="The Engine&#39;s level manager.">Level</a> constructor. <br /></td></tr>
 <tr class="separator:ac7e45382c52c87ef88b6ce8ce25b5234"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fd80b342852345a217665f2dac28a73"><td class="memItemLeft" align="right" valign="top"><a id="a0fd80b342852345a217665f2dac28a73"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Level.html#a0fd80b342852345a217665f2dac28a73">~Level</a> ()=default</td></tr>
-<tr class="memdesc:a0fd80b342852345a217665f2dac28a73"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Level.html" title="The Engine&#39;s level.">Level</a> destructor. <br /></td></tr>
+<tr class="memdesc:a0fd80b342852345a217665f2dac28a73"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Level.html" title="The Engine&#39;s level manager.">Level</a> destructor. <br /></td></tr>
 <tr class="separator:a0fd80b342852345a217665f2dac28a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ea4e51149dbb7267b53c41459a255d5"><td class="memItemLeft" align="right" valign="top"><a id="a2ea4e51149dbb7267b53c41459a255d5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parseLevel</b> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId)</td></tr>
-<tr class="separator:a2ea4e51149dbb7267b53c41459a255d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24643c0635e3b47e75aef9dbf4aae083"><td class="memItemLeft" align="right" valign="top"><a id="a24643c0635e3b47e75aef9dbf4aae083"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>getSpeedRead</b> ()</td></tr>
-<tr class="separator:a24643c0635e3b47e75aef9dbf4aae083"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae27bd8356df1b0131589700cece4ec31"><td class="memItemLeft" align="right" valign="top"><a id="ae27bd8356df1b0131589700cece4ec31"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>getDelayRead</b> ()</td></tr>
-<tr class="separator:ae27bd8356df1b0131589700cece4ec31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad57da8d77db28c27bb5bcc6136baf4f1"><td class="memItemLeft" align="right" valign="top"><a id="ad57da8d77db28c27bb5bcc6136baf4f1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setDelayRead</b> (float delayRead)</td></tr>
-<tr class="separator:ad57da8d77db28c27bb5bcc6136baf4f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a157297dcaa19588931a50e3abbe8e807"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Level.html#a157297dcaa19588931a50e3abbe8e807">parseLevel</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId)</td></tr>
+<tr class="memdesc:a157297dcaa19588931a50e3abbe8e807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the level file.  <a href="classeng_1_1Level.html#a157297dcaa19588931a50e3abbe8e807">More...</a><br /></td></tr>
+<tr class="separator:a157297dcaa19588931a50e3abbe8e807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb9b8fac6a8673c611df8ef1b6be379"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Level.html#adbb9b8fac6a8673c611df8ef1b6be379">getSpeedRead</a> ()</td></tr>
+<tr class="memdesc:adbb9b8fac6a8673c611df8ef1b6be379"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the speed of appearance of the waves in the map.  <a href="classeng_1_1Level.html#adbb9b8fac6a8673c611df8ef1b6be379">More...</a><br /></td></tr>
+<tr class="separator:adbb9b8fac6a8673c611df8ef1b6be379"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad43493ab43a1ab990caf94d3f6d31aa5"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Level.html#ad43493ab43a1ab990caf94d3f6d31aa5">getDelayRead</a> ()</td></tr>
+<tr class="memdesc:ad43493ab43a1ab990caf94d3f6d31aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the last time a wave for the map appeared.  <a href="classeng_1_1Level.html#ad43493ab43a1ab990caf94d3f6d31aa5">More...</a><br /></td></tr>
+<tr class="separator:ad43493ab43a1ab990caf94d3f6d31aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9040969ee9b93d52b972c1596e44126c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Level.html#a9040969ee9b93d52b972c1596e44126c">setDelayRead</a> (float delayRead)</td></tr>
+<tr class="memdesc:a9040969ee9b93d52b972c1596e44126c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the last time a wave for the map appeared.  <a href="classeng_1_1Level.html#a9040969ee9b93d52b972c1596e44126c">More...</a><br /></td></tr>
+<tr class="separator:a9040969ee9b93d52b972c1596e44126c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="classeng_1_1Engine.html" title="The engine of the game containing the ECS, the graphics and the loader.">Engine</a>'s level. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><p>The <a class="el" href="classeng_1_1Engine.html" title="The engine of the game containing the ECS, the graphics and the loader.">Engine</a>'s level manager. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad43493ab43a1ab990caf94d3f6d31aa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad43493ab43a1ab990caf94d3f6d31aa5">&#9670;&nbsp;</a></span>getDelayRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float eng::Level::getDelayRead </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the last time a wave for the map appeared. </p>
+<dl class="section return"><dt>Returns</dt><dd>The last time a wave for the map appeared </dd></dl>
+
+</div>
+</div>
+<a id="adbb9b8fac6a8673c611df8ef1b6be379"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbb9b8fac6a8673c611df8ef1b6be379">&#9670;&nbsp;</a></span>getSpeedRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float eng::Level::getSpeedRead </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the speed of appearance of the waves in the map. </p>
+<dl class="section return"><dt>Returns</dt><dd>The speed of appearance of the waves in the map </dd></dl>
+
+</div>
+</div>
+<a id="a157297dcaa19588931a50e3abbe8e807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a157297dcaa19588931a50e3abbe8e807">&#9670;&nbsp;</a></span>parseLevel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::Level::parseLevel </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;&#160;</td>
+          <td class="paramname"><em>graphic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>entityManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;&#160;</td>
+          <td class="paramname"><em>componentManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t &amp;&#160;</td>
+          <td class="paramname"><em>syncId</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse the level file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">graphic</td><td>A shared pointer to the engine graphics </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A shared pointer to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a> </td></tr>
+    <tr><td class="paramname">componentManager</td><td>A shared pointer to the <a class="el" href="classeng_1_1ComponentManager.html" title="The engine&#39;s ComponentManager.">ComponentManager</a> </td></tr>
+    <tr><td class="paramname">syncId</td><td>A shared pointer to the sync id when creating an enemy </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9040969ee9b93d52b972c1596e44126c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9040969ee9b93d52b972c1596e44126c">&#9670;&nbsp;</a></span>setDelayRead()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::Level::setDelayRead </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>delayRead</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the last time a wave for the map appeared. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">delayRead</td><td>The last time a wave for the map appears </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>/tmp/rtype/R-Type/Engine/Level/<a class="el" href="Level_8hpp_source.html">Level.hpp</a></li>
 <li>/tmp/rtype/R-Type/Engine/Level/Level.cpp</li>
 </ul>
