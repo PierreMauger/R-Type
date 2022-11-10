@@ -19,7 +19,7 @@ bool EnemySystem::setRandIdPlayer(Pattern &pat, EntityManager &entityManager)
     if (entityManager.getMaskCategory(spriteMask).size() == 0)
         return false;
     for (auto &id : entityManager.getMaskCategory(spriteMask))
-        if (masks[id].has_value() && (masks[id].value() & contMask) == contMask)
+        if (entityManager.hasMask(id, contMask))
             idPlayers.push_back(id);
     if (idPlayers.size() == 0)
         return false;

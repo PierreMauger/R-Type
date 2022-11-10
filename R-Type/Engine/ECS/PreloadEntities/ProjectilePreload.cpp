@@ -10,11 +10,12 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     Size size = {0, 0};
     CooldownShoot sizeProj = {0, 0};
     Position pos = {0, 0};
-    bool enemy = masks[id].has_value() && (masks[id].value() & InfoComp::ENEMY) == InfoComp::ENEMY ? true : false;
+
+    bool enemy = entityManager.hasMask(id, InfoComp::ENEMY);
     sf::Vector2f sizeFire = sf::Vector2f(56 * sizeProjScreen.x / screenSize->x * windowsSize.x, 32 * sizeProjScreen.y / screenSize->y * windowsSize.y);
     std::size_t addEntity = entityManager.addMask((InfoComp::SPRITEID | InfoComp::POS | InfoComp::VEL | InfoComp::PARENT | InfoComp::PROJECTILE | InfoComp::SIZE | InfoComp::SPRITEAT), componentManager);
 
-    if (masks[id].has_value() && (masks[id].value() & sizeMask) == sizeMask) {
+    if (entityManager.hasMask(id, sizeMask)) {
         size = componentManager.getSingleComponent<Size>(id);
         sizeProj = componentManager.getSingleComponent<CooldownShoot>(id);
         pos = componentManager.getSingleComponent<Position>(id);

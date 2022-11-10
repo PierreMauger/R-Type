@@ -20,7 +20,7 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
     for (auto id : entityManager.getMaskCategory(this->_spriteTag)) {
         SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(id);
         SpriteAttribut &spriteAT = componentManager.getSingleComponent<SpriteAttribut>(id);
-        if (masks[id].has_value() && (masks[id].value() & contMask) == contMask) {
+        if (entityManager.hasMask(id, contMask)) {
             Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
             if (vel.y < 0)
                 spriteAT.rect.left = spriteID.offsetX * 2;

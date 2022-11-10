@@ -157,7 +157,6 @@ void Client::mainLoop()
     ECS &ecs = this->_engine.getECS();
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
 
-    std::size_t i = 0;
     while (graphic.getWindow()->isOpen()) {
         this->updateEvent();
         if (*this->_isLocal)
