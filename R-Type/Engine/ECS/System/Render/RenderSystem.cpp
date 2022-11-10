@@ -153,8 +153,8 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setRotation(spriteAt.rotation);
             spriteRef.setColor(spriteAt.color);
             spriteRef.setScale(spriteAt.scale);
-            spriteRef.setOrigin(spriteAt.offset);
-            spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
+            spriteRef.setOrigin({spriteAt.offset.x / 2, spriteAt.offset.y / 2});
+            spriteRef.setPosition(pos.x + spriteAt.offset.x, pos.y + spriteAt.offset.y);
         }
         if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;
