@@ -72,7 +72,7 @@ namespace eng
         protected:
             std::vector<Room>::iterator getRoom(std::vector<Room> rooms, int id);
 
-            void editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers);
+            void editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers, Client &client);
 
         public:
             /**
@@ -107,7 +107,7 @@ namespace eng
              * @param packet The serialized packet
              * @param rooms A reference to the vector of rooms
              */
-            void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms, std::size_t &roomCount);
+            void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms, std::size_t &roomCount, Client &client);
 
             /**
              * @brief Serialize a room action
@@ -139,6 +139,14 @@ namespace eng
              * @param event Event to deserialize
              */
             // void deserializeEvent();
+
+            /**
+             * @brief Get the client id
+             * @fn std::size_t getClientId(_STORAGE_DATA packet)
+             * @param packet The packet
+             * @return The client id
+             */
+            std::size_t getClientId(_STORAGE_DATA packet);
     };
 }
 

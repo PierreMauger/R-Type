@@ -35,7 +35,7 @@ namespace eng
     {
         private:
             Engine _engine;
-            ClientNetwork _network;
+            std::shared_ptr<ClientNetwork> _network = nullptr;
 
             MenuSerializer _menuSerializer;
             GameSerializer _gameSerializer;
@@ -50,6 +50,8 @@ namespace eng
             std::shared_ptr<std::string> _ip;
             std::shared_ptr<std::size_t> _port;
             std::shared_ptr<bool> _isLocal;
+
+            void createNetwork();
 
             void initSystems();
             void initComponents();

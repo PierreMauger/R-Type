@@ -63,11 +63,13 @@ void MenuSerializer::handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms
     }
 }
 
-_STORAGE_DATA MenuSerializer::serializeRoomEdit(CrudType editType, Room &room)
+_STORAGE_DATA MenuSerializer::serializeRoomEdit(std::size_t clientId, CrudType editType, Room &room)
 {
     std::vector<uint8_t> packet;
 
     insertMagic(packet);
+
+    this->serializeData(packet, &clientId);
 
     // header
     MenuPacketType menuPacketType = MenuPacketType::ROOM_EDIT;
@@ -113,11 +115,13 @@ void MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::vecto
     this->editRoom(crudType, rooms, id, maxPlayers, nbPlayers);
 }
 
-_STORAGE_DATA MenuSerializer::serializeRoomAction(std::size_t id, RoomAction action)
+_STORAGE_DATA MenuSerializer::serializeRoomAction(std::size_t clientId, std::size_t roomId, RoomAction action)
 {
     std::vector<uint8_t> packet;
 
     insertMagic(packet);
+
+    this->serializeData(packet, &clientId);
 
     // header
     MenuPacketType menuPacketType = MenuPacketType::ROOM_ACTION;
@@ -125,7 +129,7 @@ _STORAGE_DATA MenuSerializer::serializeRoomAction(std::size_t id, RoomAction act
     this->serializeData(packet, &action);
 
     // body
-    this->serializeData(packet, &id);
+    this->serializeData(packet, &roomId);
 
     insertMagic(packet);
 
@@ -135,4 +139,6 @@ _STORAGE_DATA MenuSerializer::serializeRoomAction(std::size_t id, RoomAction act
 void MenuSerializer::deserializeEvent(std::vector<uint8_t> packet)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(MenuPacketType);
+
+    // TODO
 }

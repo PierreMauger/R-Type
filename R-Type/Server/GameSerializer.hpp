@@ -107,6 +107,14 @@ namespace eng
              * @param client A reference to the Client who send the packet
              */
             void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client);
+
+            /**
+             * @brief Get the client id
+             * @fn std::size_t getClientId(_STORAGE_DATA packet)
+             * @param packet The packet
+             * @return The client id
+             */
+            std::size_t getClientId(_STORAGE_DATA packet);
     };
 }
 

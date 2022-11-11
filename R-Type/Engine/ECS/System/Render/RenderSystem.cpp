@@ -75,7 +75,7 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
 {
     auto &masks = entityManager.getMasks();
     std::size_t shieldParent = (InfoComp::POS | InfoComp::SHIELD | InfoComp::PARENT);
-    std::size_t shieldChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE);
+    std::size_t shieldChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT);
     float scal = 0.3;
 
     if (masks[i].has_value() && (masks[i].value() & shieldParent) == shieldParent) {

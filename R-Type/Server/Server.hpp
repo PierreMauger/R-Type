@@ -47,7 +47,7 @@ namespace eng
             GameSerializer _gameSerializer;
 
             std::size_t _syncId = 0;
-            std::size_t _clientId;
+            std::size_t _clientId = 0;
             std::vector<Client> _clients;
 
             std::size_t _roomId = 0;
@@ -63,8 +63,8 @@ namespace eng
             void initEntities();
             void manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
             void manageEvent();
-            void syncUdpNetwork(Client &client);
-            void syncTcpNetwork(Client &client);
+            void syncUdpNetwork();
+            void syncTcpNetwork();
             void updateRooms();
             void updateClients();
             void updateEntities();

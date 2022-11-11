@@ -99,7 +99,7 @@ namespace eng
              * @param room A reference to the room
              * @return The serialized packet
              */
-            _STORAGE_DATA serializeRoomEdit(CrudType editType, Room &room);
+            _STORAGE_DATA serializeRoomEdit(std::size_t clientId, CrudType editType, Room &room);
             /**
              * @brief Deserialize a room edit
              * @fn void deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms)
@@ -115,7 +115,7 @@ namespace eng
              * @param action A room action
              * @return The serialized packet
              */
-            _STORAGE_DATA serializeRoomAction(std::size_t id, RoomAction action);
+            _STORAGE_DATA serializeRoomAction(std::size_t clientId, std::size_t roomId, RoomAction action);
             /**
              * @brief Deserialize a room action
              * @fn void deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms)
