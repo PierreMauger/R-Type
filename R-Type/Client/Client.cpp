@@ -14,7 +14,7 @@ Client::Client()
 
 void Client::createNetwork()
 {
-    this->_network = std::make_shared<ClientNetwork>(this->_ip, this->_port);
+    this->_network = std::make_shared<ClientNetwork>(*this->_ip, *this->_port);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     this->_network->run();
