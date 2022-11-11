@@ -111,9 +111,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a18ef3379ad976dbaf980a5a31a6ff665"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a18ef3379ad976dbaf980a5a31a6ff665">deserializeEntity</a> (std::vector&lt; uint8_t &gt; packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="memdesc:a18ef3379ad976dbaf980a5a31a6ff665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize an entity.  <a href="classeng_1_1GameSerializer.html#a18ef3379ad976dbaf980a5a31a6ff665">More...</a><br /></td></tr>
 <tr class="separator:a18ef3379ad976dbaf980a5a31a6ff665"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade51558c153181f53a9784042e9ae9bd"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#ade51558c153181f53a9784042e9ae9bd">serializeInput</a> (sf::Keyboard::Key input)</td></tr>
-<tr class="memdesc:ade51558c153181f53a9784042e9ae9bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an input.  <a href="classeng_1_1GameSerializer.html#ade51558c153181f53a9784042e9ae9bd">More...</a><br /></td></tr>
-<tr class="separator:ade51558c153181f53a9784042e9ae9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26012faf66ab036ec423adf31f7cc608"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a26012faf66ab036ec423adf31f7cc608">serializeInput</a> (std::size_t clientId, sf::Keyboard::Key input)</td></tr>
+<tr class="memdesc:a26012faf66ab036ec423adf31f7cc608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an input.  <a href="classeng_1_1GameSerializer.html#a26012faf66ab036ec423adf31f7cc608">More...</a><br /></td></tr>
+<tr class="separator:a26012faf66ab036ec423adf31f7cc608"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63b1c3717f9162b1c78d99f5c1db44cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a63b1c3717f9162b1c78d99f5c1db44cf">handlePacket</a> (_STORAGE_DATA packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client)</td></tr>
 <tr class="memdesc:a63b1c3717f9162b1c78d99f5c1db44cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a game packet.  <a href="classeng_1_1GameSerializer.html#a63b1c3717f9162b1c78d99f5c1db44cf">More...</a><br /></td></tr>
 <tr class="separator:a63b1c3717f9162b1c78d99f5c1db44cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,6 +123,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a31555e90a55fb2b8e3b4079f74a1e8d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a31555e90a55fb2b8e3b4079f74a1e8d9">deserializeInput</a> (std::vector&lt; uint8_t &gt; packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client)</td></tr>
 <tr class="memdesc:a31555e90a55fb2b8e3b4079f74a1e8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize an input.  <a href="classeng_1_1GameSerializer.html#a31555e90a55fb2b8e3b4079f74a1e8d9">More...</a><br /></td></tr>
 <tr class="separator:a31555e90a55fb2b8e3b4079f74a1e8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59e8f86e60521cb84c0fb0441c33c2c0"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a59e8f86e60521cb84c0fb0441c33c2c0">getClientId</a> (_STORAGE_DATA packet)</td></tr>
+<tr class="memdesc:a59e8f86e60521cb84c0fb0441c33c2c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the client id.  <a href="classeng_1_1GameSerializer.html#a59e8f86e60521cb84c0fb0441c33c2c0">More...</a><br /></td></tr>
+<tr class="separator:a59e8f86e60521cb84c0fb0441c33c2c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -130,9 +133,9 @@ Protected Member Functions</h2></td></tr>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a1273c6f0b3174520908d6d2a3f5a4b8f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>updateEntity</b> (std::vector&lt; uint8_t &gt; &amp;packet, std::size_t id, std::size_t &amp;adv, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="separator:a1273c6f0b3174520908d6d2a3f5a4b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ffb67ea5f8e8546e137735637b933be"><td class="memItemLeft" align="right" valign="top"><a id="a0ffb67ea5f8e8546e137735637b933be"></a>
+<tr class="memitem:a824ce994bdfd47a4e66b383efdf072ae"><td class="memItemLeft" align="right" valign="top"><a id="a824ce994bdfd47a4e66b383efdf072ae"></a>
 std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>getEntityID</b> (<a class="el" href="structSyncID.html">SyncID</a> syncID, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
-<tr class="separator:a0ffb67ea5f8e8546e137735637b933be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a824ce994bdfd47a4e66b383efdf072ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4e6e95c4058c0c2cf3f2952e287bde4"><td class="memItemLeft" align="right" valign="top"><a id="ad4e6e95c4058c0c2cf3f2952e287bde4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>getComponents</b> (std::vector&lt; uint8_t &gt; &amp;packet, std::size_t id, std::size_t mask, std::size_t &amp;adv, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="separator:ad4e6e95c4058c0c2cf3f2952e287bde4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -266,6 +269,33 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a59e8f86e60521cb84c0fb0441c33c2c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59e8f86e60521cb84c0fb0441c33c2c0">&#9670;&nbsp;</a></span>getClientId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t eng::GameSerializer::getClientId </td>
+          <td>(</td>
+          <td class="paramtype">_STORAGE_DATA&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the client id. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>The packet </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The client id </dd></dl>
 
 </div>
 </div>
@@ -416,8 +446,8 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
 
 </div>
 </div>
-<a id="ade51558c153181f53a9784042e9ae9bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade51558c153181f53a9784042e9ae9bd">&#9670;&nbsp;</a></span>serializeInput()</h2>
+<a id="a26012faf66ab036ec423adf31f7cc608"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26012faf66ab036ec423adf31f7cc608">&#9670;&nbsp;</a></span>serializeInput()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -425,9 +455,19 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
         <tr>
           <td class="memname">_STORAGE_DATA eng::GameSerializer::serializeInput </td>
           <td>(</td>
-          <td class="paramtype">sf::Keyboard::Key&#160;</td>
-          <td class="paramname"><em>input</em></td><td>)</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>clientId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">sf::Keyboard::Key&#160;</td>
+          <td class="paramname"><em>input</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
