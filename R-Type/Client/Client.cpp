@@ -123,11 +123,6 @@ void Client::updateNetwork()
         this->createNetwork();
     }
 
-    if (this->_network == nullptr && this->_ip->size() == 0 && (*this->_port) == 0) {
-        return;
-    }
-    this->createNetwork();
-
     Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
