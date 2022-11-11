@@ -34,6 +34,7 @@ namespace eng
             std::shared_ptr<std::size_t> _port;
             std::shared_ptr<std::string> _ip;
             std::shared_ptr<bool> _isLocal;
+            std::shared_ptr<bool> _isReady;
             std::shared_ptr<std::size_t> _syncId;
 
             std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
@@ -46,7 +47,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager);
+            ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<bool> isReady, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager);
             /**
              * @brief ClickSystem destructor.
              * @fn ~ClickSystem()

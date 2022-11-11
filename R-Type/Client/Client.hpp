@@ -13,6 +13,7 @@
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
+#include "Engine/ECS/PreloadEntities/RoomPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "GameSerializer.hpp"
@@ -45,13 +46,13 @@ namespace eng
             std::size_t _roomId = 0;
             std::vector<Room> _rooms;
             std::shared_ptr<std::size_t> _syncId;
-            // std::size_t _syncId = 0;
 
             sf::Time _networkTime = sf::milliseconds(50);
 
             std::shared_ptr<std::string> _ip;
             std::shared_ptr<std::size_t> _port;
             std::shared_ptr<bool> _isLocal;
+            std::shared_ptr<bool> _isReady;
             bool _isLevelFinished = false;
 
             void createNetwork();

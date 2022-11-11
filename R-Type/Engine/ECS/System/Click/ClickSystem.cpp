@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager)
+ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<bool> isReady, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
@@ -12,6 +12,7 @@ ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, st
     this->_port = port;
     this->_ip = ip;
     this->_isLocal = isLocal;
+    this->_isReady = isReady;
     this->_syncId = syncId;
 
     entityManager.addMaskCategory(this->_buttonTag);
@@ -41,6 +42,8 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     VesselPreload::preload(this->_window->getSize(), this->_screenSize, entityManager, componentManager, *this->_syncId);
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();
+                } else if (button.type == ButtonType::READY) {
+                    *this->_isReady = true;
                 } else if (button.type == ButtonType::TEXTZONE) {
                     button.selected = true;
                     changed = id;
@@ -50,7 +53,6 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                     Parent parent = componentManager.getSingleComponent<Parent>(id);
                     std::string text = componentManager.getSingleComponent<Text>(parent.id).str;
                     std::string text2 = componentManager.getSingleComponent<Text>(parent.id2).str;
-                    *this->_sceneId = *this->_sceneId + 1;
                     *this->_ip = text;
                     text2 != "" ? *this->_port = std::stoi(text2) : *this->_port = 0;
                 }

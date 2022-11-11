@@ -7,6 +7,7 @@ Client::Client()
     this->_ip = std::make_shared<std::string>("");
     this->_port = std::make_shared<std::size_t>(0);
     this->_isLocal = std::make_shared<bool>(false);
+    this->_isReady = std::make_shared<bool>(false);
     this->_syncId = std::make_shared<std::size_t>(0);
     this->initSystems();
     this->initComponents();
@@ -41,7 +42,7 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, this->_syncId, entityManager));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, this->_isReady, this->_syncId, entityManager));
 }
 
 void Client::initComponents()
@@ -78,6 +79,7 @@ void Client::initEntities()
 {
     ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    RoomPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Client::syncUdpNetwork()
@@ -117,10 +119,14 @@ void Client::syncTcpNetwork()
 void Client::updateNetwork()
 {
     if (this->_network == nullptr) {
-        if (this->_ip->size() == 0 || (*this->_port) == 0) {
+        if (this->_ip->size() == 0 || (*this->_port) == 0)
+            return;
+        try {
+            this->createNetwork();
+        } catch (const std::exception &e) {
             return;
         }
-        this->createNetwork();
+        *this->_engine.getGraphic().getSceneId() = SceneType::ROOM;
     }
 
     Graphic &graphic = this->_engine.getGraphic();

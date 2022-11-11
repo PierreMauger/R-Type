@@ -8,7 +8,7 @@ MenuSerializer::MenuSerializer()
 
 std::vector<Room>::iterator MenuSerializer::getRoom(std::vector<Room> rooms, int id)
 {
-    std::vector<eng::Room>::iterator it;
+    std::vector<Room>::iterator it;
 
     for (it = rooms.begin(); it != rooms.end(); ++it) {
         if (it->getId() == id) {
