@@ -102,7 +102,7 @@ namespace eng
              * @param input The input to serialize.
              * @return The serialized packet
              */
-            _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
+            _STORAGE_DATA serializeInput(std::size_t clientId, sf::Keyboard::Key input);
             /**
              * @brief Deserialize an input
              * @fn void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)

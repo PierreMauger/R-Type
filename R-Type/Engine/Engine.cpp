@@ -73,6 +73,8 @@ void Engine::updateParallax(std::size_t i, ComponentManager &componentManager, E
         SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
         spriteAt.scale.x = spriteAt.scale.x / lastSize.x * this->_graphic.getEvent()->size.width;
         spriteAt.scale.y = spriteAt.scale.y / lastSize.y * this->_graphic.getEvent()->size.height;
+        spriteAt.offset.x = spriteAt.offset.x / lastSize.x * this->_graphic.getEvent()->size.width;
+        spriteAt.offset.y = spriteAt.offset.y / lastSize.y * this->_graphic.getEvent()->size.height;
     }
 }
 

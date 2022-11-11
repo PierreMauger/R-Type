@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
+
 /// @endcond
 
 /**
@@ -31,6 +32,7 @@ namespace eng
              * @param engine A reference to the engine.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
+            static void preloadMusic(EntityManager &entityManager, ComponentManager &componentManager, std::size_t id);
     };
 }
 

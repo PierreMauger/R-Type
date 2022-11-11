@@ -57,25 +57,21 @@ set(ImGui_SRC
 #fetch required deps
 find_package(OpenGL REQUIRED)
 
-if (NOT sfml_POPULATED)
-    FetchContent_Declare(
-        SFML
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.x
-        GIT_PROGRESS TRUE)
-    FetchContent_MakeAvailable(SFML)
-endif()
+FetchContent_Declare(
+    SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 2.6.x
+    GIT_PROGRESS TRUE)
+FetchContent_MakeAvailable(SFML)
 
-if (NOT boost_POPULATED)
-    FetchContent_Declare(
-        Boost
-        GIT_REPOSITORY https://github.com/boostorg/boost.git
-        GIT_PROGRESS TRUE
-        GIT_TAG master
-        CONFIGURE_COMMAND ""
-    )
-    FetchContent_MakeAvailable(Boost)
-endif()
+FetchContent_Declare(
+    Boost
+    GIT_REPOSITORY https://github.com/boostorg/boost.git
+    GIT_PROGRESS TRUE
+    GIT_TAG master
+    CONFIGURE_COMMAND ""
+)
+FetchContent_MakeAvailable(Boost)
 
 #set include paths
 include_directories(

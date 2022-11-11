@@ -44,8 +44,8 @@
 
 #define S_IDBAR                 1
 #define S_ENEMY                 2
-// #define S_FIREBALL_BLUE         3
-// #define S_FIREBALL_YELLOW       4
+#define S_FIREBALL_BLUE         3
+#define S_FIREBALL_YELLOW       4
 #define S_MINIBOSS              5
 #define S_VESSEL                6
 
@@ -53,7 +53,7 @@
 #define S_BONUS_SPEED           7
 #define S_BONUS_SHOOT_SIZE      8
 
-// #define ???                      9
+#define S_REV_FIREBALL          9
 #define S_BUTTON                10
 
 // Parallax

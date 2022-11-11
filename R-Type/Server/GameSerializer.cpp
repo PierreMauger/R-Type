@@ -79,6 +79,12 @@ void GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size_t ma
         case 21:
             this->serializeData<Button>(packet, &componentManager.getSingleComponent<Button>(id));
             break;
+        case 22:
+            this->serializeData<Shield>(packet, &componentManager.getSingleComponent<Shield>(id));
+            break;
+        case 23:
+            this->serializeData<Scene>(packet, &componentManager.getSingleComponent<Scene>(id));
+            break;
         default:
             break;
         }
@@ -94,7 +100,7 @@ void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityMan
     if (!this->checkMagic(packetVector, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
-    adv += MAGIC_SIZE;
+    adv += (MAGIC_SIZE + sizeof(std::size_t));
     this->deserializeData<GamePacketType>(packetVector, adv, &type);
     switch (type) {
     case ENTITY:
@@ -122,11 +128,14 @@ _STORAGE_DATA GameSerializer::serializeEntity(std::size_t entityId, CrudType typ
     this->serializeData<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(entityId));
 
     // mask
+    if (entityId >= entityManager.getMasks().size()) {
+        throw std::runtime_error("[ERROR] Entity id out of range");
+    }
     std::optional<std::size_t> mask = entityManager.getMasks()[entityId];
-    if (!entityManager.getMasks()[entityId].has_value()) {
+    if (!mask.has_value()) {
         throw std::runtime_error("[ERROR] Entity has no mask");
     }
-    this->serializeData<std::size_t>(packet, &entityManager.getMasks()[entityId].value());
+    this->serializeData<std::size_t>(packet, &mask.value());
 
     // components
     this->pushComponents(packet, mask.value(), entityId, componentManager);
@@ -137,7 +146,7 @@ _STORAGE_DATA GameSerializer::serializeEntity(std::size_t entityId, CrudType typ
 
 void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
+    std::size_t adv = MAGIC_SIZE + sizeof(std::size_t) + sizeof(GamePacketType);
     sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
 
     this->deserializeData<sf::Keyboard::Key>(packet, adv, &keyPress);
@@ -146,4 +155,14 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager
     }
 
     // TODO
+}
+
+std::size_t GameSerializer::getClientId(_STORAGE_DATA packet)
+{
+    std::vector<uint8_t> packetVector = this->convertToVector(packet);
+    std::size_t adv = MAGIC_SIZE;
+    std::size_t id;
+
+    this->deserializeData(packetVector, adv, &id);
+    return id;
 }

@@ -1,6 +1,6 @@
 # <p align="center">🗺️ Map loader</p>
 
-## Description
+## 🔎 Description
 
 The map loader is a feature that allows the server host to manage the layout of the incoming in-game enemies with a simple text file.
 This file has to be located in R-Type/Assets/Levels and has to have the proper syntax:
@@ -25,7 +25,7 @@ Note that:
 - Enemies with an appearance animation (like a Boss or Cthulu) will still appear to the spot you've put but from the top
 - The height of the layout map lets you split vertically the screen into how many zones you want (as the game is a sidescroller, the waves size is decided horizontally and not vertically)
 
-## Example
+## 📍 Example
 
 Here the enemies map/game window is split into 5 horizontal zones (per wave) and 4 vertical zones.
 ```

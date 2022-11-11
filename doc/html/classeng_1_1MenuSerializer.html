@@ -113,33 +113,36 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a55397680702a3f3ed2f2ce18ea4ece04"><td class="memItemLeft" align="right" valign="top"><a id="a55397680702a3f3ed2f2ce18ea4ece04"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePacket</b> (_STORAGE_DATA packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, std::size_t &amp;roomCount)</td></tr>
 <tr class="separator:a55397680702a3f3ed2f2ce18ea4ece04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a1145be7b008fbe8a2345b93c6a31b2e4">serializeRoomEdit</a> (<a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> editType, <a class="el" href="classeng_1_1Room.html">Room</a> &amp;room)</td></tr>
-<tr class="memdesc:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize a room edit.  <a href="classeng_1_1MenuSerializer.html#a1145be7b008fbe8a2345b93c6a31b2e4">More...</a><br /></td></tr>
-<tr class="separator:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b97bd599025b02cb081dba693f2df46"><td class="memItemLeft" align="right" valign="top"><a id="a9b97bd599025b02cb081dba693f2df46"></a>
+_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><b>serializeRoomEdit</b> (std::size_t clientId, <a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> editType, <a class="el" href="classeng_1_1Room.html">Room</a> &amp;room)</td></tr>
+<tr class="separator:a9b97bd599025b02cb081dba693f2df46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9de4b2bc0b2f77fac81503874533f1db"><td class="memItemLeft" align="right" valign="top"><a id="a9de4b2bc0b2f77fac81503874533f1db"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>deserializeRoomEdit</b> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, std::size_t &amp;roomCount)</td></tr>
 <tr class="separator:a9de4b2bc0b2f77fac81503874533f1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e86cbcf327f238e1fb50a3c2de6d2f6"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a8e86cbcf327f238e1fb50a3c2de6d2f6">serializeRoomAction</a> (std::size_t id, <a class="el" href="namespaceeng.html#aacb09346091a4338e64924a813c9ef78">RoomAction</a> action)</td></tr>
-<tr class="memdesc:a8e86cbcf327f238e1fb50a3c2de6d2f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize a room action.  <a href="classeng_1_1MenuSerializer.html#a8e86cbcf327f238e1fb50a3c2de6d2f6">More...</a><br /></td></tr>
-<tr class="separator:a8e86cbcf327f238e1fb50a3c2de6d2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94ecd1ecc6a3261bca2744ae379e1cb2"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a94ecd1ecc6a3261bca2744ae379e1cb2">serializeRoomAction</a> (std::size_t clientId, std::size_t roomId, <a class="el" href="namespaceeng.html#aacb09346091a4338e64924a813c9ef78">RoomAction</a> action)</td></tr>
+<tr class="memdesc:a94ecd1ecc6a3261bca2744ae379e1cb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize a room action.  <a href="classeng_1_1MenuSerializer.html#a94ecd1ecc6a3261bca2744ae379e1cb2">More...</a><br /></td></tr>
+<tr class="separator:a94ecd1ecc6a3261bca2744ae379e1cb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6964bcda780fe3e0545c92445747344"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#ac6964bcda780fe3e0545c92445747344">deserializeEvent</a> (std::vector&lt; uint8_t &gt; packet)</td></tr>
 <tr class="memdesc:ac6964bcda780fe3e0545c92445747344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an event.  <a href="classeng_1_1MenuSerializer.html#ac6964bcda780fe3e0545c92445747344">More...</a><br /></td></tr>
 <tr class="separator:ac6964bcda780fe3e0545c92445747344"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a898068c3a32d1e6bb6c6682070ad7fed"><td class="memItemLeft" align="right" valign="top"><a id="a898068c3a32d1e6bb6c6682070ad7fed"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePacket</b> (_STORAGE_DATA packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client, std::size_t &amp;roomCount)</td></tr>
 <tr class="separator:a898068c3a32d1e6bb6c6682070ad7fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="memItemLeft" align="right" valign="top"><a id="a1145be7b008fbe8a2345b93c6a31b2e4"></a>
-_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><b>serializeRoomEdit</b> (<a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> editType, <a class="el" href="classeng_1_1Room.html">Room</a> &amp;room)</td></tr>
+<tr class="memitem:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#a1145be7b008fbe8a2345b93c6a31b2e4">serializeRoomEdit</a> (<a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> editType, <a class="el" href="classeng_1_1Room.html">Room</a> &amp;room)</td></tr>
+<tr class="memdesc:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize a room edit.  <a href="classeng_1_1MenuSerializer.html#a1145be7b008fbe8a2345b93c6a31b2e4">More...</a><br /></td></tr>
 <tr class="separator:a1145be7b008fbe8a2345b93c6a31b2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1f7607a5b714141e8b37853a9a38ce3"><td class="memItemLeft" align="right" valign="top"><a id="ad1f7607a5b714141e8b37853a9a38ce3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>deserializeRoomEdit</b> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, std::size_t &amp;roomCount)</td></tr>
-<tr class="separator:ad1f7607a5b714141e8b37853a9a38ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f2e2b4f1c80ea417a23b45b561285a6"><td class="memItemLeft" align="right" valign="top"><a id="a2f2e2b4f1c80ea417a23b45b561285a6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>deserializeRoomEdit</b> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, std::size_t &amp;roomCount, <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client)</td></tr>
+<tr class="separator:a2f2e2b4f1c80ea417a23b45b561285a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd3e2ed39e15b471ce4485f9eab09105"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#afd3e2ed39e15b471ce4485f9eab09105">deserializeRoomAction</a> (std::vector&lt; uint8_t &gt; packet, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client)</td></tr>
 <tr class="memdesc:afd3e2ed39e15b471ce4485f9eab09105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize a room action.  <a href="classeng_1_1MenuSerializer.html#afd3e2ed39e15b471ce4485f9eab09105">More...</a><br /></td></tr>
 <tr class="separator:afd3e2ed39e15b471ce4485f9eab09105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae028cddb4cc83c7bf79c9a90668cdd1b"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#ae028cddb4cc83c7bf79c9a90668cdd1b">serializeEvent</a> (<a class="el" href="namespaceeng.html#a8b0eb6c4e2fcc687bb01f8de9979e25b">MenuEvent</a> event)</td></tr>
 <tr class="memdesc:ae028cddb4cc83c7bf79c9a90668cdd1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an event.  <a href="classeng_1_1MenuSerializer.html#ae028cddb4cc83c7bf79c9a90668cdd1b">More...</a><br /></td></tr>
 <tr class="separator:ae028cddb4cc83c7bf79c9a90668cdd1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeafdfd9ef876b0b8011154c4223ff1fb"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1MenuSerializer.html#aeafdfd9ef876b0b8011154c4223ff1fb">getClientId</a> (_STORAGE_DATA packet)</td></tr>
+<tr class="memdesc:aeafdfd9ef876b0b8011154c4223ff1fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the client id.  <a href="classeng_1_1MenuSerializer.html#aeafdfd9ef876b0b8011154c4223ff1fb">More...</a><br /></td></tr>
+<tr class="separator:aeafdfd9ef876b0b8011154c4223ff1fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -152,9 +155,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>editRoom</b> (<a clas
 <tr class="memitem:a888c805e0c104ff83dbd77e767a5b18c"><td class="memItemLeft" align="right" valign="top"><a id="a888c805e0c104ff83dbd77e767a5b18c"></a>
 std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt;::iterator&#160;</td><td class="memItemRight" valign="bottom"><b>getRoom</b> (std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; rooms, int id)</td></tr>
 <tr class="separator:a888c805e0c104ff83dbd77e767a5b18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11de1449aee132dcc292cc9e0eac14a8"><td class="memItemLeft" align="right" valign="top"><a id="a11de1449aee132dcc292cc9e0eac14a8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>editRoom</b> (<a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> crudType, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers)</td></tr>
-<tr class="separator:a11de1449aee132dcc292cc9e0eac14a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf43ea17fc649feda1a72a599f63870"><td class="memItemLeft" align="right" valign="top"><a id="acbf43ea17fc649feda1a72a599f63870"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>editRoom</b> (<a class="el" href="namespaceeng.html#a9a8e3f390a5b8c1d4200d0d11b4f3574">CrudType</a> crudType, std::vector&lt; <a class="el" href="classeng_1_1Room.html">Room</a> &gt; &amp;rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers, <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client)</td></tr>
+<tr class="separator:acbf43ea17fc649feda1a72a599f63870"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classeng_1_1Serializer"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classeng_1_1Serializer')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classeng_1_1Serializer.html">eng::Serializer</a></td></tr>
 <tr class="memitem:a20c5bd20c76fd4cda50411815d2d16ac inherit pro_methods_classeng_1_1Serializer"><td class="memTemplParams" colspan="2"><a id="a20c5bd20c76fd4cda50411815d2d16ac"></a>
 template&lt;typename T &gt; </td></tr>
@@ -258,6 +261,33 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
 
 </div>
 </div>
+<a id="aeafdfd9ef876b0b8011154c4223ff1fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeafdfd9ef876b0b8011154c4223ff1fb">&#9670;&nbsp;</a></span>getClientId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t eng::MenuSerializer::getClientId </td>
+          <td>(</td>
+          <td class="paramtype">_STORAGE_DATA&#160;</td>
+          <td class="paramname"><em>packet</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the client id. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">packet</td><td>The packet </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The client id </dd></dl>
+
+</div>
+</div>
 <a id="ae028cddb4cc83c7bf79c9a90668cdd1b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae028cddb4cc83c7bf79c9a90668cdd1b">&#9670;&nbsp;</a></span>serializeEvent()</h2>
 
@@ -285,8 +315,8 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
 
 </div>
 </div>
-<a id="a8e86cbcf327f238e1fb50a3c2de6d2f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e86cbcf327f238e1fb50a3c2de6d2f6">&#9670;&nbsp;</a></span>serializeRoomAction()</h2>
+<a id="a94ecd1ecc6a3261bca2744ae379e1cb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94ecd1ecc6a3261bca2744ae379e1cb2">&#9670;&nbsp;</a></span>serializeRoomAction()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +325,13 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
           <td class="memname">_STORAGE_DATA eng::MenuSerializer::serializeRoomAction </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
+          <td class="paramname"><em>clientId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>roomId</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
