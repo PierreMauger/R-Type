@@ -2,6 +2,10 @@
 
 using namespace eng;
 
+std::mutex globalMutex;
+std::condition_variable globalCondVar;
+bool globalIsReady = false;
+
 Client::Client()
 {
     this->_ip = std::make_shared<std::string>("");
@@ -16,7 +20,10 @@ Client::Client()
 void Client::createNetwork()
 {
     this->_network = std::make_shared<ClientNetwork>(*this->_ip, *this->_port);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+    std::unique_lock<std::mutex> lock(globalMutex);
+    while (!globalIsReady) globalCondVar.wait(lock);
     this->_network->run();
 
     this->_id = this->_network->getId();

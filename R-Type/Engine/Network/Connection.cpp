@@ -2,6 +2,9 @@
 
 using namespace eng;
 
+extern std::condition_variable globalCondVar;
+extern bool globalIsReady;
+
 Connection::Connection(boost::asio::io_context &ioContext, std::shared_ptr<_QUEUE_TYPE> &dataInTcp, std::shared_ptr<_QUEUE_TYPE> &dataInUdp) : _ioContext(ioContext), _udpSocketIn(ioContext, _B_ASIO_UDP::endpoint(_B_ASIO_UDP::v4(), 0)), _udpSocketOut(ioContext), _tcpSocket(ioContext)
 {
     this->_dataInTcp = dataInTcp;
@@ -60,6 +63,8 @@ void Connection::open()
     if (!this->_udpSocketOut.is_open())
         throw std::runtime_error("UDP socket can't be opened");
     std::cout << "[+] New connection from " << this->_tcpEndpoint.address().to_string() << ":" << this->_tcpEndpoint.port() << std::endl;
+    globalIsReady = true;
+    globalCondVar.notify_one();
     this->initConnection();
 }
 
