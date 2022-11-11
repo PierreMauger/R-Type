@@ -4,8 +4,8 @@ using namespace eng;
 
 Client::Client()
 {
-    this->_ip = std::make_shared<std::string>("127.0.0.1");
-    this->_port = std::make_shared<std::size_t>(8080);
+    this->_ip = std::make_shared<std::string>("");
+    this->_port = std::make_shared<std::size_t>(0);
     this->_isLocal = std::make_shared<bool>(false);
     this->initSystems();
     this->initComponents();
@@ -14,7 +14,7 @@ Client::Client()
 
 void Client::createNetwork()
 {
-    this->_network = std::make_shared<ClientNetwork>("127.0.0.1", 8080);
+    this->_network = std::make_shared<ClientNetwork>(this->_ip, this->_port);
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     this->_network->run();

@@ -4,7 +4,7 @@ using namespace eng;
 
 ServerNetwork::ServerNetwork(uint16_t portTcp, std::time_t time) : _ioContext(), _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
-    this->initServerNetwork(time, 12);
+    this->initServerNetwork(time, 0);
 }
 
 ServerNetwork::~ServerNetwork()
