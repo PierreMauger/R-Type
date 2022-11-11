@@ -117,9 +117,11 @@ void Client::syncTcpNetwork()
 
 void Client::updateNetwork()
 {
-    if (this->_network == nullptr && this->_ip->size() != 0 && (*this->_port) != 0) {
+    if (this->_network == nullptr) {
+        if (this->_ip->size() == 0 || (*this->_port) == 0) {
+            return;
+        }
         this->createNetwork();
-        return;
     }
 
     Graphic &graphic = this->_engine.getGraphic();
