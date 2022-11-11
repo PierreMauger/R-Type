@@ -18,8 +18,15 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
         sizeProj = componentManager.getSingleComponent<CooldownShoot>(id);
         pos = componentManager.getSingleComponent<Position>(id);
     }
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((projectile.damage == 2) ? 4 : 3), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{projectile.rotation, {0, 0, 56, 32}, sf::Color::White, {(sizeProj.size / screenSize->x * windowsSize.x), (sizeProj.size / screenSize->y * windowsSize.y)}});
+    if (enemy)
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_REV_FIREBALL, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+    else
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((projectile.damage == 2) ? 4 : 3), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+    componentManager.getComponent(typeid(SpriteAttribut))
+        .emplaceData(
+            addEntity,
+            SpriteAttribut{
+                projectile.rotation, {0, 0, 56, 32}, sf::Color::White, {(sizeProj.size / screenSize->x * windowsSize.x), (sizeProj.size / screenSize->y * windowsSize.y)}, (projectile.rotation != 0 ? sf::Vector2f{sizeFire.x * sizeProj.size / 2, sizeFire.y * sizeProj.size / 2} : sf::Vector2f{0, 0})});
     componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x, (pos.y + (size.y / 2)) - (sizeFire.y * sizeProj.size / 2), pos.z});
     componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{(windowsSize.x / (screenSize->x / projectile.velX)), (windowsSize.x / (screenSize->x / projectile.velY)), 0});
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{id});

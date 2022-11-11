@@ -260,7 +260,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
         if ((masks[i].value() & cooldownEnemy) == cooldownEnemy) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, {1, -15, 0, 180});
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, {1, -15, 0, 0});
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }
