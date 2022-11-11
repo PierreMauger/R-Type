@@ -172,9 +172,7 @@ void Server::updateEntities()
     auto &masks = entityManager.getMasks();
 
     for (std::size_t i = 0; i < masks.size(); i++) {
-        if (!masks[i].has_value())
-            continue;
-        if ((masks[i].value() & InfoComp::SYNCID) == InfoComp::SYNCID) {
+        if (entityManager.hasMask(i, InfoComp::SYNCID)) {
             _STORAGE_DATA packet = this->_gameSerializer.serializeEntity(i, CrudType::UPDATE, entityManager, componentManager);
             this->_network.udpMsgAll(packet);
         }
