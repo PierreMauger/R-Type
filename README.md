@@ -29,6 +29,7 @@
 ## 🔍 About
 
 [R-Type](https://en.wikipedia.org/wiki/R-Type) is a 3rd year Epitech project where a group of 4-6 students have to code an ersatz of the original horizontally scrolling shooter arcade video game from 1987 of the same name.
+
 In the span of 2 months, the goal is to learn the [ECS](https://en.wikipedia.org/wiki/Entity_component_system) architectural pattern to code the game in C++ with an additional 2-4 players coop.
 
 ## 💻 Requirements
@@ -50,6 +51,8 @@ It will automatically:
 - Download/build [Boost Asio](https://think-async.com/Asio/)
 - Build the `r-type_client` and `r-type_server` executables (.exe on Windows) using those libraries
 
+You can also just download the installer from the release tab in github.
+
 ## 🎮 Usage
 
 One person has to start `r-type_server` to be the server host and can also start `r-type_client` to be a player.
@@ -57,9 +60,11 @@ The other players just have to start `r-type_client` on their end aswell.
 
 ## 📝 Documentation
 
-A local html-based code documentation is available in the root doc/html folder (start with the `index.html` file).
-A network protocol documentation is available in the root doc/networkProtocol folder.
-A documentation for the map loader is available in the root doc/mapLoader folder.
+A local html-based code documentation is available in the root [doc/html](doc/html/) folder (start with the `index.html` file).
+
+A network protocol documentation is available in the root [doc/networkProtocol](doc/networkProtocol/) folder.
+
+A documentation for the map loader is available in the root [doc/mapLoader](doc/mapLoader/) folder.
 
 ## 🤝 Authors
 
