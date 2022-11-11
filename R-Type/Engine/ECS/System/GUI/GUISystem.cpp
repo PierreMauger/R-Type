@@ -285,8 +285,12 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     }
     case 15:
         break;
-    case 16:
+    case 16: {
+        SyncID &syncID = componentManager.getSingleComponent<SyncID>(this->_selectedEntity);
+        const ImU64 increment = 1;
+        ImGui::InputScalar("ID##16", ImGuiDataType_U64, &syncID.id, &increment);
         break;
+    }
     case 17:
         break;
     case 18:

@@ -122,19 +122,21 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
 
     for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         sf::Text &textRef = this->_text;
+        Text &text = componentManager.getSingleComponent<Text>(id);
         if (entityManager.hasMask(id, this->_sceneTag)) {
             Scene &scene = componentManager.getSingleComponent<Scene>(id);
             if (scene.id != *this->_sceneId)
                 continue;
         }
-        textRef.setCharacterSize(35 / this->_screenSize->x * this->_window->getSize().x);
         if (componentManager.getSingleComponent<Text>(id).hasValue)
-            textRef.setString(componentManager.getSingleComponent<Text>(id).str + std::to_string(componentManager.getSingleComponent<Text>(id).value));
+            textRef.setString(text.str + std::to_string(text.value));
         else {
-            textRef.setString(componentManager.getSingleComponent<Text>(id).str);
+            textRef.setString(text.str);
             textRef.setOrigin(textRef.getLocalBounds().width / 2, textRef.getLocalBounds().height / 2);
         }
-        textRef.setPosition(componentManager.getSingleComponent<Text>(id).pos);
+        textRef.setFillColor(text.color);
+        textRef.setCharacterSize(text.size);
+        textRef.setPosition(text.pos);
         stockText.push_back(textRef);
     }
     for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
@@ -153,8 +155,8 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setRotation(spriteAt.rotation);
             spriteRef.setColor(spriteAt.color);
             spriteRef.setScale(spriteAt.scale);
-            spriteRef.setOrigin(spriteAt.offset);
-            spriteRef.setPosition(pos.x + spriteAt.offset.x * 1.5, pos.y + spriteAt.offset.y);
+            spriteRef.setOrigin({spriteAt.offset.x / 2, spriteAt.offset.y / 2});
+            spriteRef.setPosition(pos.x + spriteAt.offset.x, pos.y + spriteAt.offset.y);
         }
         if (masks[id].has_value() && (masks[id].value() & renderCooldown) == renderCooldown && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;

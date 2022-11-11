@@ -90,12 +90,43 @@ void Server::manageEvent()
     }
 }
 
-void Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+bool Server::checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic)
 {
+    auto &masks = entityManager.getMasks();
+    bool textSpawn = false;
+    bool isText = false;
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (masks[i].has_value() && (masks[i].value() & InfoComp::ENEMY) == InfoComp::ENEMY)
+            return false;
+        if (masks[i].has_value() && (masks[i].value() & InfoComp::TEXT) == InfoComp::TEXT && componentManager.getSingleComponent<Text>(i).delay != 0) {
+            isText = true;
+            Text &text = componentManager.getSingleComponent<Text>(i);
+            if (text.delay != 0 && text.last + text.delay < graphic.getClock()->getElapsedTime().asSeconds()) {
+                textSpawn = true;
+                componentManager.removeAllComponents(i);
+                entityManager.removeMask(i);
+            }
+        }
+    }
+    if (!isText) {
+        ScoreTextPreload::levelPreload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), 5);
+    }
+    return textSpawn;
+}
+
+bool Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+{
+    if (this->_isLevelFinished) {
+        if (this->checkIfEnemyAlive(ecs.getEntityManager(), ecs.getComponentManager(), graphic))
+            return true;
+    }
     if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
-        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
+        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
+    return false;
 }
 
 void Server::syncUdpNetwork()
@@ -206,11 +237,18 @@ void Server::mainLoop()
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
+    std::size_t levelId = 0;
 
     VesselPreload::preload(graphic.getWindow()->getSize(), graphic.getScreenSize(), ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
-        this->manageEnemy(level[0], graphic, ecs);
+        if (this->manageEnemy(level[levelId], graphic, ecs)) {
+            this->_isLevelFinished = false;
+            if (level.size() - 1 == levelId)
+                graphic.getWindow()->close();
+            else
+                levelId++;
+        }
         this->updateRooms();
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();

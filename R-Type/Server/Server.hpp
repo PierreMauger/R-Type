@@ -11,6 +11,7 @@
 /// @cond
 #include "Client.hpp"
 #include "Engine.hpp"
+#include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/BossPreload.hpp"
 #include "Engine/ECS/PreloadEntities/CthulhuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
@@ -57,11 +58,13 @@ namespace eng
             sf::Time _deltaTime = sf::seconds(5);
             sf::Time _bossTime = sf::seconds(5);
             sf::Time _networkTime = sf::milliseconds(50);
+            bool _isLevelFinished = false;
 
             void initSystems();
             void initComponents();
             void initEntities();
-            void manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
+            bool manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
+            bool checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic);
             void manageEvent();
             void syncUdpNetwork();
             void syncTcpNetwork();
