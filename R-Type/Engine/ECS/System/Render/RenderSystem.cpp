@@ -68,7 +68,6 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
 {
     std::size_t shieldParent = (InfoComp::POS | InfoComp::SHIELD | InfoComp::PARENT);
     std::size_t shieldChild = (InfoComp::POS | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT);
-    float scal = 0.3;
 
     if (entityManager.hasMask(i, shieldParent)) {
         std::size_t idPar = entityManager.getBySyncId(componentManager.getSingleComponent<Parent>(i).id, componentManager);
@@ -77,11 +76,11 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
             if (shield.life > 0) {
                 SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
                 Position &pos = componentManager.getSingleComponent<Position>(idPar);
-                spriteRef.setOrigin(spriteAt.offset);
+                Size &sizePar = componentManager.getSingleComponent<Size>(idPar);
                 spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
-                spriteRef.setScale(scal, scal);
+                spriteRef.setScale(spriteAt.scale.x, spriteAt.scale.y);
                 spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
-                spriteRef.setPosition(pos.x + (64 * scal) * 2, pos.y + (28 * scal));
+                spriteRef.setPosition(pos.x - (sizePar.x / 4), pos.y - (sizePar.y / 2));
             } else {
                 componentManager.removeAllComponents(i);
                 entityManager.removeMask(i);
