@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void VesselPreload::preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
+std::size_t VesselPreload::preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
 {
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::LIFE | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::CONTROLLABLE | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE | InfoComp::APP | InfoComp::DIS | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     sf::Vector2f size{windowsSize.x / (screenSize->x / 2), windowsSize.y / (screenSize->y / 2)};
@@ -33,4 +33,6 @@ void VesselPreload::preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector
     componentManager.getComponent(typeid(CooldownBar)).emplaceData(idBar, CooldownBar{true});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(id).id});
+
+    return id;
 }

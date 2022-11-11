@@ -47,7 +47,8 @@ namespace eng
             std::shared_ptr<std::size_t> _syncId;
             // std::size_t _syncId = 0;
 
-            sf::Time _networkTime = sf::milliseconds(50);
+            sf::Time _networkTime = sf::milliseconds(16);
+            sf::Time _keysTime = sf::milliseconds(16);
 
             std::shared_ptr<std::string> _ip;
             std::shared_ptr<std::size_t> _port;
@@ -65,6 +66,7 @@ namespace eng
             void updateEvent();
             bool checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic);
             bool manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
+            void updateKeys();
 
         public:
             /**
