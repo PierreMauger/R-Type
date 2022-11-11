@@ -1,0 +1,7 @@
+# charPerScreen:2
+----
+-O -
+-O -
+-E -
+-E -
+----

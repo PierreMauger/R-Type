@@ -34,11 +34,11 @@ namespace eng
             ECS _ecs;
             Graphic _graphic;
 
-            void updateSize(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updateSpeed(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updatePos(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updateParallax(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
-            void updateAppDis(auto &masks, std::size_t i, ComponentManager &componentManager, sf::Vector2f lastSize);
+            void updateSize(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, sf::Vector2f lastSize);
+            void updateSpeed(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, sf::Vector2f lastSize);
+            void updatePos(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, sf::Vector2f lastSize);
+            void updateParallax(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, sf::Vector2f lastSize);
+            void updateAppDis(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, sf::Vector2f lastSize);
 
         public:
             /**

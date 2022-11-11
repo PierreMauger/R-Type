@@ -15,21 +15,20 @@ InputSystem::InputSystem(Graphic &graphic, EntityManager &entityManager)
 
 void InputSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    auto &masks = entityManager.getMasks();
     std::size_t app = (InfoComp::APP);
     std::size_t dis = (InfoComp::DIS);
 
     for (auto id : entityManager.getMaskCategory(this->_controlTag)) {
-        if (((masks[id].value() & app) == app && componentManager.getSingleComponent<Appearance>(id).app) || ((masks[id].value() & dis) == dis && componentManager.getSingleComponent<Disappearance>(id).dis))
+        if ((entityManager.hasMask(id, app) && componentManager.getSingleComponent<Appearance>(id).app) || (entityManager.hasMask(id, dis) && componentManager.getSingleComponent<Disappearance>(id).dis))
             continue;
         Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
         CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(id);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {2, 10, 0, 0});
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {2, 15, 0, 0});
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) {
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {1, 10, 0, 0});
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {1, 15, 0, 0});
         }
         sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = vel.baseSpeedX * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = vel.baseSpeedX : vel.x = 0);
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = vel.baseSpeedY * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = vel.baseSpeedY : vel.y = 0);
@@ -41,10 +40,9 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
 
         if (button.type != ButtonType::TEXTZONE || !button.selected)
             continue;
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 9; i++)
             if (sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(static_cast<int>(sf::Keyboard::Num0) + i)) && _event->type == sf::Event::KeyPressed && text.str.size() < button.maxSize)
                 text.str += std::to_string(i);
-        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Period) && _event->type == sf::Event::KeyPressed && text.str.size() < button.maxSize)
             text.str += ".";
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace) && _event->type == sf::Event::KeyPressed && text.str.size() > 0)

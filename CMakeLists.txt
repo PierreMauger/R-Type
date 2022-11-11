@@ -267,6 +267,13 @@ set_target_properties(${SERVER} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CM
 #install target
 install(TARGETS ${SERVER})
 
+################## CPACK ##################
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/R-Type/Assets/" DESTINATION "bin/R-Type/Assets/")
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/License")
+include(CPack)
+
 ################## POST BUILD ##################
 
 #copy dlls to root for resources (only on windows)

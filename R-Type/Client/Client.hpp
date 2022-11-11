@@ -44,12 +44,15 @@ namespace eng
 
             std::size_t _roomId = 0;
             std::vector<Room> _rooms;
+            std::shared_ptr<std::size_t> _syncId;
+            // std::size_t _syncId = 0;
 
             sf::Time _networkTime = sf::milliseconds(50);
 
             std::shared_ptr<std::string> _ip;
             std::shared_ptr<std::size_t> _port;
             std::shared_ptr<bool> _isLocal;
+            bool _isLevelFinished = false;
 
             void createNetwork();
 
@@ -60,7 +63,8 @@ namespace eng
             void syncTcpNetwork();
             void updateNetwork();
             void updateEvent();
-            void manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
+            bool checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic);
+            bool manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
 
         public:
             /**
