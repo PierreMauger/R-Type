@@ -1,6 +1,6 @@
 # charPerScreen:5
 -------
--EEEEE    -
+-EEEEE-
 -E    -
 -     -
 -  E  -

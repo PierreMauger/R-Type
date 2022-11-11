@@ -310,7 +310,7 @@ void GUISystem::drawEntityComponent(ComponentManager &componentManager, std::siz
     case 23: {
         const ImU64 increment = 1;
         Scene &scene = componentManager.getSingleComponent<Scene>(this->_selectedEntity);
-        ImGui::InputScalar("Scene ID##23",ImGuiDataType_U64, &scene.id, &increment);
+        ImGui::InputScalar("Scene ID##23", ImGuiDataType_U64, &scene.id, &increment);
         break;
     }
     default:

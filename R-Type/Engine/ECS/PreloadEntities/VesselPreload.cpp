@@ -19,7 +19,7 @@ void VesselPreload::preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
-    std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD | InfoComp::SYNCID), componentManager);
+    std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{S_SHIELD, Priority::MEDIUM});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {1 / screenSize->x * windowsSize.x, 1 / screenSize->y * windowsSize.y}, {700 / 2 - (64 * size.x) / 2, 440 / 2 - (28 * size.x) / 2}});
     componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});

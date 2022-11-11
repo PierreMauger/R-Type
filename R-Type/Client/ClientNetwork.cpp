@@ -2,22 +2,18 @@
 
 using namespace eng;
 
-ClientNetwork::ClientNetwork() : _ioContext(), _resolver(_ioContext)
+ClientNetwork::ClientNetwork(std::string ip, uint16_t portTcp) : _ioContext(), _resolver(_ioContext)
 {
     this->_dataInTcp = std::make_shared<_QUEUE_TYPE>();
     this->_dataInUdp = std::make_shared<_QUEUE_TYPE>();
-    this->_connection = nullptr;
+
+    this->_connection = std::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataInTcp, this->_dataInUdp);
+    this->initClientNetwork();
 }
 
 ClientNetwork::~ClientNetwork()
 {
     this->stop();
-}
-
-void ClientNetwork::start(std::string ip, uint16_t portTcp)
-{
-    this->_connection = std::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataInTcp, this->_dataInUdp);
-    this->initClientNetwork();
 }
 
 void ClientNetwork::initClientNetwork()
@@ -34,7 +30,8 @@ void ClientNetwork::initClientNetwork()
     this->_connection->setUdpEndpoint(this->_connection->getTcpEndpoint().address().to_string(), portUdp);
 
     this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_time, sizeof(this->_time)));
-    this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_id, sizeof(this->_id)));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_id, sizeof(std::size_t) * 2));
 
     this->_connection->run();
 }
@@ -46,12 +43,10 @@ void ClientNetwork::run()
 
 void ClientNetwork::stop()
 {
-    if (this->_connection != nullptr) {
-        if (this->_connection->isConnected())
-            this->_connection->closeConnection();
-        if (this->_connection->getThreadConnection().joinable())
-            this->_connection->getThreadConnection().join();
-    }
+    if (this->_connection->isConnected())
+        this->_connection->closeConnection();
+    if (this->_connection->getThreadConnection().joinable())
+        this->_connection->getThreadConnection().join();
     if (!this->_ioContext.stopped())
         this->_ioContext.stop();
     if (this->_threadContext.joinable())
@@ -60,8 +55,6 @@ void ClientNetwork::stop()
 
 bool ClientNetwork::isConnected()
 {
-    if (this->_connection == nullptr)
-        return false;
     return this->_connection->isConnected();
 }
 
@@ -87,8 +80,6 @@ _QUEUE_TYPE &ClientNetwork::getQueueInUdp()
 
 void ClientNetwork::updateConnection()
 {
-    if (this->_connection == nullptr)
-        return;
     this->_connection->updateDataOut();
 }
 

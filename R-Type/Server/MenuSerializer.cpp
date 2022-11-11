@@ -18,12 +18,15 @@ std::vector<Room>::iterator MenuSerializer::getRoom(std::vector<Room> rooms, int
     return it;
 }
 
-void MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers)
+void MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, int id, std::size_t maxPlayers, std::size_t nbPlayers, Client &client)
 {
     auto roomIt = getRoom(rooms, id);
 
     if (roomIt == rooms.end()) {
         rooms.push_back(Room(id, maxPlayers, nbPlayers));
+        rooms.back().addPlayer();
+        client.setRoomId(id);
+        // TODO set player
     }
     if (crudType == CrudType::UPDATE) {
         roomIt->setNbPlayers(nbPlayers);
@@ -32,6 +35,7 @@ void MenuSerializer::editRoom(CrudType crudType, std::vector<Room> &rooms, int i
     }
     if (crudType == CrudType::DESTROY) {
         rooms.erase(roomIt);
+        // TODO delete all clients in the room
         return;
     }
     throw std::runtime_error("[ERROR] Invalid CRUD type");
@@ -46,12 +50,13 @@ void MenuSerializer::handlePacket(_STORAGE_DATA packet, std::vector<Room> &rooms
     if (!this->checkMagic(packetVector, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
-    adv += MAGIC_SIZE;
+    // skip id
+    adv += (MAGIC_SIZE + sizeof(std::size_t));
     this->deserializeData<MenuPacketType>(packetVector, adv, &type);
 
     switch (type) {
     case MenuPacketType::ROOM_EDIT:
-        this->deserializeRoomEdit(packetVector, rooms, roomCount);
+        this->deserializeRoomEdit(packetVector, rooms, roomCount, client);
         break;
     case MenuPacketType::ROOM_ACTION:
         this->deserializeRoomAction(packetVector, rooms, client);
@@ -86,9 +91,9 @@ _STORAGE_DATA MenuSerializer::serializeRoomEdit(CrudType editType, Room &room)
     return this->convertToData(packet);
 }
 
-void MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms, std::size_t &roomCount)
+void MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::vector<Room> &rooms, std::size_t &roomCount, Client &client)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(MenuPacketType);
+    std::size_t adv = MAGIC_SIZE + sizeof(std::size_t) + sizeof(MenuPacketType);
     std::size_t id;
     std::size_t maxPlayers;
     std::size_t nbPlayers;
@@ -108,12 +113,12 @@ void MenuSerializer::deserializeRoomEdit(std::vector<uint8_t> packet, std::vecto
     if (roomIt == rooms.end()) {
         id = roomCount++;
     }
-    this->editRoom(crudType, rooms, id, maxPlayers, nbPlayers);
+    this->editRoom(crudType, rooms, id, maxPlayers, nbPlayers, client);
 }
 
 void MenuSerializer::deserializeRoomAction(std::vector<uint8_t> packet, std::vector<Room> &rooms, Client &client)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(MenuPacketType);
+    std::size_t adv = MAGIC_SIZE + sizeof(std::size_t) + sizeof(MenuPacketType);
     std::size_t id;
     RoomAction action;
 
@@ -165,4 +170,14 @@ _STORAGE_DATA MenuSerializer::serializeEvent(MenuEvent event)
     insertMagic(packet);
 
     return this->convertToData(packet);
+}
+
+std::size_t MenuSerializer::getClientId(_STORAGE_DATA packet)
+{
+    std::vector<uint8_t> packetVector = this->convertToVector(packet);
+    std::size_t adv = MAGIC_SIZE;
+    std::size_t id;
+
+    this->deserializeData(packetVector, adv, &id);
+    return id;
 }
