@@ -57,8 +57,8 @@ The other players just have to start `r-type_client` on their end aswell.
 
 ## 📝 Documentation
 
-An english html-based local code documentation is available in the root doc/html folder (start with the `index.html` file).
-A network protocol documentation will soon be available at the root.
+A local html-based code documentation is available in the root doc/html folder (start with the `index.html` file).
+A network protocol documentation is available in the root doc/networkProtocol folder.
 A documentation for the map loader is available in the root doc/mapLoader folder.
 
 ## 🤝 Authors
