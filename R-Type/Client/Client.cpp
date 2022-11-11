@@ -2,17 +2,25 @@
 
 using namespace eng;
 
-Client::Client() : _network()
+Client::Client()
 {
     this->_ip = std::make_shared<std::string>("");
     this->_port = std::make_shared<std::size_t>(0);
+    this->_isLocal = std::make_shared<bool>(false);
     this->initSystems();
     this->initComponents();
     this->initEntities();
-    this->_network.run();
+}
 
-    std::srand(this->_network.getTime());
-    this->_id = this->_network.getId();
+void Client::createNetwork()
+{
+    this->_network = std::make_shared<ClientNetwork>(*this->_ip, *this->_port);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    this->_network->run();
+
+    this->_id = this->_network->getId();
+    std::srand(this->_network->getTime());
 }
 
 void Client::initSystems()
@@ -33,7 +41,7 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, entityManager));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, entityManager));
 }
 
 void Client::initComponents()
@@ -74,13 +82,16 @@ void Client::initEntities()
 
 void Client::syncUdpNetwork()
 {
-    _QUEUE_TYPE &dataIn = this->_network.getQueueInUdp();
-    _STORAGE_DATA packet;
+    _QUEUE_TYPE &dataIn = this->_network->getQueueInUdp();
 
     if (dataIn.empty())
         return;
-    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    for (_STORAGE_DATA packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        try {
+            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }
         if (dataIn.empty())
             break;
     }
@@ -88,13 +99,16 @@ void Client::syncUdpNetwork()
 
 void Client::syncTcpNetwork()
 {
-    _QUEUE_TYPE &dataIn = this->_network.getQueueInTcp();
-    _STORAGE_DATA packet;
+    _QUEUE_TYPE &dataIn = this->_network->getQueueInTcp();
 
     if (dataIn.empty())
         return;
-    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        this->_menuSerializer.handlePacket(packet, this->_rooms, this->_roomId);
+    for (_STORAGE_DATA packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        try {
+            this->_menuSerializer.handlePacket(packet, this->_rooms, this->_roomId);
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }
         if (dataIn.empty())
             break;
     }
@@ -102,20 +116,19 @@ void Client::syncTcpNetwork()
 
 void Client::updateNetwork()
 {
-    Graphic &graphic = this->_engine.getGraphic();
-
-    if (*this->_ip != "" && *this->_port != 0) {
-        this->_network.start(*this->_ip, *this->_port);
-        *this->_ip = "";
-        *this->_port = 0;
+    if (this->_network == nullptr && this->_ip->size() != 0 && (*this->_port) != 0) {
+        this->createNetwork();
+        return;
     }
+
+    Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
     this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->syncUdpNetwork();
     this->syncTcpNetwork();
-    this->_network.updateConnection();
+    this->_network->updateConnection();
 }
 
 void Client::updateEvent()
@@ -140,17 +153,29 @@ void Client::updateEvent()
     }
 }
 
+void Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
+{
+    std::size_t i = 0;
+
+    if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
+        level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), i);
+        level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
+    }
+}
+
 void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    VesselPreload vesselPreload;
+    std::vector<Level> &level = this->_engine.getLoader().getLevels();
 
     while (graphic.getWindow()->isOpen()) {
-        this->updateNetwork();
         this->updateEvent();
+        if (*this->_isLocal)
+            this->manageEnemy(level[0], graphic, ecs);
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
+        this->updateNetwork();
     }
 }

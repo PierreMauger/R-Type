@@ -29,7 +29,6 @@ void Server::initSystems()
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    // systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
 void Server::initComponents()
@@ -99,7 +98,7 @@ void Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
     }
 }
 
-void Server::syncUdpNetwork(Client &client)
+void Server::syncUdpNetwork()
 {
     _QUEUE_TYPE &dataIn = this->_network.getQueueInUdp();
     _STORAGE_DATA packet;
@@ -107,13 +106,16 @@ void Server::syncUdpNetwork(Client &client)
     if (dataIn.empty())
         return;
     for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), client);
+        std::size_t clientId = this->_gameSerializer.getClientId(packet);
+        if (clientId >= this->_clients.size())
+            continue;
+        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_clients[clientId]);
         if (dataIn.empty())
             break;
     }
 }
 
-void Server::syncTcpNetwork(Client &client)
+void Server::syncTcpNetwork()
 {
     _QUEUE_TYPE &dataIn = this->_network.getQueueInTcp();
     _STORAGE_DATA packet;
@@ -121,7 +123,10 @@ void Server::syncTcpNetwork(Client &client)
     if (dataIn.empty())
         return;
     for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        this->_menuSerializer.handlePacket(packet, this->_rooms, client, this->_roomId);
+        std::size_t clientId = this->_gameSerializer.getClientId(packet);
+        if (clientId >= this->_clients.size())
+            continue;
+        this->_menuSerializer.handlePacket(packet, this->_rooms, this->_clients[clientId], this->_roomId);
         if (dataIn.empty())
             break;
     }
@@ -154,7 +159,7 @@ void Server::updateClients()
                 check = true;
         }
         if (!check) {
-            this->_clients.push_back(Client(connection, this->_roomId++));
+            this->_clients.push_back(Client(connection, this->_clientId++));
         }
         check = false;
     }
@@ -186,11 +191,10 @@ void Server::updateNetwork()
 {
     Graphic &graphic = this->_engine.getGraphic();
 
-    // this->syncTcpNetwork();
-    // this->syncUdpNetwork();
-    if (graphic.getClock()->getElapsedTime() <= this->_networkTime) {
+    this->syncTcpNetwork();
+    this->syncUdpNetwork();
+    if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
-    }
     this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->updateClients();
     this->updateEntities();
@@ -201,10 +205,9 @@ void Server::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    VesselPreload vesselPreload;
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
 
-    VesselPreload::preload(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
+    VesselPreload::preload(graphic.getWindow()->getSize(), graphic.getScreenSize(), ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         this->manageEnemy(level[0], graphic, ecs);

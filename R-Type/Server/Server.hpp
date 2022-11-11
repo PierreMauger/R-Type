@@ -16,9 +16,9 @@
 #include "Engine/ECS/PreloadEntities/DevourerOfGodsPreload.hpp"
 #include "Engine/ECS/PreloadEntities/EnemyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
+#include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
-#include "Engine/Level/Level.hpp"
 #include "Engine/Network/Room.hpp"
 #include "GameSerializer.hpp"
 #include "Includes.hpp"
@@ -47,7 +47,7 @@ namespace eng
             GameSerializer _gameSerializer;
 
             std::size_t _syncId = 0;
-            std::size_t _clientId;
+            std::size_t _clientId = 0;
             std::vector<Client> _clients;
 
             std::size_t _roomId = 0;
@@ -61,10 +61,10 @@ namespace eng
             void initSystems();
             void initComponents();
             void initEntities();
-            void manageEnemy(eng::Level &level, Graphic &graphic, ECS &ecs);
+            void manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
             void manageEvent();
-            void syncUdpNetwork(Client &client);
-            void syncTcpNetwork(Client &client);
+            void syncUdpNetwork();
+            void syncTcpNetwork();
             void updateRooms();
             void updateClients();
             void updateEntities();

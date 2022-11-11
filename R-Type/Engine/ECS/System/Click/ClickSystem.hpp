@@ -9,7 +9,7 @@
 #define CLICKSYSTEM_HPP
 
 /// @cond
-#include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
+#include "Engine/ECS/PreloadEntities/VesselPreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
@@ -33,6 +33,7 @@ namespace eng
             std::shared_ptr<std::size_t> _sceneId;
             std::shared_ptr<std::size_t> _port;
             std::shared_ptr<std::string> _ip;
+            std::shared_ptr<bool> _isLocal;
 
             std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
             std::size_t _sceneTag = (InfoComp::SCENE);
@@ -44,7 +45,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, EntityManager &entityManager);
+            ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, EntityManager &entityManager);
             /**
              * @brief ClickSystem destructor.
              * @fn ~ClickSystem()

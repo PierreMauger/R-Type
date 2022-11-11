@@ -42,22 +42,17 @@ namespace eng
         public:
             /**
              * @brief ClientNetwork constructor
-             * @fn ClientNetwork()
+             * @fn ClientNetwork(std::string ip, uint16_t portTcp)
+             * @param ip The ip of the client
+             * @param portTdp The tdp port
              */
-            ClientNetwork();
+            ClientNetwork(std::string ip, uint16_t portTcp);
             /**
              * @brief ClientNetwork destructor
              * @fn ~ClientNetwork()
              */
             ~ClientNetwork();
 
-            /**
-             * @brief Start the client network.
-             * @fn void start(std::string ip, uint16_t portTcp)
-             * @param ip The server ip.
-             * @param portTcp The server tcp port.
-             */
-            void start(std::string ip, uint16_t portTcp);
             /**
              * @brief Run the client network
              * @fn void run()
