@@ -213,9 +213,6 @@ void PhysicSystem::collisionFireballEnemy(ComponentManager &componentManager, En
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile proj = componentManager.getSingleComponent<Projectile>(i);
 
-    if (entityManager.hasMask(par.id, InfoComp::CONTROLLABLE))
-        componentManager.getSingleComponent<Controllable>(par.id).kill++;
-
     for (auto k : entityManager.getMaskCategory(this->_shieldTag)) {
         if (componentManager.getSingleComponent<Parent>(k).id == componentManager.getSingleComponent<SyncID>(j).id) {
             Shield &shield = componentManager.getSingleComponent<Shield>(k);
