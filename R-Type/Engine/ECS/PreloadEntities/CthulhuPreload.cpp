@@ -15,7 +15,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, pos.y / screenSize->y * windowsSize.y, (pos.x - graphic.getScreenSize()->x) / screenSize->x * windowsSize.x});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{pos.x + (110 / 2 * size.x) / screenSize->x * windowsSize.x, -324 / screenSize->y * windowsSize.y, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{3 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y, 0, 2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y});
-    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CTHULHU, TypeStatus(SEARCH), TypePhase(PHASE01), 0});
+    componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CTHULHU, TypeStatus::SEARCH, TypePhase::PHASE01, 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{110 * size.x, 162 * size.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
