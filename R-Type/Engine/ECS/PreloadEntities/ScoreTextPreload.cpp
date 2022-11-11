@@ -6,12 +6,13 @@ void ScoreTextPreload::preload(Graphic &graphic, EntityManager &entityManager, C
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
+    float sText = 30 / screenSize->x * windowsSize.x;
 
     std::size_t idScore = entityManager.addMask((InfoComp::TEXT), componentManager);
-    componentManager.getComponent(typeid(Text)).emplaceData(idScore, Text{"Score: ", true, 0, 30, sf::Color::White, {static_cast<float>(graphic.getWindow()->getSize().x - (150 / screenSize->x * windowsSize.x)), 10}});
+    componentManager.getComponent(typeid(Text)).emplaceData(idScore, Text{"Score: ", true, 0, sText, sf::Color::White, {static_cast<float>(graphic.getWindow()->getSize().x - (150 / screenSize->x * windowsSize.x)), 10 / screenSize->x * windowsSize.x}});
 
     std::size_t idKill = entityManager.addMask((InfoComp::TEXT), componentManager);
-    componentManager.getComponent(typeid(Text)).emplaceData(idKill, Text{"Death: ", true, 0, 30, sf::Color::White, {static_cast<float>(graphic.getWindow()->getSize().x - (150 / screenSize->x * windowsSize.x)), 50}});
+    componentManager.getComponent(typeid(Text)).emplaceData(idKill, Text{"Death: ", true, 0, sText, sf::Color::White, {static_cast<float>(graphic.getWindow()->getSize().x - (150 / screenSize->x * windowsSize.x)), 50 / screenSize->x * windowsSize.x}});
 }
 
 void ScoreTextPreload::levelPreload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
@@ -21,6 +22,5 @@ void ScoreTextPreload::levelPreload(Graphic &graphic, EntityManager &entityManag
     float sText = 150 / screenSize->x * windowsSize.x;
 
     std::size_t idScore = entityManager.addMask((InfoComp::TEXT), componentManager);
-    componentManager.getComponent(typeid(Text))
-        .emplaceData(idScore, Text{"Level Done !", false, 0, sText, sf::Color::White, {static_cast<float>(graphic.getWindow()->getSize().x / 2) - (sText * 2), static_cast<float>(graphic.getWindow()->getSize().y / 2) - (sText / 2)}, graphic.getClock()->getElapsedTime().asSeconds(), 2});
+    componentManager.getComponent(typeid(Text)).emplaceData(idScore, Text{"Level Done !", false, 0, sText, sf::Color::White, {static_cast<float>(graphic.getWindow()->getSize().x / 2), static_cast<float>(graphic.getWindow()->getSize().y / 2)}, graphic.getClock()->getElapsedTime().asSeconds(), 2});
 }
