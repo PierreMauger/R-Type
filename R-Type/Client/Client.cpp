@@ -15,9 +15,7 @@ Client::Client()
 
 void Client::createNetwork()
 {
-    std::cout << "Enter the IP address of the server: " << *this->_ip << ":" << *this->_port << std::endl;
     this->_network = std::make_shared<ClientNetwork>(*this->_ip, *this->_port);
-    exit(0);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     this->_network->run();
 
