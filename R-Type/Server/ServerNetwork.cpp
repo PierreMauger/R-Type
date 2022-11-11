@@ -53,8 +53,8 @@ void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::sh
         newConnection->getTcpSocket().read_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
         newConnection->setUdpEndpoint(newConnection->getTcpEndpoint().address().to_string(), portUdp);
 
-        std::time_t time = std::time(nullptr);
-        newConnection->getTcpSocket().write_some(boost::asio::buffer(&time, sizeof(time)));
+        // std::time_t time = std::time(nullptr);
+        // newConnection->getTcpSocket().write_some(boost::asio::buffer(&time, sizeof(time)));
 
         newConnection->run();
 
