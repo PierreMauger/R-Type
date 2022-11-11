@@ -254,13 +254,10 @@ void PhysicSystem::checkFireballDamage(std::size_t i, std::size_t j, ComponentMa
 
 void PhysicSystem::collisionFireballEnemy(ComponentManager &componentManager, std::vector<std::optional<std::size_t>> &masks, std::size_t i, std::size_t j, Parent &par, bool &checkShield)
 {
-    std::size_t physicCon = (InfoComp::CONTROLLABLE);
     std::size_t physicShield = (InfoComp::PARENT | InfoComp::SHIELD);
 
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
-    if ((masks[par.id].value() & physicCon) == physicCon)
-        componentManager.getSingleComponent<Controllable>(par.id).kill++;
     for (std::size_t k = 0; k < masks.size(); k++) {
         if (!masks[k].has_value() || ((masks[k].value() & physicShield) != physicShield))
             continue;
@@ -282,15 +279,19 @@ void PhysicSystem::collisionCheckShield(ComponentManager &componentManager, Enti
 {
     std::size_t physicDrop = (InfoComp::DROP);
     std::size_t physicDis = (InfoComp::DIS);
+    std::size_t physicCon = (InfoComp::CONTROLLABLE);
 
     if (checkShield)
         return;
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile &proj = componentManager.getSingleComponent<Projectile>(i);
+    Parent &par = componentManager.getSingleComponent<Parent>(i);
     if (proj.damage >= hp.life) {
         if ((masks[j].value() & physicDrop) == physicDrop)
             this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
         hp.life = 0;
+        if ((masks[par.id].value() & physicCon) == physicCon)
+            componentManager.getSingleComponent<Controllable>(par.id).kill++;
         if (masks[j].has_value() && (masks[j].value() & physicDis) == physicDis)
             componentManager.getSingleComponent<Disappearance>(j).dis = true;
         else {
