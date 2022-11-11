@@ -128,11 +128,14 @@ _STORAGE_DATA GameSerializer::serializeEntity(std::size_t entityId, CrudType typ
     this->serializeData<SyncID>(packet, &componentManager.getSingleComponent<SyncID>(entityId));
 
     // mask
+    if (entityId >= entityManager.getMasks().size()) {
+        throw std::runtime_error("[ERROR] Entity id out of range");
+    }
     std::optional<std::size_t> mask = entityManager.getMasks()[entityId];
-    if (!entityManager.getMasks()[entityId].has_value()) {
+    if (!mask.has_value()) {
         throw std::runtime_error("[ERROR] Entity has no mask");
     }
-    this->serializeData<std::size_t>(packet, &entityManager.getMasks()[entityId].value());
+    this->serializeData<std::size_t>(packet, &mask.value());
 
     // components
     this->pushComponents(packet, mask.value(), entityId, componentManager);

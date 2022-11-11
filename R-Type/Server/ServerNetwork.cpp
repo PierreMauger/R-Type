@@ -4,7 +4,7 @@ using namespace eng;
 
 ServerNetwork::ServerNetwork(uint16_t portTcp, std::time_t time) : _ioContext(), _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
-    this->initServerNetwork(time);
+    this->initServerNetwork(time, 12);
 }
 
 ServerNetwork::~ServerNetwork()
@@ -12,13 +12,13 @@ ServerNetwork::~ServerNetwork()
     this->stop();
 }
 
-void ServerNetwork::initServerNetwork(std::time_t time)
+void ServerNetwork::initServerNetwork(std::time_t time, std::size_t clientId)
 {
     this->_dataInTcp = std::make_shared<_QUEUE_TYPE>();
     this->_dataInUdp = std::make_shared<_QUEUE_TYPE>();
 
     std::shared_ptr<Connection> newConnection = std::make_shared<Connection>(this->_ioContext, this->_dataInTcp, this->_dataInUdp);
-    this->_acceptor.async_accept(newConnection->getTcpSocket(), boost::bind(&ServerNetwork::handleNewTcp, this, boost::asio::placeholders::error, newConnection, time));
+    this->_acceptor.async_accept(newConnection->getTcpSocket(), boost::bind(&ServerNetwork::handleNewTcp, this, boost::asio::placeholders::error, newConnection, time, clientId));
 }
 
 void ServerNetwork::run()
@@ -43,7 +43,7 @@ void ServerNetwork::stop()
         this->_threadContext.join();
 }
 
-void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::shared_ptr<Connection> newConnection, std::time_t time)
+void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::shared_ptr<Connection> newConnection, std::time_t time, std::size_t clientId)
 {
     if (!error) {
         newConnection->setTcpEndpoint(newConnection->getTcpSocket().remote_endpoint());
@@ -53,8 +53,8 @@ void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::sh
         newConnection->getTcpSocket().read_some(boost::asio::buffer(&portUdp, sizeof(portUdp)));
         newConnection->setUdpEndpoint(newConnection->getTcpEndpoint().address().to_string(), portUdp);
 
-        // std::time_t time = std::time(nullptr);
-        // newConnection->getTcpSocket().write_some(boost::asio::buffer(&time, sizeof(time)));
+        newConnection->getTcpSocket().write_some(boost::asio::buffer(&time, sizeof(time)));
+        newConnection->getTcpSocket().write_some(boost::asio::buffer(&clientId, sizeof(std::size_t)));
 
         newConnection->run();
 
@@ -62,7 +62,7 @@ void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::sh
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
     }
-    this->initServerNetwork(time);
+    this->initServerNetwork(time, clientId++);
 }
 
 void ServerNetwork::tcpMsgCli(_B_ASIO_TCP::endpoint endpoint, _STORAGE_DATA data)

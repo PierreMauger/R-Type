@@ -32,7 +32,7 @@ namespace eng
         private:
             std::size_t _id;
             int _vesselId = -1;
-            bool _isAlive = -1;
+            bool _isAlive = false;
             int _roomId = -1;
             bool _isReady = false;
             std::shared_ptr<Connection> _connection;

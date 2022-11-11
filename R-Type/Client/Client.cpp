@@ -16,12 +16,11 @@ void Client::createNetwork()
 {
     this->_network = std::make_shared<ClientNetwork>("127.0.0.1", 8080);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     this->_network->run();
 
-    // this->_id = this->_network->getId();
-    // std::srand(this->_network->getTime());
+    this->_id = this->_network->getId();
+    std::srand(this->_network->getTime());
 }
 
 void Client::initSystems()
@@ -84,12 +83,15 @@ void Client::initEntities()
 void Client::syncUdpNetwork()
 {
     _QUEUE_TYPE &dataIn = this->_network->getQueueInUdp();
-    _STORAGE_DATA packet;
 
     if (dataIn.empty())
         return;
-    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    for (_STORAGE_DATA packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        try {
+            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }
         if (dataIn.empty())
             break;
     }
@@ -98,12 +100,15 @@ void Client::syncUdpNetwork()
 void Client::syncTcpNetwork()
 {
     _QUEUE_TYPE &dataIn = this->_network->getQueueInTcp();
-    _STORAGE_DATA packet;
 
     if (dataIn.empty())
         return;
-    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        this->_menuSerializer.handlePacket(packet, this->_rooms, this->_roomId);
+    for (_STORAGE_DATA packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
+        try {
+            this->_menuSerializer.handlePacket(packet, this->_rooms, this->_roomId);
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }
         if (dataIn.empty())
             break;
     }
@@ -164,7 +169,6 @@ void Client::mainLoop()
     ECS &ecs = this->_engine.getECS();
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
 
-    std::size_t i = 0;
     while (graphic.getWindow()->isOpen()) {
         this->updateEvent();
         if (*this->_isLocal)

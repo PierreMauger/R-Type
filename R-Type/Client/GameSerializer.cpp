@@ -117,20 +117,20 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
 {
     std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
     CrudType type = CrudType::UNKNOWN;
-    SyncID syncID = {0};
+    SyncID syncId = {0};
     std::size_t mask = 0;
     std::size_t id = 0;
 
     this->deserializeData<CrudType>(packet, adv, &type);
-    this->deserializeData<SyncID>(packet, adv, &syncID);
+    this->deserializeData<SyncID>(packet, adv, &syncId);
     this->deserializeData<std::size_t>(packet, adv, &mask);
 
-    id = entityManager.getBySyncId(syncID.id, componentManager);
+    id = entityManager.getBySyncId(syncId.id, componentManager);
 
     if (id == entityManager.getMasks().size()) {
         id = entityManager.addMask(mask, componentManager);
         componentManager.addComponent<SyncID>(id);
-        componentManager.getSingleComponent<SyncID>(id) = syncID;
+        componentManager.getSingleComponent<SyncID>(id) = syncId;
     }
     if (type == CrudType::DESTROY) {
         componentManager.removeAllComponents(id);

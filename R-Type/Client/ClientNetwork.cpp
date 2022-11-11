@@ -29,8 +29,9 @@ void ClientNetwork::initClientNetwork()
     this->_connection->getTcpSocket().write_some(boost::asio::buffer(&newPortUdp, sizeof(newPortUdp)));
     this->_connection->setUdpEndpoint(this->_connection->getTcpEndpoint().address().to_string(), portUdp);
 
-    // this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_time, sizeof(this->_time)));
-    // this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_id, sizeof(this->_id)));
+    this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_time, sizeof(this->_time)));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    this->_connection->getTcpSocket().read_some(boost::asio::buffer(&_id, sizeof(std::size_t) * 2));
 
     this->_connection->run();
 }
