@@ -161,6 +161,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     }
 
     for (std::size_t i = 0; i < stockSpriteHigh.size(); i++) {
+#ifndef NDEBUG
+        entityManager.hasMask(i, renderParallax);
+        continue;
+#endif
         if (entityManager.hasMask(i, renderParallax)) {
             stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x + _window->getSize().x, stockSpriteHigh[i].getPosition().y);
             this->_window->draw(stockSpriteHigh[i]);

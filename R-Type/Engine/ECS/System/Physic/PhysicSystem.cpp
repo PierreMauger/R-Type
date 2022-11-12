@@ -72,6 +72,18 @@ bool PhysicSystem::checkCollision(Position pos, Position pos2, Size sz, Size sz2
     sf::Rect<float> rect1 = sf::Rect(pos.x, pos.y, sz.x, sz.y);
     sf::Rect<float> rect2 = sf::Rect(pos2.x, pos2.y, sz2.x, sz2.y);
 
+#ifndef NDEBUG
+    sf::RectangleShape rect3{sf::Vector2f{sz.x, sz.y}};
+    sf::RectangleShape rect4{sf::Vector2f{sz2.x, sz2.y}};
+    rect3.setPosition(pos.x, pos.y);
+    rect4.setPosition(pos2.x, pos2.y);
+    rect3.setOutlineThickness(2);
+    rect4.setOutlineThickness(2);
+    rect3.setOutlineColor(sf::Color::Red);
+    rect4.setOutlineColor(sf::Color::Red);
+    this->_window->draw(rect3);
+    this->_window->draw(rect4);
+#endif
     return rect1.intersects(rect2);
 }
 
