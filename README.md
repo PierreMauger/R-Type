@@ -51,7 +51,7 @@ It will automatically:
 - Download/build [Boost](https://www.boost.org/)
 - Build the `r-type_client` and `r-type_server` executables (.exe on Windows) using those libraries
 
-You can also just download the installer from the [release](https://github.com/EpitechPromo2025/B-CPP-500-REN-5-1-rtype-pierre.hamel/releases) tab in github (created by running `cpack -C Debug` in build/).
+You can also just download the installer from the [release](https://github.com/EpitechPromo2025/B-CPP-500-REN-5-1-rtype-pierre.hamel/releases) tab in github (created by running `cpack` in build/).
 
 ## 🎮 Usage
 

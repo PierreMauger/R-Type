@@ -27,9 +27,13 @@ namespace eng
     {
         public:
             /**
-             * @brief Preloads the Eye of Cthulhu.
-             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
-             * @param engine A reference to the engine.
+             * @brief Preloads the cthulu.
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos)
+             * @param graphic A reference to the engine graphics.
+             * @param entityManager A reference to the EntityManager.
+             * @param componentManager A reference to the ComponentManager.
+             * @param syncId A reference to the synchronized id.
+             * @param pos The obstacle position.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos);
     };
