@@ -207,6 +207,7 @@ void Client::updateKeys()
         } catch (const std::exception &e) {
             return;
         }
+        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
     }
 
     Graphic &graphic = this->_engine.getGraphic();
