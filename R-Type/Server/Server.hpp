@@ -47,7 +47,7 @@ namespace eng
             MenuSerializer _menuSerializer;
             GameSerializer _gameSerializer;
 
-            std::size_t _syncId = 0;
+            std::shared_ptr<std::size_t> _syncId;
             std::size_t _clientId = 0;
             std::vector<Client> _clients;
 

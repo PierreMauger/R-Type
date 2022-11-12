@@ -38,7 +38,7 @@ namespace eng
             float _charPerScreen;
             float _sizeChar;
             void initializeLevelFormat(std::vector<std::string> &lines);
-            void parseStringLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, std::smatch match, std::string levelStr);
+            void parseStringLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, std::smatch match, std::string levelStr);
 
         public:
             /**
@@ -53,13 +53,13 @@ namespace eng
             ~Level() = default;
             /**
              * @brief Parse the level file
-             * @fn void parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
+             * @fn void parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId)
              * @param graphic A shared pointer to the engine graphics
              * @param entityManager A shared pointer to the EntityManager
              * @param componentManager A shared pointer to the ComponentManager
              * @param syncId A shared pointer to the sync id when creating an enemy
              */
-            bool parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId);
+            bool parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId);
             /**
              * @brief Get the speed of appearance of the waves in the map
              * @fn float getSpeedRead()

@@ -31,14 +31,14 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager, this->_syncId));
     systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, nullptr));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<GUISystem>(graphic));
 #endif
-    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager, this->_syncId));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, this->_syncId, entityManager));
@@ -189,7 +189,7 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
             return true;
     }
     if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
-        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), *this->_syncId);
+        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
     return false;

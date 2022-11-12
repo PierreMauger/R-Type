@@ -10,6 +10,8 @@
 
 /// @cond
 #include "Client.hpp"
+#include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
+#include "Engine/Graphic/Graphic.hpp"
 #include "Engine/Network/Serializer.hpp"
 
 /// @endcond
@@ -64,13 +66,14 @@ namespace eng
 
             /**
              * @brief Handle a game packet.
-             * @fn handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client)
+             * @fn handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic, Client &client)
              * @param packet The packet to handle.
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
+             * @param graphic A reference to the Graphic
              * @param client A reference to the Client who send the packet
              */
-            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client);
+            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic, Client &client, std::shared_ptr<std::size_t> syncId);
 
             /**
              * @brief Serialize an entity
@@ -100,13 +103,14 @@ namespace eng
             // _STORAGE_DATA serializeInput(sf::Keyboard::Key input);
             /**
              * @brief Deserialize an input
-             * @fn void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
+             * @fn void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic, Client &client)
              * @param packet The serialized packet
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
+             * @param graphic A reference to the Graphic
              * @param client A reference to the Client who send the packet
              */
-            void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client);
+            void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic, Client &client, std::shared_ptr<std::size_t> syncId);
 
             /**
              * @brief Get the client id

@@ -14,6 +14,7 @@
 #include "Engine/ECS/System/ISystem.hpp"
 #include "imgui-SFML.h"
 #include "imgui.h"
+
 /// @cond
 
 /**
@@ -29,6 +30,7 @@ namespace eng
     class InputSystem : public virtual ISystem
     {
         private:
+            std::shared_ptr<std::size_t> _syncId;
             std::shared_ptr<sf::Event> _event;
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::RenderWindow> _window;
@@ -44,7 +46,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            InputSystem(Graphic &graphic, EntityManager &entityManager);
+            InputSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::size_t> syncId);
             /**
              * @brief InputSystem destructor.
              * @fn ~InputSystem
