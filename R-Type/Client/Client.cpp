@@ -197,6 +197,13 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
 
 void Client::updateKeys()
 {
+    if (this->_network == nullptr) {
+        if (this->_ip->size() == 0 || (*this->_port) == 0) {
+            return;
+        }
+        this->createNetwork();
+    }
+
     Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() <= this->_keysTime)

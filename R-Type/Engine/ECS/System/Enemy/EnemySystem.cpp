@@ -169,7 +169,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
         }
         if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {1, ((posPlayer.x - pos.x) / 35), ((posPlayer.y - pos.y) / 35), spriteAttribut.rotation + 90});
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {1, ((posPlayer.x - pos.x) / 35), ((posPlayer.y - pos.y) / 35), spriteAttribut.rotation + 90, 0});
             clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
         }
         break;
@@ -259,7 +259,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
         if (entityManager.hasMask(i, cooldownEnemy)) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, {1, -15, 0, 0});
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, {1, -15, 0, 0, 0});
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }

@@ -15,7 +15,7 @@ PhysicSystem::PhysicSystem(Graphic &graphic, [[maybe_unused]] EntityManager &ent
 
 void PhysicSystem::switchCreateBonus(std::size_t addEntity, std::size_t drop, ComponentManager &componentManager, Size &size, Position &pos)
 {
-    sf::Vector2f sizeBonus{_screenSize->x / (1920 / 3), _screenSize->y / (1080 / 3)};
+    sf::Vector2f sizeBonus{3 / _screenSize->x * this->_window->getSize().x, 3 / _screenSize->y * this->_window->getSize().y};
 
     switch (drop) {
     case 0:
@@ -34,6 +34,12 @@ void PhysicSystem::switchCreateBonus(std::size_t addEntity, std::size_t drop, Co
 
     case 2:
         componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SHIELD, Priority::MEDIUM, 0, 14, false, false, 0, 0.05, 32, 0});
+        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 32, 32}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
+        componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2});
+        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{32 * sizeBonus.x / _screenSize->x * _window->getSize().x, 32 * sizeBonus.y / _screenSize->y * _window->getSize().y});
+        break;
+    case 3:
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_TRIPLE, Priority::MEDIUM, 0, 3, true, false, 0, 0.05, 32, 0});
         componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 32, 32}, sf::Color::White, {sizeBonus.x / _screenSize->x * _window->getSize().x, sizeBonus.y / _screenSize->y * _window->getSize().y}});
         componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2});
         componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{32 * sizeBonus.x / _screenSize->x * _window->getSize().x, 32 * sizeBonus.y / _screenSize->y * _window->getSize().y});
@@ -66,6 +72,18 @@ bool PhysicSystem::checkCollision(Position pos, Position pos2, Size sz, Size sz2
     sf::Rect<float> rect1 = sf::Rect(pos.x, pos.y, sz.x, sz.y);
     sf::Rect<float> rect2 = sf::Rect(pos2.x, pos2.y, sz2.x, sz2.y);
 
+#ifndef NDEBUG
+    sf::RectangleShape rect3{sf::Vector2f{sz.x, sz.y}};
+    sf::RectangleShape rect4{sf::Vector2f{sz2.x, sz2.y}};
+    rect3.setPosition(pos.x, pos.y);
+    rect4.setPosition(pos2.x, pos2.y);
+    rect3.setOutlineThickness(2);
+    rect4.setOutlineThickness(2);
+    rect3.setOutlineColor(sf::Color::Red);
+    rect4.setOutlineColor(sf::Color::Red);
+    this->_window->draw(rect3);
+    this->_window->draw(rect4);
+#endif
     return rect1.intersects(rect2);
 }
 
@@ -142,6 +160,8 @@ void PhysicSystem::bonusFound(ComponentManager &componentManager, EntityManager 
         componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 > 0.1 ? componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 : 0;
     if (drop.id == 1)
         componentManager.getSingleComponent<CooldownShoot>(i).size < 3 ? componentManager.getSingleComponent<CooldownShoot>(i).size += 1 : 0;
+    if (drop.id == 3)
+        componentManager.getSingleComponent<CooldownShoot>(i).tripleShoot += 2;
     if (drop.id == 2) {
         for (auto k : entityManager.getMaskCategory(this->_shieldTag)) {
             if (componentManager.getSingleComponent<Parent>(k).id == componentManager.getSingleComponent<SyncID>(i).id) {
@@ -208,7 +228,7 @@ bool PhysicSystem::collisionEnemy(std::size_t i, ComponentManager &componentMana
     return false;
 }
 
-void PhysicSystem::collisionFireballEnemy(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Parent par, bool &checkShield)
+void PhysicSystem::collisionFireballEnemy(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, bool &checkShield)
 {
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile proj = componentManager.getSingleComponent<Projectile>(i);
@@ -264,7 +284,7 @@ bool PhysicSystem::splitCollisionFireball(ComponentManager &componentManager, En
                 entityManager.removeMask(i);
                 return true;
             }
-            this->collisionFireballEnemy(componentManager, entityManager, i, j, par, checkShield);
+            this->collisionFireballEnemy(componentManager, entityManager, i, j, checkShield);
             if (!checkShield)
                 this->collisionCheckShield(componentManager, entityManager, i, j);
             if (entityManager.hasMask(i, InfoComp::DIS))
