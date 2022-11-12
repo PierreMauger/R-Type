@@ -21,6 +21,7 @@ void AnimationSystem::update(ComponentManager &componentManager, EntityManager &
         SpriteAttribut &spriteAT = componentManager.getSingleComponent<SpriteAttribut>(id);
         if (entityManager.hasMask(id, contMask)) {
             Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
+            spriteAT.rect.top = spriteID.offsetY;
             if (vel.y < 0)
                 spriteAT.rect.left = spriteID.offsetX * 2;
             else if (vel.y > 0)

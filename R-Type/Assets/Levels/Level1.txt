@@ -1,4 +1,4 @@
-# charPerScreen:500
+# charPerScreen:2
 -------
 -                                                                                                                                   -
 -C                                                                                                                              -
