@@ -106,7 +106,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
-    std::vector<sf::Sprite> stockButton;
 
     for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         sf::Text &textRef = this->_text;
@@ -176,8 +175,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         this->_window->draw(stockSpriteMedium[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
-    for (std::size_t i = 0; i < stockButton.size(); i++)
-        this->_window->draw(stockButton[i]);
     for (std::size_t i = 0; i < stockText.size(); i++)
         this->_window->draw(stockText[i]);
 }

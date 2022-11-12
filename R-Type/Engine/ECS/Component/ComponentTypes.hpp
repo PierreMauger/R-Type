@@ -332,10 +332,12 @@ typedef struct SpriteAttribut {
  */
 enum ButtonType {
     QUIT = 0,
-    TEXTZONE,
     BACK,
+    TEXTZONE,
     CONNECT,
     PLAY_SOLO,
+    READY,
+    CREATE_ROOM,
 };
 
 /**
@@ -350,6 +352,8 @@ typedef struct Button {
 
 enum SceneType {
     MENU = 0,
+    LOBBY,
+    ROOM,
     GAME,
 };
 
