@@ -47,7 +47,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<bool> isReady, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager);
+            ClickSystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief ClickSystem destructor.
              * @fn ~ClickSystem()

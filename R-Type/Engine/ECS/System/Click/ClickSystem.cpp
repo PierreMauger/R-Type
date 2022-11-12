@@ -2,18 +2,18 @@
 
 using namespace eng;
 
-ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<bool> isReady, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager)
+ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
     this->_event = graphic.getEvent();
-    this->_sceneId = graphic.getSceneId();
 
-    this->_port = port;
-    this->_ip = ip;
-    this->_isLocal = isLocal;
-    this->_isReady = isReady;
-    this->_syncId = syncId;
+    this->_sceneId = graphic.getSceneId();
+    this->_port = graphic.getPort();
+    this->_ip = graphic.getIp();
+    this->_isLocal = graphic.getIsLocal();
+    this->_isReady = graphic.getIsReady();
+    this->_syncId = graphic.getSyncId();
 
     entityManager.addMaskCategory(this->_buttonTag);
 }

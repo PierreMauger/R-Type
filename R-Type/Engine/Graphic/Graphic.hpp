@@ -34,6 +34,12 @@ namespace eng
             bool _isFullscreen;
             std::shared_ptr<std::size_t> _sceneId;
 
+            std::shared_ptr<std::size_t> _port;
+            std::shared_ptr<std::string> _ip;
+            std::shared_ptr<bool> _isLocal;
+            std::shared_ptr<bool> _isReady;
+            std::shared_ptr<std::size_t> _syncId;
+
         public:
             /**
              * @brief Graphic constructor.
@@ -105,6 +111,12 @@ namespace eng
              * @return The scene id
              */
             std::shared_ptr<std::size_t> getSceneId();
+
+            std::shared_ptr<std::size_t> getPort();
+            std::shared_ptr<std::string> getIp();
+            std::shared_ptr<bool> getIsLocal();
+            std::shared_ptr<bool> getIsReady();
+            std::shared_ptr<std::size_t> getSyncId();
     };
 }
 
