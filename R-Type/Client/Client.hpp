@@ -45,7 +45,6 @@ namespace eng
             std::size_t _roomId = 0;
             std::vector<Room> _rooms;
             std::shared_ptr<std::size_t> _syncId;
-            // std::size_t _syncId = 0;
 
             sf::Time _networkTime = sf::milliseconds(16);
             sf::Time _keysTime = sf::milliseconds(16);
