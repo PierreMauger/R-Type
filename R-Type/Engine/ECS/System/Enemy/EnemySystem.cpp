@@ -146,7 +146,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.status = TypeStatus::IDLE;
             }
         }
-        if (checkPlayer) {
+        if (checkPlayer && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
             posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
             if (pat.phase == TypePhase::PHASE01) {
                 vel.x = ((posPlayer.x - 20) - pos.x) / 60;
@@ -214,7 +214,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     }
 
     // Rotation Part
-    if (checkPlayer) {
+    if (checkPlayer && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
         posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
         spriteAttribut.rotation = (atan2(posPlayer.y - pos.y, posPlayer.x - pos.x) * 180 / M_PI) - 90;
     }

@@ -127,6 +127,9 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         stockText.push_back(textRef);
     }
     for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
+        if (!entityManager.hasMask(id, InfoComp::POS) || !entityManager.hasMask(id, InfoComp::SPRITEID))
+            continue;
+
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
         if (entityManager.hasMask(id, this->_sceneTag)) {
