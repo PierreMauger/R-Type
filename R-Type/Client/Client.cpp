@@ -28,7 +28,7 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
     systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, nullptr));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
@@ -191,7 +191,7 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
             return true;
     }
     if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
-        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), *this->_engine.getGraphic().getSyncId());
+        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_engine.getGraphic().getSyncId());
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
     return false;
