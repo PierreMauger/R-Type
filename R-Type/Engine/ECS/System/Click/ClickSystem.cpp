@@ -43,7 +43,7 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                         continue;
                     *this->_sceneId = SceneType::GAME;
                     *this->_isLocal = true;
-                    VesselPreload::preload(this->_window->getSize(), this->_screenSize, entityManager, componentManager, *this->_syncId, *this->_syncId % 4);
+                    VesselPreload::preload(this->_window->getSize(), this->_screenSize, entityManager, componentManager, this->_syncId, *this->_syncId % 4);
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();
                 } else if (button.type == ButtonType::READY) {

@@ -46,14 +46,14 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     float delayMove = 2;
 
     // check if player is dead & used to stop rotation for transform rotation
-    bool checkPlayer = true;
+    bool checkPlayer = true && pat.focusEntity < masks.size();
 
     // Set the elapsed time at the beginning of the game
     if (pat.statusTime == 0)
         pat.statusTime = this->_clock->getElapsedTime().asSeconds();
 
     // Reset player id if the player is dead
-    if (!masks[pat.focusEntity].has_value()) {
+    if (pat.focusEntity < masks.size() && !masks[pat.focusEntity].has_value()) {
         setRandIdPlayer(pat, entityManager);
         return;
     }
@@ -173,8 +173,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
                 break;
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, (posPlayer.x - pos.x) / 35, (posPlayer.y - pos.y) / 35, spriteAttribut.rotation - 90, idPar, *this->_syncId, 0});
-            *this->_syncId += 1;
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, (posPlayer.x - pos.x) / 35, (posPlayer.y - pos.y) / 35, spriteAttribut.rotation - 90, idPar, this->_syncId, 0});
             clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
         }
         break;
@@ -267,8 +266,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
                 if (entityManager.hasMask(i, InfoComp::SYNCID) == false)
                     continue;
                 std::size_t idPar = componentManager.getSingleComponent<SyncID>(i).id;
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, *this->_syncId, 0});
-                *this->_syncId += 1;
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, this->_syncId, 0});
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }

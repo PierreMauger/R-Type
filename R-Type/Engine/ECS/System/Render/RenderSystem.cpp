@@ -76,7 +76,6 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
             if (shield.life > 0) {
                 SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
                 Position &pos = componentManager.getSingleComponent<Position>(idPar);
-                Size &sizePar = componentManager.getSingleComponent<Size>(idPar);
                 SpriteAttribut &spriteAtPar = componentManager.getSingleComponent<SpriteAttribut>(idPar);
                 spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
                 spriteRef.setScale(spriteAt.scale.x * spriteAtPar.scale.x, spriteAt.scale.y * spriteAtPar.scale.y);

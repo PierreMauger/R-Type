@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f position)
+void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, sf::Vector2f position)
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
@@ -18,7 +18,8 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{375 * size.x, 375 * size.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{*syncId});
+    *syncId += 1;
 
     for (std::size_t i = 0; i < 10; i++) {
         lastId = id;
