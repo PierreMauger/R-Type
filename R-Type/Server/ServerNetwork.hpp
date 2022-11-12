@@ -125,16 +125,16 @@ namespace eng
 
             /**
              * @brief Get the input queue
-             * @fn _QUEUE_TYPE &getQueueInTcp()
-             * @return A reference to the tcp input queue
+             * @fn std::shared_ptr<_QUEUE_TYPE> getQueueInTcp()
+             * @return A shared_ptr to the tcp input queue
              */
-            _QUEUE_TYPE &getQueueInTcp();
+            std::shared_ptr<_QUEUE_TYPE> getQueueInTcp();
             /**
              * @brief Get the input queue
-             * @fn _QUEUE_TYPE &getQueueInUdp()
-             * @return A reference to the udp input queue
+             * @fn std::shared_ptr<_QUEUE_TYPE> getQueueInUdp()
+             * @return A shared_ptr to the udp input queue
              */
-            _QUEUE_TYPE &getQueueInUdp();
+            std::shared_ptr<_QUEUE_TYPE> getQueueInUdp();
     };
 } // namespace eng
 

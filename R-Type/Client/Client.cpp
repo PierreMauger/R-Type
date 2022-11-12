@@ -128,7 +128,7 @@ void Client::updateNetwork()
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
-    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
+    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(16);
     this->syncUdpNetwork();
     this->syncTcpNetwork();
     this->_network->updateConnection();
@@ -195,6 +195,35 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
     return false;
 }
 
+void Client::updateKeys()
+{
+    Graphic &graphic = this->_engine.getGraphic();
+
+    if (graphic.getClock()->getElapsedTime() <= this->_keysTime)
+        return;
+    this->_keysTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(16);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Left);
+        this->_network->udpMsg(packet);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Right);
+        this->_network->udpMsg(packet);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Up);
+        this->_network->udpMsg(packet);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Down);
+        this->_network->udpMsg(packet);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+        _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Enter);
+        this->_network->udpMsg(packet);
+    }
+}
+
 void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
@@ -216,6 +245,7 @@ void Client::mainLoop()
         graphic.getWindow()->clear(sf::Color::Black);
         ecs.update();
         graphic.getWindow()->display();
+        this->updateKeys();
         this->updateNetwork();
     }
 }
