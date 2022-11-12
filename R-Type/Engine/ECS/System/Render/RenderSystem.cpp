@@ -82,7 +82,7 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
                 spriteRef.setScale(spriteAt.scale.x * spriteAtPar.scale.x, spriteAt.scale.y * spriteAtPar.scale.y);
                 spriteRef.setRotation(spriteAtPar.rotation);
                 spriteRef.setOrigin(spriteAt.offset.x, spriteAt.offset.y);
-                spriteRef.setPosition(pos.x + spriteAtPar.offset.x * spriteAtPar.scale.x, pos.y + spriteAtPar.offset.y * spriteAtPar.scale.y);
+                spriteRef.setPosition(pos.x + spriteAtPar.offset.x * spriteAtPar.scale.x * _window->getSize().x / _screenSize->x, pos.y + spriteAtPar.offset.y * spriteAtPar.scale.y * _window->getSize().y / _screenSize->y);
             } else {
                 componentManager.removeAllComponents(i);
                 entityManager.removeMask(i);
@@ -144,8 +144,9 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setRotation(spriteAt.rotation);
             spriteRef.setColor(spriteAt.color);
             spriteRef.setScale(spriteAt.scale);
-            spriteRef.setOrigin({spriteAt.offset.x, spriteAt.offset.y});
-            spriteRef.setPosition(pos.x + spriteAt.offset.x * spriteAt.scale.x + spriteAt.delay.x * spriteAt.scale.x, pos.y + spriteAt.offset.y * spriteAt.scale.y + spriteAt.delay.y * spriteAt.scale.y);
+            sf::Vector2f ratio = {_screenSize->x / _window->getSize().x, _screenSize->y / _window->getSize().y};
+            spriteRef.setOrigin({spriteAt.offset.x * ratio.x, spriteAt.offset.y * ratio.y});
+            spriteRef.setPosition(pos.x + spriteAt.offset.x * spriteAt.scale.x * ratio.x + spriteAt.delay.x * spriteAt.scale.x * ratio.x, pos.y + spriteAt.offset.y * spriteAt.scale.y * ratio.y + spriteAt.delay.y * spriteAt.scale.x * ratio.y);
         }
         if (entityManager.hasMask(id, renderCooldown) && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;
