@@ -173,7 +173,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
                 break;
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, 8, 8, spriteAttribut.rotation + 90, idPar, *this->_syncId, 0});
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, (posPlayer.x - pos.x) / 35, (posPlayer.y - pos.y) / 35, spriteAttribut.rotation - 90, idPar, *this->_syncId, 0});
             *this->_syncId += 1;
             clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
         }
