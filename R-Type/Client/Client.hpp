@@ -47,7 +47,8 @@ namespace eng
             std::size_t _roomId = 0;
             std::vector<Room> _rooms;
 
-            sf::Time _networkTime = sf::milliseconds(50);
+            sf::Time _networkTime = sf::milliseconds(16);
+            sf::Time _keysTime = sf::milliseconds(16);
 
             bool _isLevelFinished = false;
 
@@ -62,6 +63,7 @@ namespace eng
             void updateEvent();
             bool checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic);
             bool manageEnemy(Level &level, Graphic &graphic, ECS &ecs);
+            void updateKeys();
 
         public:
             /**

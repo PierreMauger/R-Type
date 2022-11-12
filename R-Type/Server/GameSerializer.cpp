@@ -153,8 +153,27 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
+    if (static_cast<std::size_t>(client.getVesselId()) >= entityManager.getMasks().size()) {
+        return;
+    }
 
-    // TODO
+    auto &vel = componentManager.getSingleComponent<Velocity>(client.getVesselId());
+    if (keyPress == sf::Keyboard::Key::Left) {
+        vel.x += vel.baseSpeedX * -1;
+        return;
+    }
+    if (keyPress == sf::Keyboard::Key::Right) {
+        vel.x += vel.baseSpeedX;
+        return;
+    }
+    if (keyPress == sf::Keyboard::Key::Up) {
+        vel.y += vel.baseSpeedY * -1;
+        return;
+    }
+    if (keyPress == sf::Keyboard::Key::Down) {
+        vel.y += vel.baseSpeedY;
+        return;
+    }
 }
 
 std::size_t GameSerializer::getClientId(_STORAGE_DATA packet)

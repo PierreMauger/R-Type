@@ -35,6 +35,7 @@ namespace eng
                     float velX = 0.0f;
                     float velY = 0.0f;
                     float rotation = 0.0f;
+                    std::size_t tripleShoot = 0;
             } ProjectileStats;
 
             /**
@@ -48,6 +49,7 @@ namespace eng
              * @param damage The damage of the projectile.
              */
             static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileStats projectile);
+            static void createTripleShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileStats projectile);
     };
 }
 

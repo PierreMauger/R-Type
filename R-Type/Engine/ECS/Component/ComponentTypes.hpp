@@ -190,6 +190,7 @@ typedef struct CooldownShoot {
         float lastShoot = 0.0f;
         float shootDelay = 2.0f;
         float size = 1.0f;
+        std::size_t tripleShoot = 0;
 } CooldownShoot;
 
 /**
