@@ -129,6 +129,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Score/ScoreSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Sound/SoundSystem.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/MenuPreload.cpp
+    ${ENGINE_ROOT}/ECS/PreloadEntities/LobbyPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/RoomPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/ParallaxPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/VesselPreload.cpp

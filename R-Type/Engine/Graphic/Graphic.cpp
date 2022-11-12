@@ -90,3 +90,13 @@ std::shared_ptr<std::size_t> Graphic::getSyncId()
 {
     return this->_syncId;
 }
+
+std::shared_ptr<std::size_t> Graphic::getRoomPlayerNb()
+{
+    return this->_roomPlayerNb;
+}
+
+std::shared_ptr<std::size_t> Graphic::getRoomPlayerMax()
+{
+    return this->_roomPlayerMax;
+}

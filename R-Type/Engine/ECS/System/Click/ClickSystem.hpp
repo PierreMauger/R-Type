@@ -36,6 +36,8 @@ namespace eng
             std::shared_ptr<bool> _isLocal;
             std::shared_ptr<bool> _isReady;
             std::shared_ptr<std::size_t> _syncId;
+            std::shared_ptr<std::size_t> _roomPlayerNb;
+            std::shared_ptr<std::size_t> _roomPlayerMax;
 
             std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);
             std::size_t _sceneTag = (InfoComp::SCENE);

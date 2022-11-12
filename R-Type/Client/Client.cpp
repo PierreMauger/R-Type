@@ -74,6 +74,7 @@ void Client::initEntities()
 {
     ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    LobbyPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     RoomPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
@@ -121,7 +122,7 @@ void Client::updateNetwork()
         } catch (const std::exception &e) {
             return;
         }
-        *this->_engine.getGraphic().getSceneId() = SceneType::ROOM;
+        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
     }
 
     Graphic &graphic = this->_engine.getGraphic();

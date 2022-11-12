@@ -39,6 +39,8 @@ namespace eng
             std::shared_ptr<bool> _isLocal;
             std::shared_ptr<bool> _isReady;
             std::shared_ptr<std::size_t> _syncId;
+            std::shared_ptr<std::size_t> _roomPlayerNb;
+            std::shared_ptr<std::size_t> _roomPlayerMax;
 
         public:
             /**
@@ -117,6 +119,8 @@ namespace eng
             std::shared_ptr<bool> getIsLocal();
             std::shared_ptr<bool> getIsReady();
             std::shared_ptr<std::size_t> getSyncId();
+            std::shared_ptr<std::size_t> getRoomPlayerNb();
+            std::shared_ptr<std::size_t> getRoomPlayerMax();
     };
 }
 

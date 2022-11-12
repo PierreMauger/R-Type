@@ -336,6 +336,7 @@ enum ButtonType {
     CONNECT,
     PLAY_SOLO,
     READY,
+    CREATE_ROOM,
 };
 
 /**
@@ -350,6 +351,7 @@ typedef struct Button {
 
 enum SceneType {
     MENU = 0,
+    LOBBY,
     ROOM,
     GAME,
 };

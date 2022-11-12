@@ -13,6 +13,7 @@
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
+#include "Engine/ECS/PreloadEntities/LobbyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/RoomPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
