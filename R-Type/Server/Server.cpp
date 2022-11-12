@@ -205,7 +205,8 @@ void Server::updateClients()
         }
         if (!check) {
             this->_clients.push_back(Client(connection, this->_clientId++));
-            this->_clients.back().setVesselId(VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId));
+            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId);
+            this->_clients.back().setVesselId(vesselId);
         }
         check = false;
     }
