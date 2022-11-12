@@ -143,7 +143,7 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setColor(spriteAt.color);
             spriteRef.setScale(spriteAt.scale);
             spriteRef.setOrigin({spriteAt.offset.x / 2, spriteAt.offset.y / 2});
-            spriteRef.setPosition(pos.x + spriteAt.offset.x, pos.y + spriteAt.offset.y);
+            spriteRef.setPosition(pos.x + spriteAt.offset.x + spriteAt.delay.x, pos.y + spriteAt.offset.y + spriteAt.delay.y);
         }
         if (entityManager.hasMask(id, renderCooldown) && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;
