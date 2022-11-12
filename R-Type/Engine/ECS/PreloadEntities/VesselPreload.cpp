@@ -8,7 +8,7 @@ std::size_t VesselPreload::preload(sf::Vector2u windowsSize, std::shared_ptr<sf:
     sf::Vector2f size{windowsSize.x / (screenSize->x / 2), windowsSize.y / (screenSize->y / 2)};
 
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_VESSEL, Priority::MEDIUM, 0, 0, false, false, 0, 0, 64, 0});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x, size.y}, {size.x / 2, size.y / 2}});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x, size.y}, {64 * size.x / 4, 28 * size.y / 4}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, 28 / screenSize->y * windowsSize.y * -1, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, windowsSize.x / (screenSize->x / 10), windowsSize.y / (screenSize->y / 10)});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100 / screenSize->y * windowsSize.y});
@@ -21,7 +21,7 @@ std::size_t VesselPreload::preload(sf::Vector2u windowsSize, std::shared_ptr<sf:
 
     std::size_t idShield = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::SHIELD | InfoComp::SYNCID | InfoComp::SPRITEAT), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idShield, SpriteID{S_SHIELD, Priority::MEDIUM});
-    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {0.3f / screenSize->x * windowsSize.x, 0.3f / screenSize->y * windowsSize.y}});
+    componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(idShield, SpriteAttribut{0, {0, 0, 700, 440}, sf::Color::White, {0.2f / screenSize->x * windowsSize.x, 0.2f / screenSize->y * windowsSize.y}, {700 * 1.0f / screenSize->x * windowsSize.x / 2, 440 * 1.0f / screenSize->y * windowsSize.y / 2}});
     componentManager.getComponent(typeid(Position)).emplaceData(idShield, Position{0, 0, 0});
     componentManager.getComponent(typeid(Shield)).emplaceData(idShield, Shield{5});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idShield, SyncID{syncId++});

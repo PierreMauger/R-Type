@@ -30,6 +30,7 @@ namespace eng
     class EnemySystem : public virtual ISystem
     {
         private:
+            std::shared_ptr<std::size_t> _syncId;
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;

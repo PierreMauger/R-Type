@@ -62,7 +62,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            PhysicSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::size_t> syncId);
+            PhysicSystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief PhysicSystem destructor.
              * @fn ~PhysicSystem

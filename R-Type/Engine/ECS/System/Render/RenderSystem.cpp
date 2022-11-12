@@ -77,10 +77,12 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
                 SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
                 Position &pos = componentManager.getSingleComponent<Position>(idPar);
                 Size &sizePar = componentManager.getSingleComponent<Size>(idPar);
+                SpriteAttribut &spriteAtPar = componentManager.getSingleComponent<SpriteAttribut>(idPar);
                 spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
-                spriteRef.setScale(spriteAt.scale.x, spriteAt.scale.y);
-                spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
-                spriteRef.setPosition(pos.x - (sizePar.x / 4), pos.y - (sizePar.y / 2));
+                spriteRef.setScale(spriteAt.scale.x * spriteAtPar.scale.x, spriteAt.scale.y * spriteAtPar.scale.y);
+                spriteRef.setRotation(spriteAtPar.rotation);
+                spriteRef.setOrigin(spriteAt.offset.x, spriteAt.offset.y);
+                spriteRef.setPosition(pos.x + spriteAtPar.offset.x * spriteAtPar.scale.x, pos.y + spriteAtPar.offset.y * spriteAtPar.scale.y);
             } else {
                 componentManager.removeAllComponents(i);
                 entityManager.removeMask(i);
@@ -142,8 +144,8 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setRotation(spriteAt.rotation);
             spriteRef.setColor(spriteAt.color);
             spriteRef.setScale(spriteAt.scale);
-            spriteRef.setOrigin({spriteAt.offset.x / 2, spriteAt.offset.y / 2});
-            spriteRef.setPosition(pos.x + spriteAt.offset.x + spriteAt.delay.x, pos.y + spriteAt.offset.y + spriteAt.delay.y);
+            spriteRef.setOrigin({spriteAt.offset.x, spriteAt.offset.y});
+            spriteRef.setPosition(pos.x + spriteAt.offset.x * spriteAt.scale.x + spriteAt.delay.x * spriteAt.scale.x, pos.y + spriteAt.offset.y * spriteAt.scale.y + spriteAt.delay.y * spriteAt.scale.y);
         }
         if (entityManager.hasMask(id, renderCooldown) && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;

@@ -31,7 +31,7 @@ namespace eng
              * @fn static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
              * @param engine A reference to the engine.
              */
-            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos);
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t syncId, sf::Vector2f pos);
     };
 }
 
