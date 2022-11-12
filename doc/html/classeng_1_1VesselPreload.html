@@ -101,15 +101,9 @@ Collaboration diagram for eng::VesselPreload:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a48dec7b2a9a079236b6c6a3531f7d693"><td class="memItemLeft" align="right" valign="top"><a id="a48dec7b2a9a079236b6c6a3531f7d693"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>preload</b> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId)</td></tr>
-<tr class="separator:a48dec7b2a9a079236b6c6a3531f7d693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79e0dfd006f710dff1c74cc0d14ec7a1"><td class="memItemLeft" align="right" valign="top"><a id="a79e0dfd006f710dff1c74cc0d14ec7a1"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>preload</b> (sf::Vector2u windowsSize, std::shared_ptr&lt; sf::Vector2f &gt; screenSize, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId)</td></tr>
-<tr class="separator:a79e0dfd006f710dff1c74cc0d14ec7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3458789bb413d808b220d1631440e83"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1VesselPreload.html#af3458789bb413d808b220d1631440e83">preloadScore</a> (<a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId, std::size_t kill, std::size_t death, sf::Vector2u windowsSize, std::shared_ptr&lt; sf::Vector2f &gt; screenSize)</td></tr>
-<tr class="memdesc:af3458789bb413d808b220d1631440e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preloads the vessel's (player's score)  <a href="classeng_1_1VesselPreload.html#af3458789bb413d808b220d1631440e83">More...</a><br /></td></tr>
-<tr class="separator:af3458789bb413d808b220d1631440e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae577350c3d71cbe3ffa6bb36f65489cb"><td class="memItemLeft" align="right" valign="top"><a id="ae577350c3d71cbe3ffa6bb36f65489cb"></a>
+static std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>preload</b> (sf::Vector2u windowsSize, std::shared_ptr&lt; sf::Vector2f &gt; screenSize, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, std::size_t &amp;syncId)</td></tr>
+<tr class="separator:ae577350c3d71cbe3ffa6bb36f65489cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_static_methods_classeng_1_1EntityPreload"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classeng_1_1EntityPreload')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classeng_1_1EntityPreload.html">eng::EntityPreload</a></td></tr>
 <tr class="memitem:ab60650f43fec48b38c0f639c8b5a7d68 inherit pub_static_methods_classeng_1_1EntityPreload"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1EntityPreload.html#ab60650f43fec48b38c0f639c8b5a7d68">preload</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
 <tr class="memdesc:ab60650f43fec48b38c0f639c8b5a7d68 inherit pub_static_methods_classeng_1_1EntityPreload"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preloads an entity.  <a href="classeng_1_1EntityPreload.html#ab60650f43fec48b38c0f639c8b5a7d68">More...</a><br /></td></tr>
@@ -120,87 +114,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>preload</b> (s
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Preloads the vessel. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="af3458789bb413d808b220d1631440e83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3458789bb413d808b220d1631440e83">&#9670;&nbsp;</a></span>preloadScore()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void eng::VesselPreload::preloadScore </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
-          <td class="paramname"><em>entityManager</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;&#160;</td>
-          <td class="paramname"><em>componentManager</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t &amp;&#160;</td>
-          <td class="paramname"><em>syncId</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>kill</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::size_t&#160;</td>
-          <td class="paramname"><em>death</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">sf::Vector2u&#160;</td>
-          <td class="paramname"><em>windowsSize</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; sf::Vector2f &gt;&#160;</td>
-          <td class="paramname"><em>screenSize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Preloads the vessel's (player's score) </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a>. </td></tr>
-    <tr><td class="paramname">componentManager</td><td>A reference to the <a class="el" href="classeng_1_1ComponentManager.html" title="The engine&#39;s ComponentManager.">ComponentManager</a>. </td></tr>
-    <tr><td class="paramname">kill</td><td>The player's kill count. </td></tr>
-    <tr><td class="paramname">death</td><td>The player's death count. </td></tr>
-    <tr><td class="paramname">windowsSize</td><td>The size of the window. </td></tr>
-    <tr><td class="paramname">screenSize</td><td>The size of the screen. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>/tmp/rtype/R-Type/Engine/ECS/PreloadEntities/<a class="el" href="VesselPreload_8hpp_source.html">VesselPreload.hpp</a></li>
 <li>/tmp/rtype/R-Type/Engine/ECS/PreloadEntities/VesselPreload.cpp</li>
 </ul>
