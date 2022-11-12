@@ -1,7 +1,7 @@
-# charPerScreen:1
+# charPerScreen:2
 -------
--                                                                                                                                   -
--B                                                                                                                              -
--                                                                                                                               -
--                                                                                                                                   -
+-EEEEEE                         E-
+--
+--
+--
 -------

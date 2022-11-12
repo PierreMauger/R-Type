@@ -31,7 +31,7 @@ namespace eng
              * @fn VesselPreload
              * @param engine A reference to the engine.
              */
-            static std::size_t preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId);
+            static std::size_t preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, std::size_t colorNum);
     };
 }
 
