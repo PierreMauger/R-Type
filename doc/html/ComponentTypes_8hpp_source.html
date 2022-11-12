@@ -282,28 +282,32 @@ $(function() {
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="keyword">enum</span> ButtonType {</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;    QUIT = 0,</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    TEXTZONE,</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    BACK,</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    BACK,</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    TEXTZONE,</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    CONNECT,</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    PLAY_SOLO,</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;};</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160; </div>
-<div class="line"><a name="l00345"></a><span class="lineno"><a class="line" href="structButton.html">  345</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structButton.html">Button</a> {</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;        ButtonType type = QUIT;</div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;        <span class="keywordtype">bool</span> selected = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        std::size_t maxSize = 15;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;} <a class="code" href="structButton.html">Button</a>;</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="keyword">enum</span> SceneType {</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;    MENU = 0,</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    GAME,</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;};</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
-<div class="line"><a name="l00360"></a><span class="lineno"><a class="line" href="structScene.html">  360</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structScene.html">Scene</a> {</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;} <a class="code" href="structScene.html">Scene</a>;</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160; </div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    READY,</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    CREATE_ROOM,</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;};</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
+<div class="line"><a name="l00347"></a><span class="lineno"><a class="line" href="structButton.html">  347</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structButton.html">Button</a> {</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;        ButtonType type = QUIT;</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        <span class="keywordtype">bool</span> selected = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;        std::size_t maxSize = 15;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;} <a class="code" href="structButton.html">Button</a>;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="keyword">enum</span> SceneType {</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    MENU = 0,</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    LOBBY,</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;    ROOM,</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;    GAME,</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;};</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160; </div>
+<div class="line"><a name="l00364"></a><span class="lineno"><a class="line" href="structScene.html">  364</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structScene.html">Scene</a> {</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;} <a class="code" href="structScene.html">Scene</a>;</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
 <div class="ttc" id="aComponentTypes_8hpp_html_a152e0c36b337a97595cf8e9d5dc937cb"><div class="ttname"><a href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a></div><div class="ttdeci">TypePhase</div><div class="ttdoc">The type of phase that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:254</div></div>
 <div class="ttc" id="aComponentTypes_8hpp_html_a315655b1bb5848c063491adffde62b15"><div class="ttname"><a href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a></div><div class="ttdeci">Priority</div><div class="ttdoc">Priority of the sprites to be displayed (background before foreground etc..).</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:89</div></div>
 <div class="ttc" id="aComponentTypes_8hpp_html_a58ec645a8af2e639f20c750ca31a504e"><div class="ttname"><a href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a></div><div class="ttdeci">TypeStatus</div><div class="ttdoc">The type of status that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:241</div></div>
@@ -312,7 +316,7 @@ $(function() {
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 <div class="ttc" id="anamespaceeng_html_ae58dbf00a8a6d1168e886cb3aabd5e8c"><div class="ttname"><a href="namespaceeng.html#ae58dbf00a8a6d1168e886cb3aabd5e8c">eng::InfoComp</a></div><div class="ttdeci">InfoComp</div><div class="ttdoc">Masks of the components.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:26</div></div>
 <div class="ttc" id="astructAppearance_html"><div class="ttname"><a href="structAppearance.html">Appearance</a></div><div class="ttdoc">The appearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:170</div></div>
-<div class="ttc" id="astructButton_html"><div class="ttname"><a href="structButton.html">Button</a></div><div class="ttdoc">The button component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:345</div></div>
+<div class="ttc" id="astructButton_html"><div class="ttname"><a href="structButton.html">Button</a></div><div class="ttdoc">The button component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:347</div></div>
 <div class="ttc" id="astructControllable_html"><div class="ttname"><a href="structControllable.html">Controllable</a></div><div class="ttdoc">The controllable component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:116</div></div>
 <div class="ttc" id="astructCooldownBar_html"><div class="ttname"><a href="structCooldownBar.html">CooldownBar</a></div><div class="ttdoc">The cooldownBar component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:200</div></div>
 <div class="ttc" id="astructCooldownShoot_html"><div class="ttname"><a href="structCooldownShoot.html">CooldownShoot</a></div><div class="ttdoc">The cooldownShoot component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:189</div></div>
@@ -326,7 +330,7 @@ $(function() {
 <div class="ttc" id="astructPattern_html"><div class="ttname"><a href="structPattern.html">Pattern</a></div><div class="ttdoc">The patern component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:264</div></div>
 <div class="ttc" id="astructPosition_html"><div class="ttname"><a href="structPosition.html">Position</a></div><div class="ttdoc">The position component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:58</div></div>
 <div class="ttc" id="astructProjectile_html"><div class="ttname"><a href="structProjectile.html">Projectile</a></div><div class="ttdoc">The projectile component.</div></div>
-<div class="ttc" id="astructScene_html"><div class="ttname"><a href="structScene.html">Scene</a></div><div class="ttdoc">The scene component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:360</div></div>
+<div class="ttc" id="astructScene_html"><div class="ttname"><a href="structScene.html">Scene</a></div><div class="ttdoc">The scene component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:364</div></div>
 <div class="ttc" id="astructShield_html"><div class="ttname"><a href="structShield.html">Shield</a></div><div class="ttdoc">The shield component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:153</div></div>
 <div class="ttc" id="astructSize_html"><div class="ttname"><a href="structSize.html">Size</a></div><div class="ttdoc">The size component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:80</div></div>
 <div class="ttc" id="astructSoundID_html"><div class="ttname"><a href="structSoundID.html">SoundID</a></div><div class="ttdoc">The soundID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:310</div></div>
