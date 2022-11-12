@@ -2,17 +2,20 @@
 
 using namespace eng;
 
-ClickSystem::ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager)
+ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
 {
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
     this->_event = graphic.getEvent();
-    this->_sceneId = graphic.getSceneId();
 
-    this->_port = port;
-    this->_ip = ip;
-    this->_isLocal = isLocal;
-    this->_syncId = syncId;
+    this->_sceneId = graphic.getSceneId();
+    this->_port = graphic.getPort();
+    this->_ip = graphic.getIp();
+    this->_isLocal = graphic.getIsLocal();
+    this->_isReady = graphic.getIsReady();
+    this->_syncId = graphic.getSyncId();
+    this->_roomPlayerNb = graphic.getRoomPlayerNb();
+    this->_roomPlayerMax = graphic.getRoomPlayerMax();
 
     entityManager.addMaskCategory(this->_buttonTag);
 }
@@ -36,23 +39,32 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
 
             if (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x && mousePos.y >= pos.y && mousePos.y <= pos.y + size.y) {
                 if (button.type == ButtonType::PLAY_SOLO) {
-                    *this->_sceneId = *this->_sceneId + 1;
+                    if (*this->_sceneId != SceneType::MENU)
+                        continue;
+                    *this->_sceneId = SceneType::GAME;
                     *this->_isLocal = true;
                     VesselPreload::preload(this->_window->getSize(), this->_screenSize, entityManager, componentManager, *this->_syncId);
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();
+                } else if (button.type == ButtonType::READY) {
+                    *this->_isReady = true;
                 } else if (button.type == ButtonType::TEXTZONE) {
                     button.selected = true;
                     changed = id;
                 } else if (button.type == ButtonType::CONNECT) {
-                    if (*this->_sceneId != 0)
+                    if (*this->_sceneId != SceneType::MENU)
                         continue;
                     Parent parent = componentManager.getSingleComponent<Parent>(id);
                     std::string text = componentManager.getSingleComponent<Text>(parent.id).str;
                     std::string text2 = componentManager.getSingleComponent<Text>(parent.id2).str;
-                    *this->_sceneId = *this->_sceneId + 1;
                     *this->_ip = text;
                     text2 != "" ? *this->_port = std::stoi(text2) : *this->_port = 0;
+                } else if (button.type == ButtonType::CREATE_ROOM) {
+                    if (*this->_sceneId != SceneType::LOBBY)
+                        continue;
+                    Parent parent = componentManager.getSingleComponent<Parent>(id);
+                    std::string text = componentManager.getSingleComponent<Text>(parent.id).str;
+                    text != "" ? *this->_roomPlayerMax = std::stoi(text) : *this->_roomPlayerMax = 4;
                 }
             }
             if (changed) {

@@ -80,68 +80,69 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Engine_8hpp.html">Engine.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="BackgroundMusicPreload_8hpp.html">Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="MenuPreload_8hpp.html">Engine/ECS/PreloadEntities/MenuPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ParallaxPreload_8hpp.html">Engine/ECS/PreloadEntities/ParallaxPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ScoreTextPreload_8hpp.html">Engine/ECS/PreloadEntities/ScoreTextPreload.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;GameSerializer.hpp&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;MenuSerializer.hpp&quot;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="LobbyPreload_8hpp.html">Engine/ECS/PreloadEntities/LobbyPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="RoomPreload_8hpp.html">Engine/ECS/PreloadEntities/RoomPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ParallaxPreload_8hpp.html">Engine/ECS/PreloadEntities/ParallaxPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ScoreTextPreload_8hpp.html">Engine/ECS/PreloadEntities/ScoreTextPreload.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;GameSerializer.hpp&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="Includes_8hpp.html">Includes.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;MenuSerializer.hpp&quot;</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;{</div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classeng_1_1Client.html">   34</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1Client.html">Client</a></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <a class="code" href="classeng_1_1Engine.html">Engine</a> _engine;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            std::shared_ptr&lt;ClientNetwork&gt; _network = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <a class="code" href="classeng_1_1MenuSerializer.html">MenuSerializer</a> _menuSerializer;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <a class="code" href="classeng_1_1GameSerializer.html">GameSerializer</a> _gameSerializer;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            std::size_t _id;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceeng.html">eng</a></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;{</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classeng_1_1Client.html">   36</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classeng_1_1Client.html">Client</a></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <a class="code" href="classeng_1_1Engine.html">Engine</a> _engine;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            std::shared_ptr&lt;ClientNetwork&gt; _network = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <a class="code" href="classeng_1_1MenuSerializer.html">MenuSerializer</a> _menuSerializer;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <a class="code" href="classeng_1_1GameSerializer.html">GameSerializer</a> _gameSerializer;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            std::size_t _roomId = 0;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            std::vector&lt;Room&gt; _rooms;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            std::shared_ptr&lt;std::size_t&gt; _syncId;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="comment">// std::size_t _syncId = 0;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            std::size_t _id;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            std::size_t _roomId = 0;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            std::vector&lt;Room&gt; _rooms;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            sf::Time _networkTime = sf::milliseconds(50);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            std::shared_ptr&lt;std::string&gt; _ip;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            std::shared_ptr&lt;std::size_t&gt; _port;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            std::shared_ptr&lt;bool&gt; _isLocal;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordtype">bool</span> _isLevelFinished = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            sf::Time _networkTime = sf::milliseconds(16);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            sf::Time _keysTime = sf::milliseconds(16);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordtype">bool</span> _isLevelFinished = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordtype">void</span> createNetwork();</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordtype">void</span> createNetwork();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> initSystems();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> initComponents();</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">void</span> initEntities();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> syncUdpNetwork();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> syncTcpNetwork();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">void</span> updateNetwork();</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordtype">void</span> updateEvent();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordtype">bool</span> checkIfEnemyAlive(<a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordtype">bool</span> manageEnemy(<a class="code" href="classeng_1_1Level.html">Level</a> &amp;level, <a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1ECS.html">ECS</a> &amp;ecs);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="classeng_1_1Client.html#ad5dbd28e7c9348d10472d9a73e4115c2">Client</a>();</div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classeng_1_1Client.html#a27f5235dbc118ce4ac5229b37122ce47">   79</a></span>&#160;            <a class="code" href="classeng_1_1Client.html#a27f5235dbc118ce4ac5229b37122ce47">~Client</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1Client.html#a150fa91716ff4230fdb993f656646c00">mainLoop</a>();</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    };</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// CLIENT_HPP</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordtype">void</span> initSystems();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordtype">void</span> initComponents();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> initEntities();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> syncUdpNetwork();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">void</span> syncTcpNetwork();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> updateNetwork();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> updateEvent();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">bool</span> checkIfEnemyAlive(<a class="code" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordtype">bool</span> manageEnemy(<a class="code" href="classeng_1_1Level.html">Level</a> &amp;level, <a class="code" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="code" href="classeng_1_1ECS.html">ECS</a> &amp;ecs);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordtype">void</span> updateKeys();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <a class="code" href="classeng_1_1Client.html#ad5dbd28e7c9348d10472d9a73e4115c2">Client</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classeng_1_1Client.html#a27f5235dbc118ce4ac5229b37122ce47">   78</a></span>&#160;            <a class="code" href="classeng_1_1Client.html#a27f5235dbc118ce4ac5229b37122ce47">~Client</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1Client.html#a150fa91716ff4230fdb993f656646c00">mainLoop</a>();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    };</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// CLIENT_HPP</span></div>
 <div class="ttc" id="aBackgroundMusicPreload_8hpp_html"><div class="ttname"><a href="BackgroundMusicPreload_8hpp.html">BackgroundMusicPreload.hpp</a></div><div class="ttdoc">The background music preloader.</div></div>
 <div class="ttc" id="aClientNetwork_8hpp_html"><div class="ttname"><a href="ClientNetwork_8hpp.html">ClientNetwork.hpp</a></div><div class="ttdoc">The client network handling functions.</div></div>
 <div class="ttc" id="aEngine_8hpp_html"><div class="ttname"><a href="Engine_8hpp.html">Engine.hpp</a></div><div class="ttdoc">The engine of the game containing the ECS, the graphics and the loader.</div></div>
 <div class="ttc" id="aIncludes_8hpp_html"><div class="ttname"><a href="Includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
+<div class="ttc" id="aLobbyPreload_8hpp_html"><div class="ttname"><a href="LobbyPreload_8hpp.html">LobbyPreload.hpp</a></div><div class="ttdoc">Preload the lobby.</div></div>
 <div class="ttc" id="aMenuPreload_8hpp_html"><div class="ttname"><a href="MenuPreload_8hpp.html">MenuPreload.hpp</a></div><div class="ttdoc">Preload the menu.</div></div>
 <div class="ttc" id="aParallaxPreload_8hpp_html"><div class="ttname"><a href="ParallaxPreload_8hpp.html">ParallaxPreload.hpp</a></div><div class="ttdoc">Preload the parallax.</div></div>
+<div class="ttc" id="aRoomPreload_8hpp_html"><div class="ttname"><a href="RoomPreload_8hpp.html">RoomPreload.hpp</a></div><div class="ttdoc">Preload the room.</div></div>
 <div class="ttc" id="aScoreTextPreload_8hpp_html"><div class="ttname"><a href="ScoreTextPreload_8hpp.html">ScoreTextPreload.hpp</a></div><div class="ttdoc">Preload the score text.</div></div>
-<div class="ttc" id="aclasseng_1_1Client_html"><div class="ttname"><a href="classeng_1_1Client.html">eng::Client</a></div><div class="ttdoc">The client handling functions.</div><div class="ttdef"><b>Definition:</b> Client.hpp:35</div></div>
-<div class="ttc" id="aclasseng_1_1Client_html_a150fa91716ff4230fdb993f656646c00"><div class="ttname"><a href="classeng_1_1Client.html#a150fa91716ff4230fdb993f656646c00">eng::Client::mainLoop</a></div><div class="ttdeci">void mainLoop()</div><div class="ttdoc">Main loop of the client.</div><div class="ttdef"><b>Definition:</b> Client.cpp:197</div></div>
+<div class="ttc" id="aclasseng_1_1Client_html"><div class="ttname"><a href="classeng_1_1Client.html">eng::Client</a></div><div class="ttdoc">The client handling functions.</div><div class="ttdef"><b>Definition:</b> Client.hpp:37</div></div>
+<div class="ttc" id="aclasseng_1_1Client_html_a150fa91716ff4230fdb993f656646c00"><div class="ttname"><a href="classeng_1_1Client.html#a150fa91716ff4230fdb993f656646c00">eng::Client::mainLoop</a></div><div class="ttdeci">void mainLoop()</div><div class="ttdoc">Main loop of the client.</div><div class="ttdef"><b>Definition:</b> Client.cpp:240</div></div>
 <div class="ttc" id="aclasseng_1_1Client_html_a27f5235dbc118ce4ac5229b37122ce47"><div class="ttname"><a href="classeng_1_1Client.html#a27f5235dbc118ce4ac5229b37122ce47">eng::Client::~Client</a></div><div class="ttdeci">~Client()=default</div><div class="ttdoc">Client destructor.</div></div>
 <div class="ttc" id="aclasseng_1_1Client_html_ad5dbd28e7c9348d10472d9a73e4115c2"><div class="ttname"><a href="classeng_1_1Client.html#ad5dbd28e7c9348d10472d9a73e4115c2">eng::Client::Client</a></div><div class="ttdeci">Client()</div><div class="ttdoc">Client constructor.</div><div class="ttdef"><b>Definition:</b> Client.cpp:5</div></div>
 <div class="ttc" id="aclasseng_1_1ComponentManager_html"><div class="ttname"><a href="classeng_1_1ComponentManager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:29</div></div>

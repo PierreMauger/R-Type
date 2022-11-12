@@ -2,9 +2,9 @@
 
 using namespace eng;
 
-EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager, std::shared_ptr<std::size_t> syncId)
+EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
-    this->_syncId = syncId;
+    this->_syncId = graphic.getSyncId();
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
@@ -173,7 +173,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
                 break;
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, 8, 8, spriteAttribut.rotation + 90, idPar, *this->_syncId});
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, 8, 8, spriteAttribut.rotation + 90, idPar, *this->_syncId, 0});
             *this->_syncId += 1;
             clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
         }
@@ -267,7 +267,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
                 if (entityManager.hasMask(i, InfoComp::SYNCID) == false)
                     continue;
                 std::size_t idPar = componentManager.getSingleComponent<SyncID>(i).id;
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, *this->_syncId});
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, *this->_syncId, 0});
                 *this->_syncId += 1;
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }

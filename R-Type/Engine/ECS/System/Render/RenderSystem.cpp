@@ -106,7 +106,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
-    std::vector<sf::Sprite> stockButton;
 
     for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         sf::Text &textRef = this->_text;
@@ -161,6 +160,10 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     }
 
     for (std::size_t i = 0; i < stockSpriteHigh.size(); i++) {
+#ifndef NDEBUG
+        entityManager.hasMask(i, renderParallax);
+        continue;
+#endif
         if (entityManager.hasMask(i, renderParallax)) {
             stockSpriteHigh[i].setPosition(stockSpriteHigh[i].getPosition().x + _window->getSize().x, stockSpriteHigh[i].getPosition().y);
             this->_window->draw(stockSpriteHigh[i]);
@@ -172,8 +175,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         this->_window->draw(stockSpriteMedium[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
-    for (std::size_t i = 0; i < stockButton.size(); i++)
-        this->_window->draw(stockButton[i]);
     for (std::size_t i = 0; i < stockText.size(); i++)
         this->_window->draw(stockText[i]);
 }

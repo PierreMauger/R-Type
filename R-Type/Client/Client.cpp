@@ -4,10 +4,6 @@ using namespace eng;
 
 Client::Client()
 {
-    this->_ip = std::make_shared<std::string>("");
-    this->_port = std::make_shared<std::size_t>(0);
-    this->_isLocal = std::make_shared<bool>(false);
-    this->_syncId = std::make_shared<std::size_t>(0);
     this->initSystems();
     this->initComponents();
     this->initEntities();
@@ -15,7 +11,7 @@ Client::Client()
 
 void Client::createNetwork()
 {
-    this->_network = std::make_shared<ClientNetwork>(*this->_ip, *this->_port);
+    this->_network = std::make_shared<ClientNetwork>(*this->_engine.getGraphic().getIp(), *this->_engine.getGraphic().getPort());
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     this->_network->run();
 
@@ -31,17 +27,17 @@ void Client::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager, this->_syncId));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, nullptr));
+    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<GUISystem>(graphic));
 #endif
-    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager, this->_syncId));
+    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
-    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, this->_port, this->_ip, this->_isLocal, this->_syncId, entityManager));
+    systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
 }
 
 void Client::initComponents()
@@ -78,6 +74,8 @@ void Client::initEntities()
 {
     ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    LobbyPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    RoomPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
@@ -118,10 +116,14 @@ void Client::syncTcpNetwork()
 void Client::updateNetwork()
 {
     if (this->_network == nullptr) {
-        if (this->_ip->size() == 0 || (*this->_port) == 0) {
+        if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
+            return;
+        try {
+            this->createNetwork();
+        } catch (const std::exception &e) {
             return;
         }
-        this->createNetwork();
+        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
     }
 
     Graphic &graphic = this->_engine.getGraphic();
@@ -189,7 +191,7 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
             return true;
     }
     if (graphic.getClock()->getElapsedTime().asSeconds() > (level.getDelayRead() + level.getSpeedRead()) || level.getDelayRead() == 0) {
-        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
+        this->_isLevelFinished = level.parseLevel(graphic, ecs.getEntityManager(), ecs.getComponentManager(), this->_engine.getGraphic().getSyncId());
         level.setDelayRead(graphic.getClock()->getElapsedTime().asSeconds());
     }
     return false;
@@ -197,6 +199,17 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
 
 void Client::updateKeys()
 {
+    if (this->_network == nullptr) {
+        if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
+            return;
+        try {
+            this->createNetwork();
+        } catch (const std::exception &e) {
+            return;
+        }
+        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
+    }
+
     Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() <= this->_keysTime)
@@ -233,7 +246,7 @@ void Client::mainLoop()
 
     while (graphic.getWindow()->isOpen()) {
         this->updateEvent();
-        if (*this->_isLocal) {
+        if (*this->_engine.getGraphic().getIsLocal()) {
             if (this->manageEnemy(level[levelId], graphic, ecs)) {
                 this->_isLevelFinished = false;
                 if (level.size() - 1 == levelId)

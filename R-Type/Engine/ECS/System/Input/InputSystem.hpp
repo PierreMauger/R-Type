@@ -46,7 +46,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            InputSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::size_t> syncId);
+            InputSystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief InputSystem destructor.
              * @fn ~InputSystem

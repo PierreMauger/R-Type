@@ -45,7 +45,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            EnemySystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::size_t> syncId);
+            EnemySystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief EnemySystem destructor.
              * @fn ~EnemySystem()
