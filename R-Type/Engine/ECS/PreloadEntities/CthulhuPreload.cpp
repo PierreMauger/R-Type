@@ -6,7 +6,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
-    float randY = createRandom(200 / screenSize->y * windowsSize.y, windowsSize.y - (100 / screenSize->y * windowsSize.y));
+    std::size_t randBonus = createRandom(0, 3);
     sf::Vector2f size{2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y};
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SYNCID | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 
@@ -19,7 +19,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{110 * size.x, 162 * size.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
-    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{static_cast<std::size_t>(randY) % 2});
+    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{randBonus});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1.5});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
