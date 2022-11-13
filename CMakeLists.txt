@@ -9,11 +9,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 if(UNIX)
-    set(CMAKE_CXX_FLAGS "-std=c++20 -O3 -Wall -Wextra")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g")
+    set(CMAKE_CXX_FLAGS "-std=c++20 -Ofast")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -Wall -Wextra")
 else()
-    # set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /Wall /EHsc")
-    # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL")
+    # set(CMAKE_CXX_FLAGS "/std:c++20 /Ox /EHsc")
+    # set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /DEBUG:FULL /Wall")
 endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -24,13 +24,32 @@ if (WIN32)
 else()
     set(BUILD_SHARED_LIBS ON)
 endif()
-include(ProcessorCount)
-ProcessorCount(CMAKE_BUILD_PARALLEL_LEVEL)
 set(SFML_BUILD_EXAMPLES OFF)
 set(SFML_BUILD_DOC OFF)
 set(SFML_BUILD_NETWORK OFF)
 include(FetchContent)
 set(FETCHCONTENT_QUIET OFF)
+
+################## FETCH DEPENDENCIES ##################
+
+#fetch required deps
+find_package(OpenGL REQUIRED)
+
+FetchContent_Declare(
+    SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 2.6.x
+    GIT_PROGRESS TRUE)
+FetchContent_MakeAvailable(SFML)
+
+FetchContent_Declare(
+    Boost
+    GIT_REPOSITORY https://github.com/boostorg/boost.git
+    GIT_PROGRESS TRUE
+    GIT_TAG master
+    CONFIGURE_COMMAND ""
+)
+FetchContent_MakeAvailable(Boost)
 
 ################## BUILD ImGui ##################
 
@@ -54,29 +73,9 @@ set(ImGui_SRC
     ${ImGui_ROOT}/imgui-SFML.cpp
 )
 
-#fetch required deps
-find_package(OpenGL REQUIRED)
-
-FetchContent_Declare(
-    SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 2.6.x
-    GIT_PROGRESS TRUE)
-FetchContent_MakeAvailable(SFML)
-
-FetchContent_Declare(
-    Boost
-    GIT_REPOSITORY https://github.com/boostorg/boost.git
-    GIT_PROGRESS TRUE
-    GIT_TAG master
-    CONFIGURE_COMMAND ""
-)
-FetchContent_MakeAvailable(Boost)
-
 #set include paths
 include_directories(
     ${ImGui_INC}
-    ${Boost_INCLUDE_DIR}
     ${PROJECT_NAME}
 )
 
@@ -155,7 +154,7 @@ set(ENGINE_SRC
     # Loader files
     ${ENGINE_ROOT}/Loader/Loader.cpp
 
-    # Loader files
+    # Level files
     ${ENGINE_ROOT}/Level/Level.cpp
 
     # Engine files

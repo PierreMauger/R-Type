@@ -39,6 +39,7 @@ namespace eng
              * @fn AnimationSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites)
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
+             * @param sprites A shared pointer to the vector of sprites
              */
             AnimationSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::Sprite>> sprites);
             /**

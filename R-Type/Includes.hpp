@@ -42,41 +42,48 @@
     #define M_PI 3.141592653589793
 #endif
 
-#define S_IDBAR 1
-#define S_ENEMY 2
-#define S_FIREBALL_BLUE 3
-#define S_FIREBALL_YELLOW 4
+// Bonus
+#define S_BONUS_SIZE 0
+#define S_BONUS_SPEED 1
+#define S_BONUS_TRIPLE 2
+#define S_SHIELD 3
+#define S_BONUS_SHIELD 4
+
+// Enemies
 #define S_MINIBOSS 5
-#define S_VESSEL 6
+#define S_CTHULHU_EYE 6
+#define S_CTHULHU_MOUTH 7
+#define S_DEVOURER_HEAD 8
+#define S_DEVOURER_BODY 9
+#define S_DEVOURER_TAIL 10
+#define S_ENEMY 11
 
-// Bonus Icons
-// #define S_BONUS_SPEED 7
-// #define S_BONUS_SHOOT_SIZE 8
+// Fireballs
+#define S_FIREBALL_BLUE 12
+#define S_REV_FIREBALL 13
+#define S_FIREBALL_YELLOW 14
 
-#define S_REV_FIREBALL 9
-#define S_BUTTON 10
+// GUI
+#define S_IDBAR 15
+#define S_BUTTON 16
 
 // Parallax
-#define S_PARALLAX_0 11
-#define S_PARALLAX_3 12
-#define S_PARALLAX_4 13
-#define S_PARALLAX_1 14
-#define S_PARALLAX_2 15
+#define S_PARALLAX_0 17
+#define S_PARALLAX_3 18
+#define S_PARALLAX_4 19
+#define S_PARALLAX_1 20
+#define S_PARALLAX_2 21
 
-// Devoureur
-#define S_DEVOURER_HEAD 16
-#define S_DEVOURER_BODY 17
-#define S_DEVOURER_TAIL 18
+// Player
+#define S_VESSEL 22
 
-// Cthulhu
-#define S_CTHULHU_EYE 19
-#define S_CTHULHU_MOUTH 20
-
-// Bonus
-#define S_SHIELD 21
-#define S_BONUS_SHIELD 22
-#define S_BONUS_SIZE 23
-#define S_BONUS_SPEED 24
-#define S_BONUS_TRIPLE 25
+// Audio
+#define A_BATTLELINEBECK 0
+#define A_MUSIC 1
+#define A_BONUS 2
+#define A_CTHULHURAGE 3
+#define A_CTHULHURAGE2 4
+#define A_LEVELCOMPLETED 5
+#define A_SHOOT 6
 
 #endif // INCLUDES_HPP

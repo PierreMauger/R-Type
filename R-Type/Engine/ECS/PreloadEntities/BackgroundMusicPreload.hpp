@@ -28,10 +28,19 @@ namespace eng
         public:
             /**
              * @brief Preloads the background music.
-             * @fn static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
-             * @param engine A reference to the engine.
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+             * @param graphic A reference to the engine graphics.
+             * @param entityManager A reference to the EntityManager.
+             * @param componentManager A reference to the ComponentManager.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
+            /**
+             * @brief Preloads the music.
+             * @fn void preloadMusic(EntityManager &entityManager, ComponentManager &componentManager, std::size_t id)
+             * @param entityManager A reference to the EntityManager.
+             * @param componentManager A reference to the ComponentManager.
+             * @param id The music id.
+             */
             static void preloadMusic(EntityManager &entityManager, ComponentManager &componentManager, std::size_t id);
     };
 }

@@ -353,6 +353,10 @@ typedef struct Button {
         std::size_t maxSize = 15;
 } Button;
 
+/**
+ * @struct SceneType
+ * @brief The sceneType component.
+ */
 enum SceneType {
     MENU = 0,
     LOBBY,
