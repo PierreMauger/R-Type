@@ -108,6 +108,7 @@ void Engine::updateSizeWindow()
             Text &text = componentManager.getSingleComponent<Text>(i);
             text.pos.x = text.pos.x / lastSize.x * this->_graphic.getEvent()->size.width;
             text.pos.y = text.pos.y / lastSize.y * this->_graphic.getEvent()->size.height;
+            text.size = text.size / lastSize.y * this->_graphic.getEvent()->size.height;
         }
         if (entityManager.hasMask(i, checkCooldownBar)) {
             Position &cb = componentManager.getSingleComponent<Position>(i);

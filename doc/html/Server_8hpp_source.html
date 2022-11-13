@@ -105,7 +105,7 @@ $(function() {
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <a class="code" href="classeng_1_1MenuSerializer.html">MenuSerializer</a> _menuSerializer;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="classeng_1_1GameSerializer.html">GameSerializer</a> _gameSerializer;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            std::size_t _syncId = 0;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            std::shared_ptr&lt;std::size_t&gt; _syncId;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            std::size_t _clientId = 0;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            std::vector&lt;Client&gt; _clients;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
@@ -115,7 +115,7 @@ $(function() {
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            sf::Time _elapsedTime = sf::seconds(0);</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            sf::Time _deltaTime = sf::seconds(5);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            sf::Time _bossTime = sf::seconds(5);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            sf::Time _networkTime = sf::milliseconds(50);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            sf::Time _networkTime = sf::milliseconds(16);</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">bool</span> _isLevelFinished = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> initSystems();</div>
@@ -163,7 +163,7 @@ $(function() {
 <div class="ttc" id="aclasseng_1_1MenuSerializer_html"><div class="ttname"><a href="classeng_1_1MenuSerializer.html">eng::MenuSerializer</a></div><div class="ttdoc">The menu serializer.</div><div class="ttdef"><b>Definition:</b> MenuSerializer.hpp:70</div></div>
 <div class="ttc" id="aclasseng_1_1ServerNetwork_html"><div class="ttname"><a href="classeng_1_1ServerNetwork.html">eng::ServerNetwork</a></div><div class="ttdoc">The server network handling functions.</div><div class="ttdef"><b>Definition:</b> ServerNetwork.hpp:28</div></div>
 <div class="ttc" id="aclasseng_1_1Server_html"><div class="ttname"><a href="classeng_1_1Server.html">eng::Server</a></div><div class="ttdoc">The engine of the game containing the ECS, the graphics and the loader.</div><div class="ttdef"><b>Definition:</b> Server.hpp:42</div></div>
-<div class="ttc" id="aclasseng_1_1Server_html_a5f48ea28a4cef61ce2ca55bf737e79b6"><div class="ttname"><a href="classeng_1_1Server.html#a5f48ea28a4cef61ce2ca55bf737e79b6">eng::Server::mainLoop</a></div><div class="ttdeci">void mainLoop()</div><div class="ttdoc">The main server loop.</div><div class="ttdef"><b>Definition:</b> Server.cpp:235</div></div>
+<div class="ttc" id="aclasseng_1_1Server_html_a5f48ea28a4cef61ce2ca55bf737e79b6"><div class="ttname"><a href="classeng_1_1Server.html#a5f48ea28a4cef61ce2ca55bf737e79b6">eng::Server::mainLoop</a></div><div class="ttdeci">void mainLoop()</div><div class="ttdoc">The main server loop.</div><div class="ttdef"><b>Definition:</b> Server.cpp:248</div></div>
 <div class="ttc" id="aclasseng_1_1Server_html_a7be88ae3702d1191c1325532decf3249"><div class="ttname"><a href="classeng_1_1Server.html#a7be88ae3702d1191c1325532decf3249">eng::Server::Server</a></div><div class="ttdeci">Server(uint16_t portTcp, time_t time)</div><div class="ttdoc">Server constructor.</div><div class="ttdef"><b>Definition:</b> Server.cpp:5</div></div>
 <div class="ttc" id="aclasseng_1_1Server_html_aa415f043b9a05541d11f318dcbd28d17"><div class="ttname"><a href="classeng_1_1Server.html#aa415f043b9a05541d11f318dcbd28d17">eng::Server::~Server</a></div><div class="ttdeci">~Server()=default</div><div class="ttdoc">Server destructor.</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>

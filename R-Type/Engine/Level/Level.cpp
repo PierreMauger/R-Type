@@ -62,25 +62,30 @@ Level::Level(std::vector<std::string> lines)
     }
 }
 
-void Level::parseStringLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, std::smatch match, std::string levelStr)
+void Level::parseStringLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, std::smatch match, std::string levelStr)
 {
     if (std::regex_search(levelStr, match, std::regex("([A-Z])\\(([0-9]+):([0-9]+)\\)"))) {
         this->_index += match[0].length();
         switch (match[1].str()[0]) {
         case 'E':
-            EnemyPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            EnemyPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            *syncId += 1;
             break;
         case 'B':
-            BossPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            BossPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            *syncId += 1;
             break;
         case 'D':
-            DevourerPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            DevourerPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            *syncId += 1;
             break;
         case 'C':
-            CthulhuPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            CthulhuPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            *syncId += 2;
             break;
         case 'O':
-            ObstaclePreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            ObstaclePreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            *syncId += 1;
             break;
         default:
             break;
@@ -88,7 +93,7 @@ void Level::parseStringLevel(Graphic &graphic, EntityManager &entityManager, Com
     }
 }
 
-bool Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId)
+bool Level::parseLevel(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId)
 {
     float compt = 0;
     std::smatch match;

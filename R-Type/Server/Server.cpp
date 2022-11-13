@@ -4,10 +4,14 @@ using namespace eng;
 
 Server::Server(uint16_t portTcp, time_t time) : _network(portTcp, time)
 {
+    this->_syncId = std::make_shared<std::size_t>(0);
+
     this->initSystems();
     this->initComponents();
     this->initEntities();
     this->_network.run();
+
+    this->_engine.getECS().getEntityManager().addMaskCategory(InfoComp::CONTROLLABLE);
 }
 
 // TODO see if graph is usefull on serv
@@ -19,8 +23,8 @@ void Server::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, std::make_shared<std::size_t>(this->_syncId)));
+    // systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
@@ -64,9 +68,6 @@ void Server::initComponents()
 
 void Server::initEntities()
 {
-    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Server::manageEvent()
@@ -132,34 +133,46 @@ bool Server::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
 
 void Server::syncUdpNetwork()
 {
-    _QUEUE_TYPE &dataIn = this->_network.getQueueInUdp();
-    _STORAGE_DATA packet;
+    std::shared_ptr<_QUEUE_TYPE> dataIn = this->_network.getQueueInUdp();
 
-    if (dataIn.empty())
+    for (auto id : this->_engine.getECS().getEntityManager().getMaskCategory(InfoComp::CONTROLLABLE)) {
+        auto &vel = this->_engine.getECS().getComponentManager().getSingleComponent<Velocity>(id);
+
+        vel.x = 0;
+        vel.y = 0;
+    }
+
+    if (dataIn->empty())
         return;
-    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        std::size_t clientId = this->_gameSerializer.getClientId(packet);
-        if (clientId >= this->_clients.size())
-            continue;
-        this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_clients[clientId]);
-        if (dataIn.empty())
+    for (_STORAGE_DATA packet = dataIn->pop_front(); true; packet = dataIn->pop_front()) {
+        try {
+            std::size_t clientId = this->_gameSerializer.getClientId(packet);
+            if (clientId < this->_clients.size()) {
+                this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_engine.getGraphic(), this->_clients[clientId], this->_syncId);
+            }
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }
+        if (dataIn->empty())
             break;
     }
 }
 
 void Server::syncTcpNetwork()
 {
-    _QUEUE_TYPE &dataIn = this->_network.getQueueInTcp();
-    _STORAGE_DATA packet;
+    std::shared_ptr<_QUEUE_TYPE> dataIn = this->_network.getQueueInTcp();
 
-    if (dataIn.empty())
+    if (dataIn->empty())
         return;
-    for (packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
-        std::size_t clientId = this->_gameSerializer.getClientId(packet);
-        if (clientId >= this->_clients.size())
-            continue;
-        this->_menuSerializer.handlePacket(packet, this->_rooms, this->_clients[clientId], this->_roomId);
-        if (dataIn.empty())
+    for (_STORAGE_DATA packet = dataIn->pop_front(); true; packet = dataIn->pop_front()) {
+        try {
+            std::size_t clientId = this->_gameSerializer.getClientId(packet);
+            if (clientId < this->_clients.size())
+                this->_menuSerializer.handlePacket(packet, this->_rooms, this->_clients[clientId], this->_roomId);
+        } catch (const std::exception &e) {
+            std::cerr << e.what() << std::endl;
+        }
+        if (dataIn->empty())
             break;
     }
 }
@@ -192,6 +205,8 @@ void Server::updateClients()
         }
         if (!check) {
             this->_clients.push_back(Client(connection, this->_clientId++));
+            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), *this->_syncId, this->_clientId % 4);
+            this->_clients.back().setVesselId(vesselId);
         }
         check = false;
     }
@@ -225,7 +240,7 @@ void Server::updateNetwork()
     this->syncUdpNetwork();
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
-    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
+    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(16);
     this->updateClients();
     this->updateEntities();
     this->_network.updateConnection();
@@ -238,7 +253,6 @@ void Server::mainLoop()
     std::vector<Level> &level = this->_engine.getLoader().getLevels();
     std::size_t levelId = 0;
 
-    VesselPreload::preload(graphic.getWindow()->getSize(), graphic.getScreenSize(), ecs.getEntityManager(), ecs.getComponentManager(), this->_syncId);
     while (graphic.getWindow()->isOpen()) {
         this->manageEvent();
         if (this->manageEnemy(level[levelId], graphic, ecs)) {

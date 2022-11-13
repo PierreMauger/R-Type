@@ -4,6 +4,8 @@ using namespace eng;
 
 ServerNetwork::ServerNetwork(uint16_t portTcp, std::time_t time) : _ioContext(), _acceptor(_ioContext, _B_ASIO_TCP::endpoint(_B_ASIO_TCP::v4(), portTcp))
 {
+    this->_dataInTcp = std::make_shared<_QUEUE_TYPE>();
+    this->_dataInUdp = std::make_shared<_QUEUE_TYPE>();
     this->initServerNetwork(time, 0);
 }
 
@@ -14,9 +16,6 @@ ServerNetwork::~ServerNetwork()
 
 void ServerNetwork::initServerNetwork(std::time_t time, std::size_t clientId)
 {
-    this->_dataInTcp = std::make_shared<_QUEUE_TYPE>();
-    this->_dataInUdp = std::make_shared<_QUEUE_TYPE>();
-
     std::shared_ptr<Connection> newConnection = std::make_shared<Connection>(this->_ioContext, this->_dataInTcp, this->_dataInUdp);
     this->_acceptor.async_accept(newConnection->getTcpSocket(), boost::bind(&ServerNetwork::handleNewTcp, this, boost::asio::placeholders::error, newConnection, time, clientId));
 }
@@ -62,7 +61,7 @@ void ServerNetwork::handleNewTcp(const boost::system::error_code &error, std::sh
     } else {
         std::cerr << "handleNewTcp Error: " << error.message() << std::endl;
     }
-    this->initServerNetwork(time, clientId++);
+    this->initServerNetwork(time, ++clientId);
 }
 
 void ServerNetwork::tcpMsgCli(_B_ASIO_TCP::endpoint endpoint, _STORAGE_DATA data)
@@ -150,12 +149,12 @@ std::vector<std::shared_ptr<Connection>> &ServerNetwork::getConnections()
     return this->_listConnections;
 }
 
-_QUEUE_TYPE &ServerNetwork::getQueueInTcp()
+std::shared_ptr<_QUEUE_TYPE> ServerNetwork::getQueueInTcp()
 {
-    return *this->_dataInTcp;
+    return this->_dataInTcp;
 }
 
-_QUEUE_TYPE &ServerNetwork::getQueueInUdp()
+std::shared_ptr<_QUEUE_TYPE> ServerNetwork::getQueueInUdp()
 {
-    return *this->_dataInUdp;
+    return this->_dataInUdp;
 }

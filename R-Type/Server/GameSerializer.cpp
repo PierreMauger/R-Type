@@ -93,7 +93,7 @@ void GameSerializer::pushComponents(std::vector<uint8_t> &packet, std::size_t ma
     }
 }
 
-void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client)
+void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic, Client &client, std::shared_ptr<std::size_t> syncId)
 {
     std::size_t adv = 0;
     std::vector<uint8_t> packetVector = this->convertToVector(packet);
@@ -108,7 +108,7 @@ void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityMan
     case ENTITY:
         break;
     case INPUT:
-        this->deserializeInput(packetVector, entityManager, componentManager, client);
+        this->deserializeInput(packetVector, entityManager, componentManager, graphic, client, syncId);
         break;
     default:
         throw std::runtime_error("[ERROR] Unknown packet type");
@@ -146,7 +146,7 @@ _STORAGE_DATA GameSerializer::serializeEntity(std::size_t entityId, CrudType typ
     return this->convertToData(packet);
 }
 
-void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Client &client)
+void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Graphic &graphic, Client &client, std::shared_ptr<std::size_t> syncId)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(std::size_t) + sizeof(GamePacketType);
     sf::Keyboard::Key keyPress = sf::Keyboard::Key::Unknown;
@@ -155,8 +155,40 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager
     if (!this->checkMagic(packet, adv)) {
         throw std::runtime_error("[ERROR] Bad packet format");
     }
+    if (static_cast<std::size_t>(client.getVesselId()) >= entityManager.getMasks().size()) {
+        return;
+    }
 
-    // TODO
+    auto &vel = componentManager.getSingleComponent<Velocity>(client.getVesselId());
+    auto &sht = componentManager.getSingleComponent<CooldownShoot>(client.getVesselId());
+    if (keyPress == sf::Keyboard::Key::Left) {
+        vel.x += vel.baseSpeedX * -1;
+        return;
+    }
+    if (keyPress == sf::Keyboard::Key::Right) {
+        vel.x += vel.baseSpeedX;
+        return;
+    }
+    if (keyPress == sf::Keyboard::Key::Up) {
+        vel.y += vel.baseSpeedY * -1;
+        return;
+    }
+    if (keyPress == sf::Keyboard::Key::Down) {
+        vel.y += vel.baseSpeedY;
+        return;
+    }
+
+    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && graphic.getClock()->getElapsedTime().asSeconds() > sht.lastShoot)) {
+        std::size_t idPar = componentManager.getSingleComponent<SyncID>(client.getVesselId()).id;
+        sht.lastShoot = graphic.getClock()->getElapsedTime().asSeconds() + sht.shootDelay;
+        ProjectilePreload::createShoot(entityManager, componentManager, graphic.getWindow()->getSize(), graphic.getScreenSize(), {2, 15, 0, 0, idPar, *syncId});
+        *syncId += 1;
+    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && graphic.getClock()->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2)))) {
+        std::size_t idPar = componentManager.getSingleComponent<SyncID>(client.getVesselId()).id;
+        sht.lastShoot = graphic.getClock()->getElapsedTime().asSeconds() + sht.shootDelay;
+        ProjectilePreload::createShoot(entityManager, componentManager, graphic.getWindow()->getSize(), graphic.getScreenSize(), {1, 15, 0, 0, idPar, *syncId});
+        *syncId += 1;
+    }
 }
 
 std::size_t GameSerializer::getClientId(_STORAGE_DATA packet)

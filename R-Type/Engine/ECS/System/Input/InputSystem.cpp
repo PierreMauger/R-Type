@@ -4,10 +4,12 @@ using namespace eng;
 
 InputSystem::InputSystem(Graphic &graphic, EntityManager &entityManager)
 {
+    this->_syncId = graphic.getSyncId();
     this->_event = graphic.getEvent();
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
+    this->_isLocal = graphic.getIsLocal();
 
     entityManager.addMaskCategory(this->_controlTag);
     entityManager.addMaskCategory(this->_buttonTag);
@@ -23,12 +25,16 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
             continue;
         Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
         CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(id);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) {
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) && *this->_isLocal) {
+            std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {2, 15, 0, 0});
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) {
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {2, 15, 0, 0, idPar, *this->_syncId, sht.tripleShoot});
+            *this->_syncId += 1;
+        } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2)))  && *this->_isLocal) {
+            std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {1, 15, 0, 0});
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, 15, 0, 0, idPar, *this->_syncId, sht.tripleShoot});
+            *this->_syncId += 1;
         }
         sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ? vel.x = vel.baseSpeedX * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ? vel.x = vel.baseSpeedX : vel.x = 0);
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ? vel.y = vel.baseSpeedY * -1 : (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ? vel.y = vel.baseSpeedY : vel.y = 0);

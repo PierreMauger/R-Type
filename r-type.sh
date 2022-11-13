@@ -3,5 +3,10 @@
 if [ ! -d "build" ]; then
     mkdir build
 fi
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+if [ "$#" -eq 1 ] && [ "$1" = "debug" ]; then
+    echo "-- DEBUG MODE"
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=debug
+else
+    cmake -S . -B build -DCMAKE_BUILD_TYPE=release
+fi
 cmake --build build -j 8

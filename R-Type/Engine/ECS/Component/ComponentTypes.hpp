@@ -191,6 +191,7 @@ typedef struct CooldownShoot {
         float lastShoot = 0.0f;
         float shootDelay = 2.0f;
         float size = 1.0f;
+        std::size_t tripleShoot = 0;
 } CooldownShoot;
 
 /**
@@ -325,6 +326,7 @@ typedef struct SpriteAttribut {
         sf::Color color = sf::Color::White;
         sf::Vector2f scale = {1.0f, 1.0f};
         sf::Vector2f offset = {0.0f, 0.0f};
+        sf::Vector2f delay = {0.0f, 0.0f};
 } SpriteAttribut;
 
 /**
@@ -333,10 +335,12 @@ typedef struct SpriteAttribut {
  */
 enum ButtonType {
     QUIT = 0,
-    TEXTZONE,
     BACK,
+    TEXTZONE,
     CONNECT,
     PLAY_SOLO,
+    READY,
+    CREATE_ROOM,
 };
 
 /**
@@ -351,6 +355,8 @@ typedef struct Button {
 
 enum SceneType {
     MENU = 0,
+    LOBBY,
+    ROOM,
     GAME,
 };
 

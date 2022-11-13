@@ -48,7 +48,7 @@ namespace eng
             bool collisionEnemySplit(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position pos);
             bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos);
             bool splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position pos);
-            void collisionFireballEnemy(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Parent par, bool &checkShield);
+            void collisionFireballEnemy(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, bool &checkShield);
             void collisionCheckShield(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j);
             void physicVessel(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i);
             void physicPattern(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i);
@@ -62,7 +62,7 @@ namespace eng
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
              */
-            PhysicSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::size_t> syncId);
+            PhysicSystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief PhysicSystem destructor.
              * @fn ~PhysicSystem

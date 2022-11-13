@@ -31,7 +31,7 @@ namespace eng
             std::vector<sf::Texture *> _saveTextures;
             std::vector<sf::Sprite> _sprites;
             std::vector<sf::SoundBuffer> _sounds;
-            std::vector<eng::Level> _level;
+            std::vector<Level> _level;
 
         public:
             /**
@@ -64,7 +64,7 @@ namespace eng
              */
             std::vector<sf::SoundBuffer> &getSounds();
 
-            std::vector<eng::Level> &getLevels();
+            std::vector<Level> &getLevels();
 
             /**
              * @brief Load the sprites.

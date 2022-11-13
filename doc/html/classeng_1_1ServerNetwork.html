@@ -126,12 +126,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a78308eef83ae55b641d217593b703bbe"><td class="memItemLeft" align="right" valign="top"><a id="a78308eef83ae55b641d217593b703bbe"></a>
 std::vector&lt; std::shared_ptr&lt; <a class="el" href="classeng_1_1Connection.html">Connection</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getConnections</b> ()</td></tr>
 <tr class="separator:a78308eef83ae55b641d217593b703bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8313ceede0ba608aeeeb9b8c5ea34859"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classQueue.html">_QUEUE_TYPE</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ServerNetwork.html#a8313ceede0ba608aeeeb9b8c5ea34859">getQueueInTcp</a> ()</td></tr>
-<tr class="memdesc:a8313ceede0ba608aeeeb9b8c5ea34859"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the input queue.  <a href="classeng_1_1ServerNetwork.html#a8313ceede0ba608aeeeb9b8c5ea34859">More...</a><br /></td></tr>
-<tr class="separator:a8313ceede0ba608aeeeb9b8c5ea34859"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae870162929df06fde17a9b0fba31e73a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classQueue.html">_QUEUE_TYPE</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ServerNetwork.html#ae870162929df06fde17a9b0fba31e73a">getQueueInUdp</a> ()</td></tr>
-<tr class="memdesc:ae870162929df06fde17a9b0fba31e73a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the input queue.  <a href="classeng_1_1ServerNetwork.html#ae870162929df06fde17a9b0fba31e73a">More...</a><br /></td></tr>
-<tr class="separator:ae870162929df06fde17a9b0fba31e73a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a259fbfefdea926b9aa0f6480955fbcc0"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classQueue.html">_QUEUE_TYPE</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ServerNetwork.html#a259fbfefdea926b9aa0f6480955fbcc0">getQueueInTcp</a> ()</td></tr>
+<tr class="memdesc:a259fbfefdea926b9aa0f6480955fbcc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the input queue.  <a href="classeng_1_1ServerNetwork.html#a259fbfefdea926b9aa0f6480955fbcc0">More...</a><br /></td></tr>
+<tr class="separator:a259fbfefdea926b9aa0f6480955fbcc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6409ccf8f4eb232d8b512b339cbdd773"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classQueue.html">_QUEUE_TYPE</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1ServerNetwork.html#a6409ccf8f4eb232d8b512b339cbdd773">getQueueInUdp</a> ()</td></tr>
+<tr class="memdesc:a6409ccf8f4eb232d8b512b339cbdd773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the input queue.  <a href="classeng_1_1ServerNetwork.html#a6409ccf8f4eb232d8b512b339cbdd773">More...</a><br /></td></tr>
+<tr class="separator:a6409ccf8f4eb232d8b512b339cbdd773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The server network handling functions. </p>
@@ -199,14 +199,14 @@ std::vector&lt; std::shared_ptr&lt; <a class="el" href="classeng_1_1Connection.h
 
 </div>
 </div>
-<a id="a8313ceede0ba608aeeeb9b8c5ea34859"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8313ceede0ba608aeeeb9b8c5ea34859">&#9670;&nbsp;</a></span>getQueueInTcp()</h2>
+<a id="a259fbfefdea926b9aa0f6480955fbcc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a259fbfefdea926b9aa0f6480955fbcc0">&#9670;&nbsp;</a></span>getQueueInTcp()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classQueue.html">_QUEUE_TYPE</a> &amp; eng::ServerNetwork::getQueueInTcp </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classQueue.html">_QUEUE_TYPE</a> &gt; eng::ServerNetwork::getQueueInTcp </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -215,18 +215,18 @@ std::vector&lt; std::shared_ptr&lt; <a class="el" href="classeng_1_1Connection.h
 </div><div class="memdoc">
 
 <p>Get the input queue. </p>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the tcp input queue </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared_ptr to the tcp input queue </dd></dl>
 
 </div>
 </div>
-<a id="ae870162929df06fde17a9b0fba31e73a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae870162929df06fde17a9b0fba31e73a">&#9670;&nbsp;</a></span>getQueueInUdp()</h2>
+<a id="a6409ccf8f4eb232d8b512b339cbdd773"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6409ccf8f4eb232d8b512b339cbdd773">&#9670;&nbsp;</a></span>getQueueInUdp()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classQueue.html">_QUEUE_TYPE</a> &amp; eng::ServerNetwork::getQueueInUdp </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classQueue.html">_QUEUE_TYPE</a> &gt; eng::ServerNetwork::getQueueInUdp </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -235,7 +235,7 @@ std::vector&lt; std::shared_ptr&lt; <a class="el" href="classeng_1_1Connection.h
 </div><div class="memdoc">
 
 <p>Get the input queue. </p>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the udp input queue </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A shared_ptr to the udp input queue </dd></dl>
 
 </div>
 </div>

@@ -4,6 +4,7 @@ using namespace eng;
 
 EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
+    this->_syncId = graphic.getSyncId();
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
@@ -225,16 +226,16 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (checkPlayer)
                 pat.lastPosFocus = componentManager.getSingleComponent<Position>(pat.focusEntity);
             if (pat.phase == TypePhase::PHASE01) {
-                id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
+                std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
             } else if (pat.phase == PHASE02) {
                 pat.status = TypeStatus::MOVE;
                 pat.phaseCount--;
             } else if (pat.phase == PHASE03) {
                 pat.status = TypeStatus::ATTACK;
                 pat.phaseCount--;
-                id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{3, false, false, 1});
+                std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{3, false, false, 1});
             }
         }
         if (checkPlayer) {
@@ -283,7 +284,11 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
         }
         if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, id, {1, ((posPlayer.x - pos.x) / 35), ((posPlayer.y - pos.y) / 35), spriteAttribut.rotation + 90});
+            if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
+                break;
+            std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, (posPlayer.x - pos.x) / 35, (posPlayer.y - pos.y) / 35, spriteAttribut.rotation - 90, idPar, *this->_syncId, 0});
+            *this->_syncId += 1;
             clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
         }
         break;
@@ -293,8 +298,8 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             pat.status = TypeStatus::SEARCH;
             if (pat.phaseCount == 0) {
-                id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
+                std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
             }
         }
         vel.x = ((pat.lastPosFocus.x) - pos.x) / 10;
@@ -307,8 +312,8 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             pat.status = TypeStatus::SEARCH;
             spriteID = SpriteID{S_CTHULHU_MOUTH, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
             spriteAttribut.rect = {0, 0, 110, 146};
-            id = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-            componentManager.getComponent(typeid(SoundID)).emplaceData(id, SoundID{2, false, false, 1});
+            std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+            componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
         }
         checkPlayer = false;
         spriteAttribut.rotation += (this->_clock->getElapsedTime().asSeconds() - pat.statusTime) * 10;
@@ -377,7 +382,11 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
         if (entityManager.hasMask(i, cooldownEnemy)) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, i, {1, -15, 0, 0});
+                if (entityManager.hasMask(i, InfoComp::SYNCID) == false)
+                    continue;
+                std::size_t idPar = componentManager.getSingleComponent<SyncID>(i).id;
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, *this->_syncId, 0});
+                *this->_syncId += 1;
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }

@@ -29,7 +29,7 @@ std::vector<sf::SoundBuffer> &Loader::getSounds()
     return this->_sounds;
 }
 
-std::vector<eng::Level> &Loader::getLevels()
+std::vector<Level> &Loader::getLevels()
 {
     return this->_level;
 }

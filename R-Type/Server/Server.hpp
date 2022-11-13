@@ -47,7 +47,7 @@ namespace eng
             MenuSerializer _menuSerializer;
             GameSerializer _gameSerializer;
 
-            std::size_t _syncId = 0;
+            std::shared_ptr<std::size_t> _syncId;
             std::size_t _clientId = 0;
             std::vector<Client> _clients;
 
@@ -57,7 +57,7 @@ namespace eng
             sf::Time _elapsedTime = sf::seconds(0);
             sf::Time _deltaTime = sf::seconds(5);
             sf::Time _bossTime = sf::seconds(5);
-            sf::Time _networkTime = sf::milliseconds(50);
+            sf::Time _networkTime = sf::milliseconds(16);
             bool _isLevelFinished = false;
 
             void initSystems();

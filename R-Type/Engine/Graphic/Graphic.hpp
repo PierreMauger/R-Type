@@ -34,6 +34,14 @@ namespace eng
             bool _isFullscreen;
             std::shared_ptr<std::size_t> _sceneId;
 
+            std::shared_ptr<std::size_t> _port;
+            std::shared_ptr<std::string> _ip;
+            std::shared_ptr<bool> _isLocal;
+            std::shared_ptr<bool> _isReady;
+            std::shared_ptr<std::size_t> _syncId;
+            std::shared_ptr<std::size_t> _roomPlayerNb;
+            std::shared_ptr<std::size_t> _roomPlayerMax;
+
         public:
             /**
              * @brief Graphic constructor.
@@ -105,6 +113,49 @@ namespace eng
              * @return The scene id
              */
             std::shared_ptr<std::size_t> getSceneId();
+
+            /**
+             * @brief Get the Port object
+             * @fn std::shared_ptr<std::size_t> getPort()
+             * @return std::shared_ptr<std::size_t>
+             */
+            std::shared_ptr<std::size_t> getPort();
+            /**
+             * @brief Get the Ip object
+             * @fn std::shared_ptr<std::string> getIp()
+             * @return std::shared_ptr<std::string>
+             */
+            std::shared_ptr<std::string> getIp();
+            /**
+             * @brief Get the Is Local object
+             * @fn std::shared_ptr<bool> getIsLocal()
+             * @return std::shared_ptr<bool>
+             */
+            std::shared_ptr<bool> getIsLocal();
+            /**
+             * @brief Get the Is Ready object
+             * @fn std::shared_ptr<bool> getIsReady()
+             * @return std::shared_ptr<bool>
+             */
+            std::shared_ptr<bool> getIsReady();
+            /**
+             * @brief Get the Sync Id object
+             * @fn std::shared_ptr<std::size_t> getSyncId()
+             * @return std::shared_ptr<std::size_t>
+             */
+            std::shared_ptr<std::size_t> getSyncId();
+            /**
+             * @brief Get the Room Player Nb object
+             * @fn std::shared_ptr<std::size_t> getRoomPlayerNb()
+             * @return std::shared_ptr<std::size_t>
+             */
+            std::shared_ptr<std::size_t> getRoomPlayerNb();
+            /**
+             * @brief Get the Room Player Max object
+             * @fn std::shared_ptr<std::size_t> getRoomPlayerMax()
+             * @return std::shared_ptr<std::size_t>
+             */
+            std::shared_ptr<std::size_t> getRoomPlayerMax();
     };
 }
 
