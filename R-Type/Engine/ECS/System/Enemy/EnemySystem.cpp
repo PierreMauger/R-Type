@@ -4,6 +4,7 @@ using namespace eng;
 
 EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
+    this->_isLocal = graphic.getIsLocal();
     this->_syncId = graphic.getSyncId();
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
@@ -169,7 +170,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             vel.x = ((posPlayer.x - pos.x) / 100) + (std::cos(pat.angle) * SPEED_OSC);
             vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
         }
-        if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
+        if (*this->_isLocal && clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
             if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
                 break;
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
@@ -256,11 +257,11 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
             vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
             pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 3;
         }
-        if (pat.type == TypePattern::CTHULHU) {
+        if (*this->_isLocal && pat.type == TypePattern::CTHULHU) {
             this->cthulhuPattern(i, componentManager, entityManager);
             continue;
         }
-        if (entityManager.hasMask(i, cooldownEnemy)) {
+        if (*this->_isLocal && entityManager.hasMask(i, cooldownEnemy)) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
                 if (entityManager.hasMask(i, InfoComp::SYNCID) == false)

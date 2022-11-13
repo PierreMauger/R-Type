@@ -12,6 +12,8 @@ Server::Server(uint16_t portTcp, time_t time) : _network(portTcp, time)
     this->_network.run();
 
     this->_engine.getECS().getEntityManager().addMaskCategory(InfoComp::CONTROLLABLE);
+
+    *(this->_engine.getGraphic().getIsLocal()) = true;
 }
 
 // TODO see if graph is usefull on serv
