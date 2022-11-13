@@ -80,6 +80,7 @@ void Client::initEntities()
     LobbyPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     RoomPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    BackgroundMusicPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Client::syncUdpNetwork()
@@ -239,7 +240,7 @@ void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    std::vector<Level> &level = *graphic.getIsLocal() ? this->_engine.getLoader().getLevelsSolo() : this->_engine.getLoader().getLevels();
+    std::vector<Level> &level = !*(graphic.getIsLocal()) ? this->_engine.getLoader().getLevelsSolo() : this->_engine.getLoader().getLevels();
     std::size_t levelId = 0;
 
     while (graphic.getWindow()->isOpen()) {

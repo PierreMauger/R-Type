@@ -68,7 +68,7 @@ void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id,
             this->updateEntity<DropBonus>(packet, id, adv, componentManager);
             break;
         case 18:
-            // this->updateEntity<Text>(packet, id, adv, componentManager);
+            this->updateEntity<Text>(packet, id, adv, componentManager);
             break;
         case 19:
             this->updateEntity<SoundID>(packet, id, adv, componentManager);
