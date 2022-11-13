@@ -144,6 +144,9 @@ void PhysicSystem::killWhenDisappeared(EntityManager &entityManager, ComponentMa
         componentManager.getSingleComponent<Controllable>(i).kill = 0;
         componentManager.getSingleComponent<Controllable>(i).death += 1;
         componentManager.getSingleComponent<SpriteAttribut>(i).rotation = 0;
+        componentManager.getSingleComponent<CooldownShoot>(i).tripleShoot = 0;
+        componentManager.getSingleComponent<CooldownShoot>(i).size = 1;
+        componentManager.getSingleComponent<CooldownShoot>(i).shootDelay = 1;
         for (auto j : entityManager.getMaskCategory(this->_shieldTag)) {
             if (componentManager.getSingleComponent<Parent>(j).id == componentManager.getSingleComponent<SyncID>(i).id) {
                 componentManager.removeAllComponents(j);
@@ -182,7 +185,7 @@ void PhysicSystem::bonusFound(ComponentManager &componentManager, EntityManager 
     componentManager.removeAllComponents(j);
     entityManager.removeMask(j);
     if (drop.id == 0)
-        componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 > 0.1 ? componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 : 0;
+        componentManager.getSingleComponent<CooldownShoot>(i).shootDelay = 0.5;
     if (drop.id == 1)
         componentManager.getSingleComponent<CooldownShoot>(i).size < 3 ? componentManager.getSingleComponent<CooldownShoot>(i).size += 1 : 0;
     if (drop.id == 3)
@@ -280,14 +283,14 @@ void PhysicSystem::collisionCheckShield(ComponentManager &componentManager, Enti
 {
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile proj = componentManager.getSingleComponent<Projectile>(i);
-    Parent par = componentManager.getSingleComponent<Parent>(i);
+    std::size_t idPar = entityManager.getBySyncId(componentManager.getSingleComponent<Parent>(i).id, componentManager);
 
     if (proj.damage >= hp.life) {
         if (entityManager.hasMask(j, InfoComp::DROP))
             this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
         hp.life = 0;
-        if (entityManager.hasMask(par.id, InfoComp::CONTROLLABLE))
-            componentManager.getSingleComponent<Controllable>(par.id).kill++;
+        if (entityManager.hasMask(idPar, InfoComp::CONTROLLABLE))
+            componentManager.getSingleComponent<Controllable>(idPar).kill++;
         if (entityManager.hasMask(j, InfoComp::DIS))
             componentManager.getSingleComponent<Disappearance>(j).dis = true;
         else {
@@ -340,7 +343,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
         return false;
     Parent par = componentManager.getSingleComponent<Parent>(i);
     std::size_t idPar = entityManager.getBySyncId(par.id, componentManager);
-    if (idPar < masks.size() && !masks[idPar].has_value()) {
+    if ((idPar >= masks.size() || !masks[idPar].has_value())) {
         componentManager.removeAllComponents(i);
         entityManager.removeMask(i);
         it--;
