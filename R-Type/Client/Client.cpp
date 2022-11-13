@@ -15,6 +15,7 @@ void Client::createNetwork()
 {
     this->_network = std::make_unique<ClientNetwork>(*this->_engine.getGraphic().getIp(), *this->_engine.getGraphic().getPort());
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
     this->_network->run();
 
     this->_id = this->_network->getId();
@@ -71,6 +72,7 @@ void Client::initComponents()
     componentManager.bindComponent<Button>();
     componentManager.bindComponent<Shield>();
     componentManager.bindComponent<Scene>();
+    componentManager.bindComponent<Chain>();
 }
 
 void Client::initEntities()

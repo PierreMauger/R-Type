@@ -56,26 +56,29 @@
 #define S_DEVOURER_HEAD 8
 #define S_DEVOURER_BODY 9
 #define S_DEVOURER_TAIL 10
-#define S_ENEMY 11
+#define S_DEVOURER_HEAD_S 11
+#define S_DEVOURER_BODY_S 12
+#define S_DEVOURER_TAIL_S 13
+#define S_ENEMY 14
 
 // Fireballs
-#define S_FIREBALL_BLUE 12
-#define S_REV_FIREBALL 13
-#define S_FIREBALL_YELLOW 14
+#define S_FIREBALL_BLUE 15
+#define S_REV_FIREBALL 16
+#define S_FIREBALL_YELLOW 17
 
 // GUI
-#define S_IDBAR 15
-#define S_BUTTON 16
+#define S_IDBAR 18
+#define S_BUTTON 19
 
 // Parallax
-#define S_PARALLAX_0 17
-#define S_PARALLAX_3 18
-#define S_PARALLAX_4 19
-#define S_PARALLAX_1 20
-#define S_PARALLAX_2 21
+#define S_PARALLAX_0 20
+#define S_PARALLAX_3 21
+#define S_PARALLAX_4 22
+#define S_PARALLAX_1 23
+#define S_PARALLAX_2 24
 
 // Player
-#define S_VESSEL 22
+#define S_VESSEL 25
 
 // Audio
 #define A_BATTLELINEBECK 0
