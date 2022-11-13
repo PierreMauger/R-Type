@@ -93,18 +93,19 @@ $(function() {
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::shared_ptr&lt;sf::Clock&gt; _clock;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            std::shared_ptr&lt;sf::RenderWindow&gt; _window;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            std::shared_ptr&lt;sf::Vector2f&gt; _screenSize;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            std::size_t _controlTag = (InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            InputSystem(Graphic &amp;graphic, EntityManager &amp;entityManager);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            ~InputSystem() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">void</span> update(ComponentManager &amp;componentManager, EntityManager &amp;entityManager);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// INPUTSYSTEM_HPP</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            std::shared_ptr&lt;bool&gt; _isLocal;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            std::size_t _controlTag = (InfoComp::CONTROLLABLE | InfoComp::VEL | InfoComp::POS | InfoComp::COOLDOWNSHOOT | InfoComp::SIZE);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            std::size_t _buttonTag = (InfoComp::BUTTON | InfoComp::POS | InfoComp::SPRITEID | InfoComp::SPRITEAT | InfoComp::SIZE);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            InputSystem(Graphic &amp;graphic, EntityManager &amp;entityManager);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            ~InputSystem() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> update(ComponentManager &amp;componentManager, EntityManager &amp;entityManager);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    };</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// INPUTSYSTEM_HPP</span></div>
 <div class="ttc" id="aECS_8hpp_html"><div class="ttname"><a href="ECS_8hpp.html">ECS.hpp</a></div><div class="ttdoc">The Engine's ECS (Entity Component System, see the readme for more infos).</div></div>
 <div class="ttc" id="aISystem_8hpp_html"><div class="ttname"><a href="ISystem_8hpp.html">ISystem.hpp</a></div><div class="ttdoc">Interface of the system.</div></div>
 <div class="ttc" id="aProjectilePreload_8hpp_html"><div class="ttname"><a href="ProjectilePreload_8hpp.html">ProjectilePreload.hpp</a></div><div class="ttdoc">Preload the projectile.</div></div>
