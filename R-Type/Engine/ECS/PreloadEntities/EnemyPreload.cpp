@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t syncId, sf::Vector2f pos)
+void EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, sf::Vector2f pos)
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
@@ -19,5 +19,6 @@ void EnemyPreload::preload(Graphic &graphic, EntityManager &entityManager, Compo
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{63 * size.x, 48 * size.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{2});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, (float)(rand == 0 ? 1.0 : 0.0)});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{*syncId});
+    *syncId += 1;
 }

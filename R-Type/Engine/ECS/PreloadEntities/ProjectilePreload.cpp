@@ -74,9 +74,8 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{*(projectile.syncId)});
     *(projectile.syncId) += 1;
     if (!enemy) {
-        addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
         float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));
-        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{A_SHOOT, false, false, pitch});
+        SoundPreload::preload(entityManager, componentManager, projectile.syncId, {A_SHOOT, false, false, pitch});
     }
     if (projectile.tripleShoot != 0)
         createTripleShoot(entityManager, componentManager, windowsSize, screenSize, projectile);

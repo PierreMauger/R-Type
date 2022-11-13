@@ -35,7 +35,7 @@ namespace eng
              * @param syncId A reference to the synchronized id.
              * @param pos The obstacle position.
              */
-            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t syncId, sf::Vector2f pos);
+            static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, sf::Vector2f pos);
     };
 }
 
