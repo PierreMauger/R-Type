@@ -170,7 +170,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             vel.x = ((posPlayer.x - pos.x) / 100) + (std::cos(pat.angle) * SPEED_OSC);
             vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
         }
-        if (*this->_isLocal && clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
+        if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
             if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
                 break;
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
@@ -222,6 +222,9 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
 
 void EnemySystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
+    if (*this->_isLocal == false)
+        return;
+
     auto &masks = entityManager.getMasks();
     std::size_t appear = (InfoComp::APP);
     std::size_t enemyData = (InfoComp::POS | InfoComp::VEL | InfoComp::PATTERN);
@@ -257,11 +260,11 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
             vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
             pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 3;
         }
-        if (*this->_isLocal && pat.type == TypePattern::CTHULHU) {
+        if (pat.type == TypePattern::CTHULHU) {
             this->cthulhuPattern(i, componentManager, entityManager);
             continue;
         }
-        if (*this->_isLocal && entityManager.hasMask(i, cooldownEnemy)) {
+        if (entityManager.hasMask(i, cooldownEnemy)) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
                 if (entityManager.hasMask(i, InfoComp::SYNCID) == false)
