@@ -61,7 +61,7 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                 } else if (button.type == ButtonType::CREATE_ROOM) {
                     Parent parent = componentManager.getSingleComponent<Parent>(id);
                     std::string text = componentManager.getSingleComponent<Text>(parent.id).str;
-                    text != "" ? *this->_roomPlayerMax = std::stoi(text) : *this->_roomPlayerMax = 4;
+                    text != "" ? *this->_roomPlayerMax = std::stoi(text) : *this->_roomPlayerMax = 0;
                 }
             }
         }

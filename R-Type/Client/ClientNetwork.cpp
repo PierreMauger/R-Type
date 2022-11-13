@@ -7,7 +7,7 @@ ClientNetwork::ClientNetwork(std::string ip, uint16_t portTcp) : _ioContext(), _
     this->_dataInTcp = std::make_shared<_QUEUE_TYPE>();
     this->_dataInUdp = std::make_shared<_QUEUE_TYPE>();
 
-    this->_connection = std::make_shared<Connection>(ip, portTcp, this->_ioContext, this->_dataInTcp, this->_dataInUdp);
+    this->_connection = std::make_unique<Connection>(ip, portTcp, this->_ioContext, this->_dataInTcp, this->_dataInUdp);
     this->initClientNetwork();
 }
 

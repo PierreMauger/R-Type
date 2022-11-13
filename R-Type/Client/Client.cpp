@@ -120,14 +120,20 @@ void Client::updateNetwork()
     *graphic.getSyncId() += 1;
 
     if (this->_network == nullptr) {
-        if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
+        if (graphic.getIp()->size() == 0 || (*graphic.getPort()) == 0)
             return;
         try {
             this->createNetwork();
         } catch (const std::exception &e) {
             return;
         }
-        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
+        *graphic.getSceneId() = SceneType::LOBBY;
+    }
+    if (this->_network != nullptr && *graphic.getRoomPlayerMax() != 0) {
+        this->_rooms.push_back(Room(this->_roomId, *graphic.getRoomPlayerMax(), 1));
+        *graphic.getRoomPlayerMax() = 0;
+        this->_roomId++;
+        *graphic.getSceneId() = SceneType::GAME;
     }
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)

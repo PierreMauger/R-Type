@@ -11,6 +11,8 @@ Graphic::Graphic()
     this->_isLocal = std::make_shared<bool>(false);
     this->_isReady = std::make_shared<bool>(false);
     this->_syncId = std::make_shared<std::size_t>(0);
+    this->_roomPlayerNb = std::make_shared<std::size_t>(0);
+    this->_roomPlayerMax = std::make_shared<std::size_t>(0);
 
     this->_window = std::make_shared<sf::RenderWindow>(sf::VideoMode(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height), "R-Type", sf::Style::Fullscreen);
     this->_screenSize = std::make_shared<sf::Vector2f>(1920, 1080);

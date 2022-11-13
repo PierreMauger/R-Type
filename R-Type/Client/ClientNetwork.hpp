@@ -33,7 +33,7 @@ namespace eng
             _B_ASIO_TCP::resolver _resolver;
             std::shared_ptr<_QUEUE_TYPE> _dataInTcp;
             std::shared_ptr<_QUEUE_TYPE> _dataInUdp;
-            std::shared_ptr<Connection> _connection;
+            std::unique_ptr<Connection> _connection;
             std::thread _threadContext;
 
             std::time_t _time;
