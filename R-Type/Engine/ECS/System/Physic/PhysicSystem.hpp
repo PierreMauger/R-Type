@@ -63,7 +63,7 @@ namespace eng
              * @param entityManager A reference to the EntityManager
              * @param syncId A shared pointer to the synchronized id of the client
              */
-            PhysicSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::size_t> syncId);
+            PhysicSystem(Graphic &graphic, EntityManager &entityManager);
             /**
              * @brief PhysicSystem destructor.
              * @fn ~PhysicSystem

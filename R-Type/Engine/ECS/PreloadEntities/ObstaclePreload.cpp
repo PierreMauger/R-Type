@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void eng::ObstaclePreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos)
+void ObstaclePreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, sf::Vector2f pos)
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
@@ -14,5 +14,6 @@ void eng::ObstaclePreload::preload(Graphic &graphic, EntityManager &entityManage
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{(3 / screenSize->x * windowsSize.x) * -1, 0, 0});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{114 / screenSize->x * windowsSize.x, 99 / screenSize->y * windowsSize.y});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{*syncId});
+    *syncId += 1;
 }

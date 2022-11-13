@@ -76,11 +76,12 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
             if (shield.life > 0) {
                 SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
                 Position &pos = componentManager.getSingleComponent<Position>(idPar);
-                Size &sizePar = componentManager.getSingleComponent<Size>(idPar);
+                SpriteAttribut &spriteAtPar = componentManager.getSingleComponent<SpriteAttribut>(idPar);
                 spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
-                spriteRef.setScale(spriteAt.scale.x, spriteAt.scale.y);
-                spriteRef.setRotation(componentManager.getSingleComponent<SpriteAttribut>(idPar).rotation);
-                spriteRef.setPosition(pos.x - (sizePar.x / 4), pos.y - (sizePar.y / 2));
+                spriteRef.setScale(spriteAt.scale.x * spriteAtPar.scale.x, spriteAt.scale.y * spriteAtPar.scale.y);
+                spriteRef.setRotation(spriteAtPar.rotation);
+                spriteRef.setOrigin(spriteAt.offset.x, spriteAt.offset.y);
+                spriteRef.setPosition(pos.x + spriteAtPar.offset.x * spriteAtPar.scale.x * _window->getSize().x / _screenSize->x, pos.y + spriteAtPar.offset.y * spriteAtPar.scale.y * _window->getSize().y / _screenSize->y);
             } else {
                 componentManager.removeAllComponents(i);
                 entityManager.removeMask(i);
@@ -106,7 +107,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
     std::vector<sf::Sprite> stockSpriteMedium;
     std::vector<sf::Sprite> stockSpriteLow;
     std::vector<sf::Text> stockText;
-    std::vector<sf::Sprite> stockButton;
 
     for (auto id : entityManager.getMaskCategory(this->_textTag)) {
         sf::Text &textRef = this->_text;
@@ -128,6 +128,9 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         stockText.push_back(textRef);
     }
     for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
+        if (!entityManager.hasMask(id, InfoComp::POS) || !entityManager.hasMask(id, InfoComp::SPRITEID))
+            continue;
+
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
         if (entityManager.hasMask(id, this->_sceneTag)) {
@@ -143,8 +146,9 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
             spriteRef.setRotation(spriteAt.rotation);
             spriteRef.setColor(spriteAt.color);
             spriteRef.setScale(spriteAt.scale);
-            spriteRef.setOrigin({spriteAt.offset.x / 2, spriteAt.offset.y / 2});
-            spriteRef.setPosition(pos.x + spriteAt.offset.x, pos.y + spriteAt.offset.y);
+            sf::Vector2f ratio = {_screenSize->x / _window->getSize().x, _screenSize->y / _window->getSize().y};
+            spriteRef.setOrigin({spriteAt.offset.x * ratio.x, spriteAt.offset.y * ratio.y});
+            spriteRef.setPosition(pos.x + spriteAt.offset.x * spriteAt.scale.x * ratio.x + spriteAt.delay.x * spriteAt.scale.x * ratio.x, pos.y + spriteAt.offset.y * spriteAt.scale.y * ratio.y + spriteAt.delay.y * spriteAt.scale.x * ratio.y);
         }
         if (entityManager.hasMask(id, renderCooldown) && displayCooldownBar(componentManager, entityManager, spriteRef, id))
             continue;
@@ -176,8 +180,6 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         this->_window->draw(stockSpriteMedium[i]);
     for (std::size_t i = 0; i < stockSpriteLow.size(); i++)
         this->_window->draw(stockSpriteLow[i]);
-    for (std::size_t i = 0; i < stockButton.size(); i++)
-        this->_window->draw(stockButton[i]);
     for (std::size_t i = 0; i < stockText.size(); i++)
         this->_window->draw(stockText[i]);
 }

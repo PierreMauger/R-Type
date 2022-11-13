@@ -35,21 +35,22 @@ namespace eng
                     float velX = 0.0f;
                     float velY = 0.0f;
                     float rotation = 0.0f;
+                    std::size_t syncIdPar = 0;
+                    std::shared_ptr<std::size_t> syncId = 0;
                     std::size_t tripleShoot = 0;
             } ProjectileStats;
 
             /**
              * @brief Creates a shot
-             * @fn static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, std::size_t damage)
+             * @fn static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t damage)
              * @param entityManager A reference to the EntityManager.
              * @param componentManager A reference to the ComponentManager.
              * @param windowsSize The size of the window.
              * @param screenSize The size of the screen.
-             * @param id The id of the projectile.
              * @param damage The damage of the projectile.
              */
-            static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileStats projectile);
-            static void createTripleShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, std::size_t id, ProjectileStats projectile);
+            static void createShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, ProjectileStats projectile);
+            static void createTripleShoot(EntityManager &entityManager, ComponentManager &componentManager, sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, ProjectileStats projectile);
     };
 }
 

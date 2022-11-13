@@ -2,7 +2,7 @@
 
 using namespace eng;
 
-void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f position)
+void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, sf::Vector2f position)
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
@@ -21,12 +21,14 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{15});
     componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{randBonus});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 0.5});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{*syncId});
+    *syncId += 1;
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR | InfoComp::SYNCID), componentManager);
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
     componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 15});
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{S_IDBAR, Priority::MEDIUM});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{*syncId});
+    *syncId += 1;
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(id).id});
 }

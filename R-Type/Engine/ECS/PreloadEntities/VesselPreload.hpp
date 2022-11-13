@@ -44,7 +44,7 @@ namespace eng
              * @param componentManager A reference to the ComponentManager.
              * @param syncId A reference to the synchronized id of the vessel.
              */
-            static std::size_t preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId);
+            static std::size_t preload(sf::Vector2u windowsSize, std::shared_ptr<sf::Vector2f> screenSize, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, std::size_t colorNum);
     };
 }
 

@@ -12,8 +12,10 @@
 #include "Client/ClientNetwork.hpp"
 #include "Engine.hpp"
 #include "Engine/ECS/PreloadEntities/BackgroundMusicPreload.hpp"
+#include "Engine/ECS/PreloadEntities/LobbyPreload.hpp"
 #include "Engine/ECS/PreloadEntities/MenuPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ParallaxPreload.hpp"
+#include "Engine/ECS/PreloadEntities/RoomPreload.hpp"
 #include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "GameSerializer.hpp"
 #include "Includes.hpp"
@@ -35,7 +37,7 @@ namespace eng
     {
         private:
             Engine _engine;
-            std::shared_ptr<ClientNetwork> _network = nullptr;
+            std::unique_ptr<ClientNetwork> _network = nullptr;
 
             MenuSerializer _menuSerializer;
             GameSerializer _gameSerializer;
@@ -44,15 +46,10 @@ namespace eng
 
             std::size_t _roomId = 0;
             std::vector<Room> _rooms;
-            std::shared_ptr<std::size_t> _syncId;
-            // std::size_t _syncId = 0;
 
             sf::Time _networkTime = sf::milliseconds(16);
             sf::Time _keysTime = sf::milliseconds(16);
 
-            std::shared_ptr<std::string> _ip;
-            std::shared_ptr<std::size_t> _port;
-            std::shared_ptr<bool> _isLocal;
             bool _isLevelFinished = false;
 
             void createNetwork();

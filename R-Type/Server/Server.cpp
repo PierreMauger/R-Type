@@ -4,12 +4,16 @@ using namespace eng;
 
 Server::Server(uint16_t portTcp, time_t time) : _network(portTcp, time)
 {
+    this->_syncId = std::make_shared<std::size_t>(0);
+
     this->initSystems();
     this->initComponents();
     this->initEntities();
     this->_network.run();
 
     this->_engine.getECS().getEntityManager().addMaskCategory(InfoComp::CONTROLLABLE);
+
+    *(this->_engine.getGraphic().getIsLocal()) = true;
 }
 
 // TODO see if graph is usefull on serv
@@ -22,7 +26,7 @@ void Server::initSystems()
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
     // systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
-    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager, std::make_shared<std::size_t>(this->_syncId)));
+    systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
 #ifndef NDEBUG
@@ -30,7 +34,7 @@ void Server::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
-    systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
+    // systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
 }
 
 void Server::initComponents()
@@ -65,9 +69,6 @@ void Server::initComponents()
 
 void Server::initEntities()
 {
-    ParallaxPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-    MenuPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Server::manageEvent()
@@ -148,7 +149,7 @@ void Server::syncUdpNetwork()
         try {
             std::size_t clientId = this->_gameSerializer.getClientId(packet);
             if (clientId < this->_clients.size()) {
-                this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_clients[clientId]);
+                this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_engine.getGraphic(), this->_clients[clientId], this->_syncId);
             }
         } catch (const std::exception &e) {
             std::cerr << e.what() << std::endl;
@@ -205,7 +206,7 @@ void Server::updateClients()
         }
         if (!check) {
             this->_clients.push_back(Client(connection, this->_clientId++));
-            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId);
+            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId, this->_clientId % 4);
             this->_clients.back().setVesselId(vesselId);
         }
         check = false;
@@ -238,6 +239,7 @@ void Server::updateNetwork()
 
     this->syncTcpNetwork();
     this->syncUdpNetwork();
+    *this->_syncId += 1;
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
     this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(16);
