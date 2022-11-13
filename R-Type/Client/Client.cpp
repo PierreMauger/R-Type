@@ -132,7 +132,9 @@ void Client::updateNetwork()
     if (this->_network != nullptr && *graphic.getRoomPlayerMax() != 0) {
         this->_rooms.push_back(Room(this->_roomId, *graphic.getRoomPlayerMax(), 1));
         *graphic.getRoomPlayerMax() = 0;
-        this->_roomId++;
+        this->_roomId = this->_rooms.size() - 1;
+        _STORAGE_DATA packet = this->_menuSerializer.serializeRoomEdit(this->_id, CrudType::UPDATE, this->_rooms[this->_roomId]);
+        this->_network->tcpMsg(packet);
         *graphic.getSceneId() = SceneType::GAME;
     }
 
