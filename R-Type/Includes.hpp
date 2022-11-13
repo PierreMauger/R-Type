@@ -64,17 +64,22 @@
 #define S_PARALLAX_2 15
 
 // Devoureur
-#define S_DEVOURER_HEAD 17
-#define S_DEVOURER_BODY 16
-#define S_DEVOURER_TAIL 18
+#define S_DEVOURER_HEAD 19
+#define S_DEVOURER_BODY 17
+#define S_DEVOURER_TAIL 21
+#define S_DEVOURER_HEAD_S 20
+#define S_DEVOURER_BODY_S 18
+#define S_DEVOURER_TAIL_S 22
+#define S_DEVOURER_FIRE 16
+#define S_DEVOURER_BEAM 23
 
 // Cthulhu
-#define S_CTHULHU_EYE 19
-#define S_CTHULHU_MOUTH 20
+#define S_CTHULHU_EYE 24
+#define S_CTHULHU_MOUTH 25
 
 // Bonus
-#define S_SHIELD 21
-#define S_BONUS_SHIELD 22
-#define S_BONUS_TRIPLE 23
+#define S_SHIELD 26
+#define S_BONUS_SHIELD 27
+#define S_BONUS_TRIPLE 28
 
 #endif // INCLUDES_HPP

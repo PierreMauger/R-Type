@@ -27,11 +27,59 @@ bool EnemySystem::setRandIdPlayer(Pattern &pat, EntityManager &entityManager)
     return true;
 }
 
-void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, ComponentManager &componentManager, EntityManager &entityManager)
+void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, ComponentManager &componentManager, EntityManager &entityManager) {
+    auto &masks = entityManager.getMasks();
+    std::size_t baseId = 0;
+    std::size_t chainId = 0;
+    Chain chain;
+    std::size_t dmgToGive = 0;
+
+    for (std::size_t j = 0; j < masks.size(); j++) {
+        if (!entityManager.hasMask(j, (InfoComp::CHAIN | InfoComp::LIFE)))
+            continue;
+        chain = componentManager.getSingleComponent<Chain>(j);
+        if (chain.partInfo == firstChainSpriteId) {
+            baseId = j;
+            break;
+        }
+    }
+    chainId = baseId;
+    if (!masks[chainId].has_value()) {
+        std::cout << "Error: chainId is not valid : " << chainId << std::endl;
+        return;
+    }
+
+    Life &life = componentManager.getSingleComponent<Life>(chainId);
+    dmgToGive += life.defaultLife - life.life;
+    while (chain.nextId < masks.size() && chain.partInfo != lastChainSpriteId) {
+        if (!entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL) || !entityManager.hasMask(chain.nextId, InfoComp::LIFE)) {
+            break;
+        }
+        life = componentManager.getSingleComponent<Life>(chain.nextId);
+        dmgToGive += life.defaultLife - life.life;
+        chainId = chain.nextId;
+        chain = componentManager.getSingleComponent<Chain>(chain.nextId);
+    }
+
+    chainId = baseId;
+    life = componentManager.getSingleComponent<Life>(chainId);
+    life.life -= dmgToGive;
+    while (chain.nextId < masks.size() && chain.partInfo != lastChainSpriteId) {
+        if (!entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL) || !entityManager.hasMask(chain.nextId, InfoComp::LIFE)) {
+            break;
+        }
+        life = componentManager.getSingleComponent<Life>(chain.nextId);
+        life.life -= dmgToGive;
+        chain = componentManager.getSingleComponent<Chain>(chain.nextId);
+    }
+}
+
+void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, std::size_t speedFactor, ComponentManager &componentManager, EntityManager &entityManager)
 {
     auto &masks = entityManager.getMasks();
+    // sf::Vector2u windowsSize = this->_window->getSize();
+    // float scal = 1.5;
     std::size_t chainId = 0;
-    float scal = 0.5f;
     Chain chain;
 
     // Search the begin of the tail
@@ -49,33 +97,46 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
         return;
     }
 
+    // get the pattern component of the head
+    Pattern &pat = componentManager.getSingleComponent<Pattern>(chainId);
+
     while (chain.nextId < masks.size() && chain.partInfo != lastChainSpriteId) {
         if (!entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL)) {
             break;
         }
-
         Position lastPos = componentManager.getSingleComponent<Position>(chainId);
         Position &pos = componentManager.getSingleComponent<Position>(chain.nextId);
         Velocity &vel = componentManager.getSingleComponent<Velocity>(chain.nextId);
+        SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(chain.nextId);
         SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(chain.nextId);
+        // Size &size = componentManager.getSingleComponent<Size>(chainId);
+
+        // Change the sprite of the chain
+        if (pat.status == TypeStatus::TRANSFORM) {
+            spriteID = SpriteID{S_DEVOURER_BODY_S, Priority::MEDIUM, 0, 0, false, false, 0, 0, 0, 0};
+            spriteAttribut.rect = {0, 0, 88, 114};
+            // size = Size{(88 / _screenSize->x * windowsSize.x) * scal, (114 / _screenSize->y * windowsSize.y) * scal};
+        }
 
         spriteAttribut.rotation = (atan2(lastPos.y - pos.y, lastPos.x - pos.x) * 180 / M_PI - 180);
 
-        std::cout << "chainId: " << chain.nextId << std::endl;
-        // vel.x = (lastPos.x - pos.x) - (chain.diffX * fabs(cos(spriteAttribut.rotation)));
-        // vel.y = (lastPos.y - pos.y) - (chain.diffX * fabs(sin(spriteAttribut.rotation)));
-
-        vel.x = (lastPos.x - pos.x) / 10;
-        vel.y = (lastPos.y - pos.y) / 10;
-
-        std::cout << "vel.x: " << vel.x << " vel.y: " << vel.y << std::endl;
-
-        // std::cout << "diff X: " << (chain.diffX * fabs(cos(spriteAttribut.rotation))) << std::endl;
-        // std::cout << "diff Y: " << (chain.diffX * fabs(sin(spriteAttribut.rotation))) << std::endl;
+        vel.x = (lastPos.x - pos.x) / speedFactor;
+        vel.y = (lastPos.y - pos.y) / speedFactor;
 
         // update chain
         chainId = chain.nextId;
         chain = componentManager.getSingleComponent<Chain>(chain.nextId);
+    }
+
+    // Change ID of the last sprite of the tail
+    SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(chainId);
+    SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(chainId);
+    // Size &size = componentManager.getSingleComponent<Size>(chainId);
+    if (pat.status == TypeStatus::TRANSFORM) {
+        spriteID = SpriteID{S_DEVOURER_TAIL_S, Priority::MEDIUM, 0, 0, false, false, 0, 0, 0, 0};
+        spriteAttribut.rect = {0, 0, 148, 86};
+        // size = Size{(148 / _screenSize->x * windowsSize.x) * scal, (86 / _screenSize->y * windowsSize.y) * scal};
+        pat.status = TypeStatus::SEARCH;
     }
 }
 
@@ -87,12 +148,21 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
     Life &life = componentManager.getSingleComponent<Life>(id);
     SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(id);
     SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(id);
+    // Size &size = componentManager.getSingleComponent<Size>(id);
     Position posPlayer = {0, 0, 0};
+    // sf::Vector2u windowsSize = this->_window->getSize();
+    std::size_t speedFactor = 6;
+    // float scal = 1.5;
     auto &masks = entityManager.getMasks();
 
-    // float delayTransform = 5;
-    float delayAttack = 5;
+    // rand a position with the size of the screen
+    float randTpX = (rand() % static_cast<int>(this->_screenSize->x));
+    float posPairY = 0;
+
+    float delayIdle = (rand() % 3) + 1;
+    float delayAttack = 3;
     float delayMove = 10;
+    float delayShoot = 3;
 
     bool checkPlayer = true;
 
@@ -104,6 +174,29 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
         return;
     }
 
+    // Phase 2 Event
+    if (life.life <= life.defaultLife / 2 && pat.phase == PHASE01) {
+        pat.status = TypeStatus::TRANSFORM;
+        pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+        pat.phase = TypePhase::PHASE02;
+        pat.phaseCount = 4;
+    }
+
+    // Phase 1 && Phase 2 Attack && Phase 3 Rage Attack
+    if (pat.phase == TypePhase::PHASE02) {
+        if (pat.phaseCount == 0) {
+            pat.phase = TypePhase::PHASE03;
+            pat.phaseCount = 3;
+        }
+        speedFactor = 10;
+    } else if (pat.phase == TypePhase::PHASE03) {
+        if (pat.phaseCount == 0) {
+            pat.phase = TypePhase::PHASE02;
+            pat.status = TypeStatus::SEARCH;
+            pat.phaseCount = 4;
+        }
+    }
+
     switch (pat.status) {
     case TypeStatus::SEARCH:
         pat.status = TypeStatus::MOVE;
@@ -113,26 +206,71 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
         }
         break;
 
+    case TypeStatus::IDLE:
+        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayIdle) {
+            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            if (pat.phase == TypePhase::PHASE01) {
+                pat.status = TypeStatus::MOVE;
+            } else if (pat.phase == TypePhase::PHASE02) {
+                pat.status = TypeStatus::ATTACK;
+                pat.lastPosFocus.x = randTpX;
+                spriteAttribut.rotation = (atan2(pat.lastPosFocus.y - pos.y, pat.lastPosFocus.x - pos.x) * 180 / M_PI - 180);
+                checkPlayer = false;
+                speedFactor = 1;
+            }
+            vel.x = 0;
+            vel.y = 0;
+            // sound teleport
+        }
+        break;
+
     case TypeStatus::MOVE:
         if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-            pat.status = TypeStatus::ATTACK;
+            pat.status = TypeStatus::SEARCH;
+            if (pat.phase == TypePhase::PHASE02) {
+                pat.lastPosFocus.x = randTpX;
+                pat.status = TypeStatus::ATTACK;
+                speedFactor = 1;
+            }
         }
         if (checkPlayer) {
             posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
-            vel.x = ((posPlayer.x - 20) - pos.x) / 80;
-            vel.y = ((posPlayer.y - 20) - pos.y) / 80;
+            vel.x = ((posPlayer.x - 20) - pos.x) / 60;
+            vel.y = ((posPlayer.y - 20) - pos.y) / 60;
+        }
+        break;
+
+    case TypeStatus::SHOOT:
+        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayShoot) {
+            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            pat.status = TypeStatus::MOVE;
+            pat.phaseCount--;
         }
         break;
 
     case TypeStatus::ATTACK:
         if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayAttack) {
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-            pat.status = TypeStatus::SEARCH;
+            pat.status = TypeStatus::IDLE;
+            pat.phaseCount--;
         }
-        vel.x = ((pat.lastPosFocus.x) - pos.x) / 60;
-        vel.y = ((pat.lastPosFocus.y) - pos.y) / 60;
+        if (pat.phaseCount % 2 == 0)
+            posPairY = -200;
+        else
+            posPairY = this->_screenSize->y + 200;
+        vel.x = (pat.lastPosFocus.x - pos.x) / 50;
+        vel.y = (posPairY - pos.y) / 50;
         break;
+
+    case TypeStatus::TRANSFORM: {
+        spriteID = SpriteID{S_DEVOURER_HEAD_S, Priority::MEDIUM, 0, 0, false, false, 0, 0, 0, 0};
+        spriteAttribut.rect = {0, 0, 196, 134};
+        // size = Size{(196 / _screenSize->x * windowsSize.x) * scal, (134 / _screenSize->y * windowsSize.y) * scal};
+        std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
+        componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
+        break;
+    }
 
     default:
         pat.status = TypeStatus::SEARCH;
@@ -144,7 +282,8 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
         posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
         spriteAttribut.rotation = (atan2(posPlayer.y - pos.y, posPlayer.x - pos.x) * 180 / M_PI - 180);
     }
-    chainPattern(S_DEVOURER_HEAD, S_DEVOURER_TAIL, componentManager, entityManager);
+    chainPattern(S_DEVOURER_HEAD, S_DEVOURER_TAIL, speedFactor, componentManager, entityManager);
+    lifeChainPattern(S_DEVOURER_HEAD, S_DEVOURER_TAIL, componentManager, entityManager);
 }
 
 void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager)

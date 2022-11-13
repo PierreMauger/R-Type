@@ -369,6 +369,8 @@ bool PhysicSystem::physicAnim(ComponentManager &componentManager, EntityManager 
             pos.x = 0;
         return true;
     }
+    if (entityManager.hasMask(i, (InfoComp::CHAIN)))
+        return false;
     if ((entityManager.hasMask(i, InfoComp::PROJECTILE) && pos.x > _window->getSize().x + 100) || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
         entityManager.removeMask(i);
         componentManager.removeAllComponents(i);
