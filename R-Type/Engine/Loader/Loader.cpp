@@ -34,6 +34,11 @@ std::vector<Level> &Loader::getLevels()
     return this->_level;
 }
 
+std::vector<Level> &Loader::getLevelsSolo()
+{
+    return this->_levelSolo;
+}
+
 void Loader::loadSprites(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
@@ -88,6 +93,7 @@ void Loader::loadSounds(std::vector<std::string> paths)
 void Loader::loadLevel(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
+    bool solo = false;
 
     for (auto &path : paths) {
         for (auto &file_name : std::filesystem::directory_iterator(path))
@@ -103,10 +109,11 @@ void Loader::loadLevel(std::vector<std::string> paths)
                 while (getline(file, line))
                     totalLine.push_back(line);
                 file.close();
-                this->_level.push_back(Level(totalLine));
+                !solo ? this->_level.push_back(Level(totalLine)) : this->_levelSolo.push_back(Level(totalLine));
             }
         }
         sorted.clear();
+        solo = true;
     }
 }
 

@@ -239,7 +239,7 @@ void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    std::vector<Level> &level = this->_engine.getLoader().getLevels();
+    std::vector<Level> &level = *graphic.getIsLocal() ? this->_engine.getLoader().getLevelsSolo() : this->_engine.getLoader().getLevels();
     std::size_t levelId = 0;
 
     while (graphic.getWindow()->isOpen()) {
