@@ -183,7 +183,7 @@ bool Client::checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &c
     }
     if (!isText) {
         ScoreTextPreload::levelPreload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), A_MUSIC);
+        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), A_LEVELCOMPLETED);
     }
     return textSpawn;
 }
