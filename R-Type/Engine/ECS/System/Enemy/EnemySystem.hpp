@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
+#include "Engine/ECS/PreloadEntities/SoundPreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
@@ -30,6 +31,7 @@ namespace eng
     class EnemySystem : public virtual ISystem
     {
         private:
+            std::shared_ptr<bool> _isLocal;
             std::shared_ptr<std::size_t> _syncId;
             std::shared_ptr<sf::Clock> _clock;
             std::shared_ptr<sf::RenderWindow> _window;

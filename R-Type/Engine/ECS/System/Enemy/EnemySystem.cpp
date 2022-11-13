@@ -4,6 +4,7 @@ using namespace eng;
 
 EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
+    this->_isLocal = graphic.getIsLocal();
     this->_syncId = graphic.getSyncId();
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
@@ -335,14 +336,14 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     float delayMove = 2;
 
     // check if player is dead & used to stop rotation for transform rotation
-    bool checkPlayer = true;
+    bool checkPlayer = true && pat.focusEntity < masks.size();
 
     // Set the elapsed time at the beginning of the game
     if (pat.statusTime == 0)
         pat.statusTime = this->_clock->getElapsedTime().asSeconds();
 
     // Reset player id if the player is dead
-    if (!masks[pat.focusEntity].has_value()) {
+    if (pat.focusEntity < masks.size() && !masks[pat.focusEntity].has_value()) {
         setRandIdPlayer(pat, entityManager);
         return;
     }
@@ -401,16 +402,14 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (checkPlayer)
                 pat.lastPosFocus = componentManager.getSingleComponent<Position>(pat.focusEntity);
             if (pat.phase == TypePhase::PHASE01) {
-                std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
+                SoundPreload::preload(entityManager, componentManager, this->_syncId, {A_CTHULHURAGE, false, false, 1});
             } else if (pat.phase == PHASE02) {
                 pat.status = TypeStatus::MOVE;
                 pat.phaseCount--;
             } else if (pat.phase == PHASE03) {
                 pat.status = TypeStatus::ATTACK;
                 pat.phaseCount--;
-                std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{3, false, false, 1});
+                SoundPreload::preload(entityManager, componentManager, this->_syncId, {A_CTHULHURAGE2, false, false, 1});
             }
         }
         if (checkPlayer) {
@@ -435,7 +434,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.status = TypeStatus::IDLE;
             }
         }
-        if (checkPlayer) {
+        if (checkPlayer && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
             posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
             if (pat.phase == TypePhase::PHASE01) {
                 vel.x = ((posPlayer.x - 20) - pos.x) / 60;
@@ -462,8 +461,14 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
                 break;
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, (posPlayer.x - pos.x) / 35, (posPlayer.y - pos.y) / 35, spriteAttribut.rotation - 90, idPar, *this->_syncId, 0});
-            *this->_syncId += 1;
+
+            float x = posPlayer.x - pos.x;
+            float y = posPlayer.y - pos.y;
+            float norm = std::sqrt(x * x + y * y);
+            x = x / norm * 15;
+            y = y / norm * 15;
+
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, x, y, spriteAttribut.rotation - 90, idPar, this->_syncId, 0});
             clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
         }
         break;
@@ -473,8 +478,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             pat.status = TypeStatus::SEARCH;
             if (pat.phaseCount == 0) {
-                std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
+                SoundPreload::preload(entityManager, componentManager, this->_syncId, {A_CTHULHURAGE, false, false, 1});
             }
         }
         vel.x = ((pat.lastPosFocus.x) - pos.x) / 10;
@@ -487,8 +491,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             pat.status = TypeStatus::SEARCH;
             spriteID = SpriteID{S_CTHULHU_MOUTH, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
             spriteAttribut.rect = {0, 0, 110, 146};
-            std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-            componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
+            SoundPreload::preload(entityManager, componentManager, this->_syncId, {A_CTHULHURAGE2, false, false, 1});
         }
         checkPlayer = false;
         spriteAttribut.rotation += (this->_clock->getElapsedTime().asSeconds() - pat.statusTime) * 10;
@@ -503,7 +506,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     }
 
     // Rotation Part
-    if (checkPlayer) {
+    if (checkPlayer && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
         posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
         spriteAttribut.rotation = (atan2(posPlayer.y - pos.y, posPlayer.x - pos.x) * 180 / M_PI) - 90;
     }
@@ -511,6 +514,9 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
 
 void EnemySystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
+    if (*this->_isLocal == false)
+        return;
+
     auto &masks = entityManager.getMasks();
     std::size_t appear = (InfoComp::APP);
     std::size_t enemyData = (InfoComp::POS | InfoComp::VEL | InfoComp::PATTERN);
@@ -560,8 +566,7 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
                 if (entityManager.hasMask(i, InfoComp::SYNCID) == false)
                     continue;
                 std::size_t idPar = componentManager.getSingleComponent<SyncID>(i).id;
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, *this->_syncId, 0});
-                *this->_syncId += 1;
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, this->_syncId, 0});
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }

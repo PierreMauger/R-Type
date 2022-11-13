@@ -12,6 +12,8 @@ Server::Server(uint16_t portTcp, time_t time) : _network(portTcp, time)
     this->_network.run();
 
     this->_engine.getECS().getEntityManager().addMaskCategory(InfoComp::CONTROLLABLE);
+
+    *(this->_engine.getGraphic().getIsLocal()) = true;
 }
 
 // TODO see if graph is usefull on serv
@@ -23,7 +25,6 @@ void Server::initSystems()
     std::shared_ptr<std::vector<sf::Sprite>> sprites = std::make_shared<std::vector<sf::Sprite>>(this->_engine.getLoader().getSprites());
     std::shared_ptr<std::vector<sf::SoundBuffer>> sounds = std::make_shared<std::vector<sf::SoundBuffer>>(this->_engine.getLoader().getSounds());
 
-    // systemManager.addSystem(std::make_shared<InputSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
@@ -86,7 +87,7 @@ void Server::manageEvent()
             graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
-            this->_engine.updateSizeWindow();
+            this->_engine.updateSizeWindow(graphic.getLastSize());
             graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
         }
     }
@@ -113,7 +114,7 @@ bool Server::checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &c
     }
     if (!isText) {
         ScoreTextPreload::levelPreload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), 5);
+        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), A_LEVELCOMPLETED);
     }
     return textSpawn;
 }
@@ -205,7 +206,7 @@ void Server::updateClients()
         }
         if (!check) {
             this->_clients.push_back(Client(connection, this->_clientId++));
-            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), *this->_syncId, this->_clientId % 4);
+            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId, this->_clientId % 4);
             this->_clients.back().setVesselId(vesselId);
         }
         check = false;
@@ -238,6 +239,7 @@ void Server::updateNetwork()
 
     this->syncTcpNetwork();
     this->syncUdpNetwork();
+    *this->_syncId += 1;
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
     this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(16);

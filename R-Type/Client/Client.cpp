@@ -7,11 +7,13 @@ Client::Client()
     this->initSystems();
     this->initComponents();
     this->initEntities();
+
+    this->_gameSerializer.setClock(this->_engine.getGraphic().getClock());
 }
 
 void Client::createNetwork()
 {
-    this->_network = std::make_shared<ClientNetwork>(*this->_engine.getGraphic().getIp(), *this->_engine.getGraphic().getPort());
+    this->_network = std::make_unique<ClientNetwork>(*this->_engine.getGraphic().getIp(), *this->_engine.getGraphic().getPort());
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
     this->_network->run();
@@ -39,6 +41,7 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<EntityTimeOutSystem>(graphic, entityManager));
 }
 
 void Client::initComponents()
@@ -79,6 +82,7 @@ void Client::initEntities()
     LobbyPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     RoomPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    BackgroundMusicPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Client::syncUdpNetwork()
@@ -89,7 +93,7 @@ void Client::syncUdpNetwork()
         return;
     for (_STORAGE_DATA packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
         try {
-            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_engine);
         } catch (const std::exception &e) {
             std::cerr << e.what() << std::endl;
         }
@@ -117,6 +121,9 @@ void Client::syncTcpNetwork()
 
 void Client::updateNetwork()
 {
+    Graphic &graphic = this->_engine.getGraphic();
+
+    *graphic.getSyncId() += 1;
     if (this->_network == nullptr) {
         if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
             return;
@@ -127,8 +134,6 @@ void Client::updateNetwork()
         }
         *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
     }
-
-    Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
@@ -146,15 +151,17 @@ void Client::updateEvent()
 #ifndef NDEBUG
         ImGui::SFML::ProcessEvent(*graphic.getEvent());
 #endif
-        if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             graphic.getWindow()->close();
+            return;
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
             graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen - graphic.isFullscreen());
             graphic.getWindow()->setFramerateLimit(60);
             graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
-            this->_engine.updateSizeWindow();
+            this->_engine.updateSizeWindow(graphic.getLastSize());
             graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
         }
     }
@@ -181,7 +188,7 @@ bool Client::checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &c
     }
     if (!isText) {
         ScoreTextPreload::levelPreload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), 5);
+        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), A_LEVELCOMPLETED);
     }
     return textSpawn;
 }
@@ -201,16 +208,8 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
 
 void Client::updateKeys()
 {
-    if (this->_network == nullptr) {
-        if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
-            return;
-        try {
-            this->createNetwork();
-        } catch (const std::exception &e) {
-            return;
-        }
-        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
-    }
+    if (this->_network == nullptr)
+        return;
 
     Graphic &graphic = this->_engine.getGraphic();
 
@@ -243,7 +242,7 @@ void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    std::vector<Level> &level = this->_engine.getLoader().getLevels();
+    std::vector<Level> &level = !*(graphic.getIsLocal()) ? this->_engine.getLoader().getLevelsSolo() : this->_engine.getLoader().getLevels();
     std::size_t levelId = 0;
 
     while (graphic.getWindow()->isOpen()) {

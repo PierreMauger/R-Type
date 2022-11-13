@@ -142,6 +142,10 @@ namespace eng
              */
             void updateComponent(std::size_t id);
 
+            /**
+             * @brief Clear a component
+             * @fn void clear()
+             */
             void clear();
     };
 }

@@ -172,6 +172,8 @@ typedef struct Appearance {
         bool app = false;
         float end = 0.0f;
         float x_app = 0.0f;
+        float invincible = 0.0f;
+        float delay = 0.0f;
 } Appearance;
 
 /**
@@ -280,6 +282,7 @@ typedef struct Pattern {
  */
 typedef struct SyncID {
         std::size_t id = 0;
+        float lastRefresh = 0.0f;
 } SyncID;
 
 /**
@@ -353,6 +356,10 @@ typedef struct Button {
         std::size_t maxSize = 15;
 } Button;
 
+/**
+ * @struct SceneType
+ * @brief The sceneType component.
+ */
 enum SceneType {
     MENU = 0,
     LOBBY,

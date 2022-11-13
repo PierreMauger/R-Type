@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
+#include "Engine/ECS/PreloadEntities/SoundPreload.hpp"
 
 /// @endcond
 
@@ -36,7 +37,7 @@ namespace eng
                     float velY = 0.0f;
                     float rotation = 0.0f;
                     std::size_t syncIdPar = 0;
-                    std::size_t syncId = 0;
+                    std::shared_ptr<std::size_t> syncId = 0;
                     std::size_t tripleShoot = 0;
             } ProjectileStats;
 

@@ -110,6 +110,10 @@ namespace eng
              */
             std::size_t getBySyncId(std::size_t syncId, ComponentManager &componentManager);
 
+            /**
+             * @brief Clear a component
+             * @fn void clear()
+             */
             void clear();
     };
 }

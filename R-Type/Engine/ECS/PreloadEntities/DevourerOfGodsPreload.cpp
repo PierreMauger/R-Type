@@ -2,14 +2,14 @@
 
 using namespace eng;
 
-void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f position)
+void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, sf::Vector2f position)
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
     std::size_t lastId = 0;
     float randY = createRandom(200 / screenSize->y * windowsSize.y, windowsSize.y - (100 / screenSize->y * windowsSize.y));
     float scal = 1.5;
-    std::size_t life = 10;
+    std::size_t life = 200;
 
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::SPRITEAT | InfoComp::CHAIN), componentManager);
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_DEVOURER_TAIL, Priority::MEDIUM});
@@ -47,5 +47,6 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{life});
     componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{static_cast<std::size_t>(randY) % 2});
     componentManager.getComponent(typeid(Chain)).emplaceData(id, Chain{S_DEVOURER_HEAD, lastId, (120 / 2), (106 / 2)});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{*syncId});
+    *syncId += 1;
 }
