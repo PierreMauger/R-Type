@@ -68,7 +68,7 @@ void Level::parseStringLevel(Graphic &graphic, EntityManager &entityManager, Com
         this->_index += match[0].length();
         switch (match[1].str()[0]) {
         case 'E':
-            EnemyPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
+            EnemyPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
             break;
         case 'B':
             BossPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
