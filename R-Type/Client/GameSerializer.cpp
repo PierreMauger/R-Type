@@ -91,7 +91,7 @@ void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id,
     }
 }
 
-void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager)
+void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Engine &engine)
 {
     std::size_t adv = 0;
     std::vector<uint8_t> packetVector = this->convertToVector(packet);
@@ -104,7 +104,7 @@ void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityMan
     this->deserializeData<GamePacketType>(packetVector, adv, &type);
     switch (type) {
     case ENTITY:
-        this->deserializeEntity(packetVector, entityManager, componentManager);
+        this->deserializeEntity(packetVector, entityManager, componentManager, engine);
         break;
     case INPUT:
         break;
@@ -113,7 +113,7 @@ void GameSerializer::handlePacket(_STORAGE_DATA packet, EntityManager &entityMan
     }
 }
 
-void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager)
+void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Engine &engine)
 {
     std::size_t adv = MAGIC_SIZE + sizeof(GamePacketType);
     CrudType type = CrudType::UNKNOWN;
@@ -139,6 +139,7 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
         this->getComponents(packet, id, mask, adv, componentManager);
         auto &last = componentManager.getSingleComponent<SyncID>(id).lastRefresh;
         last = (2.0f + this->_clock->getElapsedTime().asSeconds());
+        engine.updateSizeWindowId({1920, 1080}, id);
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
     }

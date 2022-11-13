@@ -34,9 +34,11 @@ namespace eng
             virtual ~EntityPreload() = default;
 
             /**
-             * @brief Preloads an entity.
-             * @fn virtual void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager) = 0
-             * @param engine A reference to the engine.
+             * @brief Preloads the parallax.
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+             * @param graphic A reference to the engine graphics.
+             * @param entityManager A reference to the EntityManager.
+             * @param componentManager A reference to the ComponentManager.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
             {

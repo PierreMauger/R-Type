@@ -86,7 +86,7 @@ void Server::manageEvent()
             graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
-            this->_engine.updateSizeWindow();
+            this->_engine.updateSizeWindow(graphic.getLastSize());
             graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
         }
     }
@@ -113,7 +113,7 @@ bool Server::checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &c
     }
     if (!isText) {
         ScoreTextPreload::levelPreload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), 5);
+        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), A_LEVELCOMPLETED);
     }
     return textSpawn;
 }

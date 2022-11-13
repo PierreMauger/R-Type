@@ -66,7 +66,7 @@ void PhysicSystem::createBonus(std::size_t id, std::size_t drop, ComponentManage
             *this->_syncId += 1;
         }
         addEntity = entityManager.addMask((InfoComp::SOUNDID | InfoComp::SYNCID), componentManager);
-        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{0, false, false});
+        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{A_BONUS, false, false});
         if (this->_syncId) {
             componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{*this->_syncId});
             *this->_syncId += 1;
@@ -163,7 +163,7 @@ bool PhysicSystem::checkDisappearance(EntityManager &entityManager, ComponentMan
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
 
     if (dis.dis) {
-        pos.y -= -vel.baseSpeedY * 1;
+        pos.y -= -vel.baseSpeedY * 3;
         sprite.rotation += 40;
         if (pos.y >= dis.end) {
             vel.y = 0;

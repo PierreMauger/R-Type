@@ -27,8 +27,10 @@ namespace eng
         public:
             /**
              * @brief Preloads the menu.
-             * @fn static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
-             * @param engine A reference to the engine.
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager)
+             * @param graphic A reference to the engine graphics.
+             * @param entityManager A reference to the EntityManager.
+             * @param componentManager A reference to the ComponentManager.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
     };

@@ -175,12 +175,11 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager
         vel.y += vel.baseSpeedY;
         return;
     }
-
-    if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && graphic.getClock()->getElapsedTime().asSeconds() > sht.lastShoot)) {
+    if ((keyPress == sf::Keyboard::Key::Enter && graphic.getClock()->getElapsedTime().asSeconds() > sht.lastShoot)) {
         std::size_t idPar = componentManager.getSingleComponent<SyncID>(client.getVesselId()).id;
         sht.lastShoot = graphic.getClock()->getElapsedTime().asSeconds() + sht.shootDelay;
         ProjectilePreload::createShoot(entityManager, componentManager, graphic.getWindow()->getSize(), graphic.getScreenSize(), {2, 15, 0, 0, idPar, syncId, sht.tripleShoot});
-    } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && graphic.getClock()->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2)))) {
+    } else if ((keyPress == sf::Keyboard::Key::Enter && graphic.getClock()->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2)))) {
         std::size_t idPar = componentManager.getSingleComponent<SyncID>(client.getVesselId()).id;
         sht.lastShoot = graphic.getClock()->getElapsedTime().asSeconds() + sht.shootDelay;
         ProjectilePreload::createShoot(entityManager, componentManager, graphic.getWindow()->getSize(), graphic.getScreenSize(), {1, 15, 0, 0, idPar, syncId, sht.tripleShoot});
