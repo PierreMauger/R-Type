@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/ProjectilePreload.hpp"
+#include "Engine/ECS/PreloadEntities/SoundPreload.hpp"
 #include "Engine/ECS/System/ISystem.hpp"
 #include "Engine/Graphic/Graphic.hpp"
 /// @endcond
