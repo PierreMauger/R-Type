@@ -34,7 +34,7 @@ void Client::initSystems()
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<GUISystem>(graphic));
 #endif
-    // systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
