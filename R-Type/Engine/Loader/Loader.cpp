@@ -40,8 +40,10 @@ void Loader::loadSprites(std::vector<std::string> paths)
 
     for (auto &path : paths) {
         try {
-            for (auto &file_name : std::filesystem::directory_iterator(path))
+            for (auto &file_name : std::filesystem::directory_iterator(path)) {
+                std::cout << file_name.path().string() << std::endl;
                 sorted.insert(file_name.path());
+            }
 
             for (auto &file_name : sorted) {
                 sf::Texture *texture = new sf::Texture();

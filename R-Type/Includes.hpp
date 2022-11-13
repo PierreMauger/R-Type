@@ -50,8 +50,8 @@
 #define S_VESSEL 6
 
 // Bonus Icons
-#define S_BONUS_SPEED 7
-#define S_BONUS_SHOOT_SIZE 8
+// #define S_BONUS_SPEED 7
+// #define S_BONUS_SHOOT_SIZE 8
 
 #define S_REV_FIREBALL 9
 #define S_BUTTON 10
@@ -75,6 +75,8 @@
 // Bonus
 #define S_SHIELD 21
 #define S_BONUS_SHIELD 22
-#define S_BONUS_TRIPLE 23
+#define S_BONUS_SIZE 23
+#define S_BONUS_SPEED 24
+#define S_BONUS_TRIPLE 25
 
 #endif // INCLUDES_HPP

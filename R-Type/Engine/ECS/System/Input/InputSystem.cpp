@@ -19,17 +19,19 @@ void InputSystem::update(ComponentManager &componentManager, EntityManager &enti
 {
     std::size_t app = (InfoComp::APP);
     std::size_t dis = (InfoComp::DIS);
+    bool inv = false;
 
     for (auto id : entityManager.getMaskCategory(this->_controlTag)) {
-        if ((entityManager.hasMask(id, app) && componentManager.getSingleComponent<Appearance>(id).app) || (entityManager.hasMask(id, dis) && componentManager.getSingleComponent<Disappearance>(id).dis))
+        entityManager.hasMask(id, app) && componentManager.getSingleComponent<Appearance>(id).invincible &&componentManager.getSingleComponent<Appearance>(id).app ? inv = true : inv = false;
+        if ((entityManager.hasMask(id, app) && componentManager.getSingleComponent<Appearance>(id).app && !inv) || (entityManager.hasMask(id, dis) && componentManager.getSingleComponent<Disappearance>(id).dis))
             continue;
         Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
         CooldownShoot &sht = componentManager.getSingleComponent<CooldownShoot>(id);
-        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) && *this->_isLocal) {
+        if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > sht.lastShoot) && *this->_isLocal && !inv) {
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
             ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {2, 15, 0, 0, idPar, this->_syncId, sht.tripleShoot});
-        } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) && *this->_isLocal) {
+        } else if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && _clock->getElapsedTime().asSeconds() > (sht.lastShoot - (sht.shootDelay / 2))) && *this->_isLocal && !inv) {
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
             sht.lastShoot = _clock->getElapsedTime().asSeconds() + sht.shootDelay;
             ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, 15, 0, 0, idPar, this->_syncId, sht.tripleShoot});
