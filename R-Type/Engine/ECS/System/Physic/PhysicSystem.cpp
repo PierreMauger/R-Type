@@ -336,7 +336,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
         return false;
     Parent par = componentManager.getSingleComponent<Parent>(i);
     std::size_t idPar = entityManager.getBySyncId(par.id, componentManager);
-    if (!masks[idPar].has_value()) {
+    if (idPar < masks.size() && !masks[idPar].has_value()) {
         componentManager.removeAllComponents(i);
         entityManager.removeMask(i);
         return false;

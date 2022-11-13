@@ -4,6 +4,7 @@ using namespace eng;
 
 EnemySystem::EnemySystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
+    this->_isLocal = graphic.getIsLocal();
     this->_syncId = graphic.getSyncId();
     this->_clock = graphic.getClock();
     this->_window = graphic.getWindow();
@@ -46,14 +47,14 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     float delayMove = 2;
 
     // check if player is dead & used to stop rotation for transform rotation
-    bool checkPlayer = true;
+    bool checkPlayer = true && pat.focusEntity < masks.size();
 
     // Set the elapsed time at the beginning of the game
     if (pat.statusTime == 0)
         pat.statusTime = this->_clock->getElapsedTime().asSeconds();
 
     // Reset player id if the player is dead
-    if (!masks[pat.focusEntity].has_value()) {
+    if (pat.focusEntity < masks.size() && !masks[pat.focusEntity].has_value()) {
         setRandIdPlayer(pat, entityManager);
         return;
     }
@@ -146,7 +147,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.status = TypeStatus::IDLE;
             }
         }
-        if (checkPlayer) {
+        if (checkPlayer && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
             posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
             if (pat.phase == TypePhase::PHASE01) {
                 vel.x = ((posPlayer.x - 20) - pos.x) / 60;
@@ -169,12 +170,11 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             vel.x = ((posPlayer.x - pos.x) / 100) + (std::cos(pat.angle) * SPEED_OSC);
             vel.y = ((posPlayer.y - pos.y) / 100) + (std::sin(pat.angle) * SPEED_OSC);
         }
-        if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
+        if (*this->_isLocal && clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
             if (entityManager.hasMask(id, InfoComp::SYNCID) == false)
                 break;
             std::size_t idPar = componentManager.getSingleComponent<SyncID>(id).id;
-            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, (posPlayer.x - pos.x) / 35, (posPlayer.y - pos.y) / 35, spriteAttribut.rotation - 90, idPar, *this->_syncId, 0});
-            *this->_syncId += 1;
+            ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, (posPlayer.x - pos.x) / 35, (posPlayer.y - pos.y) / 35, spriteAttribut.rotation - 90, idPar, this->_syncId, 0});
             clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
         }
         break;
@@ -214,7 +214,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
     }
 
     // Rotation Part
-    if (checkPlayer) {
+    if (checkPlayer && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
         posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
         spriteAttribut.rotation = (atan2(posPlayer.y - pos.y, posPlayer.x - pos.x) * 180 / M_PI) - 90;
     }
@@ -257,18 +257,17 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
             vel.y = (std::sin(pat.angle) * SPEED_OSC) / this->_screenSize->y * _window->getSize().y;
             pat.angle = this->_clock->getElapsedTime().asSeconds() * SPEED_OSC / 3;
         }
-        if (pat.type == TypePattern::CTHULHU) {
+        if (*this->_isLocal && pat.type == TypePattern::CTHULHU) {
             this->cthulhuPattern(i, componentManager, entityManager);
             continue;
         }
-        if (entityManager.hasMask(i, cooldownEnemy)) {
+        if (*this->_isLocal && entityManager.hasMask(i, cooldownEnemy)) {
             CooldownShoot &clEnemy = componentManager.getSingleComponent<CooldownShoot>(i);
             if (clEnemy.shootDelay > 0 && _clock->getElapsedTime().asSeconds() > clEnemy.lastShoot + clEnemy.shootDelay) {
                 if (entityManager.hasMask(i, InfoComp::SYNCID) == false)
                     continue;
                 std::size_t idPar = componentManager.getSingleComponent<SyncID>(i).id;
-                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, *this->_syncId, 0});
-                *this->_syncId += 1;
+                ProjectilePreload::createShoot(entityManager, componentManager, _window->getSize(), _screenSize, {1, -15, 0, 0, idPar, this->_syncId, 0});
                 clEnemy.lastShoot = _clock->getElapsedTime().asSeconds();
             }
         }

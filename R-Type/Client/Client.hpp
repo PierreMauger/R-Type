@@ -37,7 +37,7 @@ namespace eng
     {
         private:
             Engine _engine;
-            std::shared_ptr<ClientNetwork> _network = nullptr;
+            std::unique_ptr<ClientNetwork> _network = nullptr;
 
             MenuSerializer _menuSerializer;
             GameSerializer _gameSerializer;
