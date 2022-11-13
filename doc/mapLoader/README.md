@@ -24,6 +24,7 @@ Note that:
 - You can design the incoming waves of enemies that will appear every 10seconds from the start by putting enemies farther than the charPerScreen width
 - Enemies with an appearance animation (like a Boss or Cthulu) will still appear to the spot you've put but from the top
 - The height of the layout map lets you split vertically the screen into how many zones you want (as the game is a sidescroller, the waves size is decided horizontally and not vertically)
+- You can layout your levels in multiple separate files (they get loaded alphabetically)
 
 ## 📍 Example
 

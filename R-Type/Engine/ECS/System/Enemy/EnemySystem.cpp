@@ -114,7 +114,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.lastPosFocus = componentManager.getSingleComponent<Position>(pat.focusEntity);
             if (pat.phase == TypePhase::PHASE01) {
                 std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
+                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{A_CTHULHURAGE, false, false, 1});
             } else if (pat.phase == PHASE02) {
                 pat.status = TypeStatus::MOVE;
                 pat.phaseCount--;
@@ -122,7 +122,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
                 pat.status = TypeStatus::ATTACK;
                 pat.phaseCount--;
                 std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{3, false, false, 1});
+                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{A_CTHULHURAGE2, false, false, 1});
             }
         }
         if (checkPlayer) {
@@ -185,7 +185,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             pat.status = TypeStatus::SEARCH;
             if (pat.phaseCount == 0) {
                 std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
+                componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{A_CTHULHURAGE, false, false, 1});
             }
         }
         vel.x = ((pat.lastPosFocus.x) - pos.x) / 10;
@@ -199,7 +199,7 @@ void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, 
             spriteID = SpriteID{S_CTHULHU_MOUTH, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 110, 0};
             spriteAttribut.rect = {0, 0, 110, 146};
             std::size_t soundId = entityManager.addMask((InfoComp::SOUNDID), componentManager);
-            componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{2, false, false, 1});
+            componentManager.getComponent(typeid(SoundID)).emplaceData(soundId, SoundID{A_CTHULHURAGE2, false, false, 1});
         }
         checkPlayer = false;
         spriteAttribut.rotation += (this->_clock->getElapsedTime().asSeconds() - pat.statusTime) * 10;

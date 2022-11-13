@@ -23,7 +23,7 @@ void ProjectilePreload::createTripleShoot(EntityManager &entityManager, Componen
         if (enemy)
             componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_REV_FIREBALL, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
         else
-            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((projectile.damage == 2) ? 4 : 3), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+            componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((projectile.damage == 2) ? S_FIREBALL_BLUE : S_FIREBALL_YELLOW), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
         componentManager.getComponent(typeid(SpriteAttribut))
             .emplaceData(addEntity, SpriteAttribut{projectile.rotation,
                                                    {0, 0, 56, 32},
@@ -60,7 +60,7 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     if (enemy)
         componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_REV_FIREBALL, Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
     else
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((projectile.damage == 2) ? 4 : 3), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{static_cast<std::size_t>((projectile.damage == 2) ? S_FIREBALL_BLUE : S_FIREBALL_YELLOW), Priority::MEDIUM, 0, 2, false, false, 0, 0.2, 56, 0});
     componentManager.getComponent(typeid(SpriteAttribut))
         .emplaceData(
             addEntity,
@@ -76,7 +76,7 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     if (!enemy) {
         addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
         float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));
-        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{4, false, false, pitch});
+        componentManager.getComponent(typeid(SoundID)).emplaceData(addEntity, SoundID{A_SHOOT, false, false, pitch});
     }
     if (projectile.tripleShoot != 0)
         createTripleShoot(entityManager, componentManager, windowsSize, screenSize, projectile);

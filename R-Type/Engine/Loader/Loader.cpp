@@ -37,19 +37,19 @@ std::vector<Level> &Loader::getLevels()
 void Loader::loadSprites(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
+    size_t ids = 0;
 
     for (auto &path : paths) {
         try {
-            for (auto &file_name : std::filesystem::directory_iterator(path)) {
-                std::cout << file_name.path().string() << std::endl;
+            for (auto &file_name : std::filesystem::directory_iterator(path))
                 sorted.insert(file_name.path());
-            }
 
             for (auto &file_name : sorted) {
                 sf::Texture *texture = new sf::Texture();
                 sf::Sprite sprite;
 
                 this->_saveTextures.push_back(texture);
+                std::cout << file_name.string() << " " << ids++ << std::endl;
                 if (texture->loadFromFile(file_name.string())) {
                     sprite.setTexture(*texture);
                     this->_textures.push_back(*texture);
@@ -66,6 +66,7 @@ void Loader::loadSprites(std::vector<std::string> paths)
 void Loader::loadSounds(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
+    size_t ids = 0;
 
     for (auto &path : paths) {
         try {
@@ -75,6 +76,7 @@ void Loader::loadSounds(std::vector<std::string> paths)
             for (auto &file_name : sorted) {
                 sf::SoundBuffer sound;
 
+                std::cout << file_name.string() << " " << ids++ << std::endl;
                 if (sound.loadFromFile(file_name.string())) {
                     this->_sounds.push_back(sound);
                 }
