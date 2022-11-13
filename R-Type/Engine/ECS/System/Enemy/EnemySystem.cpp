@@ -49,7 +49,11 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
         return;
     }
 
-    while (chain.partInfo != lastChainSpriteId) {
+    while (chain.nextId < masks.size() && chain.partInfo != lastChainSpriteId) {
+        if (!entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL)) {
+            break;
+        }
+
         Position lastPos = componentManager.getSingleComponent<Position>(chainId);
         Position &pos = componentManager.getSingleComponent<Position>(chain.nextId);
         Velocity &vel = componentManager.getSingleComponent<Velocity>(chain.nextId);
@@ -58,15 +62,18 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
         spriteAttribut.rotation = (atan2(lastPos.y - pos.y, lastPos.x - pos.x) * 180 / M_PI - 180);
 
         std::cout << "chainId: " << chain.nextId << std::endl;
-        vel.x = (lastPos.x - pos.x) / 10 + (chain.diffX * fabs(cos(spriteAttribut.rotation)));
-        vel.y = (lastPos.y - pos.y) / 10 + (chain.diffX * fabs(sin(spriteAttribut.rotation)));
+        // vel.x = (lastPos.x - pos.x) - (chain.diffX * fabs(cos(spriteAttribut.rotation)));
+        // vel.y = (lastPos.y - pos.y) - (chain.diffX * fabs(sin(spriteAttribut.rotation)));
+
+        vel.x = (lastPos.x - pos.x) / 10;
+        vel.y = (lastPos.y - pos.y) / 10;
 
         std::cout << "vel.x: " << vel.x << " vel.y: " << vel.y << std::endl;
 
         // std::cout << "diff X: " << (chain.diffX * fabs(cos(spriteAttribut.rotation))) << std::endl;
         // std::cout << "diff Y: " << (chain.diffX * fabs(sin(spriteAttribut.rotation))) << std::endl;
 
-        //update chain
+        // update chain
         chainId = chain.nextId;
         chain = componentManager.getSingleComponent<Chain>(chain.nextId);
     }
@@ -110,7 +117,6 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
         if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             pat.status = TypeStatus::ATTACK;
-            
         }
         if (checkPlayer) {
             posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
