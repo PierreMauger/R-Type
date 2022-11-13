@@ -180,8 +180,10 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
 
     bool checkPlayer = true;
 
-    if (pat.statusTime == 0)
+    if (pat.statusTime == 0) {
         pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+        pat.phaseCount = 3;
+    }
 
     if (pat.focusEntity < masks.size() && !masks[pat.focusEntity].has_value()) {
         setRandIdPlayer(pat, entityManager);
@@ -193,21 +195,26 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
         pat.status = TypeStatus::TRANSFORM;
         pat.statusTime = this->_clock->getElapsedTime().asSeconds();
         pat.phase = TypePhase::PHASE02;
-        pat.phaseCount = 4;
+        pat.phaseCount = 7;
     }
 
     // Phase 1 && Phase 2 Attack && Phase 3 Rage Attack
-    if (pat.phase == TypePhase::PHASE02) {
+    if (pat.phase == TypePhase::PHASE01) {
+        if (pat.phaseCount == 0) {
+            pat.phaseCount = 3;
+            pat.status = TypeStatus::SEARCH;
+        }
+    } else if (pat.phase == TypePhase::PHASE02) {
         if (pat.phaseCount == 0) {
             pat.phase = TypePhase::PHASE03;
-            pat.phaseCount = 3;
+            pat.phaseCount = 4;
         }
         speedFactor = 10;
     } else if (pat.phase == TypePhase::PHASE03) {
         if (pat.phaseCount == 0) {
             pat.phase = TypePhase::PHASE02;
             pat.status = TypeStatus::SEARCH;
-            pat.phaseCount = 4;
+            pat.phaseCount = 7;
         }
     }
 
@@ -223,14 +230,13 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
     case TypeStatus::IDLE:
         if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayIdle) {
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
-            if (pat.phase == TypePhase::PHASE01) {
-                pat.status = TypeStatus::MOVE;
-            } else if (pat.phase == TypePhase::PHASE02) {
+            if (pat.phase == TypePhase::PHASE02) {
                 pat.status = TypeStatus::ATTACK;
                 pat.lastPosFocus.x = randTpX;
-                spriteAttribut.rotation = (atan2(pat.lastPosFocus.y - pos.y, pat.lastPosFocus.x - pos.x) * 180 / M_PI - 180);
-                checkPlayer = false;
                 speedFactor = 1;
+            } else if (pat.phase == TypePhase::PHASE03) {
+                pat.status = TypeStatus::SHOOT;
+                speedFactor = 10;
             }
             vel.x = 0;
             vel.y = 0;
@@ -242,9 +248,14 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
         if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             pat.status = TypeStatus::SEARCH;
-            if (pat.phase == TypePhase::PHASE02) {
+            if (pat.phase == TypePhase::PHASE01) {
+                pat.status = TypeStatus::SHOOT;
+            } else if (pat.phase == TypePhase::PHASE02) {
                 pat.lastPosFocus.x = randTpX;
                 pat.status = TypeStatus::ATTACK;
+                speedFactor = 1;
+            } else if (pat.phase == TypePhase::PHASE03) {
+                pat.status = TypeStatus::SHOOT;
                 speedFactor = 1;
             }
         }
@@ -260,6 +271,11 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
             pat.statusTime = this->_clock->getElapsedTime().asSeconds();
             pat.status = TypeStatus::MOVE;
             pat.phaseCount--;
+        }
+        if (checkPlayer && pat.focusEntity < masks.size() && masks[pat.focusEntity].has_value() && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
+            posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+            vel.x = ((posPlayer.x - 20) - pos.x) / 40;
+            vel.y = ((posPlayer.y - 20) - pos.y) / 40;
         }
         break;
 

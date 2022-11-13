@@ -48,11 +48,4 @@ void DevourerPreload::preload(Graphic &graphic, EntityManager &entityManager, Co
     componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{static_cast<std::size_t>(randY) % 2});
     componentManager.getComponent(typeid(Chain)).emplaceData(id, Chain{S_DEVOURER_HEAD, lastId, (120 / 2), (106 / 2)});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
-
-    std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR | InfoComp::SYNCID), componentManager);
-    componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
-    componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, life});
-    componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{S_IDBAR, Priority::MEDIUM});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
-    componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(id).id});
 }
