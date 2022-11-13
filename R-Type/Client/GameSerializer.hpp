@@ -9,11 +9,12 @@
 #define GAMESERIALIZER_HPP
 
 /// @cond
+#include "Engine.hpp"
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
-#include "Engine/Network/Serializer.hpp"
 #include "Engine/Network/NetCommon.hpp"
 #include "Engine/Network/Room.hpp"
+#include "Engine/Network/Serializer.hpp"
 #include "Includes.hpp"
 
 /// @endcond
@@ -75,7 +76,7 @@ namespace eng
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
              */
-            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager);
+            void handlePacket(_STORAGE_DATA packet, EntityManager &entityManager, ComponentManager &componentManager, Engine &engine);
 
             /**
              * @brief Serialize an entity
@@ -94,7 +95,7 @@ namespace eng
              * @param entityManager A reference to the EntityManager
              * @param componentManager A reference to the ComponentManager
              */
-            void deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
+            void deserializeEntity(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager, Engine &engine);
 
             /**
              * @brief Serialize an input

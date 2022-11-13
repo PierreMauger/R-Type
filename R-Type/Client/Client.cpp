@@ -87,7 +87,7 @@ void Client::syncUdpNetwork()
         return;
     for (_STORAGE_DATA packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
         try {
-            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_engine);
         } catch (const std::exception &e) {
             std::cerr << e.what() << std::endl;
         }
@@ -156,7 +156,7 @@ void Client::updateEvent()
             graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
-            this->_engine.updateSizeWindow();
+            this->_engine.updateSizeWindow(graphic.getLastSize());
             graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
         }
     }
