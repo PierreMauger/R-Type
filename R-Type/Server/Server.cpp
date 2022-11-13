@@ -86,7 +86,7 @@ void Server::manageEvent()
             graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
-            this->_engine.updateSizeWindow();
+            this->_engine.updateSizeWindow(graphic.getLastSize());
             graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
         }
     }
