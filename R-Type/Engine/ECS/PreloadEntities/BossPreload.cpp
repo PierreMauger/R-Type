@@ -13,19 +13,19 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(SpriteID)).emplaceData(id, SpriteID{S_MINIBOSS, Priority::LOW, 0, 4, false, false, 0, 0.2, 96, 0});
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 96, 96}, sf::Color::White, {size.x, size.y}});
     componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, position.y / screenSize->y * windowsSize.y, (position.x - graphic.getScreenSize()->x) / screenSize->x * windowsSize.x});
-    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{(position.x - 200) / screenSize->x * windowsSize.x, -192 / screenSize->y * windowsSize.y, 0});
+    componentManager.getComponent(typeid(Position)).emplaceData(id, Position{(position.x - (250 / screenSize->x * windowsSize.x)) / screenSize->x * windowsSize.x, -192 / screenSize->y * windowsSize.y, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{3 / screenSize->x * windowsSize.x, size.x, 0, size.y, size.x});
     componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CIRCLE, TypeStatus::MOVE, TypePhase::PHASE01, 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{96 * size.x, 96 * size.y});
-    componentManager.getComponent(typeid(Life)).emplaceData(id, Life{15});
-    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{randBonus});
+    componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
+    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{1});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 0.5});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR | InfoComp::SYNCID), componentManager);
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
-    componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 15});
+    componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 1});
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{S_IDBAR, Priority::MEDIUM});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{syncId++});
     componentManager.getComponent(typeid(Parent)).emplaceData(idBar, Parent{componentManager.getSingleComponent<SyncID>(id).id});

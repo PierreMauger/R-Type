@@ -31,6 +31,7 @@ namespace eng
             std::shared_ptr<std::size_t> _syncId;
             std::shared_ptr<sf::RenderWindow> _window;
             std::shared_ptr<sf::Vector2f> _screenSize;
+            std::shared_ptr<sf::Clock> _clock;
 
             std::size_t _speedTag = (InfoComp::VEL | InfoComp::POS);
             std::size_t _shieldTag = (InfoComp::PARENT | InfoComp::SHIELD);
@@ -38,7 +39,7 @@ namespace eng
 
             void createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager);
             void switchCreateBonus(std::size_t addEntity, std::size_t drop, ComponentManager &componentManager, Size &size, Position &pos);
-            bool checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
+            bool checkAppareance(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position &pos, Velocity &vel);
             bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
             void killWhenDisappeared(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i);
             bool checkCollision(Position pos, Position pos2, Size sz, Size sz2);

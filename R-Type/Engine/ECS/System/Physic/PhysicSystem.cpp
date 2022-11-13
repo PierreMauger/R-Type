@@ -7,6 +7,7 @@ PhysicSystem::PhysicSystem(Graphic &graphic, [[maybe_unused]] EntityManager &ent
     this->_window = graphic.getWindow();
     this->_screenSize = graphic.getScreenSize();
     this->_syncId = graphic.getSyncId();
+    this->_clock = graphic.getClock();
 
     entityManager.addMaskCategory(this->_speedTag);
     entityManager.addMaskCategory(this->_shieldTag);
@@ -19,17 +20,17 @@ void PhysicSystem::switchCreateBonus(std::size_t addEntity, std::size_t drop, Co
 
     switch (drop) {
     case 0:
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SHOOT_SIZE, Priority::MEDIUM});
-        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 18, 16}, sf::Color::White, {sizeBonus.x, sizeBonus.y}});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SIZE, Priority::MEDIUM, 0, 5, true, false, 0, 0.05, 24, 0});
+        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 24, 16}, sf::Color::White, {sizeBonus.x, sizeBonus.y}});
         componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
-        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18 * sizeBonus.x, 16 * sizeBonus.y});
+        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{23 * sizeBonus.x, 16 * sizeBonus.y});
         break;
 
     case 1:
-        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SPEED, Priority::MEDIUM});
-        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 18, 16}, sf::Color::White, {sizeBonus.x, sizeBonus.y}});
+        componentManager.getComponent(typeid(SpriteID)).emplaceData(addEntity, SpriteID{S_BONUS_SPEED, Priority::MEDIUM, 0, 5, true, false, 0, 0.05, 30, 0});
+        componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(addEntity, SpriteAttribut{0, {0, 0, 30, 22}, sf::Color::White, {sizeBonus.x, sizeBonus.y}});
         componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x + size.x / 2, pos.y + size.y / 2, pos.z});
-        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{18 * sizeBonus.x, 16 * sizeBonus.y});
+        componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{30 * sizeBonus.x, 22 * sizeBonus.y});
         break;
 
     case 2:
@@ -93,11 +94,18 @@ bool PhysicSystem::checkCollision(Position pos, Position pos2, Size sz, Size sz2
     return rect1.intersects(rect2);
 }
 
-bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel)
+bool PhysicSystem::checkAppareance(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position &pos, Velocity &vel)
 {
     Appearance &app = componentManager.getSingleComponent<Appearance>(i);
     SpriteAttribut &sprite = componentManager.getSingleComponent<SpriteAttribut>(i);
+
     if (app.app) {
+        if (app.delay != 0 && this->_clock->getElapsedTime().asSeconds() - app.delay < app.invincible) {
+            pos.y += vel.y;
+            pos.x += vel.x;
+            this->physicVessel(componentManager, entityManager, i);
+            return true;
+        }
         if (app.x_app != 0.0f && pos.x > app.x_app) {
             pos.x -= vel.x;
             return true;
@@ -108,8 +116,18 @@ bool PhysicSystem::checkAppareance(ComponentManager &componentManager, std::size
             sprite.color = sf::Color(255, 255, 255, 50);
         if (pos.y >= app.end) {
             vel.y = 0;
-            app.app = false;
-            sprite.color = sf::Color::White;
+            if (app.invincible == 0) {
+                app.app = false;
+                sprite.color = sf::Color(255, 255, 255, 255);
+                return true;
+            }
+            if (app.delay == 0 && app.invincible != 0)
+                app.delay = this->_clock->getElapsedTime().asSeconds();
+            if (app.invincible != 0 && this->_clock->getElapsedTime().asSeconds() - app.delay >= app.invincible) {
+                app.app = false;
+                app.delay = 0;
+                sprite.color = sf::Color(255, 255, 255, 255);
+            }
         }
         return true;
     }
@@ -357,7 +375,7 @@ bool PhysicSystem::physicAnim(ComponentManager &componentManager, EntityManager 
 {
     std::size_t physicPar = (InfoComp::VEL | InfoComp::POS | InfoComp::PARALLAX);
 
-    if (entityManager.hasMask(i, InfoComp::APP) && checkAppareance(componentManager, i, pos, vel))
+    if (entityManager.hasMask(i, InfoComp::APP) && checkAppareance(componentManager, entityManager, i, pos, vel))
         return true;
     if (entityManager.hasMask(i, InfoComp::DIS) && checkDisappearance(entityManager, componentManager, i, pos, vel))
         return true;
@@ -372,6 +390,8 @@ bool PhysicSystem::physicAnim(ComponentManager &componentManager, EntityManager 
         componentManager.removeAllComponents(i);
         return true;
     }
+    pos.y += vel.y;
+    pos.x += vel.x;
     return false;
 }
 
@@ -397,8 +417,6 @@ void PhysicSystem::update(ComponentManager &componentManager, EntityManager &ent
         Velocity vel = componentManager.getSingleComponent<Velocity>(id);
         if (this->physicAnim(componentManager, entityManager, id, pos, vel))
             continue;
-        pos.y += vel.y;
-        pos.x += vel.x;
         if (this->physicCollision(componentManager, entityManager, id, pos))
             continue;
         this->physicVessel(componentManager, entityManager, id);
