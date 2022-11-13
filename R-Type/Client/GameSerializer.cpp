@@ -137,6 +137,8 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
         entityManager.removeMask(id);
     } else if (type == CrudType::UPDATE) {
         this->getComponents(packet, id, mask, adv, componentManager);
+        auto &last = componentManager.getSingleComponent<SyncID>(id).lastRefresh;
+        last = (2.0f + this->_clock->getElapsedTime().asSeconds());
         engine.updateSizeWindowId({1920, 1080}, id);
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
@@ -160,4 +162,9 @@ _STORAGE_DATA GameSerializer::serializeInput(std::size_t clientId, sf::Keyboard:
 
     this->insertMagic(packet);
     return this->convertToData(packet);
+}
+
+void GameSerializer::setClock(std::shared_ptr<sf::Clock> clock)
+{
+    this->_clock = clock;
 }

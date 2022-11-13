@@ -49,7 +49,6 @@ void Loader::loadSprites(std::vector<std::string> paths)
                 sf::Sprite sprite;
 
                 this->_saveTextures.push_back(texture);
-                std::cout << file_name.string() << " " << ids++ << std::endl;
                 if (texture->loadFromFile(file_name.string())) {
                     sprite.setTexture(*texture);
                     this->_textures.push_back(*texture);
@@ -75,8 +74,6 @@ void Loader::loadSounds(std::vector<std::string> paths)
 
             for (auto &file_name : sorted) {
                 sf::SoundBuffer sound;
-
-                std::cout << file_name.string() << " " << ids++ << std::endl;
                 if (sound.loadFromFile(file_name.string())) {
                     this->_sounds.push_back(sound);
                 }
