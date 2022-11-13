@@ -1,7 +1,7 @@
 # charPerScreen:2
 -------
--CCCCCC
--CCCCCC
--CCCCCC
--CCCCCC
+-                                                                                       E
+-                                                                                       E
+-                                                                                       E
+-                                                                                       E
 -------

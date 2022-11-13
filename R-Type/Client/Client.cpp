@@ -11,7 +11,7 @@ Client::Client()
 
 void Client::createNetwork()
 {
-    this->_network = std::make_shared<ClientNetwork>(*this->_engine.getGraphic().getIp(), *this->_engine.getGraphic().getPort());
+    this->_network = std::make_unique<ClientNetwork>(*this->_engine.getGraphic().getIp(), *this->_engine.getGraphic().getPort());
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     this->_network->run();
 
@@ -144,8 +144,10 @@ void Client::updateEvent()
 #ifndef NDEBUG
         ImGui::SFML::ProcessEvent(*graphic.getEvent());
 #endif
-        if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             graphic.getWindow()->close();
+            return;
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::F11)) {
             graphic.getWindow()->create(sf::VideoMode::getDesktopMode(), "R-Type", sf::Style::Fullscreen - graphic.isFullscreen());
             graphic.getWindow()->setFramerateLimit(60);
@@ -199,16 +201,8 @@ bool Client::manageEnemy(Level &level, Graphic &graphic, ECS &ecs)
 
 void Client::updateKeys()
 {
-    if (this->_network == nullptr) {
-        if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
-            return;
-        try {
-            this->createNetwork();
-        } catch (const std::exception &e) {
-            return;
-        }
-        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
-    }
+    if (this->_network == nullptr)
+        return;
 
     Graphic &graphic = this->_engine.getGraphic();
 
