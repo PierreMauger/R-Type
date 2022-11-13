@@ -281,13 +281,14 @@ void PhysicSystem::collisionCheckShield(ComponentManager &componentManager, Enti
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile proj = componentManager.getSingleComponent<Projectile>(i);
     Parent par = componentManager.getSingleComponent<Parent>(i);
+    std::size_t idPar = entityManager.getBySyncId(par.id, componentManager);
 
     if (proj.damage >= hp.life) {
         if (entityManager.hasMask(j, InfoComp::DROP))
             this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
         hp.life = 0;
-        if (entityManager.hasMask(par.id, InfoComp::CONTROLLABLE))
-            componentManager.getSingleComponent<Controllable>(par.id).kill++;
+        if (entityManager.hasMask(idPar, InfoComp::CONTROLLABLE))
+            componentManager.getSingleComponent<Controllable>(idPar).kill++;
         if (entityManager.hasMask(j, InfoComp::DIS))
             componentManager.getSingleComponent<Disappearance>(j).dis = true;
         else {
