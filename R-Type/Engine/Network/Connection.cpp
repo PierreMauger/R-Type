@@ -44,6 +44,7 @@ void Connection::handleMsgUdp(const boost::system::error_code &error, size_t siz
     if (!this->checkConnection())
         return;
     if (!error) {
+        std::cout << "[~] New UDP message from " << this->_tmpEndpoint.address().to_string() << ":" << this->_tmpEndpoint.port() << std::endl;
         if (size != _NET_BUFFER_SIZE)
             std::cout << "[?] UDP message size : " << size << std::endl;
         this->_dataInUdp->push_back(this->_udpTmpBuffer);
