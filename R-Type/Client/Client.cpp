@@ -34,7 +34,7 @@ void Client::initSystems()
 #ifndef NDEBUG
     systemManager.addSystem(std::make_shared<GUISystem>(graphic));
 #endif
-    systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
+    // systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
@@ -115,6 +115,10 @@ void Client::syncTcpNetwork()
 
 void Client::updateNetwork()
 {
+    Graphic &graphic = this->_engine.getGraphic();
+
+    *graphic.getSyncId() += 1;
+
     if (this->_network == nullptr) {
         if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
             return;
@@ -125,8 +129,6 @@ void Client::updateNetwork()
         }
         *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
     }
-
-    Graphic &graphic = this->_engine.getGraphic();
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;

@@ -239,6 +239,7 @@ void Server::updateNetwork()
 
     this->syncTcpNetwork();
     this->syncUdpNetwork();
+    *this->_syncId += 1;
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
     this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(16);
