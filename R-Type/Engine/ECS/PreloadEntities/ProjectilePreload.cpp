@@ -32,7 +32,8 @@ void ProjectilePreload::createTripleShoot(EntityManager &entityManager, Componen
                                                    (projectile.rotation != 0 ? sf::Vector2f{sizeFire.x * sizeProj.size / 2, sizeFire.y * sizeProj.size / 2} : sf::Vector2f{0, 0})});
         componentManager.getComponent(typeid(Position)).emplaceData(addEntity, Position{pos.x, (pos.y + (size.y / 2)) - (sizeFire.y * sizeProj.size / 2), pos.z});
         componentManager.getComponent(typeid(Velocity)).emplaceData(addEntity, Velocity{projectile.velX / screenSize->x * windowsSize.x, static_cast<float>((i % 2 == 0) ? i + 1 : -i), 0});
-        componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{projectile.syncId});
+        componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{*(projectile.syncId)});
+        *(projectile.syncId) += 1;
         componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, projectile.damage, sizeProj.size});
         componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * sizeProj.size, sizeFire.y * sizeProj.size});
     }
@@ -69,7 +70,8 @@ void ProjectilePreload::createShoot(EntityManager &entityManager, ComponentManag
     componentManager.getComponent(typeid(Parent)).emplaceData(addEntity, Parent{projectile.syncIdPar});
     componentManager.getComponent(typeid(Projectile)).emplaceData(addEntity, Projectile{true, projectile.damage, sizeProj.size});
     componentManager.getComponent(typeid(Size)).emplaceData(addEntity, Size{sizeFire.x * sizeProj.size, sizeFire.y * sizeProj.size});
-    componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{projectile.syncId});
+    componentManager.getComponent(typeid(SyncID)).emplaceData(addEntity, SyncID{*(projectile.syncId)});
+    *(projectile.syncId) += 1;
     if (!enemy) {
         addEntity = entityManager.addMask((InfoComp::SOUNDID), componentManager);
         float pitch = (sizeProj.size == 1) ? 1 : (1 - (sizeProj.size / 10)) < 0.2 ? 0.2 : (1 - (sizeProj.size / 10));

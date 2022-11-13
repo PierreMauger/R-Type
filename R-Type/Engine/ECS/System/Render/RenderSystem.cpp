@@ -76,7 +76,6 @@ bool RenderSystem::displayShield(ComponentManager &componentManager, EntityManag
             if (shield.life > 0) {
                 SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(i);
                 Position &pos = componentManager.getSingleComponent<Position>(idPar);
-                Size &sizePar = componentManager.getSingleComponent<Size>(idPar);
                 SpriteAttribut &spriteAtPar = componentManager.getSingleComponent<SpriteAttribut>(idPar);
                 spriteRef.setColor(sf::Color(255, 255, 255, shield.life * 255 / shield.defaultLife));
                 spriteRef.setScale(spriteAt.scale.x * spriteAtPar.scale.x, spriteAt.scale.y * spriteAtPar.scale.y);
@@ -129,6 +128,9 @@ void RenderSystem::update(ComponentManager &componentManager, EntityManager &ent
         stockText.push_back(textRef);
     }
     for (auto id : entityManager.getMaskCategory(this->_renderTag)) {
+        if (!entityManager.hasMask(id, InfoComp::POS) || !entityManager.hasMask(id, InfoComp::SPRITEID))
+            continue;
+
         Position &pos = componentManager.getSingleComponent<Position>(id);
         SpriteID &spriteId = componentManager.getSingleComponent<SpriteID>(id);
         if (entityManager.hasMask(id, this->_sceneTag)) {

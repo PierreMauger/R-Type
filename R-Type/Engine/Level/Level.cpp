@@ -69,23 +69,18 @@ void Level::parseStringLevel(Graphic &graphic, EntityManager &entityManager, Com
         switch (match[1].str()[0]) {
         case 'E':
             EnemyPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
-            *syncId += 1;
             break;
         case 'B':
-            BossPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
-            *syncId += 1;
+            BossPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
             break;
         case 'D':
-            DevourerPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
-            *syncId += 1;
+            DevourerPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
             break;
         case 'C':
-            CthulhuPreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
-            *syncId += 2;
+            CthulhuPreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
             break;
         case 'O':
-            ObstaclePreload::preload(graphic, entityManager, componentManager, *syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
-            *syncId += 1;
+            ObstaclePreload::preload(graphic, entityManager, componentManager, syncId, sf::Vector2f(std::stoi(match[2]) + graphic.getScreenSize()->x, std::stoi(match[3])));
             break;
         default:
             break;
