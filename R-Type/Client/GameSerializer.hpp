@@ -12,6 +12,7 @@
 #include "Engine.hpp"
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
+#include "Engine/ECS/PreloadEntities/ScoreTextPreload.hpp"
 #include "Engine/Network/NetCommon.hpp"
 #include "Engine/Network/Room.hpp"
 #include "Engine/Network/Serializer.hpp"
@@ -55,7 +56,7 @@ namespace eng
             std::size_t getEntityID(SyncID syncID, EntityManager &entityManager, ComponentManager &componentManager);
 
             // void pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager);
-            void getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager);
+            void getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager, Engine &engine);
 
             std::shared_ptr<sf::Clock> _clock;
 

@@ -6,7 +6,7 @@ GameSerializer::GameSerializer()
 {
 }
 
-void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager)
+void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager, Engine &engine)
 {
     for (std::size_t i = 0; i < componentManager.getComponentArray().size(); i++) {
         if ((mask & (1 << i)) == 0) {
@@ -72,6 +72,8 @@ void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id,
             break;
         case 19:
             this->updateEntity<SoundID>(packet, id, adv, componentManager);
+            if (componentManager.getSingleComponent<SoundID>(id).id == A_LEVELCOMPLETED)
+                ScoreTextPreload::levelPreload(engine.getGraphic(), engine.getECS().getEntityManager(), engine.getECS().getComponentManager());
             break;
         case 20:
             this->updateEntity<SpriteAttribut>(packet, id, adv, componentManager);
@@ -136,7 +138,7 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
         componentManager.removeAllComponents(id);
         entityManager.removeMask(id);
     } else if (type == CrudType::UPDATE) {
-        this->getComponents(packet, id, mask, adv, componentManager);
+        this->getComponents(packet, id, mask, adv, componentManager, engine);
         auto &last = componentManager.getSingleComponent<SyncID>(id).lastRefresh;
         last = (2.0f + this->_clock->getElapsedTime().asSeconds());
         engine.updateSizeWindowId({1920, 1080}, id);

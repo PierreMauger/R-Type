@@ -113,7 +113,7 @@ bool Server::checkIfEnemyAlive(EntityManager &entityManager, ComponentManager &c
     }
     if (!isText) {
         ScoreTextPreload::levelPreload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
-        BackgroundMusicPreload::preloadMusic(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), A_LEVELCOMPLETED);
+        SoundPreload::preload(this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId, {A_LEVELCOMPLETED, false, false, 1});
     }
     return textSpawn;
 }
@@ -259,7 +259,7 @@ void Server::mainLoop()
         if (this->manageEnemy(level[levelId], graphic, ecs)) {
             this->_isLevelFinished = false;
             if (level.size() - 1 == levelId)
-                graphic.getWindow()->close();
+                levelId = levelId;
             else
                 levelId++;
         }
