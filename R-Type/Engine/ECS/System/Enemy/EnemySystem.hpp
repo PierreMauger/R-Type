@@ -39,6 +39,9 @@ namespace eng
 
             bool setRandIdPlayer(Pattern &pat, EntityManager &entityManager);
             void cthulhuPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager);
+            void lifeChainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, ComponentManager &componentManager, EntityManager &entityManager);
+            void chainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, std::size_t speedFactor, ComponentManager &componentManager, EntityManager &entityManager);
+            void devourerPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager);
 
         public:
             /**

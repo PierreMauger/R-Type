@@ -261,8 +261,12 @@ void PhysicSystem::collisionFireballEnemy(ComponentManager &componentManager, En
 {
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile proj = componentManager.getSingleComponent<Projectile>(i);
+    auto &masks = entityManager.getMasks();
 
     for (auto k : entityManager.getMaskCategory(this->_shieldTag)) {
+        if (k >= masks.size() || !masks[k].has_value() || !entityManager.hasMask(k, InfoComp::PARENT) || !entityManager.hasMask(j, InfoComp::SYNCID) || !entityManager.hasMask(k, InfoComp::SHIELD)) {
+            continue;
+        }
         if (componentManager.getSingleComponent<Parent>(k).id == componentManager.getSingleComponent<SyncID>(j).id) {
             Shield &shield = componentManager.getSingleComponent<Shield>(k);
             if (proj.damage >= shield.life) {
@@ -368,6 +372,8 @@ void PhysicSystem::physicVessel(ComponentManager &componentManager, EntityManage
 
 void PhysicSystem::physicPattern(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i)
 {
+    if (entityManager.hasMask(i, (InfoComp::PATTERN | InfoComp::CHAIN)))
+        return;
     if (entityManager.hasMask(i, InfoComp::PATTERN)) {
         Position &pos = componentManager.getSingleComponent<Position>(i);
         Size size = componentManager.getSingleComponent<Size>(i);
@@ -392,6 +398,8 @@ bool PhysicSystem::physicAnim(ComponentManager &componentManager, EntityManager 
     }
     pos.y += vel.y;
     pos.x += vel.x;
+    if (entityManager.hasMask(i, (InfoComp::CHAIN)))
+        return false;
     if ((entityManager.hasMask(i, InfoComp::PROJECTILE) && pos.x > _window->getSize().x + 100) || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
         entityManager.removeMask(i);
         componentManager.removeAllComponents(i);
