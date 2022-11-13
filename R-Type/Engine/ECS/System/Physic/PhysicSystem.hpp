@@ -40,21 +40,21 @@ namespace eng
             void createBonus(std::size_t id, std::size_t drop, ComponentManager &componentManager, EntityManager &entityManager);
             void switchCreateBonus(std::size_t addEntity, std::size_t drop, ComponentManager &componentManager, Size &size, Position &pos);
             bool checkAppareance(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position &pos, Velocity &vel);
-            bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel);
-            void killWhenDisappeared(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i);
+            bool checkDisappearance(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, Position &pos, Velocity &vel, std::size_t &it);
+            void killWhenDisappeared(EntityManager &entityManager, ComponentManager &componentManager, std::size_t i, std::size_t &it);
             bool checkCollision(Position pos, Position pos2, Size sz, Size sz2);
             bool collisionBonus(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos);
             void bonusFound(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, DropBonus drop, Size size);
-            bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos);
-            bool collisionEnemySplit(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position pos);
-            bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos);
-            bool splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position pos);
+            bool collisionEnemy(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos, std::size_t &it);
+            bool collisionEnemySplit(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position pos, std::size_t &it);
+            bool collisionFireball(std::size_t i, ComponentManager &componentManager, EntityManager &entityManager, Position pos, std::size_t &it);
+            bool splitCollisionFireball(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, Position pos, std::size_t &it);
             void collisionFireballEnemy(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j, bool &checkShield);
             void collisionCheckShield(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t j);
             void physicVessel(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i);
             void physicPattern(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i);
-            bool physicCollision(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position pos);
-            bool physicAnim(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position &pos, Velocity &vel);
+            bool physicCollision(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, Position pos, std::size_t &it);
+            bool physicAnim(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i, std::size_t &it, Position &pos, Velocity &vel);
 
         public:
             /**
