@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['level_843',['Level',['../classeng_1_1Level.html#ac7e45382c52c87ef88b6ce8ce25b5234',1,'eng::Level']]],
-  ['loader_844',['Loader',['../classeng_1_1Loader.html#a0e275fd69b174991f8e03433dc944695',1,'eng::Loader']]],
-  ['loadsounds_845',['loadSounds',['../classeng_1_1Loader.html#ac2469d7946ce50b6f33a658c0562d10a',1,'eng::Loader']]],
-  ['loadsprites_846',['loadSprites',['../classeng_1_1Loader.html#a7439279a697d4302b5c9e37621da5193',1,'eng::Loader']]]
+  ['main_857',['main',['../Server_2main_8cpp.html#a0c99d968a34e803d378692bde2e3f18f',1,'main.cpp']]],
+  ['mainloop_858',['mainLoop',['../classeng_1_1Client.html#a150fa91716ff4230fdb993f656646c00',1,'eng::Client::mainLoop()'],['../classeng_1_1Server.html#a5f48ea28a4cef61ce2ca55bf737e79b6',1,'eng::Server::mainLoop()']]],
+  ['menuserializer_859',['MenuSerializer',['../classeng_1_1MenuSerializer.html#a747b58808acc7fb21da742419a582c7c',1,'eng::MenuSerializer']]]
 ];

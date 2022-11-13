@@ -85,7 +85,7 @@ Inheritance diagram for eng::EntityPreload:</div>
 <div class="dyncontent">
 <div class="center"><img src="classeng_1_1EntityPreload__inherit__graph.png" border="0" usemap="#aeng_1_1EntityPreload_inherit__map" alt="Inheritance graph"/></div>
 <map name="aeng_1_1EntityPreload_inherit__map" id="aeng_1_1EntityPreload_inherit__map">
-<area shape="rect" title="Preloads an entity." alt="" coords="5,309,147,336"/>
+<area shape="rect" title="Preloads an entity." alt="" coords="5,335,147,361"/>
 <area shape="rect" href="classeng_1_1BackgroundMusicPreload.html" title="The background music preloader." alt="" coords="195,5,413,32"/>
 <area shape="rect" href="classeng_1_1BossPreload.html" title="Preloads the boss." alt="" coords="237,56,371,83"/>
 <area shape="rect" href="classeng_1_1CthulhuPreload.html" title="Preloads the Eye of Cthulhu." alt="" coords="227,107,381,133"/>
@@ -98,14 +98,15 @@ Inheritance diagram for eng::EntityPreload:</div>
 <area shape="rect" href="classeng_1_1ProjectilePreload.html" title="Preloads the projectile." alt="" coords="222,461,386,488"/>
 <area shape="rect" href="classeng_1_1RoomPreload.html" title="Preloads the room." alt="" coords="233,512,375,539"/>
 <area shape="rect" href="classeng_1_1ScoreTextPreload.html" title="Preloads the score text." alt="" coords="221,563,387,589"/>
-<area shape="rect" href="classeng_1_1VesselPreload.html" title="Preloads the vessel." alt="" coords="231,613,377,640"/>
+<area shape="rect" href="classeng_1_1SoundPreload.html" title="Preloads the vessel." alt="" coords="233,613,375,640"/>
+<area shape="rect" href="classeng_1_1VesselPreload.html" title="Preloads the vessel." alt="" coords="231,664,377,691"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab60650f43fec48b38c0f639c8b5a7d68"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1EntityPreload.html#ab60650f43fec48b38c0f639c8b5a7d68">preload</a> (<a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
-<tr class="memdesc:ab60650f43fec48b38c0f639c8b5a7d68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preloads an entity.  <a href="classeng_1_1EntityPreload.html#ab60650f43fec48b38c0f639c8b5a7d68">More...</a><br /></td></tr>
+<tr class="memdesc:ab60650f43fec48b38c0f639c8b5a7d68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preloads the parallax.  <a href="classeng_1_1EntityPreload.html#ab60650f43fec48b38c0f639c8b5a7d68">More...</a><br /></td></tr>
 <tr class="separator:ab60650f43fec48b38c0f639c8b5a7d68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a682cf8d4d6fa85541ae69682e76d699a"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1EntityPreload.html#a682cf8d4d6fa85541ae69682e76d699a">createRandom</a> (float min, float max)</td></tr>
 <tr class="memdesc:a682cf8d4d6fa85541ae69682e76d699a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a random value between a min and max.  <a href="classeng_1_1EntityPreload.html#a682cf8d4d6fa85541ae69682e76d699a">More...</a><br /></td></tr>
@@ -200,10 +201,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Preloads an entity. </p>
+<p>Preloads the parallax. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">engine</td><td>A reference to the engine. </td></tr>
+    <tr><td class="paramname">graphic</td><td>A reference to the engine graphics. </td></tr>
+    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a>. </td></tr>
+    <tr><td class="paramname">componentManager</td><td>A reference to the <a class="el" href="classeng_1_1ComponentManager.html" title="The engine&#39;s ComponentManager.">ComponentManager</a>. </td></tr>
   </table>
   </dd>
 </dl>

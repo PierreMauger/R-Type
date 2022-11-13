@@ -7,6 +7,8 @@ Client::Client()
     this->initSystems();
     this->initComponents();
     this->initEntities();
+
+    this->_gameSerializer.setClock(this->_engine.getGraphic().getClock());
 }
 
 void Client::createNetwork()
@@ -38,6 +40,7 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<EntityTimeOutSystem>(graphic, entityManager));
 }
 
 void Client::initComponents()
@@ -88,7 +91,7 @@ void Client::syncUdpNetwork()
         return;
     for (_STORAGE_DATA packet = dataIn.pop_front(); true; packet = dataIn.pop_front()) {
         try {
-            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+            this->_gameSerializer.handlePacket(packet, this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_engine);
         } catch (const std::exception &e) {
             std::cerr << e.what() << std::endl;
         }
@@ -119,7 +122,6 @@ void Client::updateNetwork()
     Graphic &graphic = this->_engine.getGraphic();
 
     *graphic.getSyncId() += 1;
-
     if (this->_network == nullptr) {
         if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
             return;
@@ -157,7 +159,7 @@ void Client::updateEvent()
             graphic.setFullscreen(!graphic.isFullscreen());
         }
         if (graphic.getEvent()->type == sf::Event::Resized) {
-            this->_engine.updateSizeWindow();
+            this->_engine.updateSizeWindow(graphic.getLastSize());
             graphic.setLastSize(sf::Vector2f(graphic.getEvent()->size.width, graphic.getEvent()->size.height));
         }
     }
@@ -238,7 +240,7 @@ void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    std::vector<Level> &level = this->_engine.getLoader().getLevels();
+    std::vector<Level> &level = !*(graphic.getIsLocal()) ? this->_engine.getLoader().getLevelsSolo() : this->_engine.getLoader().getLevels();
     std::size_t levelId = 0;
 
     while (graphic.getWindow()->isOpen()) {

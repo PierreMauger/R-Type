@@ -71,6 +71,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classeng_1_1GameSerializer-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">eng::GameSerializer Class Reference</div>  </div>
@@ -105,15 +106,18 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a68ef5f189aba9c2aba3632255c03bf97">~GameSerializer</a> ()=default</td></tr>
 <tr class="memdesc:a68ef5f189aba9c2aba3632255c03bf97"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1GameSerializer.html">GameSerializer</a> destructor. <br /></td></tr>
 <tr class="separator:a68ef5f189aba9c2aba3632255c03bf97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4cda9df1b11b84f9a91c53a89bb7cc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#af4cda9df1b11b84f9a91c53a89bb7cc4">handlePacket</a> (_STORAGE_DATA packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
-<tr class="memdesc:af4cda9df1b11b84f9a91c53a89bb7cc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle a game packet.  <a href="classeng_1_1GameSerializer.html#af4cda9df1b11b84f9a91c53a89bb7cc4">More...</a><br /></td></tr>
-<tr class="separator:af4cda9df1b11b84f9a91c53a89bb7cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18ef3379ad976dbaf980a5a31a6ff665"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a18ef3379ad976dbaf980a5a31a6ff665">deserializeEntity</a> (std::vector&lt; uint8_t &gt; packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager)</td></tr>
-<tr class="memdesc:a18ef3379ad976dbaf980a5a31a6ff665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize an entity.  <a href="classeng_1_1GameSerializer.html#a18ef3379ad976dbaf980a5a31a6ff665">More...</a><br /></td></tr>
-<tr class="separator:a18ef3379ad976dbaf980a5a31a6ff665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a451e3a5690cb200ece53d5eeca12278e"><td class="memItemLeft" align="right" valign="top"><a id="a451e3a5690cb200ece53d5eeca12278e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePacket</b> (_STORAGE_DATA packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1Engine.html">Engine</a> &amp;engine)</td></tr>
+<tr class="separator:a451e3a5690cb200ece53d5eeca12278e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdcffa26f912f45378468a6a244e886c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#afdcffa26f912f45378468a6a244e886c">deserializeEntity</a> (std::vector&lt; uint8_t &gt; packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1Engine.html">Engine</a> &amp;engine)</td></tr>
+<tr class="memdesc:afdcffa26f912f45378468a6a244e886c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deserialize an entity.  <a href="classeng_1_1GameSerializer.html#afdcffa26f912f45378468a6a244e886c">More...</a><br /></td></tr>
+<tr class="separator:afdcffa26f912f45378468a6a244e886c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26012faf66ab036ec423adf31f7cc608"><td class="memItemLeft" align="right" valign="top">_STORAGE_DATA&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a26012faf66ab036ec423adf31f7cc608">serializeInput</a> (std::size_t clientId, sf::Keyboard::Key input)</td></tr>
 <tr class="memdesc:a26012faf66ab036ec423adf31f7cc608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an input.  <a href="classeng_1_1GameSerializer.html#a26012faf66ab036ec423adf31f7cc608">More...</a><br /></td></tr>
 <tr class="separator:a26012faf66ab036ec423adf31f7cc608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86fa852cf67611811c833b614c9083f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1GameSerializer.html#a86fa852cf67611811c833b614c9083f4">setClock</a> (std::shared_ptr&lt; sf::Clock &gt; clock)</td></tr>
+<tr class="memdesc:a86fa852cf67611811c833b614c9083f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set clock.  <a href="classeng_1_1GameSerializer.html#a86fa852cf67611811c833b614c9083f4">More...</a><br /></td></tr>
+<tr class="separator:a86fa852cf67611811c833b614c9083f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c2655b43ab52be33a85af7033d69239"><td class="memItemLeft" align="right" valign="top"><a id="a1c2655b43ab52be33a85af7033d69239"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>handlePacket</b> (_STORAGE_DATA packet, <a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;entityManager, <a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager, <a class="el" href="classeng_1_1Graphic.html">Graphic</a> &amp;graphic, <a class="el" href="classeng_1_1Client.html">Client</a> &amp;client, std::shared_ptr&lt; std::size_t &gt; syncId)</td></tr>
 <tr class="separator:a1c2655b43ab52be33a85af7033d69239"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,10 +179,16 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classeng_1_1Serializer.html#a24bee48b1aad59d93c4b2b099329e31b">~Serializer</a> ()=default</td></tr>
 <tr class="memdesc:a24bee48b1aad59d93c4b2b099329e31b inherit pro_methods_classeng_1_1Serializer"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classeng_1_1Serializer.html" title="The network serializer (formats packets to be sent through network).">Serializer</a> destructor. <br /></td></tr>
 <tr class="separator:a24bee48b1aad59d93c4b2b099329e31b inherit pro_methods_classeng_1_1Serializer"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:aae0da13f644dbc39c594299332520ff0"><td class="memItemLeft" align="right" valign="top"><a id="aae0da13f644dbc39c594299332520ff0"></a>
+std::shared_ptr&lt; sf::Clock &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_clock</b></td></tr>
+<tr class="separator:aae0da13f644dbc39c594299332520ff0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a18ef3379ad976dbaf980a5a31a6ff665"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18ef3379ad976dbaf980a5a31a6ff665">&#9670;&nbsp;</a></span>deserializeEntity()</h2>
+<a id="afdcffa26f912f45378468a6a244e886c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdcffa26f912f45378468a6a244e886c">&#9670;&nbsp;</a></span>deserializeEntity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,7 +209,13 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;&#160;</td>
-          <td class="paramname"><em>componentManager</em>&#160;</td>
+          <td class="paramname"><em>componentManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classeng_1_1Engine.html">Engine</a> &amp;&#160;</td>
+          <td class="paramname"><em>engine</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -316,50 +332,6 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
 
 </div>
 </div>
-<a id="af4cda9df1b11b84f9a91c53a89bb7cc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4cda9df1b11b84f9a91c53a89bb7cc4">&#9670;&nbsp;</a></span>handlePacket()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">eng::GameSerializer::handlePacket </td>
-          <td>(</td>
-          <td class="paramtype">_STORAGE_DATA&#160;</td>
-          <td class="paramname"><em>packet</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classeng_1_1EntityManager.html">EntityManager</a> &amp;&#160;</td>
-          <td class="paramname"><em>entityManager</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;&#160;</td>
-          <td class="paramname"><em>componentManager</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Handle a game packet. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">packet</td><td>The packet to handle. </td></tr>
-    <tr><td class="paramname">entityManager</td><td>A reference to the <a class="el" href="classeng_1_1EntityManager.html" title="The engine&#39;s EntityManager.">EntityManager</a> </td></tr>
-    <tr><td class="paramname">componentManager</td><td>A reference to the <a class="el" href="classeng_1_1ComponentManager.html" title="The engine&#39;s ComponentManager.">ComponentManager</a> </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a6c1a0e13367d6aaffb7f433f3192e0e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c1a0e13367d6aaffb7f433f3192e0e5">&#9670;&nbsp;</a></span>serializeEntity()</h2>
 
@@ -446,6 +418,32 @@ std::vector&lt; uint8_t &gt;&#160;</td><td class="memItemRight" valign="bottom">
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The serialized packet </dd></dl>
+
+</div>
+</div>
+<a id="a86fa852cf67611811c833b614c9083f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86fa852cf67611811c833b614c9083f4">&#9670;&nbsp;</a></span>setClock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eng::GameSerializer::setClock </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; sf::Clock &gt;&#160;</td>
+          <td class="paramname"><em>clock</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set clock. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clock</td><td>The clock to set </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
