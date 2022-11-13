@@ -10,6 +10,7 @@
 
 /// @cond
 #include "Engine/ECS/PreloadEntities/EntityPreload.hpp"
+#include "Engine/ECS/PreloadEntities/SoundPreload.hpp"
 
 /// @endcond
 
