@@ -4,7 +4,7 @@ using namespace eng;
 
 Engine::Engine()
 {
-    this->_loader.loadLevel({"R-Type/Assets/Levels"});
+    this->_loader.loadLevel({"R-Type/Assets/Levels/Online", "R-Type/Assets/Levels/Solo"});
     this->_loader.loadSounds({"R-Type/Assets/Audio/Musics", "R-Type/Assets/Audio/Sounds"});
     this->_loader.loadSprites({"R-Type/Assets/Sprites/Bonuses", "R-Type/Assets/Sprites/Enemies", "R-Type/Assets/Sprites/Fireballs", "R-Type/Assets/Sprites/GUI", "R-Type/Assets/Sprites/Parallax", "R-Type/Assets/Sprites/Player"});
 }
