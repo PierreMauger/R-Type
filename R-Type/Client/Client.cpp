@@ -132,7 +132,7 @@ void Client::updateNetwork()
         } catch (const std::exception &e) {
             return;
         }
-        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
+        *this->_engine.getGraphic().getSceneId() = SceneType::GAME;
     }
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
