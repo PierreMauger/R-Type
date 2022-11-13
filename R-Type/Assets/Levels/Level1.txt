@@ -1,7 +1,7 @@
 # charPerScreen:5
 -------
 -B    -
--  D  -
+-  O  -
 -E C  -
 -    O-
 -------
