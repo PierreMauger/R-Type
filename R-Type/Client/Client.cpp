@@ -33,9 +33,9 @@ void Client::initSystems()
     systemManager.addSystem(std::make_shared<PhysicSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<AnimationSystem>(graphic, entityManager, sprites));
     systemManager.addSystem(std::make_shared<RenderSystem>(graphic, entityManager, sprites));
-// #ifndef NDEBUG
+#ifndef NDEBUG
     systemManager.addSystem(std::make_shared<GUISystem>(graphic));
-// #endif
+#endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
     systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
@@ -146,9 +146,9 @@ void Client::updateEvent()
     Graphic &graphic = this->_engine.getGraphic();
 
     while (graphic.getWindow()->pollEvent(*graphic.getEvent())) {
-// #ifndef NDEBUG
+#ifndef NDEBUG
         ImGui::SFML::ProcessEvent(*graphic.getEvent());
-// #endif
+#endif
         if (graphic.getEvent()->type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             graphic.getWindow()->close();
             return;
