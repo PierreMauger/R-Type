@@ -11,7 +11,7 @@ std::size_t VesselPreload::preload(sf::Vector2u windowsSize, std::shared_ptr<sf:
     componentManager.getComponent(typeid(SpriteAttribut)).emplaceData(id, SpriteAttribut{0, {0, 0, 64, 28}, sf::Color::White, {size.x, size.y}, {64 * size.x / 4, 28 * size.y / 4}});
     componentManager.getComponent(typeid(Position)).emplaceData(id, Position{10, 28 / screenSize->y * windowsSize.y * -1, 0});
     componentManager.getComponent(typeid(Velocity)).emplaceData(id, Velocity{0, 0, 0, windowsSize.x / (screenSize->x / 10), windowsSize.y / (screenSize->y / 10)});
-    componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100 / screenSize->y * windowsSize.y, 0, 2, 0});
+    componentManager.getComponent(typeid(Appearance)).emplaceData(id, Appearance{true, 100 / screenSize->y * windowsSize.y, 0, 1.5, 0});
     componentManager.getComponent(typeid(Disappearance)).emplaceData(id, Disappearance{false, static_cast<float>(windowsSize.y + (100 / screenSize->y * windowsSize.y))});
     componentManager.getComponent(typeid(Controllable)).emplaceData(id, Controllable{true});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1});

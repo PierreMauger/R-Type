@@ -6,7 +6,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
-    std::size_t randBonus = createRandom(0, 3);
+    std::size_t randBonus = createRandom(0, 4);
     sf::Vector2f size{2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y};
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SYNCID | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 

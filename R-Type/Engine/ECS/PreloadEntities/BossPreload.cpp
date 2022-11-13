@@ -6,7 +6,7 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
 {
     sf::Vector2u windowsSize = graphic.getWindow()->getSize();
     std::shared_ptr<sf::Vector2f> screenSize = graphic.getScreenSize();
-    std::size_t randBonus = createRandom(0, 3);
+    std::size_t randBonus = createRandom(0, 4);
     sf::Vector2f size{2 / screenSize->x * windowsSize.x, 2 / screenSize->y * windowsSize.y};
     std::size_t id = entityManager.addMask((InfoComp::POS | InfoComp::VEL | InfoComp::APP | InfoComp::SPRITEID | InfoComp::ENEMY | InfoComp::LIFE | InfoComp::SIZE | InfoComp::PATTERN | InfoComp::DROP | InfoComp::SYNCID | InfoComp::SPRITEAT | InfoComp::COOLDOWNSHOOT), componentManager);
 
@@ -19,7 +19,7 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{96 * size.x, 96 * size.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
-    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{1});
+    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{randBonus});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 0.5});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{syncId++});
 
