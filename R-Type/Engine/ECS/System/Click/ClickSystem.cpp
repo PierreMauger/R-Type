@@ -23,6 +23,7 @@ ClickSystem::ClickSystem(Graphic &graphic, EntityManager &entityManager)
 void ClickSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
     unsigned long int changed = -1;
+    sf::Vector2i mousePos = sf::Mouse::getPosition(*this->_window);
 
     for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
         Button &button = componentManager.getSingleComponent<Button>(id);
@@ -35,8 +36,6 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
             if (scene.id != *this->_sceneId)
                 continue;
         }
-        sf::Vector2i mousePos = sf::Mouse::getPosition(*this->_window);
-
         if (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x && mousePos.y >= pos.y && mousePos.y <= pos.y + size.y) {
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 spriteAt.color = sf::Color(128, 128, 128, 255);
@@ -70,10 +69,16 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
     for (auto id : entityManager.getMaskCategory(this->_buttonTag)) {
         Button &button = componentManager.getSingleComponent<Button>(id);
         SpriteAttribut &spriteAt = componentManager.getSingleComponent<SpriteAttribut>(id);
+        Position pos = componentManager.getSingleComponent<Position>(id);
+        Size size = componentManager.getSingleComponent<Size>(id);
+
         if (id != changed) {
             if (button.type == ButtonType::TEXTZONE && sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 button.selected = false;
-            spriteAt.color = sf::Color::White;
+            if (mousePos.x >= pos.x && mousePos.x <= pos.x + size.x && mousePos.y >= pos.y && mousePos.y <= pos.y + size.y)
+                spriteAt.color = sf::Color(200, 200, 200, 255);
+            else
+                spriteAt.color = sf::Color::White;
         }
     }
 }
