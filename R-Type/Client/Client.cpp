@@ -38,7 +38,7 @@ void Client::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
-    // systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
+    systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<EntityTimeOutSystem>(graphic, entityManager));
 }

@@ -30,6 +30,7 @@ namespace eng
     {
         private:
             std::shared_ptr<sf::Clock> _clock;
+            std::shared_ptr<bool> _isLocal;
 
         public:
             /**

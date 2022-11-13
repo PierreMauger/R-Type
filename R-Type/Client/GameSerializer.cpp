@@ -137,7 +137,8 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
         entityManager.removeMask(id);
     } else if (type == CrudType::UPDATE) {
         this->getComponents(packet, id, mask, adv, componentManager);
-        componentManager.getSingleComponent<SyncID>(id).lastRefresh = this->_clock->getElapsedTime().asMilliseconds() + 5000;
+        auto &last = componentManager.getSingleComponent<SyncID>(id).lastRefresh;
+        last = (2.0f + this->_clock->getElapsedTime().asSeconds());
     } else {
         throw std::runtime_error("[ERROR] Unknown entity type");
     }

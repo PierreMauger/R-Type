@@ -2,23 +2,27 @@
 
 using namespace eng;
 
-EntityTimeOutSystem::EntityTimeOutSystem(Graphic &graphic, EntityManager &entityManager)
+EntityTimeOutSystem::EntityTimeOutSystem(Graphic &graphic, [[maybe_unused]] EntityManager &entityManager)
 {
     this->_clock = graphic.getClock();
-
-    entityManager.addMaskCategory(InfoComp::SYNCID);
+    this->_isLocal = graphic.getIsLocal();
 }
 
 void EntityTimeOutSystem::update(ComponentManager &componentManager, EntityManager &entityManager)
 {
-    auto &arraySyncId = entityManager.getMaskCategory(InfoComp::SYNCID);
+    if (*this->_isLocal)
+        return;
 
-    for (std::size_t i = 0; i < arraySyncId.size(); i++) {
-        auto &syncId = componentManager.getSingleComponent<SyncID>(arraySyncId[i]);
-        if (syncId.lastRefresh > this->_clock->getElapsedTime().asMilliseconds()) {
+    auto &masks = entityManager.getMasks();
+
+    for (std::size_t i = 0; i < masks.size(); i++) {
+        if (!masks[i].has_value() || (masks[i].value() & InfoComp::SYNCID) != InfoComp::SYNCID) {
+            continue;
+        }
+        auto &syncId = componentManager.getSingleComponent<SyncID>(i);
+        if (syncId.lastRefresh < this->_clock->getElapsedTime().asSeconds()) {
             componentManager.removeAllComponents(i);
             entityManager.removeMask(i);
-            i--;
         }
     }
 }
