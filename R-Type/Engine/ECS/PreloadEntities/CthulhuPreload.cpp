@@ -18,7 +18,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
     componentManager.getComponent(typeid(Pattern)).emplaceData(id, Pattern{TypePattern::CTHULHU, TypeStatus::SEARCH, TypePhase::PHASE01, 0});
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{110 * size.x, 110 * size.y});
-    componentManager.getComponent(typeid(Life)).emplaceData(id, Life{10});
+    componentManager.getComponent(typeid(Life)).emplaceData(id, Life{20});
     componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{randBonus});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 1, 1.5});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{*syncId});
@@ -26,7 +26,7 @@ void CthulhuPreload::preload(Graphic &graphic, EntityManager &entityManager, Com
 
     std::size_t idBar = entityManager.addMask((InfoComp::POS | InfoComp::SPRITEID | InfoComp::PARENT | InfoComp::LIFEBAR | InfoComp::SYNCID), componentManager);
     componentManager.getComponent(typeid(Position)).emplaceData(idBar, Position{0, 0, 0});
-    componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 10});
+    componentManager.getComponent(typeid(LifeBar)).emplaceData(idBar, LifeBar{true, 20});
     componentManager.getComponent(typeid(SpriteID)).emplaceData(idBar, SpriteID{S_IDBAR, Priority::MEDIUM});
     componentManager.getComponent(typeid(SyncID)).emplaceData(idBar, SyncID{*syncId});
     *syncId += 1;
