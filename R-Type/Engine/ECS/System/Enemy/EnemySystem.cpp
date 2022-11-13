@@ -27,7 +27,8 @@ bool EnemySystem::setRandIdPlayer(Pattern &pat, EntityManager &entityManager)
     return true;
 }
 
-void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, ComponentManager &componentManager, EntityManager &entityManager) {
+void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, ComponentManager &componentManager, EntityManager &entityManager)
+{
     auto &masks = entityManager.getMasks();
     std::size_t baseId = 0;
     std::size_t chainId = 0;
@@ -35,7 +36,7 @@ void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t l
     std::size_t dmgToGive = 0;
 
     for (std::size_t j = 0; j < masks.size(); j++) {
-        if (!entityManager.hasMask(j, (InfoComp::CHAIN | InfoComp::LIFE)))
+        if (!masks[j].has_value() || !entityManager.hasMask(j, InfoComp::CHAIN) || !entityManager.hasMask(j, InfoComp::LIFE))
             continue;
         chain = componentManager.getSingleComponent<Chain>(j);
         if (chain.partInfo == firstChainSpriteId) {
@@ -44,7 +45,7 @@ void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t l
         }
     }
     chainId = baseId;
-    if (!masks[chainId].has_value()) {
+    if (chainId < masks.size() && !masks[chainId].has_value()) {
         std::cout << "Error: chainId is not valid : " << chainId << std::endl;
         return;
     }
@@ -52,7 +53,7 @@ void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t l
     Life &life = componentManager.getSingleComponent<Life>(chainId);
     dmgToGive += life.defaultLife - life.life;
     while (chain.nextId < masks.size() && chain.partInfo != lastChainSpriteId) {
-        if (!entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL) || !entityManager.hasMask(chain.nextId, InfoComp::LIFE)) {
+        if (!masks[chain.nextId].has_value() || !entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL) || !entityManager.hasMask(chain.nextId, InfoComp::LIFE)) {
             break;
         }
         life = componentManager.getSingleComponent<Life>(chain.nextId);
@@ -65,7 +66,7 @@ void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t l
     life = componentManager.getSingleComponent<Life>(chainId);
     life.life -= dmgToGive;
     while (chain.nextId < masks.size() && chain.partInfo != lastChainSpriteId) {
-        if (!entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL) || !entityManager.hasMask(chain.nextId, InfoComp::LIFE)) {
+        if (!masks[chain.nextId].has_value() || !entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL) || !entityManager.hasMask(chain.nextId, InfoComp::LIFE)) {
             break;
         }
         life = componentManager.getSingleComponent<Life>(chain.nextId);
@@ -84,7 +85,7 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
 
     // Search the begin of the tail
     for (std::size_t j = 0; j < masks.size(); j++) {
-        if (!entityManager.hasMask(j, InfoComp::CHAIN))
+        if (!masks[chain.nextId].has_value() || !entityManager.hasMask(j, InfoComp::CHAIN))
             continue;
         chain = componentManager.getSingleComponent<Chain>(j);
         if (chain.partInfo == firstChainSpriteId) {
@@ -92,16 +93,20 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
             break;
         }
     }
-    if (!masks[chainId].has_value()) {
+    if (chainId < masks.size() && !masks[chainId].has_value()) {
         std::cout << "Error: chainId is not valid : " << chainId << std::endl;
         return;
     }
 
+    if (chainId >= masks.size() || !masks[chainId].has_value() || !entityManager.hasMask(chainId, InfoComp::PATTERN) || !entityManager.hasMask(chainId, InfoComp::POS)) {
+        return;
+    }
     // get the pattern component of the head
     Pattern &pat = componentManager.getSingleComponent<Pattern>(chainId);
 
     while (chain.nextId < masks.size() && chain.partInfo != lastChainSpriteId) {
-        if (!entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL)) {
+        if (!masks[chain.nextId].has_value() || !entityManager.hasMask(chain.nextId, InfoComp::POS) || !entityManager.hasMask(chain.nextId, InfoComp::VEL) || !entityManager.hasMask(chain.nextId, InfoComp::SPRITEID) || !entityManager.hasMask(chain.nextId, InfoComp::SPRITEAT) ||
+            !entityManager.hasMask(chain.nextId, InfoComp::CHAIN)) {
             break;
         }
         Position lastPos = componentManager.getSingleComponent<Position>(chainId);
@@ -128,6 +133,9 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
         chain = componentManager.getSingleComponent<Chain>(chain.nextId);
     }
 
+    if (chainId >= masks.size() || !masks[chainId].has_value() || !entityManager.hasMask(chainId, InfoComp::SPRITEID) || !entityManager.hasMask(chainId, InfoComp::SPRITEAT)) {
+        return;
+    }
     // Change ID of the last sprite of the tail
     SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(chainId);
     SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(chainId);
@@ -142,6 +150,13 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
 
 void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager)
 {
+    auto &masks = entityManager.getMasks();
+
+    if (id >= masks.size() || !masks[id].has_value() || !entityManager.hasMask(id, InfoComp::VEL) || !entityManager.hasMask(id, InfoComp::PATTERN) || !entityManager.hasMask(id, InfoComp::POS) || !entityManager.hasMask(id, InfoComp::LIFE) || !entityManager.hasMask(id, InfoComp::SPRITEAT) ||
+        !entityManager.hasMask(id, InfoComp::SPRITEID)) {
+        return;
+    }
+
     Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
     Pattern &pat = componentManager.getSingleComponent<Pattern>(id);
     Position &pos = componentManager.getSingleComponent<Position>(id);
@@ -153,7 +168,6 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
     // sf::Vector2u windowsSize = this->_window->getSize();
     std::size_t speedFactor = 6;
     // float scal = 1.5;
-    auto &masks = entityManager.getMasks();
 
     // rand a position with the size of the screen
     float randTpX = (rand() % static_cast<int>(this->_screenSize->x));
@@ -169,7 +183,7 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
     if (pat.statusTime == 0)
         pat.statusTime = this->_clock->getElapsedTime().asSeconds();
 
-    if (!masks[pat.focusEntity].has_value()) {
+    if (pat.focusEntity < masks.size() && !masks[pat.focusEntity].has_value()) {
         setRandIdPlayer(pat, entityManager);
         return;
     }
@@ -234,7 +248,7 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
                 speedFactor = 1;
             }
         }
-        if (checkPlayer) {
+        if (checkPlayer && pat.focusEntity < masks.size() && masks[pat.focusEntity].has_value() && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
             posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
             vel.x = ((posPlayer.x - 20) - pos.x) / 60;
             vel.y = ((posPlayer.y - 20) - pos.y) / 60;
@@ -278,7 +292,7 @@ void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager,
         break;
     }
 
-    if (checkPlayer) {
+    if (checkPlayer && pat.focusEntity < masks.size() && masks[pat.focusEntity].has_value() && entityManager.hasMask(pat.focusEntity, InfoComp::POS)) {
         posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
         spriteAttribut.rotation = (atan2(posPlayer.y - pos.y, posPlayer.x - pos.x) * 180 / M_PI - 180);
     }
