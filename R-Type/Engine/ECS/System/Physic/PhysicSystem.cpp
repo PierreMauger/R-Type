@@ -144,9 +144,6 @@ void PhysicSystem::killWhenDisappeared(EntityManager &entityManager, ComponentMa
         componentManager.getSingleComponent<Controllable>(i).kill = 0;
         componentManager.getSingleComponent<Controllable>(i).death += 1;
         componentManager.getSingleComponent<SpriteAttribut>(i).rotation = 0;
-        componentManager.getSingleComponent<CooldownShoot>(i).tripleShoot = 0;
-        componentManager.getSingleComponent<CooldownShoot>(i).size = 1;
-        componentManager.getSingleComponent<CooldownShoot>(i).shootDelay = 1;
         for (auto j : entityManager.getMaskCategory(this->_shieldTag)) {
             if (componentManager.getSingleComponent<Parent>(j).id == componentManager.getSingleComponent<SyncID>(i).id) {
                 componentManager.removeAllComponents(j);
