@@ -64,8 +64,8 @@
 #define S_PARALLAX_2 15
 
 // Devoureur
-#define S_DEVOURER_HEAD 16
-#define S_DEVOURER_BODY 17
+#define S_DEVOURER_HEAD 17
+#define S_DEVOURER_BODY 16
 #define S_DEVOURER_TAIL 18
 
 // Cthulhu
