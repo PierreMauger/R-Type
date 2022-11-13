@@ -26,6 +26,120 @@ bool EnemySystem::setRandIdPlayer(Pattern &pat, EntityManager &entityManager)
     return true;
 }
 
+void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastChainSpriteId, ComponentManager &componentManager, EntityManager &entityManager)
+{
+    auto &masks = entityManager.getMasks();
+    std::size_t chainId = 0;
+    float scal = 0.5f;
+    Chain chain;
+
+    // Search the begin of the tail
+    for (std::size_t j = 0; j < masks.size(); j++) {
+        if (!entityManager.hasMask(j, InfoComp::CHAIN))
+            continue;
+        chain = componentManager.getSingleComponent<Chain>(j);
+        if (chain.partInfo == firstChainSpriteId) {
+            chainId = j;
+            break;
+        }
+    }
+    if (!masks[chainId].has_value()) {
+        std::cout << "Error: chainId is not valid : " << chainId << std::endl;
+        return;
+    }
+
+    while (chain.partInfo != lastChainSpriteId) {
+        Position lastPos = componentManager.getSingleComponent<Position>(chainId);
+        Position &pos = componentManager.getSingleComponent<Position>(chain.nextId);
+        Velocity &vel = componentManager.getSingleComponent<Velocity>(chain.nextId);
+        SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(chain.nextId);
+
+        spriteAttribut.rotation = (atan2(lastPos.y - pos.y, lastPos.x - pos.x) * 180 / M_PI - 180);
+
+        std::cout << "chainId: " << chain.nextId << std::endl;
+        vel.x = (lastPos.x - pos.x) / 10 + (chain.diffX * fabs(cos(spriteAttribut.rotation)));
+        vel.y = (lastPos.y - pos.y) / 10 + (chain.diffX * fabs(sin(spriteAttribut.rotation)));
+
+        std::cout << "vel.x: " << vel.x << " vel.y: " << vel.y << std::endl;
+
+        // std::cout << "diff X: " << (chain.diffX * fabs(cos(spriteAttribut.rotation))) << std::endl;
+        // std::cout << "diff Y: " << (chain.diffX * fabs(sin(spriteAttribut.rotation))) << std::endl;
+
+        //update chain
+        chainId = chain.nextId;
+        chain = componentManager.getSingleComponent<Chain>(chain.nextId);
+    }
+}
+
+void EnemySystem::devourerPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager)
+{
+    Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
+    Pattern &pat = componentManager.getSingleComponent<Pattern>(id);
+    Position &pos = componentManager.getSingleComponent<Position>(id);
+    Life &life = componentManager.getSingleComponent<Life>(id);
+    SpriteAttribut &spriteAttribut = componentManager.getSingleComponent<SpriteAttribut>(id);
+    SpriteID &spriteID = componentManager.getSingleComponent<SpriteID>(id);
+    Position posPlayer = {0, 0, 0};
+    auto &masks = entityManager.getMasks();
+
+    // float delayTransform = 5;
+    float delayAttack = 5;
+    float delayMove = 10;
+
+    bool checkPlayer = true;
+
+    if (pat.statusTime == 0)
+        pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+
+    if (!masks[pat.focusEntity].has_value()) {
+        setRandIdPlayer(pat, entityManager);
+        return;
+    }
+
+    switch (pat.status) {
+    case TypeStatus::SEARCH:
+        pat.status = TypeStatus::MOVE;
+        if (!this->setRandIdPlayer(pat, entityManager)) {
+            pat.status = TypeStatus::SEARCH;
+            checkPlayer = false;
+        }
+        break;
+
+    case TypeStatus::MOVE:
+        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayMove) {
+            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            pat.status = TypeStatus::ATTACK;
+            
+        }
+        if (checkPlayer) {
+            posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+            vel.x = ((posPlayer.x - 20) - pos.x) / 80;
+            vel.y = ((posPlayer.y - 20) - pos.y) / 80;
+        }
+        break;
+
+    case TypeStatus::ATTACK:
+        if (this->_clock->getElapsedTime().asSeconds() - pat.statusTime >= delayAttack) {
+            pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+            pat.status = TypeStatus::SEARCH;
+        }
+        vel.x = ((pat.lastPosFocus.x) - pos.x) / 60;
+        vel.y = ((pat.lastPosFocus.y) - pos.y) / 60;
+        break;
+
+    default:
+        pat.status = TypeStatus::SEARCH;
+        pat.statusTime = this->_clock->getElapsedTime().asSeconds();
+        break;
+    }
+
+    if (checkPlayer) {
+        posPlayer = componentManager.getSingleComponent<Position>(pat.focusEntity);
+        spriteAttribut.rotation = (atan2(posPlayer.y - pos.y, posPlayer.x - pos.x) * 180 / M_PI - 180);
+    }
+    chainPattern(S_DEVOURER_HEAD, S_DEVOURER_TAIL, componentManager, entityManager);
+}
+
 void EnemySystem::cthulhuPattern(size_t id, ComponentManager &componentManager, EntityManager &entityManager)
 {
     Velocity &vel = componentManager.getSingleComponent<Velocity>(id);
@@ -254,6 +368,10 @@ void EnemySystem::update(ComponentManager &componentManager, EntityManager &enti
         }
         if (pat.type == TypePattern::CTHULHU) {
             this->cthulhuPattern(i, componentManager, entityManager);
+            continue;
+        }
+        if (pat.type == TypePattern::DEVOUREROSC) {
+            this->devourerPattern(i, componentManager, entityManager);
             continue;
         }
         if (entityManager.hasMask(i, cooldownEnemy)) {

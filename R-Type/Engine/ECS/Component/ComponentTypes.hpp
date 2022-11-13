@@ -48,6 +48,7 @@ namespace eng
         BUTTON = 1 << 21,
         SHIELD = 1 << 22,
         SCENE = 1 << 23,
+        CHAIN = 1 << 24,
     };
 }
 
@@ -243,7 +244,8 @@ enum TypeStatus {
     SEARCH,
     ATTACK,
     SHOOT,
-    TRANSFORM
+    TRANSFORM,
+    TELEPORT
 };
 
 /**
@@ -359,5 +361,16 @@ enum SceneType {
 typedef struct Scene {
         std::size_t id = 0;
 } Scene;
+
+/**
+ * @struct Chain
+ * @brief The chain component.
+ */
+typedef struct Chain {
+        std::size_t partInfo = 0;
+        std::size_t nextId = 0;
+        std::size_t diffX = 0;
+        std::size_t diffY = 0;
+} Chain;
 
 #endif // COMPONENTTYPES_HPP

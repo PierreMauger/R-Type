@@ -59,6 +59,7 @@ void Server::initComponents()
     componentManager.bindComponent<Button>();
     componentManager.bindComponent<Shield>();
     componentManager.bindComponent<Scene>();
+    componentManager.bindComponent<Chain>();
 }
 
 void Server::initEntities()

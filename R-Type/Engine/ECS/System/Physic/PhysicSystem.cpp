@@ -317,6 +317,8 @@ void PhysicSystem::physicVessel(ComponentManager &componentManager, EntityManage
 
 void PhysicSystem::physicPattern(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i)
 {
+    if (entityManager.hasMask(i, (InfoComp::PATTERN | InfoComp::CHAIN)))
+        return;
     if (entityManager.hasMask(i, InfoComp::PATTERN)) {
         Position &pos = componentManager.getSingleComponent<Position>(i);
         Size size = componentManager.getSingleComponent<Size>(i);
