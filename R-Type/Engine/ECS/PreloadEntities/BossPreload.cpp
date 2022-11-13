@@ -19,7 +19,7 @@ void BossPreload::preload(Graphic &graphic, EntityManager &entityManager, Compon
     componentManager.getComponent(typeid(Enemy)).emplaceData(id, Enemy{true});
     componentManager.getComponent(typeid(Size)).emplaceData(id, Size{96 * size.x, 96 * size.y});
     componentManager.getComponent(typeid(Life)).emplaceData(id, Life{1});
-    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{3});
+    componentManager.getComponent(typeid(DropBonus)).emplaceData(id, DropBonus{randBonus});
     componentManager.getComponent(typeid(CooldownShoot)).emplaceData(id, CooldownShoot{0, 0.5});
     componentManager.getComponent(typeid(SyncID)).emplaceData(id, SyncID{*syncId});
     *syncId += 1;
