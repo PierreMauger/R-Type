@@ -11,9 +11,9 @@
 /// @cond
 #include "Engine/ECS/Component/ComponentManager.hpp"
 #include "Engine/ECS/Entity/EntityManager.hpp"
-#include "Engine/Network/Serializer.hpp"
 #include "Engine/Network/NetCommon.hpp"
 #include "Engine/Network/Room.hpp"
+#include "Engine/Network/Serializer.hpp"
 #include "Includes.hpp"
 
 /// @endcond
@@ -55,6 +55,8 @@ namespace eng
 
             // void pushComponents(std::vector<uint8_t> &packet, std::size_t mask, std::size_t id, ComponentManager &componentManager);
             void getComponents(std::vector<uint8_t> &packet, std::size_t id, std::size_t mask, std::size_t &adv, ComponentManager &componentManager);
+
+            std::shared_ptr<sf::Clock> _clock;
 
         public:
             /**
@@ -112,6 +114,13 @@ namespace eng
              * @param client A reference to the Client who send the packet
              */
             // void deserializeInput(std::vector<uint8_t> packet, EntityManager &entityManager, ComponentManager &componentManager);
+
+            /**
+             * @brief Set clock
+             * @fn void setClock(std::shared_ptr<sf::Clock> clock)
+             * @param clock The clock to set
+             */
+            void setClock(std::shared_ptr<sf::Clock> clock);
     };
 }
 

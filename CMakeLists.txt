@@ -128,6 +128,7 @@ set(ENGINE_SRC
     ${ENGINE_ROOT}/ECS/System/Animation/AnimationSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Score/ScoreSystem.cpp
     ${ENGINE_ROOT}/ECS/System/Sound/SoundSystem.cpp
+    ${ENGINE_ROOT}/ECS/System/EntityTimeOut/EntityTimeOutSystem.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/MenuPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/LobbyPreload.cpp
     ${ENGINE_ROOT}/ECS/PreloadEntities/RoomPreload.cpp

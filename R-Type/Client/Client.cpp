@@ -7,6 +7,8 @@ Client::Client()
     this->initSystems();
     this->initComponents();
     this->initEntities();
+
+    this->_gameSerializer.setClock(this->_engine.getGraphic().getClock());
 }
 
 void Client::createNetwork()
@@ -36,8 +38,9 @@ void Client::initSystems()
 #endif
     systemManager.addSystem(std::make_shared<EnemySystem>(graphic, entityManager));
     systemManager.addSystem(std::make_shared<ScoreSystem>(entityManager));
-    systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
+    // systemManager.addSystem(std::make_shared<SoundSystem>(graphic, entityManager, sounds));
     systemManager.addSystem(std::make_shared<ClickSystem>(graphic, entityManager));
+    systemManager.addSystem(std::make_shared<EntityTimeOutSystem>(graphic, entityManager));
 }
 
 void Client::initComponents()
@@ -118,7 +121,6 @@ void Client::updateNetwork()
     Graphic &graphic = this->_engine.getGraphic();
 
     *graphic.getSyncId() += 1;
-
     if (this->_network == nullptr) {
         if (this->_engine.getGraphic().getIp()->size() == 0 || (*this->_engine.getGraphic().getPort()) == 0)
             return;

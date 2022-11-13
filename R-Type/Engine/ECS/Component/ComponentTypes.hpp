@@ -280,6 +280,7 @@ typedef struct Pattern {
  */
 typedef struct SyncID {
         std::size_t id = 0;
+        float lastRefresh = 0.0f;
 } SyncID;
 
 /**
