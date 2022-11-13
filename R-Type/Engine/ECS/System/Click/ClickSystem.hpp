@@ -45,8 +45,12 @@ namespace eng
         public:
             /**
              * @brief ClickSystem constructor.
-             * @fn ClickSystem(Graphic &graphic, EntityManager &entityManager)
+             * @fn ClickSystem(Graphic &graphic, std::shared_ptr<std::size_t> port, std::shared_ptr<std::string> ip, std::shared_ptr<bool> isLocal, std::shared_ptr<std::size_t> syncId, EntityManager &entityManager)
              * @param graphic A reference to the Graphic
+             * @param port A shared pointer to the port
+             * @param ip A shared pointer to the ip
+             * @param isLocal A shared pointer to the boolean representing if the client is playing in local or online
+             * @param syncId The synchronized id of the client
              * @param entityManager A reference to the EntityManager
              */
             ClickSystem(Graphic &graphic, EntityManager &entityManager);

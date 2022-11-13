@@ -62,6 +62,7 @@ namespace eng
              * @fn PhysicSystem(Graphic &graphic, EntityManager &entityManager)
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
+             * @param syncId A shared pointer to the synchronized id of the client
              */
             PhysicSystem(Graphic &graphic, EntityManager &entityManager);
             /**

@@ -39,6 +39,7 @@ namespace eng
              * @fn SoundSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer)
              * @param graphic A reference to the Graphic
              * @param entityManager A reference to the EntityManager
+             * @param soundBuffer A shared pointer to the vector of soundbuffers
              */
             SoundSystem(Graphic &graphic, EntityManager &entityManager, std::shared_ptr<std::vector<sf::SoundBuffer>> soundBuffer);
             /**
