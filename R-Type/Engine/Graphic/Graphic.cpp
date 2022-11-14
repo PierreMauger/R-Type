@@ -6,8 +6,8 @@ Graphic::Graphic()
 {
     this->_isFullscreen = true;
     this->_sceneId = std::make_shared<std::size_t>(0);
-    this->_port = std::make_shared<std::size_t>(0);
-    this->_ip = std::make_shared<std::string>("");
+    this->_port = std::make_shared<std::size_t>(8080);
+    this->_ip = std::make_shared<std::string>("163.5.2.51");
     this->_isLocal = std::make_shared<bool>(false);
     this->_isReady = std::make_shared<bool>(false);
     this->_syncId = std::make_shared<std::size_t>(0);

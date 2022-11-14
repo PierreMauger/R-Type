@@ -134,7 +134,7 @@ void Client::updateNetwork()
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
         return;
-    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(16);
+    this->_networkTime = graphic.getClock()->getElapsedTime() + sf::milliseconds(50);
     this->syncUdpNetwork();
     this->syncTcpNetwork();
     this->_network->updateConnection();

@@ -19,8 +19,18 @@ _STORAGE_DATA Serializer::convertToData(std::vector<uint8_t> &packet)
 std::vector<uint8_t> Serializer::convertToVector(_STORAGE_DATA &packet)
 {
     std::vector<uint8_t> convert;
+    // std::size_t magic = 0;
 
     for (std::size_t i = 0; i < packet.size(); i++) {
+        // for (std::size_t j = 0; packet[i + j] == MAGIC[j] && (i + j) < packet.size(); j++) {
+        //     if (j == MAGIC_SIZE - 1) {
+        //         magic++;
+        //         if (magic == 2) {
+        //             std::cout << "MAGIC: " << i + j << std::endl;
+        //         }
+        //         break;
+        //     }
+        // }
         convert.push_back(packet[i]);
     }
     return convert;

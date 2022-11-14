@@ -27,7 +27,7 @@
 
 #include "Queue.hpp"
 
-#define _NET_BUFFER_SIZE 4096
+#define _NET_BUFFER_SIZE 512
 
 typedef boost::array<uint8_t, _NET_BUFFER_SIZE> _STORAGE_DATA;
 typedef Queue<_STORAGE_DATA> _QUEUE_TYPE;
