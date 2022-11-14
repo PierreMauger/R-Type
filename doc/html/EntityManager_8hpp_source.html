@@ -106,15 +106,16 @@ $(function() {
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            std::size_t <a class="code" href="classeng_1_1EntityManager.html#af9006bfeddec8ff81c9fdb7ac7b6669e">getBySyncId</a>(std::size_t syncId, <a class="code" href="classeng_1_1ComponentManager.html">ComponentManager</a> &amp;componentManager);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordtype">void</span> clear();</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    };</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENTITYMANAGER_HPP</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keywordtype">void</span> <a class="code" href="classeng_1_1EntityManager.html#a33ed44bcfc3d7cf807d47d81dad2571a">clear</a>();</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    };</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// ENTITYMANAGER_HPP</span></div>
 <div class="ttc" id="aComponentManager_8hpp_html"><div class="ttname"><a href="ComponentManager_8hpp.html">ComponentManager.hpp</a></div><div class="ttdoc">Functions definitions for the ComponentManager containing/handling the engine's components.</div></div>
 <div class="ttc" id="aIncludes_8hpp_html"><div class="ttname"><a href="Includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
 <div class="ttc" id="aclasseng_1_1ComponentManager_html"><div class="ttname"><a href="classeng_1_1ComponentManager.html">eng::ComponentManager</a></div><div class="ttdoc">The engine's ComponentManager.</div><div class="ttdef"><b>Definition:</b> ComponentManager.hpp:29</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html"><div class="ttname"><a href="classeng_1_1EntityManager.html">eng::EntityManager</a></div><div class="ttdoc">The engine's EntityManager.</div><div class="ttdef"><b>Definition:</b> EntityManager.hpp:28</div></div>
+<div class="ttc" id="aclasseng_1_1EntityManager_html_a33ed44bcfc3d7cf807d47d81dad2571a"><div class="ttname"><a href="classeng_1_1EntityManager.html#a33ed44bcfc3d7cf807d47d81dad2571a">eng::EntityManager::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Clear a component.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:85</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html_a460e0548f9af3fb3e9b41c38cb9666b8"><div class="ttname"><a href="classeng_1_1EntityManager.html#a460e0548f9af3fb3e9b41c38cb9666b8">eng::EntityManager::EntityManager</a></div><div class="ttdeci">EntityManager()</div><div class="ttdoc">EntityManager constructor.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:5</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html_a465dc393b0da213cf74cd343277c315d"><div class="ttname"><a href="classeng_1_1EntityManager.html#a465dc393b0da213cf74cd343277c315d">eng::EntityManager::updateMask</a></div><div class="ttdeci">void updateMask(std::size_t id, std::optional&lt; std::size_t &gt; mask)</div><div class="ttdoc">Update a mask.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:54</div></div>
 <div class="ttc" id="aclasseng_1_1EntityManager_html_a5c4b8da12d8df10cc2362489148e9454"><div class="ttname"><a href="classeng_1_1EntityManager.html#a5c4b8da12d8df10cc2362489148e9454">eng::EntityManager::removeMask</a></div><div class="ttdeci">void removeMask(std::size_t id)</div><div class="ttdoc">Remove a mask.</div><div class="ttdef"><b>Definition:</b> EntityManager.cpp:44</div></div>

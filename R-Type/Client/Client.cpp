@@ -15,6 +15,7 @@ void Client::createNetwork()
 {
     this->_network = std::make_unique<ClientNetwork>(*this->_engine.getGraphic().getIp(), *this->_engine.getGraphic().getPort());
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
     this->_network->run();
 
     this->_id = this->_network->getId();
@@ -71,6 +72,7 @@ void Client::initComponents()
     componentManager.bindComponent<Button>();
     componentManager.bindComponent<Shield>();
     componentManager.bindComponent<Scene>();
+    componentManager.bindComponent<Chain>();
 }
 
 void Client::initEntities()
@@ -80,6 +82,7 @@ void Client::initEntities()
     LobbyPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     RoomPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
     ScoreTextPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
+    BackgroundMusicPreload::preload(this->_engine.getGraphic(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager());
 }
 
 void Client::syncUdpNetwork()
@@ -129,7 +132,7 @@ void Client::updateNetwork()
         } catch (const std::exception &e) {
             return;
         }
-        *this->_engine.getGraphic().getSceneId() = SceneType::LOBBY;
+        *this->_engine.getGraphic().getSceneId() = SceneType::GAME;
     }
 
     if (graphic.getClock()->getElapsedTime() <= this->_networkTime)
@@ -239,7 +242,7 @@ void Client::mainLoop()
 {
     Graphic &graphic = this->_engine.getGraphic();
     ECS &ecs = this->_engine.getECS();
-    std::vector<Level> &level = this->_engine.getLoader().getLevels();
+    std::vector<Level> &level = !*(graphic.getIsLocal()) ? this->_engine.getLoader().getLevelsSolo() : this->_engine.getLoader().getLevels();
     std::size_t levelId = 0;
 
     while (graphic.getWindow()->isOpen()) {

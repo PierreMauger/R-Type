@@ -182,7 +182,7 @@ void PhysicSystem::bonusFound(ComponentManager &componentManager, EntityManager 
     componentManager.removeAllComponents(j);
     entityManager.removeMask(j);
     if (drop.id == 0)
-        componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 > 0.1 ? componentManager.getSingleComponent<CooldownShoot>(i).shootDelay /= 2 : 0;
+        componentManager.getSingleComponent<CooldownShoot>(i).shootDelay = 0.5;
     if (drop.id == 1)
         componentManager.getSingleComponent<CooldownShoot>(i).size < 3 ? componentManager.getSingleComponent<CooldownShoot>(i).size += 1 : 0;
     if (drop.id == 3)
@@ -261,8 +261,12 @@ void PhysicSystem::collisionFireballEnemy(ComponentManager &componentManager, En
 {
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile proj = componentManager.getSingleComponent<Projectile>(i);
+    auto &masks = entityManager.getMasks();
 
     for (auto k : entityManager.getMaskCategory(this->_shieldTag)) {
+        if (k >= masks.size() || !masks[k].has_value() || !entityManager.hasMask(k, InfoComp::PARENT) || !entityManager.hasMask(j, InfoComp::SYNCID) || !entityManager.hasMask(k, InfoComp::SHIELD)) {
+            continue;
+        }
         if (componentManager.getSingleComponent<Parent>(k).id == componentManager.getSingleComponent<SyncID>(j).id) {
             Shield &shield = componentManager.getSingleComponent<Shield>(k);
             if (proj.damage >= shield.life) {
@@ -280,14 +284,14 @@ void PhysicSystem::collisionCheckShield(ComponentManager &componentManager, Enti
 {
     Life &hp = componentManager.getSingleComponent<Life>(j);
     Projectile proj = componentManager.getSingleComponent<Projectile>(i);
-    Parent par = componentManager.getSingleComponent<Parent>(i);
+    std::size_t idPar = entityManager.getBySyncId(componentManager.getSingleComponent<Parent>(i).id, componentManager);
 
     if (proj.damage >= hp.life) {
         if (entityManager.hasMask(j, InfoComp::DROP))
             this->createBonus(j, componentManager.getSingleComponent<DropBonus>(j).id, componentManager, entityManager);
         hp.life = 0;
-        if (entityManager.hasMask(par.id, InfoComp::CONTROLLABLE))
-            componentManager.getSingleComponent<Controllable>(par.id).kill++;
+        if (entityManager.hasMask(idPar, InfoComp::CONTROLLABLE))
+            componentManager.getSingleComponent<Controllable>(idPar).kill++;
         if (entityManager.hasMask(j, InfoComp::DIS))
             componentManager.getSingleComponent<Disappearance>(j).dis = true;
         else {
@@ -340,7 +344,7 @@ bool PhysicSystem::collisionFireball(std::size_t i, ComponentManager &componentM
         return false;
     Parent par = componentManager.getSingleComponent<Parent>(i);
     std::size_t idPar = entityManager.getBySyncId(par.id, componentManager);
-    if (idPar < masks.size() && !masks[idPar].has_value()) {
+    if ((idPar >= masks.size() || !masks[idPar].has_value())) {
         componentManager.removeAllComponents(i);
         entityManager.removeMask(i);
         it--;
@@ -368,6 +372,8 @@ void PhysicSystem::physicVessel(ComponentManager &componentManager, EntityManage
 
 void PhysicSystem::physicPattern(ComponentManager &componentManager, EntityManager &entityManager, std::size_t i)
 {
+    if (entityManager.hasMask(i, (InfoComp::PATTERN | InfoComp::CHAIN)))
+        return;
     if (entityManager.hasMask(i, InfoComp::PATTERN)) {
         Position &pos = componentManager.getSingleComponent<Position>(i);
         Size size = componentManager.getSingleComponent<Size>(i);
@@ -392,6 +398,8 @@ bool PhysicSystem::physicAnim(ComponentManager &componentManager, EntityManager 
     }
     pos.y += vel.y;
     pos.x += vel.x;
+    if (entityManager.hasMask(i, (InfoComp::CHAIN)))
+        return false;
     if ((entityManager.hasMask(i, InfoComp::PROJECTILE) && pos.x > _window->getSize().x + 100) || pos.y > _window->getSize().y || pos.x < -100 || pos.y < -100) {
         entityManager.removeMask(i);
         componentManager.removeAllComponents(i);

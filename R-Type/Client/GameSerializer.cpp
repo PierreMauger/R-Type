@@ -85,6 +85,9 @@ void GameSerializer::getComponents(std::vector<uint8_t> &packet, std::size_t id,
         case 23:
             this->updateEntity<Scene>(packet, id, adv, componentManager);
             break;
+        case 24:
+            this->updateEntity<Chain>(packet, id, adv, componentManager);
+            break;
         default:
             break;
         }

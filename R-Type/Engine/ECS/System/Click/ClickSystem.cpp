@@ -45,6 +45,7 @@ void ClickSystem::update(ComponentManager &componentManager, EntityManager &enti
                 if (button.type == ButtonType::PLAY_SOLO) {
                     *this->_sceneId = SceneType::GAME;
                     *this->_isLocal = true;
+                    std::srand(std::time(NULL));
                     VesselPreload::preload(this->_window->getSize(), this->_screenSize, entityManager, componentManager, this->_syncId, *this->_syncId % 4);
                 } else if (button.type == ButtonType::QUIT) {
                     this->_window->close();

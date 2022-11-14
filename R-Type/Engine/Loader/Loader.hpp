@@ -32,6 +32,7 @@ namespace eng
             std::vector<sf::Sprite> _sprites;
             std::vector<sf::SoundBuffer> _sounds;
             std::vector<Level> _level;
+            std::vector<Level> _levelSolo;
 
         public:
             /**
@@ -65,6 +66,8 @@ namespace eng
             std::vector<sf::SoundBuffer> &getSounds();
 
             std::vector<Level> &getLevels();
+
+            std::vector<Level> &getLevelsSolo();
 
             /**
              * @brief Load the sprites.

@@ -64,6 +64,7 @@ void Server::initComponents()
     componentManager.bindComponent<Button>();
     componentManager.bindComponent<Shield>();
     componentManager.bindComponent<Scene>();
+    componentManager.bindComponent<Chain>();
 }
 
 void Server::initEntities()
@@ -258,9 +259,7 @@ void Server::mainLoop()
         this->manageEvent();
         if (this->manageEnemy(level[levelId], graphic, ecs)) {
             this->_isLevelFinished = false;
-            if (level.size() - 1 == levelId)
-                graphic.getWindow()->close();
-            else
+            if (level.size() - 1 != levelId)
                 levelId++;
         }
         this->updateRooms();
