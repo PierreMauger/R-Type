@@ -219,16 +219,14 @@ void Client::updateKeys()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Left);
         this->_network->udpMsg(packet);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Right);
         this->_network->udpMsg(packet);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Up);
         this->_network->udpMsg(packet);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         _STORAGE_DATA packet = this->_gameSerializer.serializeInput(this->_id, sf::Keyboard::Down);
         this->_network->udpMsg(packet);
     }

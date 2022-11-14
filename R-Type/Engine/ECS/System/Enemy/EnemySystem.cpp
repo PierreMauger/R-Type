@@ -47,7 +47,6 @@ void EnemySystem::lifeChainPattern(std::size_t firstChainSpriteId, std::size_t l
     }
     chainId = baseId;
     if (chainId < masks.size() && !masks[chainId].has_value()) {
-        std::cout << "Error: chainId is not valid : " << chainId << std::endl;
         return;
     }
 
@@ -95,7 +94,6 @@ void EnemySystem::chainPattern(std::size_t firstChainSpriteId, std::size_t lastC
         }
     }
     if (chainId < masks.size() && !masks[chainId].has_value()) {
-        std::cout << "Error: chainId is not valid : " << chainId << std::endl;
         return;
     }
 

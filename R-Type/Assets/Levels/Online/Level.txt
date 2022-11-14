@@ -1,6 +1,12 @@
-# charPerScreen:3
---------
-- E  O -
--E E B -
-- E  O -
---------
+# charPerScreen:9
+--------------------------------------------------------
+-O E   O           O                    O    O         -
+- E O               O O              OO O  O O         -
+-O E B O             EO              O  O  O O         -
+- E O               O O              O OO  O O         -
+-O E   O          BO                CO     O          D-
+- E O               O O              OOOOOOOOO         -
+-O E B O             EO              O  EO   O         -
+- E O               O O              O O O O O         -
+-O E   O           O                   O  EO           -
+--------------------------------------------------------
