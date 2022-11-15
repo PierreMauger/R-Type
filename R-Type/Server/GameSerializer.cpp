@@ -160,24 +160,22 @@ void GameSerializer::deserializeInput(std::vector<uint8_t> packet, EntityManager
     }
 
     auto &vel = componentManager.getSingleComponent<Velocity>(client.getVesselId());
+    auto &pos = componentManager.getSingleComponent<Position>(client.getVesselId());
     auto &sht = componentManager.getSingleComponent<CooldownShoot>(client.getVesselId());
+
     if (keyPress == sf::Keyboard::Key::Left) {
-        vel.x += vel.baseSpeedX * -1;
+        pos.x += vel.baseSpeedX * -1;
         return;
-    }
-    if (keyPress == sf::Keyboard::Key::Right) {
-        vel.x += vel.baseSpeedX;
+    } else if (keyPress == sf::Keyboard::Key::Right) {
+        pos.x += vel.baseSpeedX;
         return;
-    }
-    if (keyPress == sf::Keyboard::Key::Up) {
-        vel.y += vel.baseSpeedY * -1;
+    } else if (keyPress == sf::Keyboard::Key::Up) {
+        pos.y += vel.baseSpeedY * -1;
         return;
-    }
-    if (keyPress == sf::Keyboard::Key::Down) {
-        vel.y += vel.baseSpeedY;
+    } else if (keyPress == sf::Keyboard::Key::Down) {
+        pos.y += vel.baseSpeedY;
         return;
-    }
-    if ((keyPress == sf::Keyboard::Key::Enter && graphic.getClock()->getElapsedTime().asSeconds() > sht.lastShoot)) {
+    } else if ((keyPress == sf::Keyboard::Key::Enter && graphic.getClock()->getElapsedTime().asSeconds() > sht.lastShoot)) {
         std::size_t idPar = componentManager.getSingleComponent<SyncID>(client.getVesselId()).id;
         sht.lastShoot = graphic.getClock()->getElapsedTime().asSeconds() + sht.shootDelay;
         ProjectilePreload::createShoot(entityManager, componentManager, graphic.getWindow()->getSize(), graphic.getScreenSize(), {2, 15, 0, 0, idPar, syncId, sht.tripleShoot});

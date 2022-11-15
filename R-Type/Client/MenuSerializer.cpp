@@ -136,9 +136,7 @@ _STORAGE_DATA MenuSerializer::serializeRoomAction(std::size_t clientId, std::siz
     return this->convertToData(packet);
 }
 
-void MenuSerializer::deserializeEvent(std::vector<uint8_t> packet)
+void MenuSerializer::deserializeEvent([[maybe_unused]] std::vector<uint8_t> packet)
 {
-    std::size_t adv = MAGIC_SIZE + sizeof(MenuPacketType);
-
     // TODO
 }

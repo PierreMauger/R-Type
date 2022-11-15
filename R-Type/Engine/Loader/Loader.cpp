@@ -42,7 +42,6 @@ std::vector<Level> &Loader::getLevelsSolo()
 void Loader::loadSprites(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
-    size_t ids = 0;
 
     for (auto &path : paths) {
         try {
@@ -70,7 +69,6 @@ void Loader::loadSprites(std::vector<std::string> paths)
 void Loader::loadSounds(std::vector<std::string> paths)
 {
     std::set<std::filesystem::path> sorted;
-    size_t ids = 0;
 
     for (auto &path : paths) {
         try {

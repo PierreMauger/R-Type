@@ -48,7 +48,6 @@ namespace eng
             GameSerializer _gameSerializer;
 
             std::shared_ptr<std::size_t> _syncId;
-            std::size_t _clientId = 0;
             std::vector<Client> _clients;
 
             std::size_t _roomId = 0;
