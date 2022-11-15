@@ -36,6 +36,15 @@ namespace eng
              * @param pos The obstacle position.
              */
             static void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::shared_ptr<std::size_t> syncId, sf::Vector2f pos);
+
+            /**
+             * @brief Preloads the devourer of gods.
+             * @fn void preload(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t &syncId, sf::Vector2f pos)
+             * @param graphic A reference to the engine graphics.
+             * @param entityManager A reference to the EntityManager.
+             * @param componentManager A reference to the ComponentManager.
+             */
+            static void preloadBody(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
     };
 }
 

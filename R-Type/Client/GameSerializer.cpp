@@ -134,6 +134,9 @@ void GameSerializer::deserializeEntity(std::vector<uint8_t> packet, EntityManage
         id = entityManager.addMask(mask, componentManager);
         componentManager.addComponent<SyncID>(id);
         componentManager.getSingleComponent<SyncID>(id) = syncId;
+        if (entityManager.hasMask(id, InfoComp::CHAIN)) {
+            DevourerPreload::preloadBody(engine.getGraphic(), entityManager, componentManager);
+        }
     }
     if (type == CrudType::DESTROY) {
         componentManager.removeAllComponents(id);
