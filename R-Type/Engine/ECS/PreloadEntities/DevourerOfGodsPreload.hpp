@@ -43,8 +43,9 @@ namespace eng
              * @param graphic A reference to the engine graphics.
              * @param entityManager A reference to the EntityManager.
              * @param componentManager A reference to the ComponentManager.
+             * @param idHead A reference to the head id.
              */
-            static void preloadBody(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager);
+            static void preloadBody(Graphic &graphic, EntityManager &entityManager, ComponentManager &componentManager, std::size_t idHead);
     };
 }
 
