@@ -136,13 +136,6 @@ void Server::syncUdpNetwork()
 {
     std::shared_ptr<_QUEUE_TYPE> dataIn = this->_network.getQueueInUdp();
 
-    for (auto id : this->_engine.getECS().getEntityManager().getMaskCategory(InfoComp::CONTROLLABLE)) {
-        auto &vel = this->_engine.getECS().getComponentManager().getSingleComponent<Velocity>(id);
-
-        vel.x = 0;
-        vel.y = 0;
-    }
-
     if (dataIn->empty())
         return;
     for (_STORAGE_DATA packet = dataIn->pop_front(); true; packet = dataIn->pop_front()) {
@@ -205,8 +198,8 @@ void Server::updateClients()
                 check = true;
         }
         if (!check) {
-            this->_clients.push_back(Client(connection, this->_clientId++));
-            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId, this->_clientId % 4);
+            this->_clients.push_back(Client(connection, this->_clients.size()));
+            std::size_t vesselId = VesselPreload::preload(this->_engine.getGraphic().getWindow()->getSize(), this->_engine.getGraphic().getScreenSize(), this->_engine.getECS().getEntityManager(), this->_engine.getECS().getComponentManager(), this->_syncId, this->_clients.size() % 4);
             this->_clients.back().setVesselId(vesselId);
         }
         check = false;

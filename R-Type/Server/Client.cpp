@@ -66,6 +66,11 @@ void Client::destroyClient(std::vector<Room> &rooms, EntityManager &entityManage
     }
 }
 
+std::size_t Client::getId() const
+{
+    return _id;
+}
+
 bool Client::operator==(const Client &client) const
 {
     return (this->_vesselId == client._vesselId && this->_isAlive == client._isAlive && this->_roomId == client._roomId && this->_isReady == client._isReady && this->_connection == client._connection);

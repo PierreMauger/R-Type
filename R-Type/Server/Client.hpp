@@ -120,6 +120,13 @@ namespace eng
             void destroyClient(std::vector<Room> &rooms, EntityManager &entityManager, ComponentManager &componentManager);
 
             /**
+             * @brief Get the client id
+             * @fn std::size_t getId()
+             * @return The client id
+             */
+            std::size_t getId() const;
+
+            /**
              * @brief Check if the client is the same as another client
              * @fn bool operator==(const Client &client)
              * @param client A shared pointer to the client to check
