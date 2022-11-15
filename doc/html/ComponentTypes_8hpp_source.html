@@ -106,244 +106,254 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        BUTTON = 1 &lt;&lt; 21,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        SHIELD = 1 &lt;&lt; 22,</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        SCENE = 1 &lt;&lt; 23,</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    };</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structPosition.html">   58</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structPosition.html">Position</a> {</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">float</span> x = 0.0f;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">float</span> y = 0.0f;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">float</span> z = 0.0f;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;} <a class="code" href="structPosition.html">Position</a>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structVelocity.html">   68</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structVelocity.html">Velocity</a> {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">float</span> x = 0.0f;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">float</span> y = 0.0f;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">float</span> z = 0.0f;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">float</span> baseSpeedX = 0.0f;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">float</span> baseSpeedY = 0.0f;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;} <a class="code" href="structVelocity.html">Velocity</a>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="structSize.html">   80</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSize.html">Size</a> {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordtype">float</span> x = 0.0f;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordtype">float</span> y = 0.0f;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;} <a class="code" href="structSize.html">Size</a>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">   89</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    HIGH = 0,</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    MEDIUM,</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    LOW</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno"><a class="line" href="structSpriteID.html">   99</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSpriteID.html">SpriteID</a> {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> priority = Priority::MEDIUM;</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        std::size_t curFrame = 0;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        std::size_t nbFrame = 0;</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keywordtype">bool</span> autoLoop = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordtype">bool</span> sign = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordtype">float</span> lastTime = 0.0f;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordtype">float</span> delay = 0.0f;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        std::size_t offsetX = 0;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        std::size_t offsetY = 0;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;} <a class="code" href="structSpriteID.html">SpriteID</a>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="structControllable.html">  116</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structControllable.html">Controllable</a> {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordtype">bool</span> con = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        std::size_t kill = 0;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        std::size_t death = 0;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;} <a class="code" href="structControllable.html">Controllable</a>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="structParallax.html">  126</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structParallax.html">Parallax</a> {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordtype">bool</span> par = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;} <a class="code" href="structParallax.html">Parallax</a>;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structProjectile.html">Projectile</a> {</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordtype">bool</span> proj = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        std::size_t damage = 1;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <span class="keywordtype">float</span> size = 1.0f;</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;} <a class="code" href="structProjectile.html">Projectile</a>;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
-<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="structLife.html">  144</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structLife.html">Life</a> {</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        std::size_t defaultLife = 1;</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        std::size_t life = defaultLife;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;} <a class="code" href="structLife.html">Life</a>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="structShield.html">  153</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structShield.html">Shield</a> {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        std::size_t defaultLife = 0;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        std::size_t life = defaultLife;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;} <a class="code" href="structShield.html">Shield</a>;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno"><a class="line" href="structEnemy.html">  162</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structEnemy.html">Enemy</a> {</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordtype">bool</span> enemy = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;} <a class="code" href="structEnemy.html">Enemy</a>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno"><a class="line" href="structAppearance.html">  170</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structAppearance.html">Appearance</a> {</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        <span class="keywordtype">bool</span> app = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordtype">float</span> end = 0.0f;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordtype">float</span> x_app = 0.0f;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordtype">float</span> invincible = 0.0f;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordtype">float</span> delay = 0.0f;</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;} <a class="code" href="structAppearance.html">Appearance</a>;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="structDisappearance.html">  182</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structDisappearance.html">Disappearance</a> {</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;        <span class="keywordtype">bool</span> dis = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keywordtype">float</span> end = 0.0f;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;} <a class="code" href="structDisappearance.html">Disappearance</a>;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
-<div class="line"><a name="l00191"></a><span class="lineno"><a class="line" href="structCooldownShoot.html">  191</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structCooldownShoot.html">CooldownShoot</a> {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordtype">float</span> lastShoot = 0.0f;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordtype">float</span> shootDelay = 2.0f;</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordtype">float</span> size = 1.0f;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        std::size_t tripleShoot = 0;</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;} <a class="code" href="structCooldownShoot.html">CooldownShoot</a>;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno"><a class="line" href="structCooldownBar.html">  202</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structCooldownBar.html">CooldownBar</a> {</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        <span class="keywordtype">bool</span> bar = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;} <a class="code" href="structCooldownBar.html">CooldownBar</a>;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno"><a class="line" href="structLifeBar.html">  210</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structLifeBar.html">LifeBar</a> {</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        <span class="keywordtype">bool</span> bar = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        std::size_t lifeMax = 1;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;} <a class="code" href="structLifeBar.html">LifeBar</a>;</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno"><a class="line" href="structParent.html">  219</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structParent.html">Parent</a> {</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        std::size_t id2 = 0;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="keywordtype">bool</span> follow = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;} <a class="code" href="structParent.html">Parent</a>;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="comment">// Type dépendant du patern</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">  230</a></span>&#160;<span class="comment"></span><span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> {</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    LINE = 0,</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    OSCILLATION,</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    BIGOSCILLATION,</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    CIRCLE,</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    DEVOUREROSC,</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    CTHULHU</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;};</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
-<div class="line"><a name="l00243"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">  243</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a> {</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    IDLE = 0,</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    MOVE,</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    SEARCH,</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    ATTACK,</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    SHOOT,</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    TRANSFORM</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;};</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
-<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">  256</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a> {</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    PHASE01 = 0,</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    PHASE02,</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    PHASE03</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;};</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
-<div class="line"><a name="l00266"></a><span class="lineno"><a class="line" href="structPattern.html">  266</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structPattern.html">Pattern</a> {</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;        <span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> type = TypePattern::LINE;</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        <span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a> status = TypeStatus::IDLE;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a> phase = TypePhase::PHASE01;</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keywordtype">float</span> angle = 0.0f;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keywordtype">float</span> statusTime = 0.0f;</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordtype">size_t</span> focusEntity = 0;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordtype">size_t</span> phaseCount = 0;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <a class="code" href="structPosition.html">Position</a> lastPosFocus = {0.0f, 0.0f, 0.0f};</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;} <a class="code" href="structPattern.html">Pattern</a>;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno"><a class="line" href="structSyncID.html">  281</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSyncID.html">SyncID</a> {</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="keywordtype">float</span> lastRefresh = 0.0f;</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;} <a class="code" href="structSyncID.html">SyncID</a>;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
-<div class="line"><a name="l00290"></a><span class="lineno"><a class="line" href="structDropBonus.html">  290</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structDropBonus.html">DropBonus</a> {</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;} <a class="code" href="structDropBonus.html">DropBonus</a>;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
-<div class="line"><a name="l00298"></a><span class="lineno"><a class="line" href="structText.html">  298</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structText.html">Text</a> {</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;        std::string str = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        <span class="keywordtype">bool</span> hasValue = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        std::size_t value = 0;</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="keywordtype">float</span> size = 0;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        sf::Color color = sf::Color::White;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        sf::Vector2f pos = {0.0f, 0.0f};</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        <span class="keywordtype">float</span> last = 0.0f;</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="keywordtype">float</span> delay = 0.0f;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;} <a class="code" href="structText.html">Text</a>;</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
-<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="structSoundID.html">  313</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSoundID.html">SoundID</a> {</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;        <span class="keywordtype">bool</span> play = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        <span class="keywordtype">bool</span> loop = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="keywordtype">float</span> pitch = 1.0f;</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;} <a class="code" href="structSoundID.html">SoundID</a>;</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
-<div class="line"><a name="l00324"></a><span class="lineno"><a class="line" href="structSpriteAttribut.html">  324</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSpriteAttribut.html">SpriteAttribut</a> {</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;        <span class="keywordtype">float</span> rotation = 0;</div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;        sf::FloatRect rect = sf::FloatRect();</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        sf::Color color = sf::Color::White;</div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        sf::Vector2f scale = {1.0f, 1.0f};</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        sf::Vector2f offset = {0.0f, 0.0f};</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        sf::Vector2f delay = {0.0f, 0.0f};</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;} <a class="code" href="structSpriteAttribut.html">SpriteAttribut</a>;</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;<span class="keyword">enum</span> ButtonType {</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    QUIT = 0,</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    BACK,</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    TEXTZONE,</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    CONNECT,</div>
-<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    PLAY_SOLO,</div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    READY,</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    CREATE_ROOM,</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;};</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno"><a class="line" href="structButton.html">  351</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structButton.html">Button</a> {</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        ButtonType type = QUIT;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        <span class="keywordtype">bool</span> selected = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        std::size_t maxSize = 15;</div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;} <a class="code" href="structButton.html">Button</a>;</div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="keyword">enum</span> <a class="code" href="structSceneType.html">SceneType</a> {</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    MENU = 0,</div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;    LOBBY,</div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    ROOM,</div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    GAME,</div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;};</div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160; </div>
-<div class="line"><a name="l00372"></a><span class="lineno"><a class="line" href="structScene.html">  372</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structScene.html">Scene</a> {</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
-<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;} <a class="code" href="structScene.html">Scene</a>;</div>
-<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160; </div>
-<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
-<div class="ttc" id="aComponentTypes_8hpp_html_a152e0c36b337a97595cf8e9d5dc937cb"><div class="ttname"><a href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a></div><div class="ttdeci">TypePhase</div><div class="ttdoc">The type of phase that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:256</div></div>
-<div class="ttc" id="aComponentTypes_8hpp_html_a315655b1bb5848c063491adffde62b15"><div class="ttname"><a href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a></div><div class="ttdeci">Priority</div><div class="ttdoc">Priority of the sprites to be displayed (background before foreground etc..).</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:89</div></div>
-<div class="ttc" id="aComponentTypes_8hpp_html_a58ec645a8af2e639f20c750ca31a504e"><div class="ttname"><a href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a></div><div class="ttdeci">TypeStatus</div><div class="ttdoc">The type of status that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:243</div></div>
-<div class="ttc" id="aComponentTypes_8hpp_html_aaf5b95d5b986f93429ceb6a7765c9965"><div class="ttname"><a href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a></div><div class="ttdeci">TypePattern</div><div class="ttdoc">The type of pattern that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:230</div></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        CHAIN = 1 &lt;&lt; 24,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structPosition.html">   59</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structPosition.html">Position</a> {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">float</span> x = 0.0f;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">float</span> y = 0.0f;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">float</span> z = 0.0f;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;} <a class="code" href="structPosition.html">Position</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="structVelocity.html">   69</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structVelocity.html">Velocity</a> {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">float</span> x = 0.0f;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">float</span> y = 0.0f;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">float</span> z = 0.0f;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">float</span> baseSpeedX = 0.0f;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">float</span> baseSpeedY = 0.0f;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;} <a class="code" href="structVelocity.html">Velocity</a>;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="structSize.html">   81</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSize.html">Size</a> {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keywordtype">float</span> x = 0.0f;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordtype">float</span> y = 0.0f;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;} <a class="code" href="structSize.html">Size</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">   90</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    HIGH = 0,</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    MEDIUM,</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    LOW</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;};</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="structSpriteID.html">  100</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSpriteID.html">SpriteID</a> {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a> priority = Priority::MEDIUM;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        std::size_t curFrame = 0;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        std::size_t nbFrame = 0;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keywordtype">bool</span> autoLoop = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keywordtype">bool</span> sign = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordtype">float</span> lastTime = 0.0f;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordtype">float</span> delay = 0.0f;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        std::size_t offsetX = 0;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        std::size_t offsetY = 0;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;} <a class="code" href="structSpriteID.html">SpriteID</a>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="structControllable.html">  117</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structControllable.html">Controllable</a> {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">bool</span> con = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        std::size_t kill = 0;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        std::size_t death = 0;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;} <a class="code" href="structControllable.html">Controllable</a>;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="structParallax.html">  127</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structParallax.html">Parallax</a> {</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keywordtype">bool</span> par = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;} <a class="code" href="structParallax.html">Parallax</a>;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structProjectile.html">Projectile</a> {</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordtype">bool</span> proj = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        std::size_t damage = 1;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordtype">float</span> size = 1.0f;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;} <a class="code" href="structProjectile.html">Projectile</a>;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno"><a class="line" href="structLife.html">  145</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structLife.html">Life</a> {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        std::size_t defaultLife = 1;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        std::size_t life = defaultLife;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;} <a class="code" href="structLife.html">Life</a>;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="structShield.html">  154</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structShield.html">Shield</a> {</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        std::size_t defaultLife = 0;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        std::size_t life = defaultLife;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;} <a class="code" href="structShield.html">Shield</a>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="structEnemy.html">  163</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structEnemy.html">Enemy</a> {</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        <span class="keywordtype">bool</span> enemy = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;} <a class="code" href="structEnemy.html">Enemy</a>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="structAppearance.html">  171</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structAppearance.html">Appearance</a> {</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordtype">bool</span> app = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordtype">float</span> end = 0.0f;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keywordtype">float</span> x_app = 0.0f;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordtype">float</span> invincible = 0.0f;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        <span class="keywordtype">float</span> delay = 0.0f;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;} <a class="code" href="structAppearance.html">Appearance</a>;</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="structDisappearance.html">  183</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structDisappearance.html">Disappearance</a> {</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keywordtype">bool</span> dis = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordtype">float</span> end = 0.0f;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;} <a class="code" href="structDisappearance.html">Disappearance</a>;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00192"></a><span class="lineno"><a class="line" href="structCooldownShoot.html">  192</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structCooldownShoot.html">CooldownShoot</a> {</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;        <span class="keywordtype">float</span> lastShoot = 0.0f;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;        <span class="keywordtype">float</span> shootDelay = 2.0f;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        <span class="keywordtype">float</span> size = 1.0f;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;        std::size_t tripleShoot = 0;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;} <a class="code" href="structCooldownShoot.html">CooldownShoot</a>;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
+<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="structCooldownBar.html">  203</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structCooldownBar.html">CooldownBar</a> {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;        <span class="keywordtype">bool</span> bar = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;} <a class="code" href="structCooldownBar.html">CooldownBar</a>;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="structLifeBar.html">  211</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structLifeBar.html">LifeBar</a> {</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        <span class="keywordtype">bool</span> bar = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        std::size_t lifeMax = 1;</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;} <a class="code" href="structLifeBar.html">LifeBar</a>;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="structParent.html">  220</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structParent.html">Parent</a> {</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        std::size_t id2 = 0;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keywordtype">bool</span> follow = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;} <a class="code" href="structParent.html">Parent</a>;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="comment">// Type dépendant du patern</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">  231</a></span>&#160;<span class="comment"></span><span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> {</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    LINE = 0,</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    OSCILLATION,</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    BIGOSCILLATION,</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    CIRCLE,</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    DEVOUREROSC,</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;    CTHULHU</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;};</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00244"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">  244</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a> {</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    IDLE = 0,</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    MOVE,</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    SEARCH,</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    ATTACK,</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;    SHOOT,</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;    TRANSFORM,</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;    TELEPORT</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;};</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno"><a class="line" href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">  258</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a> {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    PHASE01 = 0,</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    PHASE02,</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    PHASE03</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;};</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160; </div>
+<div class="line"><a name="l00268"></a><span class="lineno"><a class="line" href="structPattern.html">  268</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structPattern.html">Pattern</a> {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        <span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a> type = TypePattern::LINE;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;        <span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a> status = TypeStatus::IDLE;</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="keyword">enum</span> <a class="code" href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a> phase = TypePhase::PHASE01;</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordtype">float</span> angle = 0.0f;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;        <span class="keywordtype">float</span> statusTime = 0.0f;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;        <span class="keywordtype">size_t</span> focusEntity = 0;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="keywordtype">size_t</span> phaseCount = 0;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <a class="code" href="structPosition.html">Position</a> lastPosFocus = {0.0f, 0.0f, 0.0f};</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;} <a class="code" href="structPattern.html">Pattern</a>;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno"><a class="line" href="structSyncID.html">  283</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSyncID.html">SyncID</a> {</div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        <span class="keywordtype">float</span> lastRefresh = 0.0f;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;} <a class="code" href="structSyncID.html">SyncID</a>;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno"><a class="line" href="structDropBonus.html">  292</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structDropBonus.html">DropBonus</a> {</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;} <a class="code" href="structDropBonus.html">DropBonus</a>;</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
+<div class="line"><a name="l00300"></a><span class="lineno"><a class="line" href="structText.html">  300</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structText.html">Text</a> {</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;        std::string str = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="keywordtype">bool</span> hasValue = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        std::size_t value = 0;</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;        <span class="keywordtype">float</span> size = 0;</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;        sf::Color color = sf::Color::White;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        sf::Vector2f pos = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordtype">float</span> last = 0.0f;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="keywordtype">float</span> delay = 0.0f;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;} <a class="code" href="structText.html">Text</a>;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160; </div>
+<div class="line"><a name="l00315"></a><span class="lineno"><a class="line" href="structSoundID.html">  315</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSoundID.html">SoundID</a> {</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="keywordtype">bool</span> play = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;        <span class="keywordtype">bool</span> loop = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;        <span class="keywordtype">float</span> pitch = 1.0f;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;} <a class="code" href="structSoundID.html">SoundID</a>;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160; </div>
+<div class="line"><a name="l00326"></a><span class="lineno"><a class="line" href="structSpriteAttribut.html">  326</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structSpriteAttribut.html">SpriteAttribut</a> {</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        <span class="keywordtype">float</span> rotation = 0;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        sf::FloatRect rect = sf::FloatRect();</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;        sf::Color color = sf::Color::White;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;        sf::Vector2f scale = {1.0f, 1.0f};</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        sf::Vector2f offset = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        sf::Vector2f delay = {0.0f, 0.0f};</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;} <a class="code" href="structSpriteAttribut.html">SpriteAttribut</a>;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;<span class="keyword">enum</span> ButtonType {</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    QUIT = 0,</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    BACK,</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;    TEXTZONE,</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    CONNECT,</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    PLAY_SOLO,</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    READY,</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;    CREATE_ROOM,</div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;};</div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno"><a class="line" href="structButton.html">  353</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structButton.html">Button</a> {</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;        ButtonType type = QUIT;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        <span class="keywordtype">bool</span> selected = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;        std::size_t maxSize = 15;</div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;} <a class="code" href="structButton.html">Button</a>;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160; </div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="keyword">enum</span> <a class="code" href="structSceneType.html">SceneType</a> {</div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;    MENU = 0,</div>
+<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;    LOBBY,</div>
+<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;    ROOM,</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    GAME,</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;};</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160; </div>
+<div class="line"><a name="l00374"></a><span class="lineno"><a class="line" href="structScene.html">  374</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structScene.html">Scene</a> {</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;        std::size_t <span class="keywordtype">id</span> = 0;</div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;} <a class="code" href="structScene.html">Scene</a>;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160; </div>
+<div class="line"><a name="l00382"></a><span class="lineno"><a class="line" href="structChain.html">  382</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structChain.html">Chain</a> {</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;        std::size_t partInfo = 0;</div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;        std::size_t nextId = 0;</div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;        std::size_t diffX = 0;</div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;        std::size_t diffY = 0;</div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;} <a class="code" href="structChain.html">Chain</a>;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160; </div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// COMPONENTTYPES_HPP</span></div>
+<div class="ttc" id="aComponentTypes_8hpp_html_a152e0c36b337a97595cf8e9d5dc937cb"><div class="ttname"><a href="ComponentTypes_8hpp.html#a152e0c36b337a97595cf8e9d5dc937cb">TypePhase</a></div><div class="ttdeci">TypePhase</div><div class="ttdoc">The type of phase that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:258</div></div>
+<div class="ttc" id="aComponentTypes_8hpp_html_a315655b1bb5848c063491adffde62b15"><div class="ttname"><a href="ComponentTypes_8hpp.html#a315655b1bb5848c063491adffde62b15">Priority</a></div><div class="ttdeci">Priority</div><div class="ttdoc">Priority of the sprites to be displayed (background before foreground etc..).</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:90</div></div>
+<div class="ttc" id="aComponentTypes_8hpp_html_a58ec645a8af2e639f20c750ca31a504e"><div class="ttname"><a href="ComponentTypes_8hpp.html#a58ec645a8af2e639f20c750ca31a504e">TypeStatus</a></div><div class="ttdeci">TypeStatus</div><div class="ttdoc">The type of status that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:244</div></div>
+<div class="ttc" id="aComponentTypes_8hpp_html_aaf5b95d5b986f93429ceb6a7765c9965"><div class="ttname"><a href="ComponentTypes_8hpp.html#aaf5b95d5b986f93429ceb6a7765c9965">TypePattern</a></div><div class="ttdeci">TypePattern</div><div class="ttdoc">The type of pattern that an enemy has.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:231</div></div>
 <div class="ttc" id="aIncludes_8hpp_html"><div class="ttname"><a href="Includes_8hpp.html">Includes.hpp</a></div><div class="ttdoc">The standard c++ includes needed for this project.</div></div>
 <div class="ttc" id="anamespaceeng_html"><div class="ttname"><a href="namespaceeng.html">eng</a></div><div class="ttdoc">Engine namespace.</div></div>
 <div class="ttc" id="anamespaceeng_html_ae58dbf00a8a6d1168e886cb3aabd5e8c"><div class="ttname"><a href="namespaceeng.html#ae58dbf00a8a6d1168e886cb3aabd5e8c">eng::InfoComp</a></div><div class="ttdeci">InfoComp</div><div class="ttdoc">Masks of the components.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:26</div></div>
-<div class="ttc" id="astructAppearance_html"><div class="ttname"><a href="structAppearance.html">Appearance</a></div><div class="ttdoc">The appearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:170</div></div>
-<div class="ttc" id="astructButton_html"><div class="ttname"><a href="structButton.html">Button</a></div><div class="ttdoc">The button component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:351</div></div>
-<div class="ttc" id="astructControllable_html"><div class="ttname"><a href="structControllable.html">Controllable</a></div><div class="ttdoc">The controllable component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:116</div></div>
-<div class="ttc" id="astructCooldownBar_html"><div class="ttname"><a href="structCooldownBar.html">CooldownBar</a></div><div class="ttdoc">The cooldownBar component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:202</div></div>
-<div class="ttc" id="astructCooldownShoot_html"><div class="ttname"><a href="structCooldownShoot.html">CooldownShoot</a></div><div class="ttdoc">The cooldownShoot component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:191</div></div>
-<div class="ttc" id="astructDisappearance_html"><div class="ttname"><a href="structDisappearance.html">Disappearance</a></div><div class="ttdoc">The disappearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:182</div></div>
-<div class="ttc" id="astructDropBonus_html"><div class="ttname"><a href="structDropBonus.html">DropBonus</a></div><div class="ttdoc">The dropBonus component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:290</div></div>
-<div class="ttc" id="astructEnemy_html"><div class="ttname"><a href="structEnemy.html">Enemy</a></div><div class="ttdoc">The enemy component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:162</div></div>
-<div class="ttc" id="astructLifeBar_html"><div class="ttname"><a href="structLifeBar.html">LifeBar</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:210</div></div>
-<div class="ttc" id="astructLife_html"><div class="ttname"><a href="structLife.html">Life</a></div><div class="ttdoc">The life component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:144</div></div>
-<div class="ttc" id="astructParallax_html"><div class="ttname"><a href="structParallax.html">Parallax</a></div><div class="ttdoc">The parallax component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:126</div></div>
-<div class="ttc" id="astructParent_html"><div class="ttname"><a href="structParent.html">Parent</a></div><div class="ttdoc">The parent component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:219</div></div>
-<div class="ttc" id="astructPattern_html"><div class="ttname"><a href="structPattern.html">Pattern</a></div><div class="ttdoc">The patern component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:266</div></div>
-<div class="ttc" id="astructPosition_html"><div class="ttname"><a href="structPosition.html">Position</a></div><div class="ttdoc">The position component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:58</div></div>
+<div class="ttc" id="astructAppearance_html"><div class="ttname"><a href="structAppearance.html">Appearance</a></div><div class="ttdoc">The appearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:171</div></div>
+<div class="ttc" id="astructButton_html"><div class="ttname"><a href="structButton.html">Button</a></div><div class="ttdoc">The button component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:353</div></div>
+<div class="ttc" id="astructChain_html"><div class="ttname"><a href="structChain.html">Chain</a></div><div class="ttdoc">The chain component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:382</div></div>
+<div class="ttc" id="astructControllable_html"><div class="ttname"><a href="structControllable.html">Controllable</a></div><div class="ttdoc">The controllable component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:117</div></div>
+<div class="ttc" id="astructCooldownBar_html"><div class="ttname"><a href="structCooldownBar.html">CooldownBar</a></div><div class="ttdoc">The cooldownBar component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:203</div></div>
+<div class="ttc" id="astructCooldownShoot_html"><div class="ttname"><a href="structCooldownShoot.html">CooldownShoot</a></div><div class="ttdoc">The cooldownShoot component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:192</div></div>
+<div class="ttc" id="astructDisappearance_html"><div class="ttname"><a href="structDisappearance.html">Disappearance</a></div><div class="ttdoc">The disappearance component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:183</div></div>
+<div class="ttc" id="astructDropBonus_html"><div class="ttname"><a href="structDropBonus.html">DropBonus</a></div><div class="ttdoc">The dropBonus component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:292</div></div>
+<div class="ttc" id="astructEnemy_html"><div class="ttname"><a href="structEnemy.html">Enemy</a></div><div class="ttdoc">The enemy component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:163</div></div>
+<div class="ttc" id="astructLifeBar_html"><div class="ttname"><a href="structLifeBar.html">LifeBar</a></div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:211</div></div>
+<div class="ttc" id="astructLife_html"><div class="ttname"><a href="structLife.html">Life</a></div><div class="ttdoc">The life component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:145</div></div>
+<div class="ttc" id="astructParallax_html"><div class="ttname"><a href="structParallax.html">Parallax</a></div><div class="ttdoc">The parallax component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:127</div></div>
+<div class="ttc" id="astructParent_html"><div class="ttname"><a href="structParent.html">Parent</a></div><div class="ttdoc">The parent component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:220</div></div>
+<div class="ttc" id="astructPattern_html"><div class="ttname"><a href="structPattern.html">Pattern</a></div><div class="ttdoc">The patern component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:268</div></div>
+<div class="ttc" id="astructPosition_html"><div class="ttname"><a href="structPosition.html">Position</a></div><div class="ttdoc">The position component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:59</div></div>
 <div class="ttc" id="astructProjectile_html"><div class="ttname"><a href="structProjectile.html">Projectile</a></div><div class="ttdoc">The projectile component.</div></div>
 <div class="ttc" id="astructSceneType_html"><div class="ttname"><a href="structSceneType.html">SceneType</a></div><div class="ttdoc">The sceneType component.</div></div>
-<div class="ttc" id="astructScene_html"><div class="ttname"><a href="structScene.html">Scene</a></div><div class="ttdoc">The scene component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:372</div></div>
-<div class="ttc" id="astructShield_html"><div class="ttname"><a href="structShield.html">Shield</a></div><div class="ttdoc">The shield component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:153</div></div>
-<div class="ttc" id="astructSize_html"><div class="ttname"><a href="structSize.html">Size</a></div><div class="ttdoc">The size component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:80</div></div>
-<div class="ttc" id="astructSoundID_html"><div class="ttname"><a href="structSoundID.html">SoundID</a></div><div class="ttdoc">The soundID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:313</div></div>
-<div class="ttc" id="astructSpriteAttribut_html"><div class="ttname"><a href="structSpriteAttribut.html">SpriteAttribut</a></div><div class="ttdoc">The spriteAttribut component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:324</div></div>
-<div class="ttc" id="astructSpriteID_html"><div class="ttname"><a href="structSpriteID.html">SpriteID</a></div><div class="ttdoc">The spriteID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:99</div></div>
-<div class="ttc" id="astructSyncID_html"><div class="ttname"><a href="structSyncID.html">SyncID</a></div><div class="ttdoc">The syncID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:281</div></div>
-<div class="ttc" id="astructText_html"><div class="ttname"><a href="structText.html">Text</a></div><div class="ttdoc">The text component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:298</div></div>
-<div class="ttc" id="astructVelocity_html"><div class="ttname"><a href="structVelocity.html">Velocity</a></div><div class="ttdoc">The velocity component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:68</div></div>
+<div class="ttc" id="astructScene_html"><div class="ttname"><a href="structScene.html">Scene</a></div><div class="ttdoc">The scene component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:374</div></div>
+<div class="ttc" id="astructShield_html"><div class="ttname"><a href="structShield.html">Shield</a></div><div class="ttdoc">The shield component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:154</div></div>
+<div class="ttc" id="astructSize_html"><div class="ttname"><a href="structSize.html">Size</a></div><div class="ttdoc">The size component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:81</div></div>
+<div class="ttc" id="astructSoundID_html"><div class="ttname"><a href="structSoundID.html">SoundID</a></div><div class="ttdoc">The soundID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:315</div></div>
+<div class="ttc" id="astructSpriteAttribut_html"><div class="ttname"><a href="structSpriteAttribut.html">SpriteAttribut</a></div><div class="ttdoc">The spriteAttribut component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:326</div></div>
+<div class="ttc" id="astructSpriteID_html"><div class="ttname"><a href="structSpriteID.html">SpriteID</a></div><div class="ttdoc">The spriteID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:100</div></div>
+<div class="ttc" id="astructSyncID_html"><div class="ttname"><a href="structSyncID.html">SyncID</a></div><div class="ttdoc">The syncID component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:283</div></div>
+<div class="ttc" id="astructText_html"><div class="ttname"><a href="structText.html">Text</a></div><div class="ttdoc">The text component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:300</div></div>
+<div class="ttc" id="astructVelocity_html"><div class="ttname"><a href="structVelocity.html">Velocity</a></div><div class="ttdoc">The velocity component.</div><div class="ttdef"><b>Definition:</b> ComponentTypes.hpp:69</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
