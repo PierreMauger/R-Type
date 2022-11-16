@@ -1,6 +1,6 @@
-# charPerScreen:3
---------
-- E  O -
--E E B -
-- E  O -
---------
+# charPerScreen:6
+--------------
+-       E  O -
+-      E E B -
+-       E  O -
+--------------
